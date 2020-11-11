@@ -1,16 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Controller.DbControllers;
-using Model.Data;
-using Model.DbModels;
 ﻿using NAudio.Wave;
-using Controller;
-using Model;
-﻿using Controller;
-using Model;
-using NAudio.Wave;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace Soundify
 {
@@ -26,9 +16,8 @@ namespace Soundify
 
         public MainWindow()
         {
-            new FileCache();
-            AudioPlayer.Initialize();
-            AudioPlayer.PlaySong(new SongAudioFile("dansenaandegracht.mp3"));
+            Data.Initialize();
+            Data.PlaySong(new Song(new AudioFileReader("dansenaandegracht.mp3")));
             InitializeComponent();
 
             Context = new DatabaseContext();
@@ -50,20 +39,26 @@ namespace Soundify
             var win3 = new View.Playlist();
             this.Close();
             win3.Show();
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
+            if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused ||
+                AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
             {
                 AudioPlayer.WaveOutDevice.Play();
-                Play.Content = "=";
-            }
-            else
-            {
-                AudioPlayer.WaveOutDevice.Pause();
-                Play.Content = ">";
+                if (Data.WaveOutDevice.PlaybackState == PlaybackState.Paused ||
+                    Data.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
+                {
+                    Data.WaveOutDevice.Play();
+                    Play.Content = "=";
+                }
+                else
+                {
+                    AudioPlayer.WaveOutDevice.Pause();
+                    Data.WaveOutDevice.Pause();
+                    Play.Content = ">";
+                }
             }
         }
 
@@ -71,6 +66,7 @@ namespace Soundify
         {
             Slider slider = sender as Slider;
             AudioPlayer.CurrentSong.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSong.CurrentTimeSong));
+            Data.CurrentSong.AudioFile.Skip((int)(slider.Value - Data.CurrentSong.CurrentTimeSong));
         }
     }
 }
