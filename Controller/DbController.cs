@@ -45,7 +45,7 @@ namespace Controller
         public virtual void UpdateItem(T item)
         {
             var dbItem = GetItem(item.ID);
-            dbItem.ID = item.ID;
+            dbItem = item;
 
             Context.Entry(dbItem).State = EntityState.Modified;
             Context.SaveChanges();

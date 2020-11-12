@@ -6,6 +6,7 @@ namespace Model.DbModels
 {
     public class PlaylistSong
     {
+
         public int SongID { get; set; }
         public Song Song { get; set; }
 
