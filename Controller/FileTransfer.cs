@@ -13,7 +13,8 @@ namespace Controller
             using (ScpClient client = new ScpClient("145.44.235.172", "student", "Sterk_W@chtw00rd2"))
             {
                 client.Connect();
-                using (Stream localfile = File.Create(Path.GetTempPath() + "Soundify/" + inputPath))
+                string localpath = RemotePathToLocalPath(inputPath);
+                using (Stream localfile = File.Create(localpath))
                 {
                     client.Download("/files/" + inputPath, localfile);
                 }
@@ -30,6 +31,11 @@ namespace Controller
                     client.Upload(localfile, "/files/" + outputPath);
                 }
             }
+        }
+
+        public static string RemotePathToLocalPath(string remotePath)
+        {
+            return Path.GetTempPath() + "Soundify/" + remotePath;
         }
     }
 }

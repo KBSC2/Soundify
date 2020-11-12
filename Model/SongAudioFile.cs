@@ -1,18 +1,15 @@
 ﻿using NAudio.Wave;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Model
 {
-    public class Song
+    public class SongAudioFile
     {
         public AudioFileReader AudioFile { get; set; }
 
         public double TotalTimeSong => AudioFile.TotalTime.TotalSeconds;
         public double CurrentTimeSong => AudioFile.CurrentTime.TotalSeconds;
 
-        public Song(AudioFileReader audioFile)
+        public SongAudioFile(AudioFileReader audioFile)
         {
             AudioFile = audioFile;
         }
