@@ -1,6 +1,12 @@
 ﻿using Controller;
 using System;
 using System.ComponentModel;
+<<<<<<< HEAD
+=======
+using System.Management.Automation.Language;
+using System.Runtime.CompilerServices;
+using System.Text;
+>>>>>>> FileTransfer
 using System.Timers;
 
 namespace View
@@ -13,9 +19,6 @@ namespace View
         public double CurrentTime => AudioPlayer.CurrentSong == null ? 0 : AudioPlayer.CurrentSong.CurrentTimeSong;
         public string TotalTimeLabel => AudioPlayer.CurrentSong == null ? "" : Math.Floor(AudioPlayer.CurrentSong.TotalTimeSong / 60) + ":" + string.Format("{0:00}",Math.Floor(AudioPlayer.CurrentSong.TotalTimeSong % 60));
         public string CurrentTimeLabel => AudioPlayer.CurrentSong == null ? "" : Math.Floor(AudioPlayer.CurrentSong.CurrentTimeSong / 60) + ":" + string.Format("{0:00}",Math.Floor(AudioPlayer.CurrentSong.CurrentTimeSong % 60));
-
-        public string TotalTimeLabel => Math.Floor(Data.CurrentSong.TotalTimeSong / 60) + ":" + string.Format("{0:00}",Math.Floor(Data.CurrentSong.TotalTimeSong % 60));
-        public string CurrentTimeLabel => Math.Floor(Data.CurrentSong.CurrentTimeSong / 60) + ":" + string.Format("{0:00}",Math.Floor(Data.CurrentSong.CurrentTimeSong % 60));
 
         private Timer _timer;
 
