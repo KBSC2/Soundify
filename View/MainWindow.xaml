@@ -7,6 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="139*"/>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="0*"/>
+            <RowDefinition Height="0*"/>
+            <RowDefinition Height="0*"/>
+            <RowDefinition Height="239*"/>
+        </Grid.RowDefinitions>
+        <Button x:Name="Home" Content="Home" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Click="Button1_Click"/>
+        <Button x:Name="Playlists" Content="Playlists&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.375,0.39" Click="Button2_Click" Width="52" Height="20"/>
 
     </Grid>
 </Window>
