@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Model.Data;
+using Model.DbModels;
 
 namespace Model
 {
@@ -10,6 +11,8 @@ namespace Model
     {
         static void Main()
         {
+            
+
             /*using (var db = new DatabaseContext())
             {
                 // Create
@@ -24,15 +27,16 @@ namespace Model
                     .First();
 
                 // Update
-                *//*Console.WriteLine("Updating the blog and adding a post");
+                */ /*Console.WriteLine("Updating the blog and adding a post");
                 blog.TestString = "https://devblogs.microsoft.com/dotnet";
                 db.SaveChanges();
 
                 // Delete
                 Console.WriteLine("Delete the blog");
                 db.Remove(blog);
-                db.SaveChanges();*//*
+                db.SaveChanges();*/ /*
             }*/
+
         }
     }
 }
