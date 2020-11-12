@@ -1,5 +1,6 @@
 ﻿using System.Windows;
-using Controller.DbControllers;
+ using System.Windows.Controls;
+ using Controller.DbControllers;
 using Model.Data;
 using Model.DbModels;
 ﻿using NAudio.Wave;
@@ -41,7 +42,7 @@ namespace Soundify
         {
             //PlaylistMenu win3 = new PlaylistMenu();
             // temporarily until playlist menu is implemented
-            var win3 = new Playlist();
+            var win3 = new View.Playlist();
             this.Close();
             win3.Show();
 
