@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using View;
+using Controller;
+using Model.Data;
+using Model.Models;
 
 namespace Soundify
 {
@@ -21,9 +24,12 @@ namespace Soundify
     /// </summary>
     public partial class MainWindow : Window
     {
+        public DatabaseContext Context { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
+            Context = new DatabaseContext();
         }
 
         private void Button1_Click(object sender, RoutedEventArgs e)

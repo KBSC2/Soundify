@@ -5,7 +5,10 @@ namespace Model.Data
 {
     public class DatabaseContext : DbContext
     {
-        /*public DbSet<T : DbModel> <TableName> { get; set; }*/
+
+        public DbSet<Song> Songs { get; set; }
+        public DbSet<Playlist> Playlists{ get; set; }
+        public DbSet<PlaylistSong> PlaylistSongs{ get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -19,6 +22,19 @@ namespace Model.Data
         {
             // For each model required in the database, copy the line below and change both .Entity<<Model>> and .ToTable("<tableName>")
             /*modelBuilder.Entity<T : DbModel>().ToTable("<TableName>");*/
+            modelBuilder.Entity<PlaylistSong>().HasKey(ps => new {ps.PlaylistID, ps.SongID});
+
+            modelBuilder.Entity<PlaylistSong>()
+                .HasOne<Playlist>(ps => ps.Playlist)
+                .WithMany(p => p.PlaylistSongs)
+                .HasForeignKey(ps => ps.PlaylistID);
+
+            modelBuilder.Entity<PlaylistSong>()
+                .HasOne<Song>(ps => ps.Song)
+                .WithMany(s => s.PlaylistSongs)
+                .HasForeignKey(ps => ps.SongID);
+
+
         }
     }
 }
