@@ -2,11 +2,14 @@
 using System;
 using System.ComponentModel;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 using System.Management.Automation.Language;
 using System.Runtime.CompilerServices;
 using System.Text;
 >>>>>>> FileTransfer
+=======
+>>>>>>> FileCache and AudioPlayer
 using System.Timers;
 
 namespace View

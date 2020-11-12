@@ -1,6 +1,25 @@
 ﻿using System.Windows;
+<<<<<<< HEAD
 using System.Windows.Controls;
 ﻿using NAudio.Wave;
+=======
+using Controller.DbControllers;
+using Model.Data;
+using Model.DbModels;
+using Playlist = View.Playlist;
+﻿using NAudio.Wave;
+using NAudio;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+﻿using Controller;
+using Model;
+using NAudio.Wave;
+using System.Windows;
+using System.Windows.Controls;
+>>>>>>> FileCache and AudioPlayer
 
 namespace Soundify
 {
@@ -16,8 +35,14 @@ namespace Soundify
 
         public MainWindow()
         {
+<<<<<<< HEAD
             Data.Initialize();
             Data.PlaySong(new Song(new AudioFileReader("dansenaandegracht.mp3")));
+=======
+            new FileCache();
+            AudioPlayer.Initialize();
+            AudioPlayer.PlaySong(new SongAudioFile(new AudioFileReader("dansenaandegracht.mp3")));
+>>>>>>> FileCache and AudioPlayer
             InitializeComponent();
 
             Context = new DatabaseContext();
@@ -43,22 +68,15 @@ namespace Soundify
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused ||
-                AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
+            if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
             {
                 AudioPlayer.WaveOutDevice.Play();
-                if (Data.WaveOutDevice.PlaybackState == PlaybackState.Paused ||
-                    Data.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
-                {
-                    Data.WaveOutDevice.Play();
-                    Play.Content = "=";
-                }
-                else
-                {
-                    AudioPlayer.WaveOutDevice.Pause();
-                    Data.WaveOutDevice.Pause();
-                    Play.Content = ">";
-                }
+                Play.Content = "=";
+            }
+            else
+            {
+                AudioPlayer.WaveOutDevice.Pause();
+                Play.Content = ">";
             }
         }
 

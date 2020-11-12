@@ -9,9 +9,9 @@ namespace Model
         public double TotalTimeSong => AudioFile.TotalTime.TotalSeconds;
         public double CurrentTimeSong => AudioFile.CurrentTime.TotalSeconds;
 
-        public SongAudioFile(string audioFile)
+        public SongAudioFile(AudioFileReader audioFile)
         {
-            AudioFile = new AudioFileReader(audioFile);
+            AudioFile = audioFile;
         }
     }
 }
