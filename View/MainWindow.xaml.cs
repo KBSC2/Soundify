@@ -1,11 +1,16 @@
 ﻿using System.Windows;
- using System.Windows.Controls;
- using Controller.DbControllers;
+using System.Windows.Controls;
+using Controller.DbControllers;
 using Model.Data;
 using Model.DbModels;
 ﻿using NAudio.Wave;
 using Controller;
 using Model;
+﻿using Controller;
+using Model;
+using NAudio.Wave;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Soundify
 {
@@ -21,9 +26,9 @@ namespace Soundify
 
         public MainWindow()
         {
-            
-            Data.Initialize();
-            Data.PlaySong(new Song(new AudioFileReader("dansenaandegracht.mp3")));
+            new FileCache();
+            AudioPlayer.Initialize();
+            AudioPlayer.PlaySong(new SongAudioFile(new AudioFileReader("dansenaandegracht.mp3")));
             InitializeComponent();
 
             Context = new DatabaseContext();
@@ -50,14 +55,14 @@ namespace Soundify
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (Data.WaveOutDevice.PlaybackState == PlaybackState.Paused || Data.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
+            if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
             {
-                Data.WaveOutDevice.Play();
+                AudioPlayer.WaveOutDevice.Play();
                 Play.Content = "=";
             }
             else
             {
-                Data.WaveOutDevice.Pause();
+                AudioPlayer.WaveOutDevice.Pause();
                 Play.Content = ">";
             }
         }
@@ -65,7 +70,7 @@ namespace Soundify
         private void Duration_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Slider slider = sender as Slider;
-            Data.CurrentSong.AudioFile.Skip((int)(slider.Value - Data.CurrentSong.CurrentTimeSong));
+            AudioPlayer.CurrentSong.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSong.CurrentTimeSong));
         }
     }
 }
