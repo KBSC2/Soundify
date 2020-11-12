@@ -64,6 +64,7 @@ namespace Soundify
             this.Close();
             win3.Show();
 
+            FileTransfer.DownloadFile("test.txt");
 
         }
 

@@ -19,5 +19,4 @@
     </PackageReference>
     <PackageReference Include="NAudio" Version="1.10.0" />
   </ItemGroup>
-
 </Project>
