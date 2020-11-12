@@ -34,7 +34,7 @@ namespace Soundify
             Data.Initialize();
             Data.PlaySong(new Song(new AudioFileReader("dansenaandegracht.mp3")));
             InitializeComponent();
-
+            FileTransfer.DownloadFile("test.txt");
 
         }
 
