@@ -21,6 +21,8 @@ namespace Controller
         {
             CurrentSong = song;
             WaveOutDevice.Init(song.AudioFile);
+
+            //PowerShell.
         }
     }
 }

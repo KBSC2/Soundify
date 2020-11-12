@@ -56,7 +56,6 @@ namespace Soundify
         {
             Slider slider = sender as Slider;
             Data.CurrentSong.AudioFile.Skip((int)(slider.Value - Data.CurrentSong.CurrentTimeSong));
-
         }
     }
 }
