@@ -13,7 +13,7 @@ namespace Tests
             AudioPlayer.Initialize();
         }
 
-        [Test]
+        [Test, Category("Local")]
         public void PlaySong_PlaybackState_Playing()
         {
             AudioPlayer.PlaySong(new SongAudioFile("dansenaandegracht.mp3"));
