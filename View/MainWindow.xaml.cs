@@ -1,6 +1,8 @@
 ﻿using System.Windows;
-using View;
+using Controller.DbControllers;
 using Model.Data;
+using Model.DbModels;
+using Playlist = View.Playlist;
 
 namespace Soundify
 {
@@ -21,17 +23,6 @@ namespace Soundify
             SongController = new SongController(Context, Context.Songs);
             PlaylistController = new PlaylistController(Context, Context.Playlists);
             PlaylistSongController = new PlaylistSongController(Context, Context.Playlists, Context.Songs);
-
-            
-            var song = new Song() { Duration = 60, Name = "Never gonna give you up", Path = "../Dit/is/een/path" };
-            var playlist = new Playlist();
-            SongController.CreateItem(song);
-            PlaylistController.CreateItem(playlist);
-
-            PlaylistSongController.addSongToPlaylist(song.ID, playlist.ID);
-            
-
-
         }
 
         private void Button1_Click(object sender, RoutedEventArgs e)
