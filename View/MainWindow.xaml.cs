@@ -1,9 +1,12 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
- using Model.Data;
- using NAudio.Wave;
+using NAudio.Wave;
+using Controller;
+using Controller.DbControllers;
+using Model.Data;
+using Model;
 
-namespace Soundify
+ namespace Soundify
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -41,26 +44,6 @@ namespace Soundify
             var win3 = new View.Playlist();
             this.Close();
             win3.Show();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
-            {
-                AudioPlayer.WaveOutDevice.Play();
-                Play.Content = "=";
-            }
-            else
-            {
-                AudioPlayer.WaveOutDevice.Pause();
-                Play.Content = ">";
-            }
-        }
-
-        private void Duration_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            Slider slider = sender as Slider;
-            AudioPlayer.CurrentSong.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSong.CurrentTimeSong));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
