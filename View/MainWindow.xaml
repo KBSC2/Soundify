@@ -29,4 +29,4 @@
         <Label x:Name="Test_Label" Content="empty" HorizontalAlignment="Left" Margin="368,0,0,0" VerticalAlignment="Center" DataContext="{Binding TestLabel, Mode=OneWay}"/>
 
     </Grid>
-</Window>
+ </Window>

@@ -54,6 +54,7 @@ namespace Controller
             CurrentSongIndex = SongQueue.Count;
             CurrentSong = song;
             WaveOutDevice.Init(CurrentSong.AudioFile);
+            WaveOutDevice.Play();
         }
 
         public static void AddSong(SongAudioFile song)
