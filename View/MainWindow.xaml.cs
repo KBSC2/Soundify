@@ -22,7 +22,7 @@ using Model.Data;
         {
             AudioPlayer.Initialize();
             AudioPlayer.PlaySong(new SongAudioFile("dansenaandegracht.mp3"));
-            
+
             InitializeComponent();
 
             Context = new DatabaseContext();

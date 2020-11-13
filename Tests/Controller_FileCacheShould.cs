@@ -11,7 +11,6 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
-            new FileCache();
         }
 
         [Test]

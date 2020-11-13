@@ -21,6 +21,10 @@ namespace Controller
             }
         }
 
+        private FileCache()
+        {
+        }
+
         public string GetFile(string path)
         {
             if (!File.Exists(FileTransfer.RemotePathToLocalPath(path)))

@@ -15,7 +15,6 @@
         <Button x:Name="Playlists" Content="Playlists&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.375,0.39" Click="Button2_Click" Width="52" Height="20"/>
         <Button x:Name="Play" Content="=" Margin="378,304,378,0" VerticalAlignment="Top" Click="Button_Click" Height="45" RenderTransformOrigin="0.517,0.645"/>
         <Slider x:Name="Duration" HorizontalAlignment="Center" Margin="0,369,0,0" VerticalAlignment="Top" Width="342" RenderTransformOrigin="0.5,0.5" Height="18" Minimum="0.00" Maximum="{Binding TotalTime, Mode=OneWay}" Value="{Binding CurrentTime, Mode=OneWay}" ValueChanged="Duration_ValueChanged"/>
-
         <Label x:Name="CurrentTime" Content="{Binding CurrentTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="152,365,0,0" VerticalAlignment="Top" />
         <Label x:Name="TotalTime" Content="{Binding TotalTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="599,365,0,0" VerticalAlignment="Top" />
     </Grid>

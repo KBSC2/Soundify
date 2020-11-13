@@ -11,8 +11,10 @@ namespace View
 
         public double TotalTime => AudioPlayer.CurrentSong == null ? 0 : AudioPlayer.CurrentSong.TotalTimeSong;
         public double CurrentTime => AudioPlayer.CurrentSong == null ? 0 : AudioPlayer.CurrentSong.CurrentTimeSong;
-        public string TotalTimeLabel => AudioPlayer.CurrentSong == null ? "" : Math.Floor(AudioPlayer.CurrentSong.TotalTimeSong / 60) + ":" + string.Format("{0:00}",Math.Floor(AudioPlayer.CurrentSong.TotalTimeSong % 60));
-        public string CurrentTimeLabel => AudioPlayer.CurrentSong == null ? "" : Math.Floor(AudioPlayer.CurrentSong.CurrentTimeSong / 60) + ":" + string.Format("{0:00}",Math.Floor(AudioPlayer.CurrentSong.CurrentTimeSong % 60));
+        public string TotalTimeLabel => AudioPlayer.CurrentSong == null ? 
+            "" : Math.Floor(AudioPlayer.CurrentSong.TotalTimeSong / 60) + ":" + string.Format("{0:00}",Math.Floor(AudioPlayer.CurrentSong.TotalTimeSong % 60));
+        public string CurrentTimeLabel => AudioPlayer.CurrentSong == null ? 
+            "" : Math.Floor(AudioPlayer.CurrentSong.CurrentTimeSong / 60) + ":" + string.Format("{0:00}",Math.Floor(AudioPlayer.CurrentSong.CurrentTimeSong % 60));
 
         private Timer _timer;
 
