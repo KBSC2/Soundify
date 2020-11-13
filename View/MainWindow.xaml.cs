@@ -1,6 +1,9 @@
 ﻿using System.Windows;
-using View;
+using Controller.DbControllers;
 using Model.Data;
+using Model.DbModels;
+using View;
+using Playlist = View.Playlist;
 
 namespace Soundify
 {
@@ -21,17 +24,6 @@ namespace Soundify
             SongController = new SongController(Context, Context.Songs);
             PlaylistController = new PlaylistController(Context, Context.Playlists);
             PlaylistSongController = new PlaylistSongController(Context, Context.Playlists, Context.Songs);
-
-            
-            var song = new Song() { Duration = 60, Name = "Never gonna give you up", Path = "../Dit/is/een/path" };
-            var playlist = new Playlist();
-            SongController.CreateItem(song);
-            PlaylistController.CreateItem(playlist);
-
-            PlaylistSongController.addSongToPlaylist(song.ID, playlist.ID);
-            
-
-
         }
 
         private void Button1_Click(object sender, RoutedEventArgs e)
@@ -42,9 +34,7 @@ namespace Soundify
         }
         private void Button2_Click(object sender, RoutedEventArgs e)
         {
-            //PlaylistMenu win3 = new PlaylistMenu();
-            // temporarily until playlist menu is implemented
-            var win3 = new Playlist();
+            PlaylistMenu win3 = new PlaylistMenu();
             this.Close();
             win3.Show();
         }

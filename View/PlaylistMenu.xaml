@@ -7,10 +7,18 @@
         mc:Ignorable="d"
         Title="PlaylistMenu" Height="450" Width="800">
     <Grid>
-        <Button Content="Home" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="Button1_Click"/>
-        <Label x:Name="Titel" Content="Name playlist" HorizontalAlignment="Left" Margin="85,42,0,0" VerticalAlignment="Top" Width="170"/>
-        <ListBox x:Name="playlistList" RenderTransformOrigin="0.17,0.491" Margin="85,73,118,31"/>
-        <Button Content="Playlists" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Click="Button2_Click" RenderTransformOrigin="0.597,2.259"/>
-
+        <Grid Background="#FF424D82" HorizontalAlignment="Left" Width="92">
+            <Button Content="Home" Margin="21,10,21,0" VerticalAlignment="Top" Click="HomeButton_Click" BorderBrush="{x:Null}" Background="#FF424D82" Foreground="White"/>
+            <Button Content="Playlists" Margin="16,43,16,0" VerticalAlignment="Top" Click="PlaylistButton_Click" Background="#FF424D82" Foreground="White" BorderBrush="{x:Null}"/>
+            <Button Content="Queue" Margin="24,77,24,0" VerticalAlignment="Top" Click="QueueButton_Click" Background="#FF424D82" Foreground="White" BorderBrush="{x:Null}"/>
+        </Grid>
+        <Grid Margin="92,0,0,0" Background="#FF363F63" Height="74" VerticalAlignment="Bottom"/>
+        <Grid Margin="92,0,0,0" Background="#FF303651" Height="54" VerticalAlignment="Top">
+            <Label HorizontalAlignment="Left" Margin="41,10,0,0" VerticalAlignment="Top" FontSize="22" Foreground="White" Width="191" Content="Playlists"/>
+            <Button Content="Create new" HorizontalAlignment="Left" Margin="495,0,0,0" VerticalAlignment="Center" IsCancel="True" FontSize="16" Click="CreateNewPlaylist_Click"/>
+        </Grid>
+        <ScrollViewer Height="Auto" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden" Margin="92,54,0,74" Background="#FF303651">
+            <Grid x:Name="PlaylistOverview" Height="306.04"  Width="708"/>
+        </ScrollViewer>
     </Grid>
 </Window>

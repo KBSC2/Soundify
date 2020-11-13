@@ -31,9 +31,7 @@ namespace View
 
         private void PlaylistButton_Click(object sender, RoutedEventArgs e)
         {
-            //PlaylistMenu win3 = new PlaylistMenu();
-            // temporarily until playlist menu is implemented
-            var win3 = new Playlist();
+            PlaylistMenu win3 = new PlaylistMenu();
             this.Close();
             win3.Show();
         }
