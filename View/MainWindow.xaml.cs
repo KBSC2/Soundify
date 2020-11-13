@@ -1,18 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-<<<<<<< HEAD
 ﻿using NAudio.Wave;
 using Controller;
 using Controller.DbControllers;
 using Model;
 using Model.Data;
-=======
-using NAudio.Wave;
-using Controller;
-using Controller.DbControllers;
-using Model.Data;
-using Model;
->>>>>>> Rebase from master 2
 
  namespace Soundify
 {

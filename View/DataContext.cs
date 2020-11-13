@@ -1,15 +1,6 @@
 ﻿using Controller;
 using System;
 using System.ComponentModel;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-using System.Management.Automation.Language;
-using System.Runtime.CompilerServices;
-using System.Text;
->>>>>>> FileTransfer
-=======
->>>>>>> FileCache and AudioPlayer
 using System.Timers;
 
 namespace View
@@ -27,13 +18,12 @@ namespace View
 
         public DataContext()
         {
-            _timer = new Timer();
-            _timer.Interval = 10;
+            _timer = new Timer {Interval = 10};
             _timer.Elapsed += OnTimedEvent;
             _timer.Start();
         }
 
-        public void OnTimedEvent(Object sender, EventArgs e)
+        public void OnTimedEvent(object sender, EventArgs e)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(""));
         }
