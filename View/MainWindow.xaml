@@ -18,6 +18,5 @@
 
         <Label x:Name="CurrentTime" Content="{Binding CurrentTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="152,365,0,0" VerticalAlignment="Top" />
         <Label x:Name="TotalTime" Content="{Binding TotalTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="599,365,0,0" VerticalAlignment="Top" />
-
     </Grid>
 </Window>

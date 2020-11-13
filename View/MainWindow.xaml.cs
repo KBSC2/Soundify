@@ -1,12 +1,20 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+<<<<<<< HEAD
 ﻿using NAudio.Wave;
 using Controller;
 using Controller.DbControllers;
 using Model;
 using Model.Data;
+=======
+using NAudio.Wave;
+using Controller;
+using Controller.DbControllers;
+using Model.Data;
+using Model;
+>>>>>>> Rebase from master 2
 
-namespace Soundify
+ namespace Soundify
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -64,7 +72,6 @@ namespace Soundify
         {
             Slider slider = sender as Slider;
             AudioPlayer.CurrentSong.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSong.CurrentTimeSong));
-            Data.CurrentSong.AudioFile.Skip((int)(slider.Value - Data.CurrentSong.CurrentTimeSong));
         }
     }
 }
