@@ -1,10 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using NAudio.Wave;
-using Controller;
-using Controller.DbControllers;
-using Model;
-using Model.Data;
+ using Model.Data;
+ using NAudio.Wave;
 
 namespace Soundify
 {
@@ -22,7 +19,7 @@ namespace Soundify
         {
             AudioPlayer.Initialize();
             AudioPlayer.PlaySong(new SongAudioFile("dansenaandegracht.mp3"));
-            
+
             InitializeComponent();
 
             Context = new DatabaseContext();
@@ -44,6 +41,26 @@ namespace Soundify
             var win3 = new View.Playlist();
             this.Close();
             win3.Show();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
+            {
+                AudioPlayer.WaveOutDevice.Play();
+                Play.Content = "=";
+            }
+            else
+            {
+                AudioPlayer.WaveOutDevice.Pause();
+                Play.Content = ">";
+            }
+        }
+
+        private void Duration_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Slider slider = sender as Slider;
+            AudioPlayer.CurrentSong.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSong.CurrentTimeSong));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

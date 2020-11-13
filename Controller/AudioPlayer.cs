@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Model;
+using System.Collections.Generic;
 using NAudio.Wave;
+using Model;
 
 namespace Controller
 {

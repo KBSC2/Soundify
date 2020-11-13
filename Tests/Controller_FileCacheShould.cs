@@ -1,7 +1,7 @@
-﻿using Controller;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 using System.IO;
+using Controller;
 
 namespace Tests
 {
@@ -11,7 +11,7 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
-            new FileCache();
+
         }
 
         [Test]

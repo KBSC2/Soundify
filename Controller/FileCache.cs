@@ -15,10 +15,11 @@ namespace Controller
                     _instance = new FileCache();
                 return _instance;
             }
-            set
-            {
-                _instance = value;
-            }
+            set { _instance = value; }
+        }
+
+        private FileCache()
+        {
         }
 
         public string GetFile(string path)
