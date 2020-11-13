@@ -5,10 +5,20 @@ namespace Controller
 {
     public class FileCache
     {
-        public static FileCache Instance { get; set; }
-        public FileCache()
+        private static FileCache _instance;
+
+        public static FileCache Instance
         {
-            Instance = this;
+            get
+            {
+                if (_instance == null)
+                    _instance = new FileCache();
+                return _instance;
+            }
+            set
+            {
+                _instance = value;
+            }
         }
 
         public string GetFile(string path)
