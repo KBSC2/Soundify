@@ -28,7 +28,7 @@ namespace Soundify
         {
             new FileCache();
             AudioPlayer.Initialize();
-            AudioPlayer.PlaySong(new SongAudioFile(new AudioFileReader("dansenaandegracht.mp3")));
+            AudioPlayer.PlaySong(new SongAudioFile("dansenaandegracht.mp3"));
             InitializeComponent();
 
             Context = new DatabaseContext();
