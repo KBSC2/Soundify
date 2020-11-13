@@ -35,14 +35,10 @@ namespace Soundify
 
         public MainWindow()
         {
-<<<<<<< HEAD
-            Data.Initialize();
-            Data.PlaySong(new Song(new AudioFileReader("dansenaandegracht.mp3")));
-=======
+
             new FileCache();
             AudioPlayer.Initialize();
-            AudioPlayer.PlaySong(new SongAudioFile(new AudioFileReader("dansenaandegracht.mp3")));
->>>>>>> FileCache and AudioPlayer
+            AudioPlayer.PlaySong(new SongAudioFile("dansenaandegracht.mp3"));
             InitializeComponent();
 
             Context = new DatabaseContext();
