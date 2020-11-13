@@ -27,12 +27,6 @@ namespace View
             // loop through all the playlists in the database
             // for each playlist, execute the following method with different row and col values
             AddPlaylistToGrid(0, 0);
-            AddPlaylistToGrid(0, 1);
-            AddPlaylistToGrid(0, 2);
-            AddPlaylistToGrid(1, 0);
-            AddPlaylistToGrid(1, 1);
-            AddPlaylistToGrid(1, 2);
-            AddPlaylistToGrid(2, 0);
         }
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
