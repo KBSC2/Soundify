@@ -26,6 +26,6 @@
         <Grid Margin="92,0,0,0" Background="#FF303651" Height="54" VerticalAlignment="Top">
             <Label Content="{Binding PageName}" HorizontalAlignment="Left" Margin="41,10,0,0" VerticalAlignment="Top" FontSize="22" Foreground="White" Width="191" Height="17"/>
         </Grid>
-        <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="92,0,0,79" ContentTemplate="{StaticResource HomeScreen}"/>
+        <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="92,54,0,79" ContentTemplate="{StaticResource HomeScreen}"/>
     </Grid>
 </Window>
