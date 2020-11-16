@@ -71,5 +71,9 @@ namespace Controller
         {
             return Set.Where(x => filter(x)).ToList();
         }
+        public virtual T GetLastItem()
+        {
+            return Set.OrderBy(i => i.ID).Last();
+        }
     }
 }
