@@ -18,7 +18,7 @@ namespace Model.DbModels
         public string Path { get; set; }
 
         [Required]
-        public TimeSpan Duration { get; set; }
+        public double Duration { get; set; }
 
         public IList<PlaylistSong> PlaylistSongs { get; set; }
     }

@@ -14,6 +14,7 @@ namespace Model
         public string Description { get; set; }
         public List<SongInfo> PlaylistItems { get; set; }
         public Playlist Playlist { get; set; }
+        public List<Song> Songs { get; set; }
 
         public void AddPlaylistsToMenu()
         {
@@ -26,7 +27,10 @@ namespace Model
             {
                 foreach (var song in Playlist.PlaylistSongs)
                 {
-                    PlaylistItems.Add(new SongInfo(song.Song.Name, song.Song.Artist, song.Song.Duration, song.Added));
+                    PlaylistItems.Add(new SongInfo(song.Song.Name, 
+                        song.Song.Artist, 
+                        TimeSpan.FromSeconds(song.Song.Duration), 
+                        song.Added));
                 }
             }
 
