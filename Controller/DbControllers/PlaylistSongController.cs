@@ -31,7 +31,6 @@ namespace Controller.DbControllers
             _context.Entry(playlistSong).State = EntityState.Added;
             _context.SaveChanges();
         }
-
         public void RemoveFromPlaylist(int songID, int playlistID)
         {
             if (!RowExists(songID, playlistID))
@@ -46,6 +45,7 @@ namespace Controller.DbControllers
             _context.Entry(playlistSong).State = EntityState.Deleted;
             _context.SaveChanges();
         }
+
         public bool RowExists(int songID, int playlistID)
         {
             return _context.PlaylistSongs
