@@ -42,7 +42,6 @@ namespace Controller.DbControllers
             foreach (var playlistSong in playlistSongs)
             {
                 var id = playlistSong.SongID;
-                var wou = "sfl";
                 songs.Add(_songController.GetItem(id));
             }
 

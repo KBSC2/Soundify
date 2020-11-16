@@ -70,7 +70,7 @@ namespace View
         {
             PlaylistController.CreateItem(new Model.DbModels.Playlist
             {
-                Name = $"Playlist {PlaylistController.GetList().Count}", 
+                Name = $"Playlist {PlaylistController.GetList().Count + 1}", 
                 CreationDate = DateTime.Today
             });
         }
