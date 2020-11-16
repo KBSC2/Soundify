@@ -9,7 +9,7 @@ namespace Controller
         public static IWavePlayer WaveOutDevice { get; set; }
         public static SongAudioFile CurrentSong { get; set; }
 
-        private static int _currentSongIndex;
+        private static int _currentSongIndex = -1;
         private static int CurrentSongIndex
         {
             get => _currentSongIndex;
