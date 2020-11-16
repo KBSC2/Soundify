@@ -34,7 +34,7 @@ namespace Model.Migrations
                 {
                     SongID = table.Column<int>(type: "int", nullable: false),
                     PlaylistID = table.Column<int>(type: "int", nullable: false),
-                    Added = table.Column<DateTime>(type: "")
+                    Added = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

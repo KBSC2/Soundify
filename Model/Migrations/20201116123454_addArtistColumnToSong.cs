@@ -10,7 +10,8 @@ namespace Model.Migrations
                 name: "Artist",
                 table: "Songs",
                 type: "nvarchar(max)",
-                nullable: false);
+                nullable: false,
+                defaultValue: "");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
