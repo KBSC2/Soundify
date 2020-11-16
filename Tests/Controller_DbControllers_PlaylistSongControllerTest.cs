@@ -7,8 +7,13 @@ using Model.DbModels;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
+<<<<<<< HEAD
 /*It's important to notice that the database should stay unchanged after running the tests.
  At the start of the test, the database should be in the same state as at the end of the test. */
+=======
+/*It's important the entries to the database are 0. So at the start and the end the database should
+remain untouched*/
+>>>>>>> test updates, not finished yet
 namespace Tests
 {
     [TestFixture]
@@ -26,9 +31,11 @@ namespace Tests
             song = new Song() { Duration = 60, Name = "Never gonna give you up", Path = "../Dit/is/een/path" };
             playlist = new Playlist();
             context = new DatabaseContext();
+            
             songController = new SongController(context, context.Songs);
             playlistController = new PlaylistController(context, context.Playlists);
             playlistSongController = new PlaylistSongController(context);
+
             songController.CreateItem(song);
             playlistController.CreateItem(playlist);
         }
@@ -76,7 +83,6 @@ namespace Tests
             Assert.IsFalse(existsInPlaylist);
         }
 
-        //Everytime you test, remove the added items out of the database.
         [TearDown]
         public void TearDown()
         {
