@@ -14,6 +14,8 @@ using Renci.SshNet;
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static bool CreateSSHTunnel = true;
+
         public DatabaseContext Context { get; set; }
         public PlaylistSongController PlaylistSongController { get; set; }
         public SongController SongController { get; set; }
@@ -52,6 +54,9 @@ using Renci.SshNet;
 
         public void OpenSSHTunnel()
         {
+            if (!CreateSSHTunnel)
+                return;
+
             using (var client = new SshClient("145.44.235.172", "student", "Sterk_W@chtw00rd2"))
             {
                 client.Connect();
