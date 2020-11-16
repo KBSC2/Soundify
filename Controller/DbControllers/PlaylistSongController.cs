@@ -20,7 +20,7 @@ namespace Controller.DbControllers
             this._songController = new SongController(context, song);
         }
 
-        public void addSongToPlaylist(int songID, int playlistID)
+        public void AddSongToPlaylist(int songID, int playlistID)
         {
             var playlistSong = new PlaylistSong()
             {

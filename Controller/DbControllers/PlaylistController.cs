@@ -11,17 +11,18 @@ namespace Controller.DbControllers
     {
         private DatabaseContext _context;
         private PlaylistController _playlistController;
+
         public PlaylistController(DatabaseContext context, DbSet<Playlist> playlist) : base(context, playlist)
         {
             this._context = context;
             this._playlistController = new PlaylistController(context, playlist);
         }
-        public void AddPlaylist(int playlistID)
+
+        public void AddPlaylist(string name, string description)
         {
             var playlist = new Playlist()
             {
-                PlaylistID = playlistID
-
+                Name = name, Description = description
             };
             _context.Playlists.Add(playlist);
             _context.Entry(playlist).State = EntityState.Added;

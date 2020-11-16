@@ -47,6 +47,11 @@ namespace View
 
         }
 
+        private void CreateNewPlaylist_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void AddPlaylistToGrid(int row, int col)
         {
             // if a new row starts, add a new row to the grid
@@ -102,11 +107,6 @@ namespace View
             innerGrid.HorizontalAlignment = HorizontalAlignment.Center;
 
             PlaylistOverview.Children.Add(innerGrid);
-        }
-
-        private void CreateNewPlaylist_Click(object sender, RoutedEventArgs e)
-        {
-            
         }
     }
 }
