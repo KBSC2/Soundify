@@ -1,18 +1,24 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
-﻿using NAudio.Wave;
+using NAudio.Wave;
 using Controller;
 using Controller.DbControllers;
 using Model;
 using Model.Data;
+using Model.EventArgs;
 
- namespace Soundify
+namespace Soundify
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Events
+        public static EventHandler<MenuItemRoutedEventArgs> MenuItemRoutedEvent;
+        #endregion
+
         public DatabaseContext Context { get; set; }
         public PlaylistSongController PlaylistSongController { get; set; }
         public SongController SongController { get; set; }
@@ -21,7 +27,7 @@ using Model.Data;
         public MainWindow()
         {
             AudioPlayer.Initialize();
-            AudioPlayer.PlaySong(new SongAudioFile("dansenaandegracht.mp3"));
+            AudioPlayer.AddSong(new SongAudioFile("dansenaandegracht.mp3"));
 
             InitializeComponent();
 
@@ -31,24 +37,15 @@ using Model.Data;
             PlaylistSongController = new PlaylistSongController(Context, Context.Playlists, Context.Songs);
 
             SetScreen(ScreenNames.HomeScreen);
-        }
 
-        private void HomeButton_Click(object sender, RoutedEventArgs e)
-        {
-            SetScreen(ScreenNames.HomeScreen);
-        }
-        private void PlaylistButton_Click(object sender, RoutedEventArgs e)
-        {
-            SetScreen(ScreenNames.PlaylistScreen);
-        }
-
-        private void QueueButton_Click(object sender, RoutedEventArgs e)
-        {
-            SetScreen(ScreenNames.QueueScreen);
+            MenuItemRoutedEvent += OnMenuItemRoutedEvent;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if(AudioPlayer.CurrentSong == null)
+                AudioPlayer.Next();
+
             if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
             {
                 AudioPlayer.WaveOutDevice.Play();
@@ -67,17 +64,15 @@ using Model.Data;
             AudioPlayer.CurrentSong.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSong.CurrentTimeSong));
         }
 
-        public enum ScreenNames
-        {
-            HomeScreen,
-            PlaylistScreen,
-            QueueScreen
-        }
-
         public void SetScreen(ScreenNames screenName, object dataContext = null)
         {
             this.DataContext = dataContext ?? this.DataContext;
-            MainContent.ContentTemplate = FindResource(screenName) as DataTemplate;
+            MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
+        }
+
+        public void OnMenuItemRoutedEvent(object sender, MenuItemRoutedEventArgs args)
+        {
+            SetScreen(args.ScreenName);
         }
     }
 }
