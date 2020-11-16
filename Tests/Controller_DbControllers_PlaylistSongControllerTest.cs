@@ -28,15 +28,12 @@ namespace Tests
             songController = new SongController(context, context.Songs);
             playlistController = new PlaylistController(context, context.Playlists);
             playlistSongController = new PlaylistSongController(context);
-            songController = new SongController(context, context.Songs);
             songController.CreateItem(song);
             playlistController.CreateItem(playlist);
         }
         [Test]
         public void AddToPlayList()
         {
-            songController.CreateItem(song);
-            playlistController.CreateItem(playlist);
             playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
 
             var lastSongID = songController.GetLastItem().ID;
