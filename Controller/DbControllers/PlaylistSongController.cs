@@ -21,7 +21,7 @@ namespace Controller.DbControllers
             this._songController = new SongController(context, song);
         }
 
-        public void addSongToPlaylist(int songID, int playlistID)
+        public void AddSongToPlaylist(int songID, int playlistID)
         {
             var playlistSong = new PlaylistSong()
             {
@@ -32,7 +32,7 @@ namespace Controller.DbControllers
             _context.SaveChanges();
         }
 
-        public void removeFromPlaylist(int songID, int playlistID)
+        public void RemoveFromPlaylist(int songID, int playlistID)
         {
             if (!RowExists(songID, playlistID))
                 throw new ArgumentOutOfRangeException();
