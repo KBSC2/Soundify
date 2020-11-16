@@ -10,12 +10,44 @@
     <Window.DataContext>
         <View:DataContext/>
     </Window.DataContext>
+    <Window.Resources>
+        <DataTemplate x:Key="HomeTemplate">
+            <StackPanel>
+                <TextBlock Margin="10" Text="Some default content here.."/>
+                <TextBlock Margin="10" Text="Maybe show progress for operation"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="PlaylistsTemplate">
+            <StackPanel>
+                <TextBlock Margin="10" Text="Playlist"/>
+                <TextBlock Margin="10" Text="Maybe show progress for operation"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="QueueTemplate">
+            <StackPanel>
+                <TextBlock Margin="10" Text="Queue"/>
+                <TextBlock Margin="10" Text="Maybe show progress for operation"/>
+            </StackPanel>
+        </DataTemplate>
+
+
+        <ResourceDictionary Source="test.xaml" x:Key="TestTemplate" />
+    </Window.Resources>
+
     <Grid>
-        <Button x:Name="Home" Content="Home" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Click="Button1_Click"/>
-        <Button x:Name="Playlists" Content="Playlists&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.375,0.39" Click="Button2_Click" Width="52" Height="20"/>
-        <Button x:Name="Play" Content="=" Margin="378,304,378,0" VerticalAlignment="Top" Click="Button_Click" Height="45" RenderTransformOrigin="0.517,0.645"/>
-        <Slider x:Name="Duration" HorizontalAlignment="Center" Margin="0,369,0,0" VerticalAlignment="Top" Width="342" RenderTransformOrigin="0.5,0.5" Height="18" Minimum="0.00" Maximum="{Binding TotalTime, Mode=OneWay}" Value="{Binding CurrentTime, Mode=OneWay}" ValueChanged="Duration_ValueChanged"/>
-        <Label x:Name="CurrentTime" Content="{Binding CurrentTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="152,365,0,0" VerticalAlignment="Top" />
-        <Label x:Name="TotalTime" Content="{Binding TotalTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="599,365,0,0" VerticalAlignment="Top" />
+        <Grid Background="#FF424D82" HorizontalAlignment="Left" Width="92">
+            <Button Content="Home" Margin="21,10,21,0" VerticalAlignment="Top" Click="HomeButton_Click" BorderBrush="{x:Null}" Background="#FF424D82" Foreground="White"/>
+            <Button Content="Playlists" Margin="16,43,16,0" VerticalAlignment="Top" Click="PlaylistButton_Click" Background="#FF424D82" Foreground="White" BorderBrush="{x:Null}"/>
+            <Button Content="Queue" Margin="24,77,24,0" VerticalAlignment="Top" Background="#FF424D82" Foreground="White" BorderBrush="{x:Null}" Click="QueueButton_Click"/>
+        </Grid>
+        <Grid Margin="92,0,0,0" Background="#FF363F63" Height="74" VerticalAlignment="Bottom">
+            <Button x:Name="Play" Content="=" Margin="319,10,354,0" VerticalAlignment="Top" Click="Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="#FF424D82"/>
+            <Slider x:Name="Duration" HorizontalAlignment="Center" Margin="0,-8,0,0" Foreground="White" VerticalAlignment="Top" Width="708" Height="18" Minimum="0.00" Maximum="{Binding TotalTime, Mode=OneWay}" Value="{Binding CurrentTime, Mode=OneWay}" ValueChanged="Duration_ValueChanged"/>
+            <Label x:Name="CurrentTime" Content="{Binding CurrentTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="0,-26,0,0" VerticalAlignment="Top" Width="49" />
+            <Label x:Name="TotalTime" Content="{Binding TotalTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="659,-26,0,0" VerticalAlignment="Top" Width="49" />
+        </Grid>
+        <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="97,0,10,135"/>
     </Grid>
 </Window>

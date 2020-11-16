@@ -11,9 +11,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="test.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="dansenaandegracht.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="test.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

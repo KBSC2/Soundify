@@ -29,21 +29,22 @@ using Model.Data;
             SongController = new SongController(Context, Context.Songs);
             PlaylistController = new PlaylistController(Context, Context.Playlists);
             PlaylistSongController = new PlaylistSongController(Context, Context.Playlists, Context.Songs);
+
+            MainContent.ContentTemplate = FindResource("HomeTemplate") as DataTemplate;
         }
 
-        private void Button1_Click(object sender, RoutedEventArgs e)
+        private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow win2 = new MainWindow();
-            this.Close();
-            win2.Show();
+            MainContent.ContentTemplate = FindResource("HomeTemplate") as DataTemplate;
         }
-        private void Button2_Click(object sender, RoutedEventArgs e)
+        private void PlaylistButton_Click(object sender, RoutedEventArgs e)
         {
-            //PlaylistMenu win3 = new PlaylistMenu();
-            // temporarily until playlist menu is implemented
-            var win3 = new View.Playlist();
-            this.Close();
-            win3.Show();
+            MainContent.ContentTemplate = FindResource("TestTemplate") as DataTemplate;
+        }
+
+        private void QueueButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.ContentTemplate = Application.Current.MainWindow.FindResource("QueueTemplate") as DataTemplate;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
