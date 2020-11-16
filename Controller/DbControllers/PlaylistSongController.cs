@@ -32,7 +32,7 @@ namespace Controller.DbControllers
             _context.SaveChanges();
         }
 
-        public void renameSongFromPlaylist(int songID, int playlistID)
+        public void removeSongFromPlaylist(int songID, int playlistID)
         {
             if (!RowExists(songID, playlistID))
                 throw new ArgumentOutOfRangeException();
