@@ -28,7 +28,7 @@ using Model.Data;
             Context = new DatabaseContext();
             SongController = new SongController(Context, Context.Songs);
             PlaylistController = new PlaylistController(Context, Context.Playlists);
-            PlaylistSongController = new PlaylistSongController(Context, Context.Playlists, Context.Songs);
+            PlaylistSongController = new PlaylistSongController(Context);
         }
 
         private void Button1_Click(object sender, RoutedEventArgs e)
