@@ -34,10 +34,17 @@ namespace Controller.DbControllers
             
         }
 
-        public List<Song> getSongsFromPlaylist(int playlistID)
+        public List<Song> GetSongsFromPlaylist(int playlistID)
         {
-            _context.PlaylistSongs.Where(ps => ps.PlaylistID = playlistID).ToList();
-            
+            List<PlaylistSong> playlistSongs = _context.PlaylistSongs.Where(ps => ps.PlaylistID == playlistID).ToList();
+
+            List<Song> songs = new List<Song>();
+            foreach (var playlistSong in playlistSongs)
+            {
+                songs.Add(_songController.GetItem(playlistSong.SongID));
+            }
+
+            return songs;
         }
     }
 }
