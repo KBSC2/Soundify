@@ -10,12 +10,12 @@ namespace Controller.DbControllers
     public class PlaylistController: DbController<Playlist>
     {
         private DatabaseContext _context;
-        private PlaylistController _playlistController;
+        //private PlaylistController _playlistController;
 
         public PlaylistController(DatabaseContext context, DbSet<Playlist> playlist) : base(context, playlist)
         {
             this._context = context;
-            this._playlistController = new PlaylistController(context, playlist);
+            //this._playlistController = new PlaylistController(context, playlist);
         }
 
         public void AddPlaylist(string name, string description)

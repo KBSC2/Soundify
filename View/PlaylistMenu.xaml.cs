@@ -104,7 +104,8 @@ namespace View
             innerGrid.Children.Add(creationDateLabel);
             Grid.SetRow(innerGrid, row);
             Grid.SetColumn(innerGrid, col);
-            innerGrid.HorizontalAlignment = HorizontalAlignment.Center;
+            innerGrid.HorizontalAlignment = HorizontalAlignment.Left;
+            innerGrid.VerticalAlignment = VerticalAlignment.Top;
 
             PlaylistOverview.Children.Add(innerGrid);
         }

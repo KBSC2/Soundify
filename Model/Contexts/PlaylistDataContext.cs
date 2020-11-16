@@ -17,10 +17,10 @@ namespace Model
 
             PlaylistItems = new List<SongInfo>
             {
-                new SongInfo("test nummer 1", "een artiest", "06:66", "today"),
-                new SongInfo("test nummer 2", "nog een artiest", "04:20", "today"),
-                new SongInfo("test nummer 3", "een andere artiest", "00:00", "today"),
-                new SongInfo("test nummer 4", "dezelfde artiest", "12:34", "today"),
+                new SongInfo("test nummer 1", "een artiest", new TimeSpan(0,6,60), DateTime.Today),
+                new SongInfo("test nummer 2", "nog een artiest", new TimeSpan(0,6,60), DateTime.Today),
+                new SongInfo("test nummer 3", "een andere artiest", new TimeSpan(0,6,60), DateTime.Today),
+                new SongInfo("test nummer 4", "dezelfde artiest", new TimeSpan(0,6,60), DateTime.Today),
             };
         }
     }

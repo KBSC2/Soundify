@@ -8,10 +8,10 @@ namespace Model
     {
         public string Title { get; set; }
         public string Artist { get; set; }
-        public string Duration { get; set; }
-        public string Added { get; set; }
+        public TimeSpan Duration { get; set; }
+        public DateTime Added { get; set; }
 
-        public SongInfo(string title, string artist, string duration, string added)
+        public SongInfo(string title, string artist, TimeSpan duration, DateTime added)
         {
             Title = title;
             Artist = artist;
