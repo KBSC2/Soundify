@@ -77,7 +77,7 @@ using Model.Data;
         public void SetScreen(ScreenNames screenName, object dataContext = null)
         {
             this.DataContext = dataContext ?? this.DataContext;
-            MainContent.ContentTemplate = FindResource(screenName) as DataTemplate;
+            MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
         }
     }
 }
