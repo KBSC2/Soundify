@@ -12,5 +12,6 @@ namespace Model.DbModels
 
         public int PlaylistID { get; set; }
         public Playlist Playlist { get; set; }
+        public DateTime Added { get; set; }
     }
 }

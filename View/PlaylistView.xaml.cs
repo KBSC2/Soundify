@@ -10,6 +10,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Controller.DbControllers;
+using Model;
+using Model.Data;
 
 namespace View
 {
@@ -18,10 +21,19 @@ namespace View
     /// </summary>
     public partial class Playlist : Window
     {
-        public Playlist()
+        public Playlist(int id)
         {
             InitializeComponent();
+            
+            DatabaseContext databaseContext = new DatabaseContext();
+
+            PlaylistController playlistController = new PlaylistController(databaseContext, databaseContext.Playlists);
+
+            PlaylistDataContext dataContext = (PlaylistDataContext)DataContext;
+            dataContext.Playlist = playlistController.GetItem(id);
+            dataContext.AddPlaylistsToMenu();
         }
+
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow win2 = new MainWindow();

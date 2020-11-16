@@ -11,6 +11,8 @@ namespace Model.DbModels
         public string Name { get; set; }
 
         public string Description { get; set; }
+        public string Genre { get; set; }
+        public DateTime CreationDate { get; set; }
 
         public IList<PlaylistSong> PlaylistSongs { get; set; }
     }
