@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Model.Data;
@@ -29,8 +30,28 @@ namespace Controller.DbControllers
             _context.PlaylistSongs.Add(playlistSong);
             _context.Entry(playlistSong).State = EntityState.Added;
             _context.SaveChanges();
+        }
 
-            
+        public void removeSongFromPlaylist(int songID, int playlistID)
+        {
+            if (!RowExists(songID, playlistID))
+                throw new ArgumentOutOfRangeException();
+
+            var playlistSong =
+                _context.PlaylistSongs
+                    .Where(p => p.PlaylistID == playlistID)
+                    .First(s => s.SongID == songID);
+
+            _context.PlaylistSongs.Remove(playlistSong);
+            _context.Entry(playlistSong).State = EntityState.Deleted;
+            _context.SaveChanges();
+        }
+
+        public bool RowExists(int songID, int playlistID)
+        {
+            return _context.PlaylistSongs
+                .Where(p => p.PlaylistID == playlistID)
+                .Any(s => s.SongID == songID);
         }
     }
 }
