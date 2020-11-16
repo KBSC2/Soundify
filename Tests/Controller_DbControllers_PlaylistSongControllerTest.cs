@@ -83,6 +83,7 @@ namespace Tests
             Assert.IsFalse(existsInPlaylist);
         }
 
+        //Everytime you test, remove the added items out of the database.
         [TearDown]
         public void TearDown()
         {
