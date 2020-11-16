@@ -41,7 +41,9 @@ namespace Controller.DbControllers
             List<Song> songs = new List<Song>();
             foreach (var playlistSong in playlistSongs)
             {
-                songs.Add(_songController.GetItem(playlistSong.SongID));
+                var id = playlistSong.SongID;
+                var wou = "sfl";
+                songs.Add(_songController.GetItem(id));
             }
 
             return songs;

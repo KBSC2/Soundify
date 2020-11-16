@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Model.Migrations
 {
@@ -13,10 +14,7 @@ namespace Model.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1")
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Playlists", x => x.ID);
-                });
+                constraints: table => { table.PrimaryKey("PK_Playlists", x => x.ID); });
 
             migrationBuilder.CreateTable(
                 name: "Songs",
@@ -28,21 +26,19 @@ namespace Model.Migrations
                     Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Duration = table.Column<double>(type: "float", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Songs", x => x.ID);
-                });
+                constraints: table => { table.PrimaryKey("PK_Songs", x => x.ID); });
 
             migrationBuilder.CreateTable(
                 name: "PlaylistSongs",
                 columns: table => new
                 {
                     SongID = table.Column<int>(type: "int", nullable: false),
-                    PlaylistID = table.Column<int>(type: "int", nullable: false)
+                    PlaylistID = table.Column<int>(type: "int", nullable: false),
+                    Added = table.Column<DateTime>(type: "")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlaylistSongs", x => new { x.PlaylistID, x.SongID });
+                    table.PrimaryKey("PK_PlaylistSongs", x => new {x.PlaylistID, x.SongID});
                     table.ForeignKey(
                         name: "FK_PlaylistSongs_Playlists_PlaylistID",
                         column: x => x.PlaylistID,
