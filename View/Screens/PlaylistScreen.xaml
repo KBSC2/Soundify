@@ -3,17 +3,17 @@
     <DataTemplate x:Key="PlaylistScreen">
         <!-- Start playlist screen -->
         <Grid>
-            <Grid Margin="0,54,0,0" Height="131" VerticalAlignment="Top">
+            <Grid Margin="0,0,0,0" Height="131" VerticalAlignment="Top">
                 <Grid.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FF6AF76A"/>
                         <GradientStop Color="#FFFF7070" Offset="1"/>
                     </LinearGradientBrush>
                 </Grid.Background>
-                <Label Content="{Binding PlaylistName}" HorizontalAlignment="Left" Margin="138,10,0,0" VerticalAlignment="Top" FontSize="22" Foreground="White" Width="181"/>
-                <TextBlock HorizontalAlignment="Left" Margin="138,53,0,0" Text="{Binding Description}" TextWrapping="Wrap" VerticalAlignment="Top" Height="67" Width="266" Background="#00000000" Foreground="White"/>
+                <Label Content="{Binding PlaylistName}" HorizontalAlignment="Left" Margin="35,10,0,0" VerticalAlignment="Top" FontSize="22" Foreground="White" Width="181"/>
+                <TextBlock HorizontalAlignment="Left" Margin="35,53,0,0" Text="{Binding Description}" TextWrapping="Wrap" VerticalAlignment="Top" Height="67" Width="266" Background="#00000000" Foreground="White"/>
             </Grid>
-            <ListView Margin="0,185,0,0" Background="#FF303651" BorderBrush="#FF303651" Foreground="White" ItemsSource="{Binding PlaylistItems}">
+            <ListView Margin="0,131,0,0" Background="#FF303651" BorderBrush="#FF303651" Foreground="White" ItemsSource="{Binding PlaylistItems}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Titel" Width="200" DisplayMemberBinding="{Binding Title}"/>
