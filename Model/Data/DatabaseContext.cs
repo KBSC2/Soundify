@@ -33,8 +33,6 @@ namespace Model.Data
                 .HasOne<Song>(ps => ps.Song)
                 .WithMany(s => s.PlaylistSongs)
                 .HasForeignKey(ps => ps.SongID);
-
-
         }
     }
 }

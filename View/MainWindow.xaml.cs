@@ -30,21 +30,21 @@ using Model.Data;
             PlaylistController = new PlaylistController(Context, Context.Playlists);
             PlaylistSongController = new PlaylistSongController(Context, Context.Playlists, Context.Songs);
 
-            MainContent.ContentTemplate = FindResource("HomeTemplate") as DataTemplate;
+            SetScreen(ScreenNames.HomeScreen);
         }
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.ContentTemplate = FindResource("HomeTemplate") as DataTemplate;
+            SetScreen(ScreenNames.HomeScreen);
         }
         private void PlaylistButton_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.ContentTemplate = FindResource("TestTemplate") as DataTemplate;
+            SetScreen(ScreenNames.PlaylistScreen);
         }
 
         private void QueueButton_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.ContentTemplate = Application.Current.MainWindow.FindResource("QueueTemplate") as DataTemplate;
+            SetScreen(ScreenNames.QueueScreen);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -65,6 +65,18 @@ using Model.Data;
         {
             Slider slider = sender as Slider;
             AudioPlayer.CurrentSong.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSong.CurrentTimeSong));
+        }
+
+        public enum ScreenNames
+        {
+            HomeScreen,
+            PlaylistScreen,
+            QueueScreen
+        }
+
+        public void SetScreen(ScreenNames screenName)
+        {
+            MainContent.ContentTemplate = FindResource(screenName) as DataTemplate;
         }
     }
 }

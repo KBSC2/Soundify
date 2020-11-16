@@ -11,19 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Remove="test.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="dansenaandegracht.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="test.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +22,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Controller\Controller.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Screens\QueueScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Screens\PlaylistScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

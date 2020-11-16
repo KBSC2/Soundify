@@ -10,31 +10,6 @@
     <Window.DataContext>
         <View:DataContext/>
     </Window.DataContext>
-    <Window.Resources>
-        <DataTemplate x:Key="HomeTemplate">
-            <StackPanel>
-                <TextBlock Margin="10" Text="Some default content here.."/>
-                <TextBlock Margin="10" Text="Maybe show progress for operation"/>
-            </StackPanel>
-        </DataTemplate>
-
-        <DataTemplate x:Key="PlaylistsTemplate">
-            <StackPanel>
-                <TextBlock Margin="10" Text="Playlist"/>
-                <TextBlock Margin="10" Text="Maybe show progress for operation"/>
-            </StackPanel>
-        </DataTemplate>
-
-        <DataTemplate x:Key="QueueTemplate">
-            <StackPanel>
-                <TextBlock Margin="10" Text="Queue"/>
-                <TextBlock Margin="10" Text="Maybe show progress for operation"/>
-            </StackPanel>
-        </DataTemplate>
-
-
-        <ResourceDictionary Source="test.xaml" x:Key="TestTemplate" />
-    </Window.Resources>
 
     <Grid>
         <Grid Background="#FF424D82" HorizontalAlignment="Left" Width="92">
@@ -48,6 +23,6 @@
             <Label x:Name="CurrentTime" Content="{Binding CurrentTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="0,-26,0,0" VerticalAlignment="Top" Width="49" />
             <Label x:Name="TotalTime" Content="{Binding TotalTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="659,-26,0,0" VerticalAlignment="Top" Width="49" />
         </Grid>
-        <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="97,0,10,135"/>
+        <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="97,0,10,79"/>
     </Grid>
 </Window>
