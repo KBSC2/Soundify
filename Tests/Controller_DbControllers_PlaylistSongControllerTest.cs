@@ -5,6 +5,7 @@ using Controller.DbControllers;
 using Model.Data;
 using Model.DbModels;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 /*It's important to notice that the database should stay unchanged after running the tests.
  At the start of the test, the database should be in the same state as at the end of the test. */
