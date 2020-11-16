@@ -74,8 +74,9 @@ using Model.Data;
             QueueScreen
         }
 
-        public void SetScreen(ScreenNames screenName)
+        public void SetScreen(ScreenNames screenName, object dataContext = null)
         {
+            this.DataContext = dataContext ?? this.DataContext;
             MainContent.ContentTemplate = FindResource(screenName) as DataTemplate;
         }
     }
