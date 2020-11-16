@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Model.Data;
@@ -30,6 +31,12 @@ namespace Controller.DbControllers
             _context.Entry(playlistSong).State = EntityState.Added;
             _context.SaveChanges();
 
+            
+        }
+
+        public List<Song> getSongsFromPlaylist(int playlistID)
+        {
+            _context.PlaylistSongs.Where(ps => ps.PlaylistID = playlistID).ToList();
             
         }
     }
