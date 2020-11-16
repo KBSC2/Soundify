@@ -6,6 +6,8 @@ using Model.Data;
 using Model.DbModels;
 using NUnit.Framework;
 
+/*It's important the entries to the database are 0. So at the start and the end the database should
+remain untouched*/
 namespace Tests
 {
     [TestFixture]
@@ -27,6 +29,8 @@ namespace Tests
             playlistController = new PlaylistController(context, context.Playlists);
             playlistSongController = new PlaylistSongController(context, context.Playlists, context.Songs);
             songController = new SongController(context, context.Songs);
+            songController.CreateItem(song);
+            playlistController.CreateItem(playlist);
         }
         [Test]
         public void AddToPlayList()
@@ -37,7 +41,8 @@ namespace Tests
 
             var lastSongID = songController.GetLastItem().ID;
             var playlistID = playlistController.GetLastItem().ID;
-            var existsInPlaylist = playlistSongController.RowExists(lastSongID,playlistID);
+
+            var existsInPlaylist = playlistSongController.RowExists(lastSongID, playlistID);
             Assert.IsTrue(existsInPlaylist);
 
 
@@ -46,7 +51,7 @@ namespace Tests
         public void DeleteFromPlayList()
         {
             //Just use songID one on the latest playlist.
-            var songID = 1;
+            var songID = songController.GetLastItem().ID;
             var playlistID = playlistController.GetLastItem().ID;
 
             var existsInPlaylist = playlistSongController.RowExists(songID, playlistID);
@@ -61,6 +66,13 @@ namespace Tests
 
             existsInPlaylist = playlistSongController.RowExists(songID, playlistID);
             Assert.IsFalse(existsInPlaylist);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            songController.DeleteItem(songController.GetLastItem().ID);
+            playlistController.DeleteItem(playlistController.GetLastItem().ID);
         }
     }
 }
