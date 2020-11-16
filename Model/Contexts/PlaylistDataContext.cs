@@ -1,27 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
+using Model.Annotations;
+using Model.DbModels;
 
 namespace Model
 {
-    public class PlaylistDataContext
+    public class PlaylistDataContext : INotifyPropertyChanged
     {
         public string PlaylistName { get; set; }
         public string Description { get; set; }
         public List<SongInfo> PlaylistItems { get; set; }
+        public Playlist Playlist { get; set; }
 
-        public PlaylistDataContext()
+        public void AddPlaylistsToMenu()
         {
-            PlaylistName = "Test playlist";
-            Description = "a description for the test playlist";
+            PlaylistName = Playlist.Name;
+            Description = Playlist.Description;
 
-            PlaylistItems = new List<SongInfo>
+            PlaylistItems = new List<SongInfo>();
+
+            if (Playlist.PlaylistSongs != null && Playlist.PlaylistSongs.Count != 0)
             {
-                new SongInfo("test nummer 1", "een artiest", new TimeSpan(0,6,60), DateTime.Today),
-                new SongInfo("test nummer 2", "nog een artiest", new TimeSpan(0,6,60), DateTime.Today),
-                new SongInfo("test nummer 3", "een andere artiest", new TimeSpan(0,6,60), DateTime.Today),
-                new SongInfo("test nummer 4", "dezelfde artiest", new TimeSpan(0,6,60), DateTime.Today),
-            };
+                foreach (var song in Playlist.PlaylistSongs)
+                {
+                    PlaylistItems.Add(new SongInfo(song.Song.Name, song.Song.Artist, song.Song.Duration, song.Added));
+                }
+            }
+
+            OnPropertyChanged("");
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

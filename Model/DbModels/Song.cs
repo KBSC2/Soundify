@@ -12,10 +12,13 @@ namespace Model.DbModels
         public string Name { get; set; }
 
         [Required]
+        public string Artist { get; set; }
+
+        [Required]
         public string Path { get; set; }
 
         [Required]
-        public double Duration { get; set; }
+        public TimeSpan Duration { get; set; }
 
         public IList<PlaylistSong> PlaylistSongs { get; set; }
     }
