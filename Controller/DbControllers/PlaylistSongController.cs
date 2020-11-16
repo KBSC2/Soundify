@@ -32,7 +32,7 @@ namespace Controller.DbControllers
             _context.SaveChanges();
         }
 
-        public void deleteSongFromPlaylist(int songID, int playlistID)
+        public void renameSongFromPlaylist(int songID, int playlistID)
         {
             if (!RowExists(songID, playlistID))
                 throw new ArgumentOutOfRangeException();
@@ -47,7 +47,7 @@ namespace Controller.DbControllers
             _context.SaveChanges();
         }
 
-        private bool RowExists(int songID, int playlistID)
+        public bool RowExists(int songID, int playlistID)
         {
             return _context.PlaylistSongs
                 .Where(p => p.PlaylistID == playlistID)
