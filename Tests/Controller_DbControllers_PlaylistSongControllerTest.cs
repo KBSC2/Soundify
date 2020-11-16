@@ -6,8 +6,8 @@ using Model.Data;
 using Model.DbModels;
 using NUnit.Framework;
 
-/*It's important the entries to the database are 0. So at the start and the end the database should
-remain untouched*/
+/*It's important to notice that the database should stay unchanged after running the tests.
+ At the start of the test, the database should be in the same state as at the end of the test. */
 namespace Tests
 {
     [TestFixture]
