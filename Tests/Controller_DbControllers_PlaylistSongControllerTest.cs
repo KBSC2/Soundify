@@ -36,7 +36,7 @@ namespace Tests
         public void AddToPlayList()
         {
             
-            playlistSongController.addSongToPlaylist(song.ID, playlist.ID);
+            playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
 
             var lastSongID = songController.GetLastItem().ID;
             var playlistID = playlistController.GetLastItem().ID;
@@ -44,29 +44,40 @@ namespace Tests
             var existsInPlaylist = playlistSongController.RowExists(lastSongID, playlistID);
             Assert.IsTrue(existsInPlaylist);
 
+            //After adding, remove it.
+            playlistSongController.RemoveSongFromPlaylist(song.ID, playlist.ID);
 
+            //Remove the added song to the playlist at the end of the test.
+            //Extra check to see whether the playlist is removed at the end.
+            existsInPlaylist = playlistSongController.RowExists(lastSongID, playlistID);
+            Assert.IsFalse(existsInPlaylist);
         }
         [Test]
         public void DeleteFromPlayList()
         {
-            //Just use songID one on the latest playlist.
+            //Same Concept as in AddToPlaylist, but it's more explicit for deleting from the playlist.
+            //Just use a songID that exists.
             var songID = songController.GetLastItem().ID;
             var playlistID = playlistController.GetLastItem().ID;
 
+            //Before adding
             var existsInPlaylist = playlistSongController.RowExists(songID, playlistID);
             Assert.IsFalse(existsInPlaylist);
 
-            playlistSongController.addSongToPlaylist(songID, playlistID);
+            playlistSongController.AddSongToPlaylist(songID, playlistID);
 
+            //After adding
             existsInPlaylist = playlistSongController.RowExists(songID, playlistID);
             Assert.IsTrue(existsInPlaylist);
 
-            playlistSongController.removeSongFromPlaylist(songID, playlistID);
+            playlistSongController.RemoveSongFromPlaylist(songID, playlistID);
 
+            //After removing
             existsInPlaylist = playlistSongController.RowExists(songID, playlistID);
             Assert.IsFalse(existsInPlaylist);
         }
 
+        //Everytime you test, remove the added items out of the database.
         [TearDown]
         public void TearDown()
         {
