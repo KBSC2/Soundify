@@ -16,7 +16,7 @@ namespace Model
         public Playlist Playlist { get; set; }
         public List<Song> Songs { get; set; }
 
-        public void AddPlaylistsToMenu()
+        public void AddSongsToList()
         {
             PlaylistName = Playlist.Name;
             Description = Playlist.Description;

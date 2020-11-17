@@ -31,7 +31,7 @@
             <Label Content="{Binding PlaylistName}" HorizontalAlignment="Left" Margin="138,10,0,0" VerticalAlignment="Top" FontSize="22" Foreground="White" Width="181"/>
             <TextBlock HorizontalAlignment="Left" Margin="138,53,0,0" Text="{Binding Description}" TextWrapping="Wrap" VerticalAlignment="Top" Height="67" Width="266" Background="#00000000" Foreground="White"/>
         </Grid>
-        <ListView Margin="92,185,0,74" Background="#FF303651" BorderBrush="#FF303651" Foreground="White" ItemsSource="{Binding PlaylistItems}">
+        <ListView x:Name="playlistSongList" Margin="92,217,0,74" Background="#FF303651" BorderBrush="#FF303651" Foreground="White" ItemsSource="{Binding PlaylistItems}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Titel" Width="200" DisplayMemberBinding="{Binding Title}"/>
@@ -41,5 +41,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Grid Margin="92,185,0,217">
+            <Button Content=" /\ " HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Background="#FF363F63" Foreground="White" Click="MoveUp_Click"/>
+            <Button Content=" \/ " HorizontalAlignment="Left" Margin="35,0,0,0" VerticalAlignment="Center" Background="#FF363F63" Foreground="#FFF4F4F4" Click="MoveDown_Click"/>
+        </Grid>
     </Grid>
 </Window>

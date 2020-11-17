@@ -33,7 +33,7 @@ namespace View
             PlaylistDataContext dataContext = (PlaylistDataContext)DataContext;
             dataContext.Playlist = playlistController.GetItem(id);
             dataContext.Songs = playlistSongController.GetSongsFromPlaylist(id);
-            dataContext.AddPlaylistsToMenu();
+            dataContext.AddSongsToList();
         }
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
@@ -53,6 +53,28 @@ namespace View
         private void QueueButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void MoveUp_Click(object sender, RoutedEventArgs e)
+        {
+            var currentIndex = playlistSongList.SelectedIndex;
+            var item = playlistSongList.Items[currentIndex];
+            if (currentIndex > 0)
+            {
+                playlistSongList.Items.RemoveAt(currentIndex);
+                playlistSongList.Items.Insert(currentIndex - 1, item);
+            }
+        }
+
+        private void MoveDown_Click(object sender, RoutedEventArgs e)
+        {
+            var currentIndex = playlistSongList.SelectedIndex;
+            var item = playlistSongList.Items[currentIndex];
+            if (currentIndex < playlistSongList.Items.Count)
+            {
+                playlistSongList.Items.RemoveAt(currentIndex);
+                playlistSongList.Items.Insert(currentIndex + 1, item);
+            }
         }
     }
 }
