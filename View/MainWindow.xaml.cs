@@ -28,6 +28,7 @@ namespace Soundify
         {
             AudioPlayer.Initialize();
             AudioPlayer.AddSong(new SongAudioFile("dansenaandegracht.mp3"));
+            AudioPlayer.AddSong(new SongAudioFile("untrago.mp3"));
 
             InitializeComponent();
 
@@ -78,8 +79,7 @@ namespace Soundify
         private void Volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Slider slider = sender as Slider;
-            if(AudioPlayer.CurrentSong != null)
-                AudioPlayer.CurrentSong.AudioFile.Volume = (int)slider.Value;
+            AudioPlayer.WaveOutDevice.Volume = (float)slider.Value;
 
         }
 
