@@ -11,10 +11,12 @@ namespace Controller.DbControllers
     public class PlaylistSongController
     {
         private DatabaseContext _context;
+        private SongController _songController;
 
         public PlaylistSongController(DatabaseContext context)
         {
             this._context = context;
+            _songController = new SongController(context, context.Songs);
         }
 
         public void AddSongToPlaylist(int songID, int playlistID)
