@@ -108,4 +108,5 @@ namespace Soundify
             AudioPlayer.Shuffle();
         }
     }
+
 }
