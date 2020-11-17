@@ -1,3 +1,4 @@
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using NAudio.Wave;
@@ -17,8 +18,6 @@ using Renci.SshNet;
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static bool CreateSSHTunnel = true;
-
         public DatabaseContext Context { get; set; }
         public PlaylistSongController PlaylistSongController { get; set; }
         public SongController SongController { get; set; }
@@ -35,9 +34,13 @@ using Renci.SshNet;
             Context = new DatabaseContext();
             SongController = new SongController(Context, Context.Songs);
             PlaylistController = new PlaylistController(Context, Context.Playlists);
-            PlaylistSongController = new PlaylistSongController(Context, Context.Playlists, Context.Songs);
-            
-            PlaylistController.deletePlaylistOnDateStamp();
+            PlaylistSongController = new PlaylistSongController(Context);
+
+            SSHController.Instance.OpenSSHTunnel();
+
+            var x = new DatabaseContext().Playlists;
+            foreach(var y in x)
+                Console.WriteLine(y);
         }
 
         private void Button1_Click(object sender, RoutedEventArgs e)
@@ -51,24 +54,6 @@ using Renci.SshNet;
             PlaylistMenu win3 = new PlaylistMenu();
             this.Close();
             win3.Show();
-
-            OpenSSHTunnel();
-        }
-
-        public void OpenSSHTunnel()
-        {
-            if (!CreateSSHTunnel)
-                return;
-
-            using (var client = new SshClient("145.44.235.172", "student", "Sterk_W@chtw00rd2"))
-            {
-                client.Connect();
-
-                var port = new ForwardedPortLocal("127.0.0.1", 1433, "localhost", 1433);
-                client.AddForwardedPort(port);
-
-                port.Start();
-            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -91,4 +76,5 @@ using Renci.SshNet;
             AudioPlayer.CurrentSong.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSong.CurrentTimeSong));
         }
     }
+
 }
