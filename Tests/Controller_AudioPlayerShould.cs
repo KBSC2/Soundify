@@ -20,7 +20,7 @@ namespace Tests
             Assert.IsTrue(AudioPlayer.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing);
         }
 
-        [Test]
+        [Test, Category("Local")]
         public void AddSong_Queue_Contains()
         {
             SongAudioFile songAudioFile = new SongAudioFile("dansenaandegracht.mp3");
