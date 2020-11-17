@@ -47,6 +47,16 @@ namespace Controller
                 WaveOutDevice.Init(CurrentSong.AudioFile);
         }
 
+        public static void Loop()
+        {
+
+        }
+
+        public static void Shuffle()
+        {
+
+        }
+
         public static void PlaySong(SongAudioFile song)
         {
             AddSong(song);
