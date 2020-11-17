@@ -74,5 +74,23 @@ namespace Soundify
         {
             SetScreen(args.ScreenName);
         }
+
+        private void Volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Slider slider = sender as Slider;
+            if(AudioPlayer.CurrentSong != null)
+                AudioPlayer.CurrentSong.AudioFile.Volume = (int)slider.Value;
+
+        }
+
+        private void Prev_Button_Click(object sender, RoutedEventArgs e)
+        {
+            AudioPlayer.Prev();
+        }
+
+        private void Next_Button_Click(object sender, RoutedEventArgs e)
+        {
+            AudioPlayer.Next();
+        }
     }
 }

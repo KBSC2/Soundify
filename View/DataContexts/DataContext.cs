@@ -9,6 +9,7 @@ namespace View
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public double Volume => AudioPlayer.CurrentSong == null ? 0 : AudioPlayer.CurrentSong.AudioFile.Volume;
         public double TotalTime => AudioPlayer.CurrentSong == null ? 0 : AudioPlayer.CurrentSong.TotalTimeSong;
         public double CurrentTime => AudioPlayer.CurrentSong == null ? 0 : AudioPlayer.CurrentSong.CurrentTimeSong;
         public string TotalTimeLabel => AudioPlayer.CurrentSong == null ? 
