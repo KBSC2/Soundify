@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using Controller;
 using Controller.DbControllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.Data;
@@ -22,6 +23,7 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
+            SSHController.Instance.OpenSSHTunnel();
             context = new DatabaseContext();
             playlistController = new PlaylistController(context, context.Playlists);
             playlist = new Playlist(){Name = "TestDeactivateDelete", ActivePlaylist = true, CreationDate = DateTime.Now};
@@ -31,7 +33,7 @@ namespace Tests
         public void DeactivatePlaylistTest()
         {
             playlistController.CreateItem(playlist);
-            playlistController.deactivatePlaylist(playlist.ID);
+            playlistController.DeactivatePlaylist(playlist.ID);
             var testVariable = playlistController.GetItem(playlist.ID);
             Assert.IsFalse(testVariable.ActivePlaylist);
             playlistController.DeleteItem(playlist.ID);
@@ -42,11 +44,11 @@ namespace Tests
         public void DeletePlaylistTest()
         {
             playlistController.CreateItem(playlist);
-            playlistController.deactivatePlaylist(playlist.ID);
+            playlistController.DeactivatePlaylist(playlist.ID);
             var testVariable = playlistController.GetItem(playlist.ID);
             testVariable.DeleteDateTime = DateTime.Now.AddMilliseconds(1500);
             playlistController.UpdateItem(testVariable);
-            playlistController.deletePlaylistOnDateStamp();
+            playlistController.DeletePlaylistOnDateStamp();
             Thread.Sleep(3000);
             playlistController.GetItem(playlist.ID);
         }
