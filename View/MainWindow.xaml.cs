@@ -36,6 +36,8 @@ using Renci.SshNet;
             SongController = new SongController(Context, Context.Songs);
             PlaylistController = new PlaylistController(Context, Context.Playlists);
             PlaylistSongController = new PlaylistSongController(Context, Context.Playlists, Context.Songs);
+            
+            PlaylistController.deletePlaylistOnDateStamp();
         }
 
         private void Button1_Click(object sender, RoutedEventArgs e)
