@@ -34,7 +34,7 @@ using Renci.SshNet;
             Context = new DatabaseContext();
             SongController = new SongController(Context, Context.Songs);
             PlaylistController = new PlaylistController(Context, Context.Playlists);
-            PlaylistSongController = new PlaylistSongController(Context, Context.Playlists, Context.Songs);
+            PlaylistSongController = new PlaylistSongController(Context);
 
             SSHController.Instance.OpenSSHTunnel();
 

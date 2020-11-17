@@ -28,7 +28,7 @@ namespace View
             DatabaseContext databaseContext = new DatabaseContext();
 
             PlaylistController playlistController = new PlaylistController(databaseContext, databaseContext.Playlists);
-            PlaylistSongController playlistSongController = new PlaylistSongController(databaseContext, databaseContext.Playlists, databaseContext.Songs);
+            PlaylistSongController playlistSongController = new PlaylistSongController(databaseContext);
 
             PlaylistDataContext dataContext = (PlaylistDataContext)DataContext;
             dataContext.Playlist = playlistController.GetItem(id);
