@@ -52,6 +52,10 @@ public class SSHController
             if (!CreateSSHTunnel)
                 return;
 
+
+            if (thread != null)
+                return;
+
             thread = new Thread(TunnelThread);
             thread.Start();
         }
