@@ -8,6 +8,7 @@ namespace Model
     {
         HomeScreen,
         PlaylistScreen,
-        QueueScreen
+        QueueScreen,
+        PlaylistMenuScreen
     }
 }

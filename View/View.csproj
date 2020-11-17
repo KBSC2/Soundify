@@ -7,9 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="PlaylistMenuView.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="dansenaandegracht.mp3" />
     <None Remove="dansenaandegracht2.mp3" />
     <None Remove="untrago.mp3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="PlaylistMenuView.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +41,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Screens\PlaylistMenuScreen.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Screens\QueueScreen.xaml">
       <SubType>Designer</SubType>
     </Page>
