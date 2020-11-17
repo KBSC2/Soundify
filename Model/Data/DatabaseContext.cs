@@ -36,7 +36,7 @@ namespace Model.Data
 
             modelBuilder.Entity<Playlist>()
                 .Property(p => p.ActivePlaylist)
-                .HasDefaultValue("1");
+                .HasDefaultValue(1);
 
             base.OnModelCreating(modelBuilder);
 
