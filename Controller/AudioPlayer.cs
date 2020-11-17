@@ -19,14 +19,22 @@ namespace Controller
                     _currentSongIndex = 0;
 
                 _currentSongIndex = value;
-                
-                if(_looping)
+
+                if (_looping)
                 {
                     if (_currentSongIndex < 0)
                         _currentSongIndex = SongQueue.Count - 1;
                     if (_currentSongIndex >= SongQueue.Count)
                         _currentSongIndex = 0;
                 }
+                else 
+                {
+                    if (_currentSongIndex < 0)
+                        _currentSongIndex = 0;
+                    if (_currentSongIndex >= SongQueue.Count)
+                        _currentSongIndex = SongQueue.Count - 1;
+                }
+                
             }
         }
 
