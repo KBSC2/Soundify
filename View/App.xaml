@@ -4,6 +4,13 @@
              xmlns:local="clr-namespace:Soundify"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Screens/HomeScreen.xaml"/>
+                <ResourceDictionary Source="Screens/QueueScreen.xaml"/>
+                <ResourceDictionary Source="Screens/PlaylistScreen.xaml"/>
+                <ResourceDictionary Source="Screens/PlaylistMenuScreen.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

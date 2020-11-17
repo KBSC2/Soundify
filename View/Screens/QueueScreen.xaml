@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DataTemplate x:Key="QueueScreen">
+        <!-- Start queue screen -->
+        <StackPanel>
+            <TextBlock Margin="10" Text="Queue"/>
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>
