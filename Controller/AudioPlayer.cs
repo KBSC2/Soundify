@@ -36,6 +36,7 @@ namespace Controller
         public static void Initialize()
         {
             WaveOutDevice = new WaveOut();
+            WaveOutDevice.Volume = 1.0f;
         }
 
         public static void Next()
