@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Controller;
 using Controller.DbControllers;
 using Model.Data;
 using Model.DbModels;
@@ -25,8 +26,10 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
-            song = new Song() { Duration = 60, Name = "Never gonna give you up", Path = "../Dit/is/een/path" };
-            playlist = new Playlist();
+            SSHController.Instance.OpenSSHTunnel();
+
+            song = new Song() { Duration = 60, Artist = "Rick Astley", Name = "Never gonna give you up", Path = "../Dit/is/een/path" };
+            playlist = new Playlist() {Name = "TESTPLAYLIST", CreationDate = DateTime.Now};
             context = new DatabaseContext();
             
             songController = new SongController(context, context.Songs);
