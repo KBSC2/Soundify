@@ -19,14 +19,19 @@ namespace Controller
                     _currentSongIndex = 0;
 
                 _currentSongIndex = value;
-                if (_currentSongIndex < 0)
-                    _currentSongIndex = SongQueue.Count - 1;
-                if (_currentSongIndex >= SongQueue.Count)
-                    _currentSongIndex = 0;
+                
+                if(_looping)
+                {
+                    if (_currentSongIndex < 0)
+                        _currentSongIndex = SongQueue.Count - 1;
+                    if (_currentSongIndex >= SongQueue.Count)
+                        _currentSongIndex = 0;
+                }
             }
         }
 
         public static List<SongAudioFile> SongQueue { get; set; } = new List<SongAudioFile>();
+        public static bool _looping = false;
 
         public static void Initialize()
         {
@@ -49,7 +54,7 @@ namespace Controller
 
         public static void Loop()
         {
-
+            _looping = !_looping;
         }
 
         public static void Shuffle()
