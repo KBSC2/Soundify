@@ -25,13 +25,11 @@ namespace Model
 
             if (Playlist.PlaylistSongs != null && Playlist.PlaylistSongs.Count != 0)
             {
-                foreach (var song in Playlist.PlaylistSongs)
-                {
-                    PlaylistItems.Add(new SongInfo(song.Song.Name, 
-                        song.Song.Artist, 
-                        TimeSpan.FromSeconds(song.Song.Duration), 
-                        song.Added));
-                }
+                var playlistList = (List<PlaylistSong>)Playlist.PlaylistSongs;
+
+                playlistList.ForEach(song => PlaylistItems.Add(
+                    new SongInfo(song.Song.Name, song.Song.Artist, TimeSpan.FromSeconds(song.Song.Duration), song.Added)
+                ));
             }
 
             OnPropertyChanged("");
