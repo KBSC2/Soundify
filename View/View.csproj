@@ -8,11 +8,15 @@
 
   <ItemGroup>
     <None Remove="dansenaandegracht.mp3" />
+    <None Remove="dansenaandegracht2.mp3" />
     <None Remove="untrago.mp3" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="dansenaandegracht.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dansenaandegracht2.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="untrago.mp3">
