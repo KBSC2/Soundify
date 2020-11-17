@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using NAudio.Wave;
@@ -31,6 +31,8 @@ namespace Soundify
             AudioPlayer.AddSong(new SongAudioFile("untrago.mp3"));
 
             InitializeComponent();
+            
+            SSHController.Instance.OpenSSHTunnel();
 
             Context = new DatabaseContext();
             SongController = new SongController(Context, Context.Songs);
