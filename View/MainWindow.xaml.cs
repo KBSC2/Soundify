@@ -37,6 +37,9 @@ namespace Soundify
             Context = new DatabaseContext();
             SongController = new SongController(Context, Context.Songs);
             PlaylistController = new PlaylistController(Context, Context.Playlists);
+            
+            PlaylistController.deletePlaylistOnDateStamp();
+        }
             PlaylistSongController = new PlaylistSongController(Context);
 
             SetScreen(ScreenNames.HomeScreen);
