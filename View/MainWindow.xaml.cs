@@ -92,5 +92,15 @@ namespace Soundify
         {
             AudioPlayer.Next();
         }
+
+        private void Loop_Button_Click(object sender, RoutedEventArgs e)
+        {
+            AudioPlayer.Loop();
+        }
+
+        private void Shuffle_Button_Click(object sender, RoutedEventArgs e)
+        {
+            AudioPlayer.Shuffle();
+        }
     }
 }

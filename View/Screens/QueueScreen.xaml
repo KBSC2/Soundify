@@ -4,7 +4,6 @@
         <!-- Start queue screen -->
         <StackPanel>
             <TextBlock Margin="10" Text="Queue"/>
-            <TextBlock Margin="10" Text="Maybe show progress for operation"/>
         </StackPanel>
     </DataTemplate>
 </ResourceDictionary>
