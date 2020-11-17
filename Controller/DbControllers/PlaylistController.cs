@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
@@ -9,8 +9,11 @@ namespace Controller.DbControllers
 {
     public class PlaylistController: DbController<Playlist>
     {
-        public PlaylistController(DatabaseContext context, DbSet<Playlist> set) : base(context, set)
+
+        public PlaylistController(DatabaseContext context, DbSet<Playlist> playlist) : base(context, playlist)
         {
         }
+
+
     }
 }

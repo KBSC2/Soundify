@@ -1,27 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
+using Model.Annotations;
+using Model.DbModels;
 
 namespace Model
 {
-    public class PlaylistDataContext
+    public class PlaylistDataContext : INotifyPropertyChanged
     {
         public string PlaylistName { get; set; }
         public string Description { get; set; }
         public List<SongInfo> PlaylistItems { get; set; }
+        public Playlist Playlist { get; set; }
+        public List<Song> Songs { get; set; }
 
-        public PlaylistDataContext()
+        public void AddPlaylistsToMenu()
         {
-            PlaylistName = "Test playlist";
-            Description = "a description for the test playlist";
+            PlaylistName = Playlist.Name;
+            Description = Playlist.Description;
 
-            PlaylistItems = new List<SongInfo>
+            PlaylistItems = new List<SongInfo>();
+
+            if (Playlist.PlaylistSongs != null && Playlist.PlaylistSongs.Count != 0)
             {
-                new SongInfo("test nummer 1", "een artiest", "06:66", "today"),
-                new SongInfo("test nummer 2", "nog een artiest", "04:20", "today"),
-                new SongInfo("test nummer 3", "een andere artiest", "00:00", "today"),
-                new SongInfo("test nummer 4", "dezelfde artiest", "12:34", "today"),
-            };
+                var playlistList = (List<PlaylistSong>)Playlist.PlaylistSongs;
+
+                playlistList.ForEach(song => PlaylistItems.Add(
+                    new SongInfo(song.Song.Name, song.Song.Artist, TimeSpan.FromSeconds(song.Song.Duration), song.Added)
+                ));
+            }
+
+            OnPropertyChanged("");
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

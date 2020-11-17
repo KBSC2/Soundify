@@ -1,10 +1,13 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
-﻿using NAudio.Wave;
+using NAudio.Wave;
 using Controller;
 using Controller.DbControllers;
 using Model;
 using Model.Data;
+using Model.DbModels;
+using View;
+using Playlist = View.Playlist;
 using Renci.SshNet;
 
  namespace Soundify
@@ -43,9 +46,7 @@ using Renci.SshNet;
         }
         private void Button2_Click(object sender, RoutedEventArgs e)
         {
-            //PlaylistMenu win3 = new PlaylistMenu();
-            // temporarily until playlist menu is implemented
-            var win3 = new View.Playlist();
+            PlaylistMenu win3 = new PlaylistMenu();
             this.Close();
             win3.Show();
 

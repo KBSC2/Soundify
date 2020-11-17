@@ -12,6 +12,9 @@ namespace Model.DbModels
         public string Name { get; set; }
 
         [Required]
+        public string Artist { get; set; }
+
+        [Required]
         public string Path { get; set; }
 
         [Required]
