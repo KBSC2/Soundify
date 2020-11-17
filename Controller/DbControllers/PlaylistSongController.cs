@@ -52,5 +52,19 @@ namespace Controller.DbControllers
                 .Where(p => p.PlaylistID == playlistID)
                 .Any(s => s.SongID == songID);
         }
+
+        public List<Song> GetSongsFromPlaylist(int playlistID)
+        {
+            List<PlaylistSong> playlistSongs = _context.PlaylistSongs.Where(ps => ps.PlaylistID == playlistID).ToList();
+
+            List<Song> songs = new List<Song>();
+            foreach (var playlistSong in playlistSongs)
+            {
+                var id = playlistSong.SongID;
+                songs.Add(_songController.GetItem(id));
+            }
+
+            return songs;
+        }
     }
 }
