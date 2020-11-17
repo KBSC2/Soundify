@@ -8,6 +8,7 @@ using Model.Data;
 using Model.DbModels;
 using View;
 using Playlist = View.Playlist;
+using Renci.SshNet;
 
  namespace Soundify
 {
@@ -16,10 +17,13 @@ using Playlist = View.Playlist;
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static bool CreateSSHTunnel = true;
+
         public DatabaseContext Context { get; set; }
         public PlaylistSongController PlaylistSongController { get; set; }
         public SongController SongController { get; set; }
         public PlaylistController PlaylistController { get; set; }
+
 
         public MainWindow()
         {
@@ -45,6 +49,24 @@ using Playlist = View.Playlist;
             PlaylistMenu win3 = new PlaylistMenu();
             this.Close();
             win3.Show();
+
+            OpenSSHTunnel();
+        }
+
+        public void OpenSSHTunnel()
+        {
+            if (!CreateSSHTunnel)
+                return;
+
+            using (var client = new SshClient("145.44.235.172", "student", "Sterk_W@chtw00rd2"))
+            {
+                client.Connect();
+
+                var port = new ForwardedPortLocal("127.0.0.1", 1433, "localhost", 1433);
+                client.AddForwardedPort(port);
+
+                port.Start();
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
