@@ -16,7 +16,7 @@ namespace Controller.DbControllers
         {
         }
 
-        public void deactivatePlaylist(int playlistID)
+        public void DeactivatePlaylist(int playlistID)
         {
             DateTime dateTime = DateTime.Now;
             var playlist = GetItem(playlistID);
@@ -25,7 +25,7 @@ namespace Controller.DbControllers
             UpdateItem(playlist);
         }
 
-        public void deletePlaylistOnDateStamp()
+        public void DeletePlaylistOnDateStamp()
         {
             var currentTime = DateTime.Now;
             var playlists = Context.Playlists.Where(p => p.ActivePlaylist == false).ToList();
