@@ -1,19 +1,23 @@
-﻿<Window x:Class="View.RegisterScreen"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
+        xmlns:DataContexts="clr-namespace:View.DataContexts" x:Class="View.RegisterScreen"
         mc:Ignorable="d"
         Title="LoginScreen" Height="715" Width="617">
+    <Window.DataContext>
+        <DataContexts:UserDataContext/>
+    </Window.DataContext>
     <Grid Background="#FF09132E">
-        <Image Margin="263,10,263,598" Stretch="Fill" Source="Assets/soundify.png" Width="91" Height="91"/>
-        <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,101,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50"/>
-        <Label Content="Register" HorizontalAlignment="Center" Margin="0,163,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
-        <TextBox Name="UsernameRegister" HorizontalAlignment="Center" Margin="0,271,0,0" Text="Username" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White"/>
-        <TextBox Name="EmailRegister" HorizontalAlignment="Center" Margin="0,356,0,0" Text="Email" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White"/>
-        <Button Name="JoinSoundify" Content="Join Soundify" HorizontalAlignment="Center" Margin="0,614,0,0" VerticalAlignment="Top" FontSize="40" Width="301" Height="60" Background="#FFF78D0E"/>
-        <TextBox Name="PasswordRegister" HorizontalAlignment="Center" Margin="0,445,0,0" Text="Password" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White"/>
-        <TextBox Name="PasswordConfirmRegister" HorizontalAlignment="Center" Margin="0,533,0,0" Text="Password" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White"/>
+        <Image Margin="263,11,263,598" Stretch="Fill" Source="Assets/soundify.png" Width="91" Height="91"/>
+        <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" Height="79"/>
+        <Label Content="Register" HorizontalAlignment="Center" Margin="0,172,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
+        <TextBox x:Name="UsernameRegister" HorizontalAlignment="Center" Margin="0,259,0,0" Text="Username" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White"/>
+        <TextBox x:Name="EmailRegister" HorizontalAlignment="Center" Margin="0,335,0,0" Text="Email" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White"/>
+        <TextBox x:Name="PasswordRegister" HorizontalAlignment="Center" Margin="0,411,0,0" Text="Password" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White"/>
+        <TextBox x:Name="PasswordConfirmRegister" HorizontalAlignment="Center" Margin="0,487,0,0" Text="Password" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White"/>
+        <Button x:Name="JoinSoundify" Content="Join Soundify" HorizontalAlignment="Center" Margin="0,593,0,0" VerticalAlignment="Top" FontSize="40" Width="301" Height="60" Background="#FFF78D0E"/>
     </Grid>
 </Window>
