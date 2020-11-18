@@ -21,5 +21,10 @@ namespace View
         {
             InitializeComponent();
         }
+
+        private void Register_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
