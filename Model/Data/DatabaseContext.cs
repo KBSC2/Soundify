@@ -33,6 +33,13 @@ namespace Model.Data
                 .HasOne<Song>(ps => ps.Song)
                 .WithMany(s => s.PlaylistSongs)
                 .HasForeignKey(ps => ps.SongID);
+
+            modelBuilder.Entity<Playlist>()
+                .Property(p => p.ActivePlaylist)
+                .HasDefaultValue(1);
+
+            base.OnModelCreating(modelBuilder);
+
         }
     }
 }
