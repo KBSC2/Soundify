@@ -1,0 +1,20 @@
+﻿<Window x:Class="View.LoginScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:View"
+        mc:Ignorable="d"
+        Title="LoginScreen" Height="715" Width="617">
+    <Grid Background="#FF09132E">
+        <Image Margin="263,32,263,576" Stretch="Fill" Source="Assets/soundify.png" Width="91" Height="91"/>
+        <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,123,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50"/>
+        <Label Content="Welcome" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
+        <TextBox Name="Username" HorizontalAlignment="Center" Margin="0,290,0,0" Text="Username" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White"/>
+        <TextBox Name="Password" HorizontalAlignment="Center" Margin="0,377,0,0" Text="Password" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White"/>
+        <Button Name="Login" Content="Login" HorizontalAlignment="Center" Margin="0,477,0,0" VerticalAlignment="Top" FontSize="40" Width="198" Height="60" Background="#FFF78D0E"/>
+        <Label Content="Forgot your password?" HorizontalAlignment="Center" Margin="0,565,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20" Width="214"/>
+        <Label Content="New here?" HorizontalAlignment="Left" Margin="208,607,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20"/>
+        <Label Content="Sign Up" HorizontalAlignment="Left" Margin="308,607,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20" FontStyle="Italic"/>
+    </Grid>
+</Window>
