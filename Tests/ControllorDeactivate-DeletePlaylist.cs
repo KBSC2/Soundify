@@ -27,10 +27,11 @@ namespace Tests
             SSHController.Instance.OpenSSHTunnel();
             context = new DatabaseContext();
             playlistController = new PlaylistController(context, context.Playlists);
-            playlist = new Playlist(){Name = "TestDeactivateDelete", ActivePlaylist = true, CreationDate = DateTime.Now};
-            playlistDelete = new Playlist() { Name = "TestDelete", ActivePlaylist = true, CreationDate = DateTime.Now };
-
+            playlist = new Playlist()
+                {Name = "TestDeactivateDelete", ActivePlaylist = true, CreationDate = DateTime.Now};
+            playlistDelete = new Playlist() {Name = "TestDelete", ActivePlaylist = true, CreationDate = DateTime.Now};
         }
+
         [Test]
         public void DeactivatePlaylistTest()
         {
@@ -39,10 +40,9 @@ namespace Tests
             var testVariable = playlistController.GetItem(playlist.ID);
             Assert.IsFalse(testVariable.ActivePlaylist);
             playlistController.DeleteItem(playlist.ID);
-            
         }
 
-        [Test, ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void DeletePlaylistTest()
         {
             playlistController.CreateItem(playlistDelete);
@@ -53,9 +53,7 @@ namespace Tests
             Thread.Sleep(2000);
             playlistController.DeletePlaylistOnDateStamp();
             Thread.Sleep(3000);
-            playlistController.GetItem(playlistDelete.ID);
+            Assert.Throws<ArgumentOutOfRangeException>((() => playlistController.GetItem(playlistDelete.ID)));
         }
-
-       
     }
 }
