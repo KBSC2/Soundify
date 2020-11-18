@@ -13,6 +13,8 @@
   <ItemGroup>
     <None Remove="dansenaandegracht.mp3" />
     <None Remove="dansenaandegracht2.mp3" />
+    <None Remove="loveyoubetter.mp3" />
+    <None Remove="sunisnevergoingdown.mp3" />
     <None Remove="untrago.mp3" />
   </ItemGroup>
 
@@ -24,7 +26,10 @@
     <Content Include="dansenaandegracht.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="dansenaandegracht2.mp3">
+    <Content Include="loveyoubetter.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sunisnevergoingdown.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="untrago.mp3">

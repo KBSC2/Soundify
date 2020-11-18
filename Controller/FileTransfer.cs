@@ -21,14 +21,15 @@ namespace Controller
             }
         }
 
-        public static void UploadFile(string inputPath, string outputPath)
+        public static string UploadFile(string inputPath, string outputPath)
         {
-            using (ScpClient client = new ScpClient("145.44.235.172", "student", "Sterk_W@chtw00rd2"))
+            using (SftpClient client = new SftpClient("145.44.235.172", "student", "Sterk_W@chtw00rd2"))
             {
                 client.Connect();
                 using (Stream localfile = File.OpenRead(inputPath))
                 {
-                    client.Upload(localfile, "/files/" + outputPath);
+                    client.UploadFile(localfile, "/home/student/files/" + outputPath);
+                    return outputPath;
                 }
             }
         }

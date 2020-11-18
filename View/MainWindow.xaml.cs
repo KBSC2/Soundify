@@ -7,6 +7,8 @@ using Controller.DbControllers;
 using Model;
 using Model.Data;
 using Model.EventArgs;
+using System.IO;
+using Model.DbModels;
 
 namespace Soundify
 {
@@ -27,17 +29,15 @@ namespace Soundify
         public MainWindow()
         {
             AudioPlayer.Initialize();
-            AudioPlayer.AddSong(new SongAudioFile("dansenaandegracht.mp3"));
-            AudioPlayer.AddSong(new SongAudioFile("untrago.mp3"));
 
             InitializeComponent();
             
             SSHController.Instance.OpenSSHTunnel();
 
             Context = new DatabaseContext();
-            SongController = new SongController(Context, Context.Songs);
+            SongController = new SongController(Context);
             PlaylistController = new PlaylistController(Context, Context.Playlists);
-            
+
             PlaylistController.DeletePlaylistOnDateStamp();
         
             PlaylistSongController = new PlaylistSongController(Context);
