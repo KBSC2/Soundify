@@ -41,10 +41,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Screens\PlaylistMenuScreen.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Screens\QueueScreen.xaml">
       <SubType>Designer</SubType>
     </Page>
