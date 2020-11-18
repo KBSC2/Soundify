@@ -18,6 +18,7 @@ namespace Tests
         private DatabaseContext context;
         private PlaylistController playlistController;
         private Playlist playlist;
+        private Playlist playlistDelete;
 
 
         [SetUp]
@@ -27,6 +28,7 @@ namespace Tests
             context = new DatabaseContext();
             playlistController = new PlaylistController(context, context.Playlists);
             playlist = new Playlist(){Name = "TestDeactivateDelete", ActivePlaylist = true, CreationDate = DateTime.Now};
+            playlistDelete = new Playlist() { Name = "TestDelete", ActivePlaylist = true, CreationDate = DateTime.Now };
 
         }
         [Test]
@@ -43,14 +45,15 @@ namespace Tests
         [Test, ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void DeletePlaylistTest()
         {
-            playlistController.CreateItem(playlist);
-            playlistController.DeactivatePlaylist(playlist.ID);
-            var testVariable = playlistController.GetItem(playlist.ID);
+            playlistController.CreateItem(playlistDelete);
+            playlistController.DeactivatePlaylist(playlistDelete.ID);
+            var testVariable = playlistController.GetItem(playlistDelete.ID);
             testVariable.DeleteDateTime = DateTime.Now.AddMilliseconds(1500);
             playlistController.UpdateItem(testVariable);
+            Thread.Sleep(2000);
             playlistController.DeletePlaylistOnDateStamp();
             Thread.Sleep(3000);
-            playlistController.GetItem(playlist.ID);
+            playlistController.GetItem(playlistDelete.ID);
         }
 
        

@@ -14,7 +14,9 @@ namespace Model.DbModels
         public string Genre { get; set; }
         public DateTime CreationDate { get; set; }
 
+        [Required]
         public bool ActivePlaylist { get; set; }
+        [Required]
         public DateTime DeleteDateTime { get; set; }
 
 

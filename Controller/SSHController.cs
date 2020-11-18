@@ -9,7 +9,7 @@ namespace Controller
 
 public class SSHController
     {
-        private bool CreateSSHTunnel = true;
+        private bool CreateSSHTunnel = false;
 
         private static SSHController _instance;
 
