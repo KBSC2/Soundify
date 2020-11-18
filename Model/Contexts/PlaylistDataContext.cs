@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using Model.Annotations;
 using Model.DbModels;
+using Model;
+using Model.Annotations;
 
-namespace Model
+namespace Model.Contexts
 {
     public class PlaylistDataContext : INotifyPropertyChanged
     {

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using NAudio.Wave;
@@ -103,6 +104,12 @@ namespace Soundify
         private void Shuffle_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Shuffle();
+        }
+
+
+        public void PlaylistMenuScreen_CreatePlaylist_Click()
+        {
+            Debug.Write("DE KNOP WERKT");
         }
     }
 }
