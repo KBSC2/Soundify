@@ -12,7 +12,7 @@ namespace Controller.DbControllers
     public class PlaylistController: DbController<Playlist>
     {
 
-        public PlaylistController(DatabaseContext context, DbSet<Playlist> playlist) : base(context, playlist)
+        public PlaylistController(DatabaseContext context) : base(context, context.Playlists)
         {
         }
 
@@ -36,6 +36,9 @@ namespace Controller.DbControllers
             
         }
 
-
+        public List<Playlist> GetActivePlaylists()
+        {
+            return GetFilteredList(x => x.ActivePlaylist);
+        }
     }
 }

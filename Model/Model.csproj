@@ -3,6 +3,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Contexts\**" />
+    <EmbeddedResource Remove="Contexts\**" />
+    <None Remove="Contexts\**" />
+    <Page Remove="Contexts\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NAudio" Version="1.10.0" />

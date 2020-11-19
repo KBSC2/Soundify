@@ -16,7 +16,7 @@ namespace Controller.DbControllers
         public PlaylistSongController(DatabaseContext context)
         {
             this._context = context;
-            _songController = new SongController(context, context.Songs);
+            _songController = new SongController(context);
         }
 
         public void AddSongToPlaylist(int songID, int playlistID)
@@ -64,6 +64,13 @@ namespace Controller.DbControllers
             }
 
             return songs;
+        }
+
+        public PlaylistSong GetPlaylistSong(int playlistID, int songID)
+        {
+            return _context.PlaylistSongs
+                .Where(p => p.PlaylistID == playlistID)
+                .First(s => s.SongID == songID);
         }
     }
 }
