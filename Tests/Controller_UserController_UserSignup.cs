@@ -21,7 +21,7 @@ namespace Tests
         public void SetUp()
         {
             SSHController.Instance.OpenSSHTunnel();
-            Controller.CreateAccount(new User() {Email = "duplicate@gmail.com"}, "Sterk_W@chtw000rd2",
+            Controller.CreateAccount(new User() {Email = "duplicate@gmail.com", Username = "test"}, "Sterk_W@chtw000rd2",
                 "Sterk_W@chtw000rd2"); // create account to test already exists
         }
 
@@ -42,7 +42,7 @@ namespace Tests
         [TestCase("Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2", "duplicate@gmail.com", ExpectedResult = RegistrationResults.EmailTaken)]    // email taken
         public RegistrationResults UserController_SignupResults(string password, string repeatPassword, string email)
         {
-            var result = Controller.CreateAccount(new User() {Email = email}, password, repeatPassword);
+            var result = Controller.CreateAccount(new User() {Email = email, Username = "test"}, password, repeatPassword);
             return result;
         }
 
