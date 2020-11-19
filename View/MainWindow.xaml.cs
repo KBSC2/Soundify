@@ -27,6 +27,7 @@ namespace Soundify
         public PlaylistSongController PlaylistSongController { get; set; }
         public SongController SongController { get; set; }
         public PlaylistController PlaylistController { get; set; }
+        public static Playlist CurrentPlayList { get; internal set; }
 
         public MainWindow()
         {
