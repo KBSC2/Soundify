@@ -39,6 +39,7 @@ namespace Soundify
 
             SetScreen(ScreenNames.HomeScreen);
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
