@@ -45,7 +45,7 @@ namespace View
                 {
                     var loginScreen = new LoginScreen();
                     loginScreen.Show();
-                    this.Close();
+                    this.Hide();
                     break;
                 }
                 case RegistrationResults.EmailTaken:

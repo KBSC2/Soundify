@@ -52,7 +52,7 @@ namespace Tests
             var result = Controller.CreateAccount(new User() { Email = email, Username = "test" }, password, password);
             if (result != RegistrationResults.Succeeded)
                 return false;
-            var user = Controller.GetUserFromEmail(email);
+            var user = Controller.GetUserFromEmailOrUsername(email);
             return user != null;
         }
 
@@ -61,7 +61,7 @@ namespace Tests
         {
             AccountsToRemove.ForEach(email =>
             {
-                var user = Controller.GetUserFromEmail(email);
+                var user = Controller.GetUserFromEmailOrUsername(email);
                 if (user != null)
                     Controller.DeleteItem(user.ID);
             });
