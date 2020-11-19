@@ -42,6 +42,7 @@ namespace Soundify
             Context = new DatabaseContext();
             SongController = new SongController(Context);
             PlaylistController = new PlaylistController(Context);
+            PlaylistController.DeletePlaylistOnDateStamp();
             PlaylistSongController = new PlaylistSongController(Context);
 
             SetScreen(ScreenNames.HomeScreen);
@@ -114,4 +115,5 @@ namespace Soundify
             AudioPlayer.Shuffle();
         }
     }
+
 }

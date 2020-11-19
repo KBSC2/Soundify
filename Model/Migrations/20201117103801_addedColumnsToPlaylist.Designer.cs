@@ -10,8 +10,8 @@ using Model.Data;
 namespace Model.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20201116123137_alterPlaylistSong")]
-    partial class alterPlaylistSong
+    [Migration("20201117103801_addedColumnsToPlaylist")]
+    partial class addedColumnsToPlaylist
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,15 @@ namespace Model.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<bool>("ActivePlaylist")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeleteDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
