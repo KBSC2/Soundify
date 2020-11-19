@@ -7,9 +7,6 @@
         xmlns:DataContexts="clr-namespace:View.DataContexts" x:Class="View.RegisterScreen"
         mc:Ignorable="d"
         Title="LoginScreen" Height="715" Width="617">
-    <Window.DataContext>
-        <DataContexts:UserDataContext/>
-    </Window.DataContext>
     <Grid Background="#FF09132E">
         <Image Margin="263,11,263,598" Stretch="Fill" Source="Assets/soundify.png" Width="91" Height="91"/>
         <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" Height="79"/>
