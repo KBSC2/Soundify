@@ -65,5 +65,12 @@ namespace Controller.DbControllers
 
             return songs;
         }
+
+        public PlaylistSong GetPlaylistSong(int playlistID, int songID)
+        {
+            return _context.PlaylistSongs
+                .Where(p => p.PlaylistID == playlistID)
+                .First(s => s.SongID == songID);
+        }
     }
 }

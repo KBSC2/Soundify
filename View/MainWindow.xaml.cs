@@ -68,8 +68,8 @@ namespace Soundify
 
         private void Duration_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Slider slider = sender as Slider;
-            AudioPlayer.CurrentSong.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSong.CurrentTimeSong));
+            if (sender is Slider slider)
+                AudioPlayer.CurrentSong.AudioFile.Skip((int) (slider.Value - AudioPlayer.CurrentSong.CurrentTimeSong));
         }
 
         public void SetScreen(ScreenNames screenName)
@@ -80,6 +80,7 @@ namespace Soundify
         public void SetScreen(ScreenNames screenName, Playlist playlist)
         {
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
+            CurrentPlayList = playlist;
         }
 
         public void OnMenuItemRoutedEvent(object sender, MenuItemRoutedEventArgs args)
@@ -90,9 +91,7 @@ namespace Soundify
 
         private void Volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Slider slider = sender as Slider;
-            AudioPlayer.WaveOutDevice.Volume = (float)slider.Value;
-
+            if (sender is Slider slider) AudioPlayer.WaveOutDevice.Volume = (float) slider.Value;
         }
 
         private void Prev_Button_Click(object sender, RoutedEventArgs e)

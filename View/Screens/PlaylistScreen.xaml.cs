@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Model.DbModels;
+using View.DataContexts;
 
 namespace View.Screens
 {
@@ -13,6 +15,5 @@ namespace View.Screens
         {
             this.InitializeComponent();
         }
-
     }
 }

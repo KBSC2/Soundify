@@ -13,7 +13,7 @@
             <Grid Height="58" VerticalAlignment="Top">
                 <Button Content="Create new playlist" HorizontalAlignment="Center" VerticalAlignment="Top" Height="38" Width="166" Background="#FF303651" Foreground="White" BorderBrush="{x:Null}" FontSize="18" Margin="0,10,0,0" Click="CreatePlaylist_Click"/>
             </Grid>
-            <DataGrid CanUserAddRows="False" Margin="0,63,0,0" ItemsSource="{Binding PlaylistsSource}"  Background="#FF303651" HeadersVisibility="All" FontSize="16" HorizontalGridLinesBrush="White" VerticalGridLinesBrush="White" AutoGenerateColumns="False">
+            <DataGrid CanUserAddRows="False" Margin="0,63,0,0" ItemsSource="{Binding PlaylistsSource}"  Background="#FF303651" HeadersVisibility="Column" FontSize="16" HorizontalGridLinesBrush="White" VerticalGridLinesBrush="White" AutoGenerateColumns="False">
                 <DataGrid.RowStyle>
                     <Style TargetType="{x:Type DataGridRow}">
 	                    <EventSetter Event="MouseDoubleClick" Handler="PlaylistsRow_Click"/>

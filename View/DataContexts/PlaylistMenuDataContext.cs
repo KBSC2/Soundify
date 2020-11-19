@@ -7,7 +7,6 @@ using System.Timers;
 using Controller.DbControllers;
 using Model.Data;
 using Model.DbModels;
-using Model.ListItems;
 
 namespace View.DataContexts
 {
