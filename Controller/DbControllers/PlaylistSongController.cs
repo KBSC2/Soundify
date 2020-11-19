@@ -11,14 +11,12 @@ namespace Controller.DbControllers
     public class PlaylistSongController
     {
         private DatabaseContext _context;
-        private PlaylistController _playlistController;
         private SongController _songController;
 
-        public PlaylistSongController(DatabaseContext context, DbSet<Playlist> playlist, DbSet<Song> song)
+        public PlaylistSongController(DatabaseContext context)
         {
             this._context = context;
-            this._playlistController = new PlaylistController(context, playlist);
-            this._songController = new SongController(context, song);
+            _songController = new SongController(context);
         }
 
         public void AddSongToPlaylist(int songID, int playlistID)
@@ -46,6 +44,7 @@ namespace Controller.DbControllers
             _context.Entry(playlistSong).State = EntityState.Deleted;
             _context.SaveChanges();
         }
+
         public bool RowExists(int songID, int playlistID)
         {
             return _context.PlaylistSongs
@@ -65,6 +64,13 @@ namespace Controller.DbControllers
             }
 
             return songs;
+        }
+
+        public PlaylistSong GetPlaylistSong(int playlistID, int songID)
+        {
+            return _context.PlaylistSongs
+                .Where(p => p.PlaylistID == playlistID)
+                .First(s => s.SongID == songID);
         }
     }
 }

@@ -69,7 +69,7 @@ namespace Controller
         // GET LIST WITH FILTER
         public virtual List<T> GetFilteredList(Func<T, bool> filter)
         {
-            return Set.Where(x => filter(x)).ToList();
+            return Set.Where(filter).ToList();
         }
         public virtual T GetLastItem()
         {
