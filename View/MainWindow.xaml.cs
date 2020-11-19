@@ -36,7 +36,7 @@ namespace Soundify
 
             Context = new DatabaseContext();
             SongController = new SongController(Context);
-            PlaylistController = new PlaylistController(Context, Context.Playlists);
+            PlaylistController = new PlaylistController(Context);
 
             PlaylistController.DeletePlaylistOnDateStamp();
         
