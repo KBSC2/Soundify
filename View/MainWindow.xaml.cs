@@ -6,6 +6,7 @@ using Controller;
 using Controller.DbControllers;
 using Model;
 using Model.Data;
+using Model.DbModels;
 using Model.EventArgs;
 
 namespace Soundify
@@ -23,6 +24,7 @@ namespace Soundify
         public PlaylistSongController PlaylistSongController { get; set; }
         public SongController SongController { get; set; }
         public PlaylistController PlaylistController { get; set; }
+        public static Playlist CurrentPlayList { get; internal set; }
 
         public MainWindow()
         {
@@ -35,8 +37,8 @@ namespace Soundify
             SSHController.Instance.OpenSSHTunnel();
 
             Context = new DatabaseContext();
-            SongController = new SongController(Context, Context.Songs);
-            PlaylistController = new PlaylistController(Context, Context.Playlists);
+            SongController = new SongController(Context);
+            PlaylistController = new PlaylistController(Context);
             
             PlaylistController.DeletePlaylistOnDateStamp();
         
@@ -76,9 +78,16 @@ namespace Soundify
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
         }
 
+        public void SetScreen(ScreenNames screenName, Playlist playlist)
+        {
+            MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
+            CurrentPlayList = playlist;
+        }
+
         public void OnMenuItemRoutedEvent(object sender, MenuItemRoutedEventArgs args)
         {
-            SetScreen(args.ScreenName);
+            if (args.ScreenName == ScreenNames.PlaylistScreen) SetScreen(args.ScreenName, args.Playlist);
+            else SetScreen(args.ScreenName);
         }
 
         private void Volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

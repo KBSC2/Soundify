@@ -26,7 +26,7 @@ namespace Tests
         {
             SSHController.Instance.OpenSSHTunnel();
             context = new DatabaseContext();
-            playlistController = new PlaylistController(context, context.Playlists);
+            playlistController = new PlaylistController(context);
             playlist = new Playlist()
                 {Name = "TestDeactivateDelete", ActivePlaylist = true, CreationDate = DateTime.Now};
             playlistDelete = new Playlist() {Name = "TestDelete", ActivePlaylist = true, CreationDate = DateTime.Now};
