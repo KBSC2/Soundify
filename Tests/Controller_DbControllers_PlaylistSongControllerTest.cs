@@ -32,12 +32,12 @@ namespace Tests
             playlist = new Playlist() {Name = "TESTPLAYLIST", CreationDate = DateTime.Now};
             context = new DatabaseContext();
             
-            songController = new SongController(context);
-            playlistController = new PlaylistController(context);
+            songController = new SongController(context, context.Songs);
+            playlistController = new PlaylistController(context, context.Playlists);
             playlistSongController = new PlaylistSongController(context);
 
-            songController = new SongController(context);
-            playlistController = new PlaylistController(context);
+            songController = new SongController(context, context.Songs);
+            playlistController = new PlaylistController(context, context.Playlists);
             playlistSongController = new PlaylistSongController(context);
 
             songController.CreateItem(song);
