@@ -27,5 +27,11 @@ namespace Tests
             AudioPlayer.AddSong(songAudioFile);
             Assert.IsTrue(AudioPlayer.SongQueue.Contains(songAudioFile));
         }
+
+        [TearDown, Category("Local")]
+        public void TearDown()
+        {
+            AudioPlayer.WaveOutDevice.Stop();
+        }
     }
 }

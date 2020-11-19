@@ -8,6 +8,7 @@ using Model;
 using Model.Data;
 using Model.DbModels;
 using Model.EventArgs;
+using View;
 
 namespace Soundify
 {
@@ -33,25 +34,27 @@ namespace Soundify
             AudioPlayer.AddSong(new SongAudioFile("untrago.mp3"));
 
             InitializeComponent();
-            
             SSHController.Instance.OpenSSHTunnel();
 
             Context = new DatabaseContext();
-            SongController = new SongController(Context);
-            PlaylistController = new PlaylistController(Context);
-            
-            PlaylistController.DeletePlaylistOnDateStamp();
-        
-            PlaylistSongController = new PlaylistSongController(Context);
+            new PlaylistController(Context).DeletePlaylistOnDateStamp();
 
             SetScreen(ScreenNames.HomeScreen);
-
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
+
+            if (View.DataContext.Instance.CurrentUser == null)
+            {
+                var login = new LoginScreen();
+                login.Show();
+                login.Focus();
+                this.Close();
+            }
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if(AudioPlayer.CurrentSong == null)
+            if (AudioPlayer.CurrentSong == null)
                 AudioPlayer.Next();
 
             if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)

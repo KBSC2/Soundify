@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\soundify.png" />
     <None Remove="dansenaandegracht.mp3" />
     <None Remove="dansenaandegracht2.mp3" />
     <None Remove="untrago.mp3" />
@@ -38,6 +39,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Controller\Controller.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\soundify.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
