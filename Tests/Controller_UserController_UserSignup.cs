@@ -49,7 +49,7 @@ namespace Tests
         [TestCase("testindb@gmail.com", "SterkWachtw00rd@", ExpectedResult = true)]
         public bool UserController_AccountInDatabase(string email, string password)
         {
-            var result = Controller.CreateAccount(new User() { Email = email }, password, password);
+            var result = Controller.CreateAccount(new User() { Email = email, Username = "test"}, password, password);
             if (result != RegistrationResults.Succeeded)
                 return false;
             var user = Controller.GetUserFromEmail(email);
