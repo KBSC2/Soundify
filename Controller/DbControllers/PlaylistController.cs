@@ -38,7 +38,7 @@ namespace Controller.DbControllers
 
         public List<Playlist> GetActivePlaylists()
         {
-            return GetList().Where(playlist => playlist.ActivePlaylist).ToList();
+            return GetFilteredList(x => x.ActivePlaylist);
         }
     }
 }

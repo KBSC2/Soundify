@@ -45,10 +45,14 @@ namespace Tests
             var result = _playlistController.GetActivePlaylists();
             Assert.True(result.Contains(_testPlaylist1));
             Assert.False(result.Contains(_testPlaylist2));
+        }
 
+        //Everytime you test, remove the added items out of the database.
+        [TearDown]
+        public void TearDown()
+        {
             _playlistController.DeleteItem(_testPlaylist1.ID);
             _playlistController.DeleteItem(_testPlaylist2.ID);
         }
-
     }
 }
