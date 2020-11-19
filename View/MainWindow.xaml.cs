@@ -49,7 +49,7 @@ namespace Soundify
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Play_Button_Click(object sender, RoutedEventArgs e)
         {
             if(AudioPlayer.CurrentSong == null)
                 AudioPlayer.Next();
@@ -72,9 +72,8 @@ namespace Soundify
             AudioPlayer.CurrentSong.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSong.CurrentTimeSong));
         }
 
-        public void SetScreen(ScreenNames screenName, object dataContext = null)
+        public void SetScreen(ScreenNames screenName)
         {
-            this.DataContext = dataContext ?? this.DataContext;
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
         }
 

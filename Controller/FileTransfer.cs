@@ -9,6 +9,8 @@ namespace Controller
         {
             if (!Directory.Exists(Path.GetTempPath() + "Soundify"))
                 Directory.CreateDirectory(Path.GetTempPath() + "Soundify");
+                Directory.CreateDirectory(Path.GetTempPath() + "Soundify/songs");
+                Directory.CreateDirectory(Path.GetTempPath() + "Soundify/images");
 
             using (ScpClient client = new ScpClient("145.44.235.172", "student", "Sterk_W@chtw00rd2"))
             {
@@ -16,7 +18,7 @@ namespace Controller
                 string localpath = RemotePathToLocalPath(inputPath);
                 using (Stream localfile = File.Create(localpath))
                 {
-                    client.Download("/files/" + inputPath, localfile);
+                    client.Download("/home/student/files/" + inputPath, localfile);
                 }
             }
         }

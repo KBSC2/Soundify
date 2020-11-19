@@ -1,31 +1,48 @@
 ﻿using NUnit.Framework;
 using Controller;
 using Model;
+using Controller.DbControllers;
+using Model.DbModels;
+using Model.Data;
 
 namespace Tests
 {
     [TestFixture]
     public class Controller_AudioPlayerShould
     {
+
+        private DatabaseContext Context { get; set; }
+        private Song Song { get; set; }
+
         [SetUp]
         public void SetUp()
         {
+            SSHController.Instance.OpenSSHTunnel();
             AudioPlayer.Initialize();
+            Context = new DatabaseContext();
+            Song = new SongController(Context).GetItem(9);
         }
 
         [Test, Category("Local")]
         public void PlaySong_PlaybackState_Playing()
         {
-            AudioPlayer.PlaySong(new SongAudioFile("dansenaandegracht.mp3"));
+            AudioPlayer.PlaySong(Song);
             Assert.IsTrue(AudioPlayer.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing);
         }
 
         [Test, Category("Local")]
         public void AddSong_Queue_Contains()
         {
-            SongAudioFile songAudioFile = new SongAudioFile("dansenaandegracht.mp3");
-            AudioPlayer.AddSong(songAudioFile);
-            Assert.IsTrue(AudioPlayer.SongQueue.Contains(songAudioFile));
+            AudioPlayer.AddSong(Song);
+            Assert.IsTrue(AudioPlayer.SongQueue.Contains(Song));
+        }
+
+        [Test, Category("Local")]
+        public void PlayPlaylist_SongQueue_ContainsSongs()
+        {
+            Playlist playlist = new PlaylistController(Context).GetItem(19);
+            AudioPlayer.PlayPlaylist(playlist);
+            CollectionAssert.AreEqual(new PlaylistSongController(Context).GetSongsFromPlaylist(19),AudioPlayer.SongQueue);
         }
     }
 }

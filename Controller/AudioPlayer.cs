@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Controller.DbControllers;
 using Model;
+using Model.DbModels;
 using NAudio.Wave;
 
 namespace Controller
@@ -10,7 +14,7 @@ namespace Controller
         public static SongAudioFile CurrentSong { get; set; }
 
         private static int _currentSongIndex = -1;
-        private static int CurrentSongIndex
+        public static int CurrentSongIndex
         {
             get => _currentSongIndex;
             set
@@ -38,27 +42,23 @@ namespace Controller
             }
         }
 
-        public static List<SongAudioFile> SongQueue { get; set; } = new List<SongAudioFile>();
+        public static List<Song> SongQueue { get; set; } = new List<Song>();
         public static bool _looping = false;
 
         public static void Initialize()
         {
             WaveOutDevice = new WaveOut();
-            WaveOutDevice.Volume = 1.0f;
+            WaveOutDevice.Volume = 0.05f;
         }
 
         public static void Next()
         {
-            CurrentSong = SongQueue[++CurrentSongIndex];
-            if (CurrentSong != null)
-                WaveOutDevice.Init(CurrentSong.AudioFile);
+            PlaySong(SongQueue[CurrentSongIndex++]);
         }
 
         public static void Prev()
         {
-            CurrentSong = SongQueue[--CurrentSongIndex];
-            if (CurrentSong != null)
-                WaveOutDevice.Init(CurrentSong.AudioFile);
+            PlaySong(SongQueue[CurrentSongIndex--]);
         }
 
         public static void Loop()
@@ -71,18 +71,37 @@ namespace Controller
 
         }
 
-        public static void PlaySong(SongAudioFile song)
+        public static void PlaySong(Song song)
         {
-            AddSong(song);
-            CurrentSongIndex = SongQueue.Count;
-            CurrentSong = song;
+            CurrentSong = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
             WaveOutDevice.Init(CurrentSong.AudioFile);
-            WaveOutDevice.Play();
+            Task.Delay(500).ContinueWith(x => WaveOutDevice.Play());
         }
 
-        public static void AddSong(SongAudioFile song)
+        public static void AddSong(Song song)
         {
             SongQueue.Add(song);
+        }
+
+        public static void PlayPlaylist(Playlist playlist, int startIndex = 0)
+        {
+            var songs = new PlaylistSongController(new Model.Data.DatabaseContext()).GetSongsFromPlaylist(playlist.ID);
+            _currentSongIndex = -1;
+
+            for (int i = startIndex; i < songs.Count; i++)
+            {
+                AddSong(songs[i]);
+            }
+
+            if (_looping)
+            {
+                for (int i = 0; i < startIndex; i++)
+                {
+                    AddSong(songs[i]);
+                }
+            }
+
+            Next();
         }
     }
 }
