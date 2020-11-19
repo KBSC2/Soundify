@@ -16,7 +16,7 @@ namespace Controller.DbControllers
         public PlaylistSongController(DatabaseContext context)
         {
             this._context = context;
-            _songController = new SongController(context, context.Songs);
+            _songController = new SongController(context);
         }
 
         public void AddSongToPlaylist(int songID, int playlistID)

@@ -35,8 +35,8 @@ namespace Soundify
             SSHController.Instance.OpenSSHTunnel();
 
             Context = new DatabaseContext();
-            SongController = new SongController(Context, Context.Songs);
-            PlaylistController = new PlaylistController(Context, Context.Playlists);
+            SongController = new SongController(Context);
+            PlaylistController = new PlaylistController(Context);
             
             PlaylistController.DeletePlaylistOnDateStamp();
         
