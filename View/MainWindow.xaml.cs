@@ -49,12 +49,12 @@ namespace Soundify
                 login.Focus();
                 this.Close();
             }
-                
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if(AudioPlayer.CurrentSong == null)
+            if (AudioPlayer.CurrentSong == null)
                 AudioPlayer.Next();
 
             if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
