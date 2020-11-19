@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using NAudio.Wave;
@@ -7,10 +6,7 @@ using Controller;
 using Controller.DbControllers;
 using Model;
 using Model.Data;
-using Model.DbModels;
 using Model.EventArgs;
-using View;
-using View.Screens;
 
 namespace Soundify
 {
@@ -27,7 +23,6 @@ namespace Soundify
         public PlaylistSongController PlaylistSongController { get; set; }
         public SongController SongController { get; set; }
         public PlaylistController PlaylistController { get; set; }
-        public static Playlist CurrentPlayList { get; internal set; }
 
         public MainWindow()
         {
@@ -40,9 +35,11 @@ namespace Soundify
             SSHController.Instance.OpenSSHTunnel();
 
             Context = new DatabaseContext();
-            SongController = new SongController(Context);
-            PlaylistController = new PlaylistController(Context);
+            SongController = new SongController(Context, Context.Songs);
+            PlaylistController = new PlaylistController(Context, Context.Playlists);
+            
             PlaylistController.DeletePlaylistOnDateStamp();
+        
             PlaylistSongController = new PlaylistSongController(Context);
 
             SetScreen(ScreenNames.HomeScreen);
@@ -69,30 +66,26 @@ namespace Soundify
 
         private void Duration_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (sender is Slider slider)
-                AudioPlayer.CurrentSong.AudioFile.Skip((int) (slider.Value - AudioPlayer.CurrentSong.CurrentTimeSong));
+            Slider slider = sender as Slider;
+            AudioPlayer.CurrentSong.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSong.CurrentTimeSong));
         }
 
-        public void SetScreen(ScreenNames screenName)
+        public void SetScreen(ScreenNames screenName, object dataContext = null)
         {
+            this.DataContext = dataContext ?? this.DataContext;
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
-        }
-
-        public void SetScreen(ScreenNames screenName, Playlist playlist)
-        {
-            MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
-            CurrentPlayList = playlist;
         }
 
         public void OnMenuItemRoutedEvent(object sender, MenuItemRoutedEventArgs args)
         {
-            if(args.ScreenName == ScreenNames.PlaylistScreen) SetScreen(args.ScreenName, args.Playlist);
-            else SetScreen(args.ScreenName);
+            SetScreen(args.ScreenName);
         }
 
         private void Volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (sender is Slider slider) AudioPlayer.WaveOutDevice.Volume = (float) slider.Value;
+            Slider slider = sender as Slider;
+            AudioPlayer.WaveOutDevice.Volume = (float)slider.Value;
+
         }
 
         private void Prev_Button_Click(object sender, RoutedEventArgs e)
