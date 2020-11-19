@@ -6,7 +6,7 @@ using Model.DbModels;
 using Model;
 using Model.Annotations;
 
-namespace Model.Contexts
+namespace View.DataContexts
 {
     public class PlaylistDataContext : INotifyPropertyChanged
     {

@@ -10,7 +10,7 @@ namespace Controller.DbControllers
     public class PlaylistController: DbController<Playlist>
     {
 
-        public PlaylistController(DatabaseContext context, DbSet<Playlist> playlist) : base(context, playlist)
+        public PlaylistController(DatabaseContext context) : base(context, context.Playlists)
         {
         }
 

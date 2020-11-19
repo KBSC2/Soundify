@@ -5,14 +5,14 @@ using System.Text;
 
 namespace Model.DbModels
 {
-    public class Playlist : DbModel 
+    public class Playlist : DbModel
     {
         [Required]
         public string Name { get; set; }
 
         public string Description { get; set; }
         public string Genre { get; set; }
-        public DateTime CreationDate { get; set; }
+        public DateTime CreationDate { get; set; } = DateTime.Now;
 
         public IList<PlaylistSong> PlaylistSongs { get; set; }
     }

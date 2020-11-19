@@ -7,7 +7,10 @@ using Controller;
 using Controller.DbControllers;
 using Model;
 using Model.Data;
+using Model.DbModels;
 using Model.EventArgs;
+using View;
+using View.Screens;
 
 namespace Soundify
 {
@@ -36,8 +39,8 @@ namespace Soundify
             SSHController.Instance.OpenSSHTunnel();
 
             Context = new DatabaseContext();
-            SongController = new SongController(Context, Context.Songs);
-            PlaylistController = new PlaylistController(Context, Context.Playlists);
+            SongController = new SongController(Context);
+            PlaylistController = new PlaylistController(Context);
             PlaylistSongController = new PlaylistSongController(Context);
 
             SetScreen(ScreenNames.HomeScreen);
@@ -68,15 +71,21 @@ namespace Soundify
             AudioPlayer.CurrentSong.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSong.CurrentTimeSong));
         }
 
-        public void SetScreen(ScreenNames screenName, object dataContext = null)
+        public void SetScreen(ScreenNames screenName)
         {
-            this.DataContext = dataContext ?? this.DataContext;
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
+        }
+
+        public void SetScreen(ScreenNames screenName, Playlist playlist)
+        {
+            MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
+            ((PlaylistScreen) MainContent.ContentTemplate.DataTemplateKey).
         }
 
         public void OnMenuItemRoutedEvent(object sender, MenuItemRoutedEventArgs args)
         {
-            SetScreen(args.ScreenName);
+            if(args.ScreenName == ScreenNames.PlaylistScreen) SetScreen(args.ScreenName, args.Playlist);
+            else SetScreen(args.ScreenName);
         }
 
         private void Volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -104,12 +113,6 @@ namespace Soundify
         private void Shuffle_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Shuffle();
-        }
-
-
-        public void PlaylistMenuScreen_CreatePlaylist_Click()
-        {
-            Debug.Write("DE KNOP WERKT");
         }
     }
 }
