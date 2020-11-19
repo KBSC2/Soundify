@@ -8,6 +8,7 @@ using Model;
 using Model.Data;
 using Model.DbModels;
 using Model.EventArgs;
+using View;
 
 namespace Soundify
 {
@@ -40,6 +41,14 @@ namespace Soundify
             SetScreen(ScreenNames.HomeScreen);
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
 
+            if (View.DataContext.Instance.CurrentUser == null)
+            {
+                var login = new LoginScreen();
+                login.Show();
+                login.Focus();
+                this.Close();
+            }
+                
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

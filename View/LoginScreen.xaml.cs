@@ -29,5 +29,17 @@ namespace View
             
         }
 
+        private void SignUp_Click(object sender, RoutedEventArgs e)
+        {
+            var signupScreen = new RegisterScreen();
+            this.Close();
+            signupScreen.Show();
+            signupScreen.Focus();
+        }
+
+        private void ForgotPassword_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
