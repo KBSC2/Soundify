@@ -79,7 +79,6 @@ namespace Soundify
         public void SetScreen(ScreenNames screenName, Playlist playlist)
         {
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
-            ((PlaylistScreen) MainContent.ContentTemplate.DataTemplateKey).
         }
 
         public void OnMenuItemRoutedEvent(object sender, MenuItemRoutedEventArgs args)
