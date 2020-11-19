@@ -9,7 +9,7 @@ namespace Controller.DbControllers
 {
     public class SongController: DbController<Song>
     {
-        public SongController(DatabaseContext context, DbSet<Song> set) : base(context, set)
+        public SongController(DatabaseContext context) : base(context, context.Songs)
         {
         }
     }
