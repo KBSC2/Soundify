@@ -9,8 +9,5 @@ namespace Model.DbModels
     {
         public string Email { get; set; }
         public string Password { get; set; }
-
-        [ForeignKey("UserID")]
-        public ICollection<Playlist> Playlists { get; set; }
     }
 }

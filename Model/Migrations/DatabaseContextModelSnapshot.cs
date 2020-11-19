@@ -21,10 +21,8 @@ namespace Model.Migrations
 
             modelBuilder.Entity("Model.DbModels.Playlist", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
 
                     b.Property<bool>("ActivePlaylist")
                         .ValueGeneratedOnAdd()
@@ -43,14 +41,16 @@ namespace Model.Migrations
                     b.Property<string>("Genre")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
+                    b.HasKey("UserID");
 
                     b.ToTable("Playlists");
                 });
@@ -100,6 +100,35 @@ namespace Model.Migrations
                     b.ToTable("Songs");
                 });
 
+            modelBuilder.Entity("Model.DbModels.User", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Model.DbModels.Playlist", b =>
+                {
+                    b.HasOne("Model.DbModels.User", "User")
+                        .WithMany("Playlists")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Model.DbModels.PlaylistSong", b =>
                 {
                     b.HasOne("Model.DbModels.Playlist", "Playlist")
@@ -127,6 +156,11 @@ namespace Model.Migrations
             modelBuilder.Entity("Model.DbModels.Song", b =>
                 {
                     b.Navigation("PlaylistSongs");
+                });
+
+            modelBuilder.Entity("Model.DbModels.User", b =>
+                {
+                    b.Navigation("Playlists");
                 });
 #pragma warning restore 612, 618
         }

@@ -33,19 +33,12 @@ namespace Soundify
             AudioPlayer.AddSong(new SongAudioFile("untrago.mp3"));
 
             InitializeComponent();
-            
             SSHController.Instance.OpenSSHTunnel();
 
             Context = new DatabaseContext();
-            SongController = new SongController(Context);
-            PlaylistController = new PlaylistController(Context);
-            
-            PlaylistController.DeletePlaylistOnDateStamp();
-        
-            PlaylistSongController = new PlaylistSongController(Context);
+            new PlaylistController(Context).DeletePlaylistOnDateStamp();
 
             SetScreen(ScreenNames.HomeScreen);
-
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
         }
 
