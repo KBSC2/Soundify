@@ -15,7 +15,7 @@ namespace View
             get
             {
                 if (_instance == null)
-                    _instance = new DataContext();
+                    new DataContext();
                 return _instance;
             }
             set
@@ -40,6 +40,7 @@ namespace View
 
         public DataContext()
         {
+            Instance = this;
             _timer = new Timer {Interval = 10};
             _timer.Elapsed += OnTimedEvent;
             _timer.Start();

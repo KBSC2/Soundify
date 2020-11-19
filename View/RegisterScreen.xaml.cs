@@ -34,7 +34,9 @@ namespace View
             var password = this.PasswordRegister.Text;
             var passwordRepeat = this.PasswordConfirmRegister.Text;
 
-            var result = new UserController(new DatabaseContext()).CreateAccount(new User() {Email = email, Username = username}, password, passwordRepeat);
+            var result =
+                new UserController(new DatabaseContext()).CreateAccount(new User() {Email = email, Username = username},
+                    password, passwordRepeat);
 
             switch(result)
             {
