@@ -13,7 +13,7 @@ namespace View.DataContexts
         public string PlaylistName { get; set; }
         public string Description { get; set; }
         public List<SongInfo> PlaylistItems { get; set; }
-        public Playlist Playlist { get; set; }
+        public Playlist Playlist => Soundify.MainWindow.CurrentPlayList;
         public List<Song> Songs { get; set; }
 
         public void AddPlaylistsToMenu()
