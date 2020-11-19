@@ -11,25 +11,28 @@
                 <DataContexts:PlaylistDataContext/>
             </Grid.DataContext>
             <Grid Margin="0,0,0,0" Height="131" VerticalAlignment="Top">
-                <Grid.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF6AF76A"/>
-                        <GradientStop Color="#FFFF7070" Offset="1"/>
-                    </LinearGradientBrush>
-                </Grid.Background>
-                <Label Content="{Binding Playlist.Name}" HorizontalAlignment="Left" Margin="35,10,0,0" VerticalAlignment="Top" FontSize="22" Foreground="White" Width="181"/>
-                <TextBlock HorizontalAlignment="Left" Margin="35,53,0,0" Text="{Binding Playlist.Description}" TextWrapping="Wrap" VerticalAlignment="Top" Height="67" Width="266" Background="#00000000" Foreground="White"/>
-            </Grid>
-            <ListView Margin="0,131,0,0" Background="#FF303651" BorderBrush="#FF303651" Foreground="White" ItemsSource="{Binding PlaylistItems}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Titel" Width="200" DisplayMemberBinding="{Binding Song.Name}"/>
-                        <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Song.Artist}"/>
-                        <GridViewColumn Header="Duration" Width="75" DisplayMemberBinding="{Binding Duration}"/>
-                        <GridViewColumn Header="Added" Width="150" DisplayMemberBinding="{Binding Added}"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+		        <Grid.Background>
+			        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+				        <GradientStop Color="#FF6AF76A"/>
+				        <GradientStop Color="#FFFF7070" Offset="1"/>
+			        </LinearGradientBrush>
+		        </Grid.Background>
+		        <Label Content="{Binding Playlist.Name}" HorizontalAlignment="Left" Margin="35,10,0,0" VerticalAlignment="Top" FontSize="22" Foreground="White" Width="181"/>
+		        <TextBlock HorizontalAlignment="Left" Margin="35,53,0,0" Text="{Binding Playlist.Description}" TextWrapping="Wrap" VerticalAlignment="Top" Height="67" Width="266" Background="#00000000" Foreground="White"/>
+	        </Grid>
+	        <ListView Margin="0,178,0,0" Background="#FF303651" BorderBrush="#FF303651" Foreground="White" ItemsSource="{Binding PlaylistItems}">
+		        <ListView.View>
+			        <GridView>
+				        <GridViewColumn Header="Titel" Width="200" DisplayMemberBinding="{Binding Song.Name}"/>
+				        <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Song.Artist}"/>
+				        <GridViewColumn Header="Duration" Width="75" DisplayMemberBinding="{Binding Duration}"/>
+				        <GridViewColumn Header="Added" Width="150" DisplayMemberBinding="{Binding Added}"/>
+			        </GridView>
+		        </ListView.View>
+	        </ListView>
+	        <Grid Margin="0,131,0,0" Background="#FF303651" Height="47" VerticalAlignment="Top">
+                <Button  Click="RemovePlaylistButton_Click" Tag="{Binding Playlist.ID}"  Content=" Remove playlist " HorizontalAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" BorderBrush="White" FontSize="16"/>
+	        </Grid>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

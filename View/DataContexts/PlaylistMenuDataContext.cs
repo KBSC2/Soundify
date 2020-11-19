@@ -14,7 +14,7 @@ namespace View.DataContexts
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public List<Playlist> PlaylistsSource => new PlaylistController(new DatabaseContext()).GetList();
+        public List<Playlist> PlaylistsSource => new PlaylistController(new DatabaseContext()).GetActivePlaylists();
 
         public PlaylistMenuDataContext()
         {
