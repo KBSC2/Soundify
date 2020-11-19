@@ -36,10 +36,6 @@ namespace Tests
             playlistController = new PlaylistController(context);
             playlistSongController = new PlaylistSongController(context);
 
-            songController = new SongController(context);
-            playlistController = new PlaylistController(context);
-            playlistSongController = new PlaylistSongController(context);
-
             songController.CreateItem(song);
             playlistController.CreateItem(playlist);
         }
