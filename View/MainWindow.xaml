@@ -19,7 +19,7 @@
             <components:MenuButton ScreenName="Logout"         Content="Logout"         Margin="24,109,24,0"/>
         </Grid>
         <Grid Margin="92,0,0,0" Background="#FF363F63" Height="74" VerticalAlignment="Bottom">
-            <Button x:Name="Play" Content="=" Margin="336,0,336,0" VerticalAlignment="Center" Click="Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="#FF424D82"/>
+            <Button x:Name="Play" Content="=" Margin="336,0,336,0" VerticalAlignment="Center" Click="Play_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="#FF424D82"/>
             <Slider x:Name="Duration" HorizontalAlignment="Center" Margin="0,-8,0,0" IsMoveToPointEnabled="True" Foreground="White" VerticalAlignment="Top" Width="708" Height="18" Minimum="0.00" Maximum="{Binding TotalTime, Mode=OneWay}" Value="{Binding CurrentTime, Mode=OneWay}" ValueChanged="Duration_ValueChanged"/>
             <Label x:Name="CurrentTime" Content="{Binding CurrentTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="0,-26,0,0" VerticalAlignment="Top" Width="49" />
             <Label x:Name="TotalTime" Content="{Binding TotalTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="659,-26,0,0" VerticalAlignment="Top" Width="49" />
@@ -27,7 +27,7 @@
             <Button x:Name="Next" Content="Next" Margin="392,0,0,0" VerticalAlignment="Center" Click="Next_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="#FF424D82" Width="50" HorizontalAlignment="Left"/>
             <Button x:Name="Loop" Content="Loop" Margin="191,0,0,0" VerticalAlignment="Center" Click="Loop_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="#FF424D82" Width="50" HorizontalAlignment="Left"/>
             <Button x:Name="Shuffle" Content="Shuffle" Margin="470,0,0,0" VerticalAlignment="Center" Click="Shuffle_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="#FF424D82" Width="50" HorizontalAlignment="Left"/>
-            <Slider x:Name="Volume" HorizontalAlignment="Left" Margin="614,0,0,0" IsMoveToPointEnabled="True" VerticalAlignment="Center" Width="70" Maximum="1.0" ValueChanged="Volume_ValueChanged" Value="{Binding Volume, Mode=OneWay}" SmallChange="0.01" LargeChange="0.1"/>
+            <Slider x:Name="Volume" HorizontalAlignment="Left" Margin="614,0,0,0" IsMoveToPointEnabled="True" VerticalAlignment="Center" Width="70" Maximum="0.1" ValueChanged="Volume_ValueChanged" Value="{Binding Volume, Mode=OneWay}" SmallChange="0.001" LargeChange="0.01"/>
         </Grid>
         <Grid Margin="92,0,0,0" Background="#FF303651" Height="54" VerticalAlignment="Top">
             <Label Content="{Binding PageName}" HorizontalAlignment="Left" Margin="41,10,0,0" VerticalAlignment="Top" FontSize="22" Foreground="White" Width="191" Height="17"/>

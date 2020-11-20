@@ -8,6 +8,8 @@ using Model;
 using Model.Data;
 using Model.DbModels;
 using Model.EventArgs;
+using System.IO;
+using Model.DbModels;
 using View;
 
 namespace Soundify
@@ -30,8 +32,6 @@ namespace Soundify
         public MainWindow()
         {
             AudioPlayer.Initialize();
-            AudioPlayer.AddSong(new SongAudioFile("dansenaandegracht.mp3"));
-            AudioPlayer.AddSong(new SongAudioFile("untrago.mp3"));
 
             InitializeComponent();
             SSHController.Instance.OpenSSHTunnel();
@@ -51,7 +51,7 @@ namespace Soundify
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Play_Button_Click(object sender, RoutedEventArgs e)
         {
             if (AudioPlayer.CurrentSong == null)
                 AudioPlayer.Next();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,13 @@ namespace Controller.DbControllers
         {
         }
 
+        public void UploadSong(Song song, string localpath)
+        {
+            string remotePath =  FileTransfer.UploadFile(localpath, "songs/" + Path.GetFileName(localpath));
+            song.Path = remotePath;
+            CreateItem(song);
+        }
+        
         public List<Song> SearchSongsOnString(List<string> searchterms)
         {
             var songs = Context.Songs.AsEnumerable();

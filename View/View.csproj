@@ -14,23 +14,10 @@
     <None Remove="Assets\soundify.png" />
     <None Remove="dansenaandegracht.mp3" />
     <None Remove="dansenaandegracht2.mp3" />
-    <None Remove="untrago.mp3" />
   </ItemGroup>
 
   <ItemGroup>
     <Page Remove="PlaylistMenuView.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="dansenaandegracht.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="dansenaandegracht2.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="untrago.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>

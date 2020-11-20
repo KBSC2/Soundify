@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Controller;
 using System.Windows.Controls;
 using Controller.DbControllers;
 using Microsoft.Extensions.Options;
@@ -20,6 +21,11 @@ namespace View.Screens
             this.InitializeComponent();
         }
 
+        private void Play_Playlist_Button_Click(object sender, RoutedEventArgs e)
+        {
+            AudioPlayer.PlayPlaylist(Soundify.MainWindow.CurrentPlayList);
+        }
+        
         private void RemovePlaylistButton_Click(object sender, RoutedEventArgs e)
         {
             var playlistID = (int)((Button)sender).Tag;
