@@ -9,8 +9,6 @@ namespace View.Screens
 {
     partial class SettingScreen : ResourceDictionary
     {
-        public bool IsOpen = false;
-
         public SettingScreen()
         {
             this.InitializeComponent();
@@ -25,12 +23,9 @@ namespace View.Screens
 
         private void ChangePassword_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (!IsOpen)
-            {
-                var change = new ChangePassword();
+            var change = new ChangePassword();
                 change.Show();
                 change.Focus();
-            }
         }
     }
 }
