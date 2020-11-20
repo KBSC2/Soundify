@@ -31,7 +31,8 @@ namespace View.Screens
         {
             var listViewItem = (ListViewItem)sender;
             var songInfo = (SongInfo)listViewItem.Content;
-            AudioPlayer.PlayPlaylist(Soundify.MainWindow.CurrentPlayList, songInfo.Index);
+
+            AudioPlayer.PlayPlaylist(Soundify.MainWindow.CurrentPlayList, 1);
         }
 
         private void RemovePlaylistButton_Click(object sender, RoutedEventArgs e)

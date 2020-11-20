@@ -8,9 +8,8 @@ using Model;
 using Model.Data;
 using Model.DbModels;
 using Model.EventArgs;
-using System.IO;
-using Model.DbModels;
 using View;
+using System.Collections.Generic;
 
 namespace Soundify
 {
@@ -24,9 +23,6 @@ namespace Soundify
         #endregion
 
         public DatabaseContext Context { get; set; }
-        public PlaylistSongController PlaylistSongController { get; set; }
-        public SongController SongController { get; set; }
-        public PlaylistController PlaylistController { get; set; }
         public static Playlist CurrentPlayList { get; internal set; }
 
         public MainWindow()
@@ -49,6 +45,13 @@ namespace Soundify
                 login.Focus();
                 this.Hide();
             }
+
+            /*var test = new PlaylistController(Context).GetList();
+
+            new PlaylistSongController(Context).AddSongToPlaylist(9, 965);
+            new PlaylistSongController(Context).AddSongToPlaylist(10, 965);
+            new PlaylistSongController(Context).AddSongToPlaylist(11, 965);
+            new PlaylistSongController(Context).AddSongToPlaylist(12, 965);*/
         }
 
         private void Play_Button_Click(object sender, RoutedEventArgs e)

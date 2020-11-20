@@ -35,14 +35,13 @@ namespace Controller
                 {
                     if (_currentSongIndex < 0)
                         _currentSongIndex = 0;
-                    if (_currentSongIndex >= SongQueue.Count)
+                    if (_currentSongIndex >= SongQueue.Find(x => x.Index == SongQueue.))
                         _currentSongIndex = SongQueue.Count - 1;
                 }
-                
             }
         }
 
-        public static List<Song> SongQueue { get; set; } = new List<Song>();
+        public static List<PlaylistSong> SongQueue { get; set; } = new List<PlaylistSong>();
         public static bool _looping = false;
 
         public static void Initialize()
@@ -71,14 +70,14 @@ namespace Controller
 
         }
 
-        public static void PlaySong(Song song)
+        public static void PlaySong(PlaylistSong song)
         {
-            CurrentSong = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
+            CurrentSong = new SongAudioFile(FileCache.Instance.GetFile(song.Song.Path));
             WaveOutDevice.Init(CurrentSong.AudioFile);
             Task.Delay(500).ContinueWith(x => WaveOutDevice.Play());
         }
 
-        public static void AddSong(Song song)
+        public static void AddSong(PlaylistSong song)
         {
             SongQueue.Add(song);
         }

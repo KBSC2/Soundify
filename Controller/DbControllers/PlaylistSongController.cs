@@ -52,18 +52,18 @@ namespace Controller.DbControllers
                 .Any(s => s.SongID == songID);
         }
 
-        public List<Song> GetSongsFromPlaylist(int playlistID)
+        public List<PlaylistSong> GetSongsFromPlaylist(int playlistID)
         {
-            List<PlaylistSong> playlistSongs = _context.PlaylistSongs.Where(ps => ps.PlaylistID == playlistID).ToList();
+            return _context.PlaylistSongs.Where(ps => ps.PlaylistID == playlistID).ToList();
 
-            List<Song> songs = new List<Song>();
+            /*List<Song> songs = new List<Song>();
             foreach (var playlistSong in playlistSongs)
             {
                 var id = playlistSong.SongID;
                 songs.Add(_songController.GetItem(id));
             }
 
-            return songs;
+            return songs;*/
         }
 
         public PlaylistSong GetPlaylistSong(int playlistID, int songID)
