@@ -8,6 +8,8 @@ using Model;
 using Model.Data;
 using Model.DbModels;
 using Model.EventArgs;
+using System.IO;
+using Model.DbModels;
 using View;
 using View.Screens;
 
@@ -72,7 +74,7 @@ namespace Soundify
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Play_Button_Click(object sender, RoutedEventArgs e)
         {
             if (AudioPlayer.CurrentSong == null)
                 AudioPlayer.Next();

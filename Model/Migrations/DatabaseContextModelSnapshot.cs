@@ -66,6 +66,9 @@ namespace Model.Migrations
                     b.Property<DateTime>("Added")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Index")
+                        .HasColumnType("int");
+
                     b.HasKey("PlaylistID", "SongID");
 
                     b.HasIndex("SongID");
