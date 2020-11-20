@@ -8,10 +8,10 @@ namespace View.Screens
 {
     partial class SettingScreen : ResourceDictionary
     {
+
         public SettingScreen()
         {
             this.InitializeComponent();
-            
         }
 
         private void Logout_Button_Click(object sender, RoutedEventArgs e)
@@ -19,14 +19,13 @@ namespace View.Screens
             DataContext.Instance.CurrentUser = null;
             MainWindow.InstanceMainWindow.Hide();
             MainWindow.InstanceLoginScreen.Show();
-
         }
 
         private void ChangePassword_Button_Click(object sender, RoutedEventArgs e)
         {
             var change = new ChangePassword();
-            change.Show();
-            change.Focus();
+                change.Show();
+                change.Focus();
         }
     }
 }
