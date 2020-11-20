@@ -9,7 +9,7 @@ using Model.DbModels;
 
 namespace Controller.DbControllers
 {
-    public class PlaylistController: DbController<Playlist>
+    public class PlaylistController : DbController<Playlist>
     {
 
         public PlaylistController(DatabaseContext context) : base(context, context.Playlists)
@@ -33,9 +33,22 @@ namespace Controller.DbControllers
             {
                 DeleteItem(VARIABLE.ID);
             }
-            
         }
 
-
+        public List<Playlist> SearchPlayListOnString(List<string> searchTerms)
+        {
+            var playlists = Context.Playlists.AsEnumerable();
+            List<Playlist> searchPlaylists = playlists
+                .Where(playlist => searchTerms.Any(s => playlist.Name != null && playlist.Name.Contains(s)) ||
+                                   searchTerms.Any(
+                                       s => playlist.Description != null && playlist.Description.Contains(s)) ||
+                                   searchTerms.Any(s => playlist.Genre != null && playlist.Genre.Contains(s)))
+                .ToList();
+            return searchPlaylists;
+        }
+        public List<Playlist> GetActivePlaylists()
+        {
+            return GetFilteredList(x => x.ActivePlaylist);
+        }
     }
 }

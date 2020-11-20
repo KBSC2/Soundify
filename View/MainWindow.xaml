@@ -8,16 +8,15 @@
     xmlns:components="clr-namespace:View.Components"
     x:Class="Soundify.MainWindow"
     mc:Ignorable="d"
-    Title="MainWindow" Height="450" Width="800">
-    <Window.DataContext>
-        <View:DataContext/>
-    </Window.DataContext>
+    Title="MainWindow" Height="450" Width="800"
+    DataContext="{x:Static View:DataContext.Instance}">
 
     <Grid>
         <Grid Background="#FF424D82" HorizontalAlignment="Left" Width="92">
-            <components:MenuButton ScreenName="HomeScreen"     Content="Home"      Margin="21,10,21,0" />
-            <components:MenuButton ScreenName="PlaylistMenuScreen" Content="Playlists" Margin="16,43,16,0" />
-            <components:MenuButton ScreenName="QueueScreen"    Content="Queue"     Margin="24,77,24,0" />
+            <components:MenuButton ScreenName="HomeScreen"     Content="Home"           Margin="21,10, 21,0" />
+            <components:MenuButton ScreenName="PlaylistMenuScreen" Content="Playlists"  Margin="16,43, 16,0" />
+            <components:MenuButton ScreenName="QueueScreen"    Content="Queue"          Margin="24,76, 24,0" />
+            <components:MenuButton ScreenName="Logout"         Content="Logout"         Margin="24,109,24,0"/>
         </Grid>
         <Grid Margin="92,0,0,0" Background="#FF363F63" Height="74" VerticalAlignment="Bottom">
             <Button x:Name="Play" Content="=" Margin="336,0,336,0" VerticalAlignment="Center" Click="Play_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="#FF424D82"/>

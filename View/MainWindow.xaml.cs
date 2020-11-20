@@ -10,6 +10,7 @@ using Model.DbModels;
 using Model.EventArgs;
 using System.IO;
 using Model.DbModels;
+using View;
 
 namespace Soundify
 {
@@ -33,25 +34,26 @@ namespace Soundify
             AudioPlayer.Initialize();
 
             InitializeComponent();
-            
             SSHController.Instance.OpenSSHTunnel();
 
             Context = new DatabaseContext();
-            SongController = new SongController(Context);
-            PlaylistController = new PlaylistController(Context);
-            
-            PlaylistController.DeletePlaylistOnDateStamp();
-        
-            PlaylistSongController = new PlaylistSongController(Context);
+            new PlaylistController(Context).DeletePlaylistOnDateStamp();
 
             SetScreen(ScreenNames.HomeScreen);
-
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
+
+            if (View.DataContext.Instance.CurrentUser == null)
+            {
+                var login = new LoginScreen();
+                login.Show();
+                login.Focus();
+                this.Hide();
+            }
         }
 
         private void Play_Button_Click(object sender, RoutedEventArgs e)
         {
-            if(AudioPlayer.CurrentSong == null)
+            if (AudioPlayer.CurrentSong == null)
                 AudioPlayer.Next();
 
             if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
@@ -74,6 +76,15 @@ namespace Soundify
 
         public void SetScreen(ScreenNames screenName)
         {
+            if (screenName == ScreenNames.Logout)
+            {
+                View.DataContext.Instance.CurrentUser = null;
+                var login = new LoginScreen();
+                login.Show();
+                login.Focus();
+                this.Hide();
+                return;
+            }
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
         }
 
@@ -115,6 +126,7 @@ namespace Soundify
         {
             AudioPlayer.Shuffle();
         }
+        
     }
 
 }

@@ -58,5 +58,11 @@ namespace Tests
             }
             Assert.IsTrue(areEqual);
         }
+
+        [TearDown, Category("Local")]
+        public void TearDown()
+        {
+            AudioPlayer.WaveOutDevice.Stop();
+        }
     }
 }
