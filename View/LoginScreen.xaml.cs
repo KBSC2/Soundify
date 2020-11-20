@@ -43,6 +43,8 @@ namespace View
                     main.Show();
                     main.Focus();
                     this.Hide();
+                    this.UsernameLogin.Text = "Username";
+                    this.PasswordLogin.Password = "Password";
                     break;
                 }
                 case LoginResults.EmailNotFound:

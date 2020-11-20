@@ -11,20 +11,22 @@ namespace View.Screens
         public SettingScreen()
         {
             this.InitializeComponent();
+            
         }
 
         private void Logout_Button_Click(object sender, RoutedEventArgs e)
         {
-            new MainWindow().Hide();
             DataContext.Instance.CurrentUser = null;
-            var login = new LoginScreen();
-            login.Show();
-            login.Focus();
+            MainWindow.InstanceMainWindow.Hide();
+            MainWindow.InstanceLoginScreen.Show();
+
         }
 
         private void ChangePassword_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            var change = new ChangePassword();
+            change.Show();
+            change.Focus();
         }
     }
 }
