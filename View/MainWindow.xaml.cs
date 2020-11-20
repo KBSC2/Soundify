@@ -8,10 +8,7 @@ using Model;
 using Model.Data;
 using Model.DbModels;
 using Model.EventArgs;
-using System.IO;
-using Model.DbModels;
 using View;
-using View.Screens;
 
 namespace Soundify
 {
