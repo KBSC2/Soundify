@@ -10,7 +10,7 @@
                 <ResourceDictionary Source="Screens/QueueScreen.xaml"/>
                 <ResourceDictionary Source="Screens/PlaylistScreen.xaml"/>
                 <ResourceDictionary Source="Screens/PlaylistMenuScreen.xaml"/>
-                <ResourceDictionary Source="Screens/SongInfo.xaml"/>
+                <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
