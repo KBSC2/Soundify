@@ -32,6 +32,7 @@
         <Grid Margin="92,0,0,0" Background="#FF303651" Height="54" VerticalAlignment="Top">
             <Label Content="{Binding PageName}" HorizontalAlignment="Left" Margin="41,10,0,0" VerticalAlignment="Top" FontSize="22" Foreground="White" Width="191" Height="17"/>
             <TextBox HorizontalAlignment="Center" Text="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="192" Height="25"/>
+            <components:MenuButton ScreenName="SettingScreen"         Content="Settings"        Margin="643,0,0,0" VerticalAlignment="Center"/>
         </Grid>
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="92,59,0,74" ContentTemplate="{StaticResource HomeScreen}"/>
     </Grid>
