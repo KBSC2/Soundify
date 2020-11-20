@@ -8,14 +8,15 @@
         mc:Ignorable="d"
         Title="LoginScreen" Height="715" Width="617">
     <Grid Background="#FF09132E">
-        <Image Margin="263,11,263,598" Stretch="Fill" Source="Assets/soundify.png" Width="91" Height="91"/>
         <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" Height="79"/>
         <Label Content="Register" HorizontalAlignment="Center" Margin="0,172,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
         <TextBox x:Name="UsernameRegister" HorizontalAlignment="Center" Margin="0,259,0,0" Text="Username" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White"/>
         <TextBox x:Name="EmailRegister" HorizontalAlignment="Center" Margin="0,335,0,0" Text="Email" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White"/>
         <PasswordBox x:Name="PasswordRegister" Password="Password" HorizontalAlignment="Center" Margin="0,411,0,0" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" />
         <PasswordBox x:Name="PasswordConfirmRegister" Password="Password"  Margin="0,487,0,0" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" />
-        <Button x:Name="JoinSoundify" Content="Join Soundify" Click="Register_Button_Click"  HorizontalAlignment="Center" Margin="0,593,0,0" VerticalAlignment="Top" FontSize="40" Width="301" Height="60" Background="#FFF78D0E" Foreground="White"/>
         <Label x:Name="Error" Content="" HorizontalAlignment="Center" Margin="0,562,0,0" VerticalAlignment="Top" Width="355" Foreground="Red" FontSize="16" HorizontalContentAlignment="Center"/>
+        <Button x:Name="Join" Content="Join" Click="Register_Button_Click"  HorizontalAlignment="Left" Margin="331,598,0,0" VerticalAlignment="Top" FontSize="40" Width="237" Height="55" Background="#FFF78D0E" Foreground="White"/>
+        <Button Content="Cancel " HorizontalAlignment="Left" Margin="39,598,0,0" VerticalAlignment="Top" Foreground="White" FontSize="40" FontStyle="Italic" Background="Red" Width="237" Height="55" BorderThickness="0,0,0,0" Click="BackToLogin_Button_Click"/>
+        <Image Margin="263,11,263,598" Stretch="Fill" Source="Assets/soundify.png" Width="66" Height="66"/>
     </Grid>
 </Window>
