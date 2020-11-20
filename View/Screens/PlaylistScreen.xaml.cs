@@ -19,7 +19,22 @@ namespace View.Screens
         {
             this.InitializeComponent();
         }
-
+        private void ListViewItem_RightClick(object sender, RoutedEventArgs e)
+        {
+            /*var song = (Song)(((MenuItem)sender).Tag);
+            SongInfoScreen songInfoScreen = new SongInfoScreen(song);
+            songInfoScreen.Show();*/
+            MenuItem menuItem = sender as MenuItem;
+            if (menuItem != null)
+            {
+                ContextMenu parentContextMenu = menuItem.CommandParameter as ContextMenu;
+                if (parentContextMenu != null)
+                {
+                    ListViewItem listViewItem = parentContextMenu.PlacementTarget as ListViewItem;
+                    var songInfo = (SongInfo)(listViewItem.Content);
+                }
+            }
+        }
         private void RemovePlaylistButton_Click(object sender, RoutedEventArgs e)
         {
             var playlistID = (int)((Button)sender).Tag;
