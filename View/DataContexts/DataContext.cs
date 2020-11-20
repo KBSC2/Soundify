@@ -18,10 +18,7 @@ namespace View
                     new DataContext();
                 return _instance;
             }
-            set
-            {
-                _instance = value;
-            }
+            set => _instance = value;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -38,7 +35,7 @@ namespace View
 
         private Timer _timer;
 
-        public DataContext()
+        private DataContext()
         {
             Instance = this;
             _timer = new Timer {Interval = 10};

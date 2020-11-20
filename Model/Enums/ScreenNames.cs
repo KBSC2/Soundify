@@ -9,6 +9,7 @@ namespace Model
         HomeScreen,
         PlaylistScreen,
         QueueScreen,
-        PlaylistMenuScreen
+        PlaylistMenuScreen,
+        Logout
     }
 }

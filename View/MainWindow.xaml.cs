@@ -47,9 +47,8 @@ namespace Soundify
                 var login = new LoginScreen();
                 login.Show();
                 login.Focus();
-                this.Close();
+                this.Hide();
             }
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -75,9 +74,17 @@ namespace Soundify
             AudioPlayer.CurrentSong.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSong.CurrentTimeSong));
         }
 
-        public void SetScreen(ScreenNames screenName, object dataContext = null)
+        public void SetScreen(ScreenNames screenName)
         {
-            this.DataContext = dataContext ?? this.DataContext;
+            if (screenName == ScreenNames.Logout)
+            {
+                View.DataContext.Instance.CurrentUser = null;
+                var login = new LoginScreen();
+                login.Show();
+                login.Focus();
+                this.Hide();
+                return;
+            }
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
         }
 
@@ -119,6 +126,7 @@ namespace Soundify
         {
             AudioPlayer.Shuffle();
         }
+        
     }
 
 }
