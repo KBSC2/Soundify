@@ -19,6 +19,12 @@ namespace Model.DbModels
 
         [Required]
         public double Duration { get; set; }
+        
+        public string WrittenBy { get; set; }
+
+        public string ProducedBy { get; set; }
+
+        public string Description { get; set; }
 
         public IList<PlaylistSong> PlaylistSongs { get; set; }
     }

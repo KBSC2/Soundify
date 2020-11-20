@@ -11,13 +11,18 @@
         <DataContexts:SongInfoDataContext/>
     </Window.DataContext>
     <Grid Background="#FF303651">
-        <Grid Margin="0,0,0,0" Height="131" VerticalAlignment="Top">
-            <!--Grid.Background>
-                <ImageBrush ImageSource="Gangnam_Style_Official_Cover.png" Stretch="UniformToFill"/>
-            </-->
+        <Grid VerticalAlignment="Center">
+            <Image Source="Gangnam_Style_Official_Cover.png" Stretch="UniformToFill" VerticalAlignment="Center">
+                <Image.OpacityMask>
+                    <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+                        <GradientStop Color="White" Offset="1"/>
+                        <GradientStop Offset="0.2"/>
+                    </LinearGradientBrush>
+                </Image.OpacityMask>
+            </Image>
         </Grid>
-        <Grid Margin="0,125,0,0" Height="150" VerticalAlignment="Top">
-            <Grid Margin="0,0,450,0">
+        <Grid Margin="0,225,0,0" Height="150" VerticalAlignment="Top">
+            <Grid Margin="0,0,500,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0"/>
                     <RowDefinition Height="60"/>
@@ -26,9 +31,9 @@
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="1" Content="Song Name:" FontSize="25" HorizontalAlignment="Right" Foreground="White"/>
-                <Label Grid.Row="2" Content="Gangnam Style" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Right" Foreground="#ACAEB9"/>
+                <Label Grid.Row="2" Content="{Binding Song.Name}" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Right" Foreground="#ACAEB9"/>
                 <Label Grid.Row="3" Content="Artist Name:" FontSize="25" HorizontalAlignment="Right" Foreground="White"/>
-                <Label Grid.Row="4" Content="PSY" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Right" Foreground="#ACAEB9"/>
+                <Label Grid.Row="4" Content="{Binding Song.Artist}" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Right" Foreground="#ACAEB9"/>
             </Grid>
             <Grid>
                 <Grid.RowDefinitions>
@@ -38,19 +43,19 @@
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="1" Content="Song Name:" FontSize="25" HorizontalAlignment="Center" Foreground="White"/>
-                <Label Grid.Row="2" Content="PSY" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Center" Foreground="#ACAEB9"/>
-                <Label Grid.Row="3" Content="Artist Name:" FontSize="25" HorizontalAlignment="Center" Foreground="White"/>
-                <Label Grid.Row="4" Content="PSY" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Center" Foreground="#ACAEB9"/>
+                <Label Grid.Row="1" Content="Written By:" FontSize="25" HorizontalAlignment="Center" Foreground="White"/>
+                <Label Grid.Row="2" Content="{Binding Song.WrittenBy}" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Center" Foreground="#ACAEB9"/>
+                <Label Grid.Row="3" Content="Produced By:" FontSize="25" HorizontalAlignment="Center" Foreground="White"/>
+                <Label Grid.Row="4" Content="{Binding Song.ProducedBy}" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Center" Foreground="#ACAEB9"/>
             </Grid>
-            <Grid Margin="450,0,0,0">
+            <Grid Margin="500,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0"/>
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="100"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="1" Content="Description:" FontSize="25" HorizontalAlignment="Left" Foreground="White"/>
-                <Label Grid.Row="2" Content="Lorem ipsum dolor sit amet, consectetur &#xA;adipiscing elit. Aenean malesuada &#xA;iaculis dui, et ultrices diam consectetur &#xA;cursus. Ut at faucibus turpis, vitae mollis &#xA;justo. Fusce id metus dui. In vitae laoreet &#xA;sem. " FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Left" Foreground="#ACAEB9"/>
+                <TextBox Grid.Row="2" Text="{Binding Song.Description}" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Left" Foreground="#FFACAEB9" SelectionTextBrush="White" TextWrapping="Wrap" IsReadOnly="true" BorderBrush="{x:Null}"  Background="{x:Null}"/>
             </Grid>
         </Grid>
     </Grid>

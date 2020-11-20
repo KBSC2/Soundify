@@ -19,10 +19,18 @@ namespace View
     /// </summary>
     public partial class SongInfoScreen : Window
     {
+        
         public SongInfoScreen(Song song)
         {
             InitializeComponent();
             ((SongInfoDataContext)DataContext).Song = song;
+            ((SongInfoDataContext)DataContext).OnPropertyChanged();
+        }
+        public void ResizeImage()
+        {
+            Image SongImage = new Image();
+            SongImage.Source = new BitmapImage(new Uri("Gangnam_Style_Official_Cover.png"));
+            double scale = 450 / SongImage.Height;
         }
     }
 }
