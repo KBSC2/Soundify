@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.DirectoryServices.ActiveDirectory;
 using System.Text;
 using System.Windows;
 using Soundify;
@@ -8,6 +9,7 @@ namespace View.Screens
 {
     partial class SettingScreen : ResourceDictionary
     {
+        public bool IsOpen = false;
 
         public SettingScreen()
         {
@@ -23,9 +25,12 @@ namespace View.Screens
 
         private void ChangePassword_Button_Click(object sender, RoutedEventArgs e)
         {
-            var change = new ChangePassword();
+            if (!IsOpen)
+            {
+                var change = new ChangePassword();
                 change.Show();
                 change.Focus();
+            }
         }
     }
 }

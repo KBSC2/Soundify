@@ -108,7 +108,6 @@ namespace Soundify
             }
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
         }
-
         public void SetScreen(ScreenNames screenName, Playlist playlist)
         {
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;

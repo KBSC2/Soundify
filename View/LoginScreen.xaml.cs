@@ -43,7 +43,7 @@ namespace View
                     main.Show();
                     main.Focus();
                     this.Hide();
-                    this.UsernameLogin.Text = "Username";
+                    this.UsernameLogin.Text = "Email";
                     this.PasswordLogin.Password = "Password";
                     break;
                 }
