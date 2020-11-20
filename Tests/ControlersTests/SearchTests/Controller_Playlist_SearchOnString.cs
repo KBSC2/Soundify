@@ -25,7 +25,7 @@ namespace Tests.ControlersTests.SearchTests
         {
             SSHController.Instance.OpenSSHTunnel();
             context = new DatabaseContext();
-            playlistController = new PlaylistController(context, context.Playlists);
+            playlistController = new PlaylistController(context);
             playlistName = new Playlist() {Name = "PlaylistNameTest"};
             playlistDescription = new Playlist()
                 {Name = "PlaylistDescriptionTest", Description = "I really wanna test this"};
