@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Text;
-using System.Timers;
 using Controller.DbControllers;
 using Model.Data;
 using Model.DbModels;

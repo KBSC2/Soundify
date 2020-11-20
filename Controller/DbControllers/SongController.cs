@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
 using Model.Data;
 using Model.DbModels;
 

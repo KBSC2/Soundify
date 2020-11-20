@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using SshNet.Security.Cryptography;
-using MD5 = SshNet.Security.Cryptography.MD5;
 
 namespace Controller
 {
