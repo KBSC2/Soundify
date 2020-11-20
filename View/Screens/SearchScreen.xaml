@@ -1,0 +1,36 @@
+﻿<ResourceDictionary
+                    x:Class="View.Screens.SearchScreen"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:DataContexts="clr-namespace:View.DataContexts" 
+                    xmlns:local="clr-namespace:View.Screens">
+    <DataTemplate x:Key="SearchScreen">
+        <Grid>
+            <Grid.DataContext>
+                <DataContexts:SearchDataContext/>
+            </Grid.DataContext>
+            <ListView Name="SongsSearch" >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Titel" Width="200" DisplayMemberBinding="{Binding Song.Name}"/>
+                        <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Song.Artist}"/>
+                        <GridViewColumn Header="Duration" Width="75" DisplayMemberBinding="{Binding Song.Duration}"/>
+                        <GridViewColumn Header="Added" Width="150" DisplayMemberBinding="{Binding Song.Added}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <ListView Name="PlaylistSearch">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Titel" Width="200" DisplayMemberBinding="{Binding Playlist.Name}"/>
+                        <GridViewColumn Header="Duration" Width="75" DisplayMemberBinding="{Binding Playlist.Duration}"/>
+                        <GridViewColumn Header="Added" Width="150" DisplayMemberBinding="{Binding Playlist.Added}"/>
+                        <GridViewColumn Header="Genre" Width="150" DisplayMemberBinding="{Binding Playlist.Genre}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </DataTemplate> 
+    
+</ResourceDictionary>
