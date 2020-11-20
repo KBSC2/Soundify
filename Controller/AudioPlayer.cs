@@ -53,7 +53,7 @@ namespace Controller
 
         public static void Next()
         {
-            PlaySong(SongQueue[CurrentSongIndex++]);
+            PlaySong(SongQueue[++CurrentSongIndex]);
         }
 
         public static void Prev()

@@ -4,6 +4,9 @@ using Model;
 using Controller.DbControllers;
 using Model.DbModels;
 using Model.Data;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Tests
 {
@@ -27,7 +30,10 @@ namespace Tests
         public void PlaySong_PlaybackState_Playing()
         {
             AudioPlayer.PlaySong(Song);
+            Thread.Sleep(500);
             Assert.IsTrue(AudioPlayer.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing);
+            Thread.Sleep(500);
+            AudioPlayer.WaveOutDevice.Stop();
         }
 
         [Test, Category("Local")]
@@ -40,9 +46,17 @@ namespace Tests
         [Test, Category("Local")]
         public void PlayPlaylist_SongQueue_ContainsSongs()
         {
+            AudioPlayer.SongQueue.Clear(); 
             Playlist playlist = new PlaylistController(Context).GetItem(19);
             AudioPlayer.PlayPlaylist(playlist);
-            CollectionAssert.AreEqual(new PlaylistSongController(Context).GetSongsFromPlaylist(19),AudioPlayer.SongQueue);
+            var playlistsongs = new PlaylistSongController(Context).GetSongsFromPlaylist(playlist.ID);
+
+            bool areEqual = true;
+            for (int i = 0; i < playlistsongs.Count; i++)
+            {
+                if (playlistsongs[i].ID != AudioPlayer.SongQueue[i].ID) areEqual = false;
+            }
+            Assert.IsTrue(areEqual);
         }
     }
 }

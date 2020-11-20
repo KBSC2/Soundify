@@ -2,31 +2,32 @@
 using NUnit.Framework;
 using System;
 using System.IO;
+using System.Threading;
 
 namespace Tests
 {
     [TestFixture]
     public class Controller_FileCacheShould
     {
+        private string Path { get; set; }
+
         [SetUp]
         public void SetUp()
         {
+            Path = FileCache.Instance.GetFile("songs/untrago.mp3");
         }
 
         [Test]
         public void GetFile_Path_Exists()
         {
-            string path = FileCache.Instance.GetFile("test.txt");
-            Assert.IsTrue(File.Exists(path));
-            FileCache.Instance.ClearCache(TimeSpan.FromSeconds(-1));
+            Assert.IsTrue(File.Exists(Path));
         }
 
         [Test]
         public void ClearCache_Path_NotExists()
         {
-            string path = FileCache.Instance.GetFile("test.txt");
             FileCache.Instance.ClearCache(TimeSpan.FromSeconds(-1));
-            Assert.IsFalse(File.Exists(path));
+            Assert.IsFalse(File.Exists(Path));
         }
     }
 }
