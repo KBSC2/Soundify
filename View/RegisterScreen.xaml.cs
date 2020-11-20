@@ -71,5 +71,12 @@ namespace View
 
             }
         }
+        private void BackToLogin_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var cancelScreen = new LoginScreen();
+            this.Close();
+            cancelScreen.Show();
+            cancelScreen.Focus();
+        }
     }
 }

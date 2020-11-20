@@ -10,6 +10,7 @@ namespace Model
         PlaylistScreen,
         QueueScreen,
         PlaylistMenuScreen,
-        Logout
+        Logout,
+        SettingScreen
     }
 }

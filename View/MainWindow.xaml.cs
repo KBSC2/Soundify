@@ -11,6 +11,7 @@ using Model.EventArgs;
 using System.IO;
 using Model.DbModels;
 using View;
+using View.Screens;
 
 namespace Soundify
 {
@@ -29,9 +30,31 @@ namespace Soundify
         public PlaylistController PlaylistController { get; set; }
         public static Playlist CurrentPlayList { get; internal set; }
 
+        public static MainWindow InstanceMainWindow
+        {
+            get
+            {
+                if (_instanceMainWindow == null) _instanceMainWindow = new MainWindow();
+                return _instanceMainWindow;
+            }
+        }
+
+        public static LoginScreen InstanceLoginScreen
+        {
+            get
+            {
+                if (_instanceLoginScreen == null) _instanceLoginScreen = new LoginScreen();
+                return _instanceLoginScreen;
+            }
+        }
+
+        public static MainWindow _instanceMainWindow;
+        public static LoginScreen _instanceLoginScreen;
+
         public MainWindow()
         {
             AudioPlayer.Initialize();
+            _instanceMainWindow = this;
 
             InitializeComponent();
             SSHController.Instance.OpenSSHTunnel();
@@ -44,10 +67,8 @@ namespace Soundify
 
             if (View.DataContext.Instance.CurrentUser == null)
             {
-                var login = new LoginScreen();
-                login.Show();
-                login.Focus();
-                this.Hide();
+                InstanceLoginScreen.Show();
+                InstanceMainWindow.Hide();
             }
         }
 
@@ -87,7 +108,6 @@ namespace Soundify
             }
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
         }
-
         public void SetScreen(ScreenNames screenName, Playlist playlist)
         {
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
@@ -126,7 +146,6 @@ namespace Soundify
         {
             AudioPlayer.Shuffle();
         }
-        
     }
 
 }
