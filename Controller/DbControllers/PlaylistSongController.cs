@@ -23,7 +23,7 @@ namespace Controller.DbControllers
         {
             var playlistSong = new PlaylistSong()
             {
-                PlaylistID = playlistID, SongID = songID
+                PlaylistID = playlistID, SongID = songID, Index = _context.PlaylistSongs.Count()
             };
             _context.PlaylistSongs.Add(playlistSong);
             _context.Entry(playlistSong).State = EntityState.Added;
@@ -71,6 +71,19 @@ namespace Controller.DbControllers
             return _context.PlaylistSongs
                 .Where(p => p.PlaylistID == playlistID)
                 .First(s => s.SongID == songID);
+        }
+
+        public PlaylistSong GetPlaylistSongFromIndex(int playlistID, int index)
+        {
+            return _context.PlaylistSongs
+                .Where(p => p.PlaylistID == playlistID)
+                .First(s => s.Index == index);
+        }
+
+        public void UpdatePlaylistSong(PlaylistSong playlistSong)
+        {
+            _context.PlaylistSongs.Update(playlistSong);
+            _context.SaveChanges();
         }
     }
 }
