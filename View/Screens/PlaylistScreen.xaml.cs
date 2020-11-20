@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Model.Data;
 using Model.DbModels;
 using View.DataContexts;
+using System.Windows.Input;
 
 namespace View.Screens
 {
@@ -25,7 +26,14 @@ namespace View.Screens
         {
             AudioPlayer.PlayPlaylist(Soundify.MainWindow.CurrentPlayList);
         }
-        
+
+        private void SongRow_Click(object sender, MouseButtonEventArgs e)
+        {
+            var listViewItem = (ListViewItem)sender;
+            var songInfo = (SongInfo)listViewItem.Content;
+            AudioPlayer.PlayPlaylist(Soundify.MainWindow.CurrentPlayList, songInfo.Index);
+        }
+
         private void RemovePlaylistButton_Click(object sender, RoutedEventArgs e)
         {
             var playlistID = (int)((Button)sender).Tag;
