@@ -21,19 +21,11 @@ namespace View.Screens
         }
         private void ListViewItem_RightClick(object sender, RoutedEventArgs e)
         {
-            /*var song = (Song)(((MenuItem)sender).Tag);
+            var song = ((SongInfo)((MenuItem) sender).DataContext).Song;
+
             SongInfoScreen songInfoScreen = new SongInfoScreen(song);
-            songInfoScreen.Show();*/
-            MenuItem menuItem = sender as MenuItem;
-            if (menuItem != null)
-            {
-                ContextMenu parentContextMenu = menuItem.CommandParameter as ContextMenu;
-                if (parentContextMenu != null)
-                {
-                    ListViewItem listViewItem = parentContextMenu.PlacementTarget as ListViewItem;
-                    var songInfo = (SongInfo)(listViewItem.Content);
-                }
-            }
+            songInfoScreen.Show();
+
         }
         private void RemovePlaylistButton_Click(object sender, RoutedEventArgs e)
         {
