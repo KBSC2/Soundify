@@ -11,7 +11,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <ListView Grid.Row="0" Name="SearchSongs" ItemsSource="{Binding SearchSongs}" >
+            <ListView Grid.Row="0" Name="SearchSongs" Background="#FF303651" BorderBrush="#FF303651" Foreground="White" ItemsSource="{Binding SearchSongs}" >
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Titel" Width="200" DisplayMemberBinding="{Binding Song.Name}"/>
@@ -20,7 +20,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <ListView Grid.Row="1" Name="SearchPlaylists" ItemsSource="{Binding SearchPlaylists}" >
+            <ListView Grid.Row="1" Name="SearchPlaylists" Background="#FF303651" BorderBrush="#FF303651" Foreground="White" ItemsSource="{Binding SearchPlaylists}" >
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}"/>
