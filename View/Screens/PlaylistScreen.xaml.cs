@@ -25,6 +25,13 @@ namespace View.Screens
             this.InitializeComponent();
         }
 
+        public void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
+        {
+            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
+            var playlist = Soundify.MainWindow.CurrentPlayList;
+            new PlaylistSongController(new DatabaseContext()).RemoveFromPlaylist(song.ID, playlist.ID);
+        }
+
         private void Play_Playlist_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.PlayPlaylist(Soundify.MainWindow.CurrentPlayList);
