@@ -38,8 +38,9 @@ namespace Controller.DbControllers
             List<Playlist> searchPlaylists = GetList(userID)
                 .Where(playlist => searchTerms.Any(s => playlist.Name != null && playlist.Name.Contains(s)) ||
                                    searchTerms.Any(
-                                       s => playlist.Description != null && playlist.Description.Contains(s)) ||
-                                   searchTerms.Any(s => playlist.Genre != null && playlist.Genre.Contains(s)))
+                                       s => playlist.Description != null && playlist.Description.ToLower().Contains(s.ToLower())) ||
+                                   searchTerms.Any(s => playlist.Genre != null && playlist.Genre.ToLower().Contains(s.ToLower())))
+                .Take(8)
                 .ToList();
             return searchPlaylists;
         }
