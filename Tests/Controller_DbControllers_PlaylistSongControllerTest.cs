@@ -22,6 +22,7 @@ namespace Tests
         private PlaylistController playlistController;
         private PlaylistSongController playlistSongController;
         private Song song;
+        private Song song2;
         private Playlist playlist;
         [SetUp]
         public void SetUp()
@@ -29,6 +30,7 @@ namespace Tests
             SSHController.Instance.OpenSSHTunnel();
 
             song = new Song() { Duration = 60, Artist = "Rick Astley", Name = "Never gonna give you up", Path = "../Dit/is/een/path" };
+            song2 = new Song() { Duration = 60, Artist = "PSY", Name = "Gangnam Style", Path = "../Dit/is/een/path", WrittenBy = "Park Jae-Sang, Yoo Gun Hyung", ProducedBy = "Park Jae-Sang, Yoo Gun Hyung", Description = "PSY - ‘I LUV IT’ M/V @ https://youtu.be/Xvjnoagk6GU PSY - ‘New Face’ M / V @https://youtu.be/OwJPPaEyqhI PSY - 8TH ALBUM '4X2=8' on iTunes @ https://smarturl.it/PSY_8thAlbum PSY - GANGNAM STYLE(강남스타일) on iTunes @ http://smarturl.it/PsyGangnam #PSY #싸이 #GANGNAMSTYLE #강남스타일"};
             playlist = new Playlist() {Name = "TESTPLAYLIST", CreationDate = DateTime.Now};
             context = new DatabaseContext();
             
@@ -37,6 +39,7 @@ namespace Tests
             playlistSongController = new PlaylistSongController(context);
 
             songController.CreateItem(song);
+            songController.CreateItem(song2);
             playlistController.CreateItem(playlist);
         }
         [Test]
@@ -81,6 +84,14 @@ namespace Tests
             //After removing
             existsInPlaylist = playlistSongController.RowExists(songID, playlistID);
             Assert.IsFalse(existsInPlaylist);
+        }
+
+        [Test]
+        public void SongInfoAssert()
+        {
+            Assert.AreEqual("Park Jae-Sang, Yoo Gun Hyung", song2.WrittenBy);
+            Assert.AreEqual("Park Jae-Sang, Yoo Gun Hyung", song2.ProducedBy);
+            Assert.AreEqual("PSY - ‘I LUV IT’ M/V @ https://youtu.be/Xvjnoagk6GU PSY - ‘New Face’ M / V @https://youtu.be/OwJPPaEyqhI PSY - 8TH ALBUM '4X2=8' on iTunes @ https://smarturl.it/PSY_8thAlbum PSY - GANGNAM STYLE(강남스타일) on iTunes @ http://smarturl.it/PsyGangnam #PSY #싸이 #GANGNAMSTYLE #강남스타일", song2.Description);
         }
 
         //Everytime you test, remove the added items out of the database.
