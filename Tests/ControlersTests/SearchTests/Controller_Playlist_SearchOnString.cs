@@ -28,7 +28,7 @@ namespace Tests.ControlersTests.SearchTests
             SSHController.Instance.OpenSSHTunnel();
             context = new DatabaseContext();
             playlistController = new PlaylistController(context);
-            DataContext.Instance.CurrentUser = new UserController(context).GetItem(818);
+            DataContext.Instance.CurrentUser = new UserController(context).GetItem(52);
             playlistName = new Playlist() {Name = "PlaylistNameTest", UserID = DataContext.Instance.CurrentUser.ID};
             playlistDescription = new Playlist()
                 {Name = "PlaylistDescriptionTest", Description = "I really wanna test this", UserID = DataContext.Instance.CurrentUser.ID };
