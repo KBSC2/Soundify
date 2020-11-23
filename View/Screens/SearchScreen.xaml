@@ -35,6 +35,7 @@
                             <MenuItem.ItemContainerStyle>
                                 <Style TargetType="{x:Type MenuItem}">
                                     <EventSetter Event="PreviewMouseDown" Handler="MenuItem_LeftClick"/>
+                                    <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem}}"/>
                                     <Setter Property="MenuItem.Header" Value="{Binding Name}"/>
                                 </Style>
                             </MenuItem.ItemContainerStyle>

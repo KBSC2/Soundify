@@ -10,6 +10,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Controller.DbControllers;
+using Model.Data;
 using Model.DbModels;
 using View.DataContexts;
 
@@ -31,7 +33,10 @@ namespace View.Screens
         private void MenuItem_LeftClick(object sender, MouseButtonEventArgs e)
         {
             var playlist = ((Playlist)((MenuItem)sender).DataContext);
-            var song = ((MenuItem) sender).Parent.GetType();
+            var song = ((SongInfo)((MenuItem)((MenuItem)sender).Tag).DataContext).Song;
+
+            var playlistSongController = new PlaylistSongController(new DatabaseContext());
+            playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
         }
     }
 }
