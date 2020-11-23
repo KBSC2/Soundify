@@ -6,10 +6,11 @@
     xmlns:local="clr-namespace:Soundify"
     xmlns:View="clr-namespace:View"
     xmlns:components="clr-namespace:View.Components"
+    xmlns:dataContexts="clr-namespace:View.DataContexts"
     x:Class="Soundify.MainWindow"
     mc:Ignorable="d"
-    Title="MainWindow" MinHeight="450" MinWidth="800" Height="450" Width="800"
-    DataContext="{x:Static View:DataContext.Instance}">
+    Title="MainWindow" Height="450" Width="800"
+    DataContext="{x:Static dataContexts:DataContext.Instance}">
 
     <Grid>
         <Grid Background="#FF424D82" HorizontalAlignment="Left" Width="92">

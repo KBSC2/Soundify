@@ -12,33 +12,10 @@ namespace Controller
         public static IWavePlayer WaveOutDevice { get; set; }
         public static SongAudioFile CurrentSong { get; set; }
 
-        private static int _currentSongIndex = -1;
+        /*private static int _currentSongIndex = -1;*/
         public static int CurrentSongIndex
         {
-            get => _currentSongIndex;
-            set
-            {
-                if (SongQueue.Count == 0)
-                    _currentSongIndex = 0;
-
-                _currentSongIndex = value;
-
-                if (_looping)
-                {
-                    if (_currentSongIndex < 0)
-                        _currentSongIndex = SongQueue.Count - 1;
-                    if (_currentSongIndex >= SongQueue.Count)
-                        _currentSongIndex = 0;
-                }
-                else 
-                {
-                    if (_currentSongIndex < 0)
-                        _currentSongIndex = 0;
-                    if (_currentSongIndex >= SongQueue.Count)
-                        _currentSongIndex = SongQueue.Count - 1;
-                }
-                
-            }
+            get; set;
         }
 
         public static List<Song> SongQueue { get; set; } = new List<Song>();
@@ -52,12 +29,22 @@ namespace Controller
 
         public static void Next()
         {
-            PlaySong(SongQueue[++CurrentSongIndex]);
+            if (SongQueue.Count == 0) return;
+            CurrentSongIndex++;
+            if (CurrentSongIndex >= SongQueue.Count)
+                CurrentSongIndex = _looping ? 0 : CurrentSongIndex - 1;
+
+            PlaySong(SongQueue[CurrentSongIndex]);
         }
 
         public static void Prev()
         {
-            PlaySong(SongQueue[CurrentSongIndex--]);
+            if (SongQueue.Count == 0) return;
+            CurrentSongIndex--;
+            if (CurrentSongIndex < 0)
+                CurrentSongIndex = _looping ? SongQueue.Count - 1 : 0;
+
+            PlaySong(SongQueue[CurrentSongIndex]);
         }
 
         public static void Loop()
@@ -82,21 +69,28 @@ namespace Controller
             SongQueue.Add(song);
         }
 
+
+        private static void ClearSongQueue()
+        {
+            SongQueue.Clear();
+        }
+
         public static void PlayPlaylist(Playlist playlist, int startIndex = 0)
         {
+            ClearSongQueue();
             var songs = new PlaylistSongController(new Model.Data.DatabaseContext()).GetSongsFromPlaylist(playlist.ID);
-            _currentSongIndex = -1;
+            CurrentSongIndex = -1;
 
             for (int i = startIndex; i < songs.Count; i++)
             {
-                AddSong(songs[i]);
+                AddSong(songs[i].Song);
             }
 
             if (_looping)
             {
                 for (int i = 0; i < startIndex; i++)
                 {
-                    AddSong(songs[i]);
+                    AddSong(songs[i].Song);
                 }
             }
 

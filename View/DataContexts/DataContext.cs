@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Timers;
 using Model.DbModels;
 
-namespace View
+namespace View.DataContexts
 {
     public class DataContext : INotifyPropertyChanged
     {

@@ -11,8 +11,7 @@ namespace View.DataContexts
     public class PlaylistDataContext : INotifyPropertyChanged
     {
         public List<SongInfo> PlaylistItems => SongInfo.ConvertSongListToSongInfo(Soundify.MainWindow.CurrentPlayList,
-            new PlaylistSongController(new DatabaseContext()).GetSongsFromPlaylist(Soundify.MainWindow.CurrentPlayList
-                .ID));
+            new PlaylistSongController(new DatabaseContext()).GetSongsFromPlaylist(Soundify.MainWindow.CurrentPlayList.ID));
         public Playlist Playlist => Soundify.MainWindow.CurrentPlayList;
 
         public event PropertyChangedEventHandler PropertyChanged;

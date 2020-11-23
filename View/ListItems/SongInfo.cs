@@ -24,12 +24,12 @@ namespace View
             Index = playlistSong.Index;
         }
 
-        public static List<SongInfo> ConvertSongListToSongInfo(Playlist playlist, List<Song> songs)
+        public static List<SongInfo> ConvertSongListToSongInfo(Playlist playlist, List<PlaylistSong> songs)
         {
             var playlistSongController = new PlaylistSongController(new DatabaseContext());
+            var songController = new SongController(new DatabaseContext());
 
-            return songs.Select(song => new SongInfo(song, playlistSongController.GetPlaylistSong(playlist.ID, song.ID)))
-                .OrderBy(playlistSong => playlistSong.Index)
+            return songs.Select(song => new SongInfo(song.Song, playlistSongController.GetPlaylistSong(playlist.ID, song.SongID)))
                 .ToList();
         }
     }

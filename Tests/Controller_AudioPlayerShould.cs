@@ -7,6 +7,7 @@ using Model.Data;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System;
 
 namespace Tests
 {
@@ -16,6 +17,11 @@ namespace Tests
 
         private DatabaseContext Context { get; set; }
         private Song Song { get; set; }
+        private Song Song2 { get; set; }
+        private Playlist Playlist { get; set; }
+        private SongController SongController { get; set; }
+        private PlaylistSongController PlaylistSongController { get; set; }
+        private PlaylistController PlaylistController { get; set; }
 
         [SetUp]
         public void SetUp()
@@ -23,17 +29,18 @@ namespace Tests
             SSHController.Instance.OpenSSHTunnel();
             AudioPlayer.Initialize();
             Context = new DatabaseContext();
-            Song = new SongController(Context).GetItem(9);
-        }
+            SongController = new SongController(Context);
+            PlaylistSongController = new PlaylistSongController(Context);
+            PlaylistController = new PlaylistController(Context);
 
-        [Test, Category("Local")]
-        public void PlaySong_PlaybackState_Playing()
-        {
-            AudioPlayer.PlaySong(Song);
-            Thread.Sleep(500);
-            Assert.IsTrue(AudioPlayer.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing);
-            Thread.Sleep(500);
-            AudioPlayer.WaveOutDevice.Stop();
+            Playlist = new Playlist() { Name = "Test", ActivePlaylist = true, CreationDate = DateTime.Now };
+            PlaylistController.CreateItem(Playlist);
+
+            Song = new Song() { Artist = "test", Duration = 11, Name = "test", Path = "songs/dansenaandegracht.mp3" };
+            Song2 = new Song() { Artist = "test2", Duration = 11, Name = "test2", Path = "songs/untrago.mp3" };
+
+            SongController.CreateItem(Song);
+            SongController.CreateItem(Song2);
         }
 
         [Test, Category("Local")]
@@ -46,23 +53,30 @@ namespace Tests
         [Test, Category("Local")]
         public void PlayPlaylist_SongQueue_ContainsSongs()
         {
-            AudioPlayer.SongQueue.Clear(); 
-            Playlist playlist = new PlaylistController(Context).GetItem(19);
-            AudioPlayer.PlayPlaylist(playlist);
-            var playlistsongs = new PlaylistSongController(Context).GetSongsFromPlaylist(playlist.ID);
+            AudioPlayer.SongQueue.Clear();
+
+            PlaylistSongController.AddSongToPlaylist(Song.ID, Playlist.ID);
+            PlaylistSongController.AddSongToPlaylist(Song2.ID, Playlist.ID);
+
+            AudioPlayer.PlayPlaylist(Playlist);
+            var playlistsongs = new PlaylistSongController(Context).GetSongsFromPlaylist(Playlist.ID);
 
             bool areEqual = true;
             for (int i = 0; i < playlistsongs.Count; i++)
             {
-                if (playlistsongs[i].ID != AudioPlayer.SongQueue[i].ID) areEqual = false;
+                if (playlistsongs[i].Song.ID != AudioPlayer.SongQueue[i].ID) areEqual = false;
             }
             Assert.IsTrue(areEqual);
+            PlaylistSongController.RemoveFromPlaylist(Song.ID, Playlist.ID);
+            PlaylistSongController.RemoveFromPlaylist(Song2.ID, Playlist.ID);
         }
 
         [TearDown, Category("Local")]
         public void TearDown()
         {
-            AudioPlayer.WaveOutDevice.Stop();
+            PlaylistController.DeleteItem(Playlist.ID);
+            SongController.DeleteItem(Song.ID);
+            SongController.DeleteItem(Song2.ID);
         }
     }
 }

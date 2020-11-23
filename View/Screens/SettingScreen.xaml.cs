@@ -4,6 +4,7 @@ using System.DirectoryServices.ActiveDirectory;
 using System.Text;
 using System.Windows;
 using Soundify;
+using View.DataContexts;
 
 namespace View.Screens
 {

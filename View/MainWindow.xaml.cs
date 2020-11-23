@@ -9,6 +9,7 @@ using Model.Data;
 using Model.DbModels;
 using Model.EventArgs;
 using View;
+using System.Collections.Generic;
 
 namespace Soundify
 {
@@ -22,9 +23,6 @@ namespace Soundify
         #endregion
 
         public DatabaseContext Context { get; set; }
-        public PlaylistSongController PlaylistSongController { get; set; }
-        public SongController SongController { get; set; }
-        public PlaylistController PlaylistController { get; set; }
         public static Playlist CurrentPlayList { get; internal set; }
 
         public static MainWindow InstanceMainWindow
@@ -62,11 +60,18 @@ namespace Soundify
             SetScreen(ScreenNames.HomeScreen);
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
 
-            if (View.DataContext.Instance.CurrentUser == null)
+            if (View.DataContexts.DataContext.Instance.CurrentUser == null)
             {
                 InstanceLoginScreen.Show();
                 InstanceMainWindow.Hide();
             }
+
+            /*var test = new PlaylistController(Context).GetList();
+
+            new PlaylistSongController(Context).AddSongToPlaylist(9, 965);
+            new PlaylistSongController(Context).AddSongToPlaylist(10, 965);
+            new PlaylistSongController(Context).AddSongToPlaylist(11, 965);
+            new PlaylistSongController(Context).AddSongToPlaylist(12, 965);*/
         }
 
         private void Play_Button_Click(object sender, RoutedEventArgs e)
@@ -96,7 +101,7 @@ namespace Soundify
         {
             if (screenName == ScreenNames.Logout)
             {
-                View.DataContext.Instance.CurrentUser = null;
+                View.DataContexts.DataContext.Instance.CurrentUser = null;
                 var login = new LoginScreen();
                 login.Show();
                 login.Focus();

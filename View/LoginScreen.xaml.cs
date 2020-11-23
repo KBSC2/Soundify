@@ -27,7 +27,7 @@ namespace View
             {
                 case LoginResults.Success:
                 {
-                    View.DataContext.Instance.CurrentUser = controller.GetUserFromEmailOrUsername(emailOrUsername);
+                    DataContexts.DataContext.Instance.CurrentUser = controller.GetUserFromEmailOrUsername(emailOrUsername);
                     var main = new MainWindow();
                     main.Show();
                     main.Focus();

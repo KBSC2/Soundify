@@ -25,15 +25,15 @@ namespace Model.Data
             /*modelBuilder.Entity<T : DbModel>().ToTable("<TableName>");*/
             modelBuilder.Entity<PlaylistSong>().HasKey(ps => new {ps.PlaylistID, ps.SongID});
 
-            modelBuilder.Entity<PlaylistSong>()
+            /*modelBuilder.Entity<PlaylistSong>()
                 .HasOne<Playlist>(ps => ps.Playlist)
                 .WithMany(p => p.PlaylistSongs)
-                .HasForeignKey(ps => ps.PlaylistID);
+                .HasForeignKey(ps => ps.PlaylistID);*/
 
-            modelBuilder.Entity<PlaylistSong>()
+            /*modelBuilder.Entity<PlaylistSong>()
                 .HasOne<Song>(ps => ps.Song)
                 .WithMany(s => s.PlaylistSongs)
-                .HasForeignKey(ps => ps.SongID);
+                .HasForeignKey(ps => ps.SongID);*/
 
             modelBuilder.Entity<Playlist>()
                 .Property(p => p.ActivePlaylist)
