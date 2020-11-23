@@ -7,13 +7,6 @@
         xmlns:DataContexts="clr-namespace:View.DataContexts" x:Class="View.LoginScreen"
         mc:Ignorable="d"
         Title="LoginScreen" Height="715" Width="617">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/Watermark.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
     <Grid Background="{DynamicResource BackgroundColor}">
         <Image Margin="263,32,263,576" Stretch="Fill" Source="Assets/soundify.png" Width="66" Height="66"/>
         <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,123,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50"/>
