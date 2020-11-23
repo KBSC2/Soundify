@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.Data;
 using Model.DbModels;
 using NUnit.Framework;
+using View.DataContexts;
 using Assert = NUnit.Framework.Assert;
 
 namespace Tests
@@ -28,9 +29,9 @@ namespace Tests
             _context = new DatabaseContext();
             _playlistController = new PlaylistController(_context);
             _testPlaylist1 = new Playlist()
-                {Name = "TestPlaylist1", ActivePlaylist = true, CreationDate = DateTime.Now};
+                {Name = "TestPlaylist1", ActivePlaylist = true, CreationDate = DateTime.Now, UserID = 1};
             _testPlaylist2 = new Playlist()
-                { Name = "TestPlaylist2", ActivePlaylist = false, CreationDate = DateTime.Now };
+                { Name = "TestPlaylist2", ActivePlaylist = false, CreationDate = DateTime.Now, UserID = 1};
         }
 
         [Test]
@@ -42,7 +43,7 @@ namespace Tests
             _testPlaylist2.ActivePlaylist = false;
             _playlistController.UpdateItem(_testPlaylist2);
 
-            var result = _playlistController.GetActivePlaylists();
+            var result = _playlistController.GetActivePlaylists(1);
             Assert.True(result.Contains(_testPlaylist1));
             Assert.False(result.Contains(_testPlaylist2));
         }

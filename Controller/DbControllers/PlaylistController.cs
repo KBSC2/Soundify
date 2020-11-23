@@ -32,11 +32,11 @@ namespace Controller.DbControllers
             }
         }
 
-        public List<Playlist> SearchPlayListOnString(List<string> searchTerms)
+        public List<Playlist> SearchPlayListOnString(List<string> searchTerms, int userID)
         {
-            var playlists = Context.Playlists.AsEnumerable();
-            List<Playlist> searchPlaylists = playlists
-                .Where(playlist => searchTerms.Any(s => playlist.Name != null && playlist.Name.ToLower().Contains(s.ToLower())) ||
+            /*var playlists = Context.Playlists.AsEnumerable();*/
+            List<Playlist> searchPlaylists = GetList(userID)
+                .Where(playlist => searchTerms.Any(s => playlist.Name != null && playlist.Name.Contains(s)) ||
                                    searchTerms.Any(
                                        s => playlist.Description != null && playlist.Description.ToLower().Contains(s.ToLower())) ||
                                    searchTerms.Any(s => playlist.Genre != null && playlist.Genre.ToLower().Contains(s.ToLower())))
@@ -44,9 +44,15 @@ namespace Controller.DbControllers
                 .ToList();
             return searchPlaylists;
         }
-        public List<Playlist> GetActivePlaylists()
+
+        public List<Playlist> GetList(int userID)
         {
-            return GetFilteredList(x => x.ActivePlaylist);
+            return base.GetFilteredList(x => x.UserID == userID);
+        }
+
+        public List<Playlist> GetActivePlaylists(int userID)
+        {
+            return GetList(userID).Where(x => x.ActivePlaylist).ToList();
         }
     }
 }

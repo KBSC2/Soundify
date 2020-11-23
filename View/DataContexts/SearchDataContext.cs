@@ -30,7 +30,7 @@ namespace View.DataContexts
         
         public List<SongInfo> SearchSongs => SongInfo.ConvertSongListToSongInfo(new SongController(new DatabaseContext()).SearchSongsOnString(SearchTerms));
         
-        public List<Playlist> SearchPlaylists => new PlaylistController(new DatabaseContext()).SearchPlayListOnString(SearchTerms);
+        public List<Playlist> SearchPlaylists => new PlaylistController(new DatabaseContext()).SearchPlayListOnString(SearchTerms, DataContext.Instance.CurrentUser.ID);
 
         [NotifyPropertyChangedInvocator]
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
