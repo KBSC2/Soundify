@@ -28,31 +28,15 @@ namespace View.DataContexts
 
         public List<string> SearchTerms { get; set; } = new List<string>();
         
-        public List<SongInfo> SearchSongs => SongInfo.ConvertSongListToSongInfo(SearchSongsOnString());
+        public List<SongInfo> SearchSongs => SongInfo.ConvertSongListToSongInfo(new SongController(new DatabaseContext()).SearchSongsOnString(SearchTerms));
         
-        public List<Playlist> SearchPlaylists => SearchPlaylistsOnStrings();
+        public List<Playlist> SearchPlaylists => new PlaylistController(new DatabaseContext()).SearchPlayListOnString(SearchTerms);
 
         [NotifyPropertyChangedInvocator]
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        private List<Song> SearchSongsOnString()
-        {
-            SongController songController = new SongController(new DatabaseContext());
-            return songController.SearchSongsOnString(SearchTerms);
-        }
-        
-        
-        private List<Playlist> SearchPlaylistsOnStrings()
-        {
-            PlaylistController playlistController= new PlaylistController(new DatabaseContext());
-            return playlistController.SearchPlayListOnString(SearchTerms);
-        }
-        
-        
-
 
     }
 }
