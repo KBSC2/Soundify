@@ -11,6 +11,13 @@
     mc:Ignorable="d"
     Title="MainWindow" Height="720" Width="1280" MinHeight="720" MinWidth="1280"
     DataContext="{x:Static dataContexts:DataContext.Instance}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Watermark.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
 
     <Grid>
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="92,59,0,74" ContentTemplate="{StaticResource HomeScreen}"/>
@@ -26,7 +33,7 @@
             <Slider x:Name="Duration" Margin="-6,-8,-4,64" IsMoveToPointEnabled="True" Foreground="White" Minimum="0.00" Maximum="{Binding TotalTime, Mode=OneWay}" Value="{Binding CurrentTime, Mode=OneWay}" ValueChanged="Duration_ValueChanged"/>
         </Grid>
         <Grid Margin="89,0,0,0" Background="{DynamicResource Background2Color}" Height="54" VerticalAlignment="Top" ShowGridLines="False">
-            <TextBox HorizontalAlignment="Center" Text="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="192" Height="25" KeyDown="SetSearchTerms" BorderBrush="{x:Null}"/>
+            <TextBox Style="{StaticResource WatermarkTextbox }" HorizontalAlignment="Center" Tag="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="192" Height="25" KeyDown="SetSearchTerms" BorderBrush="{x:Null}"/>
             <components:MenuButton MaxHeight="34" MaxWidth="70" ScreenName="SettingScreen"         Content="Settings"        Margin="0,0,10,0" VerticalAlignment="Center" Height="30" HorizontalAlignment="Right" Width="78"/>
         </Grid>
         <Grid Background="{DynamicResource BackgroundColor}" HorizontalAlignment="Left" Width="92" ShowGridLines="False">
