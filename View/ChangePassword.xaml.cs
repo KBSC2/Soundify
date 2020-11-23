@@ -35,7 +35,7 @@ namespace View
             var repeatPassword = this.RepeatPassword.Text;
 
             var controller = new UserController(new DatabaseContext());
-            var user = controller.GetUserFromEmailOrUsername(View.DataContext.Instance.CurrentUser.Email);
+            var user = controller.GetUserFromEmailOrUsername(DataContexts.DataContext.Instance.CurrentUser.Email);
             var result = controller.UserLogin(user.Email, currentPassword);
             switch (result)
             {
