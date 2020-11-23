@@ -1,36 +1,96 @@
 ﻿<ResourceDictionary
-                    x:Class="View.Screens.SearchScreen"
-                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:DataContexts="clr-namespace:View.DataContexts" 
-                    xmlns:View="clr-namespace:View"
-                    xmlns:local="clr-namespace:View.Screens">
+    x:Class="View.Screens.SearchScreen"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:DataContexts="clr-namespace:View.DataContexts"
+    xmlns:View="clr-namespace:View"
+    xmlns:local="clr-namespace:View.Screens">
     <DataTemplate x:Key="SearchScreen">
         <Grid DataContext="{x:Static DataContexts:SearchDataContext.Instance}">
+            <Grid.Resources>
+                <CollectionViewSource x:Key="AllPlaylists" Source="{Binding AllPlaylists}"></CollectionViewSource>
+            </Grid.Resources>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
-            <ListView Grid.Row="0" Name="SearchSongs" Background="#FF303651" BorderBrush="#FF303651" Foreground="White" ItemsSource="{Binding SearchSongs}" >
+            <ListView Grid.Row="0" Name="SearchSongs" Background="#FF303651" BorderBrush="#FF303651" Foreground="White"
+                      ItemsSource="{Binding SearchSongs}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Titel" Width="200" DisplayMemberBinding="{Binding Song.Name}"/>
-                        <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Song.Artist}"/>
-                        <GridViewColumn Header="Duration" Width="75" DisplayMemberBinding="{Binding Duration}"/>
+                        <GridViewColumn Header="Titel" Width="200" DisplayMemberBinding="{Binding Song.Name}" />
+                        <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Song.Artist}" />
+                        <GridViewColumn Header="Duration" Width="75" DisplayMemberBinding="{Binding Duration}" />
                     </GridView>
                 </ListView.View>
+                <ListView.Resources>
+                    <ContextMenu x:Key="ItemContextMenu">
+                        <MenuItem Header="Add to Playlist"  
+                                  CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" >
+                            <MenuItem.ItemsSource>
+                                <CompositeCollection>
+                                    <CollectionContainer Collection="{Binding Source={StaticResource AllPlaylists }}" />
+                                </CompositeCollection>
+                            </MenuItem.ItemsSource>
+                            <MenuItem.ItemContainerStyle>
+                                <Style TargetType="{x:Type MenuItem}">
+                                    <EventSetter Event="PreviewMouseDown" Handler="MenuItem_LeftClick"/>
+                                    <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem}}"/>
+                                    <Setter Property="MenuItem.Header" Value="{Binding Name}"/>
+                                </Style>
+                            </MenuItem.ItemContainerStyle>
+                        </MenuItem>
+                    </ContextMenu>
+                </ListView.Resources>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}"  >
+<!--                        <EventSetter Event="MouseDoubleClick" Handler="SongRow_Click"/>-->
+                        <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}"></Setter>
+                        <Setter Property="Background" Value="#FF445399" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#FF8390E4" />
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
             </ListView>
-            <ListView Grid.Row="1" Name="SearchPlaylists" Background="#FF303651" BorderBrush="#FF303651" Foreground="White" ItemsSource="{Binding SearchPlaylists}" >
+            <ListView Grid.Row="1" Name="SearchPlaylists" Background="#FF303651" BorderBrush="#FF303651"
+                      Foreground="White" ItemsSource="{Binding SearchPlaylists}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}"/>
-                        <GridViewColumn Header="Creation Date" Width="150" DisplayMemberBinding="{Binding CreationDate}"/>
-                        <GridViewColumn Header="Genre" Width="150" DisplayMemberBinding="{Binding Genre}"/>
+                        <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Creation Date" Width="150"
+                                        DisplayMemberBinding="{Binding CreationDate}" />
+                        <GridViewColumn Header="Genre" Width="150" DisplayMemberBinding="{Binding Genre}" />
                     </GridView>
                 </ListView.View>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}"  >
+ <!--                       <EventSetter Event="MouseDoubleClick" Handler="PlaylistRow_Click"/>-->
+                        <Setter Property="Background" Value="#FF445399" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#FF8390E4" />
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
             </ListView>
 
         </Grid>
-    </DataTemplate> 
-    
+    </DataTemplate>
+
 </ResourceDictionary>

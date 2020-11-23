@@ -66,7 +66,7 @@ namespace Soundify
             if (View.DataContexts.DataContext.Instance.CurrentUser == null)
             {
                 InstanceLoginScreen.Show();
-                InstanceMainWindow.Hide();
+               InstanceMainWindow.Hide();
             }
 
             /*var test = new PlaylistController(Context).GetList();
