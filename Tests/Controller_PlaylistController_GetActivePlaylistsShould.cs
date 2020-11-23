@@ -29,9 +29,9 @@ namespace Tests
             _context = new DatabaseContext();
             _playlistController = new PlaylistController(_context);
             _testPlaylist1 = new Playlist()
-                {Name = "TestPlaylist1", ActivePlaylist = true, CreationDate = DateTime.Now};
+                {Name = "TestPlaylist1", ActivePlaylist = true, CreationDate = DateTime.Now, UserID = 1};
             _testPlaylist2 = new Playlist()
-                { Name = "TestPlaylist2", ActivePlaylist = false, CreationDate = DateTime.Now };
+                { Name = "TestPlaylist2", ActivePlaylist = false, CreationDate = DateTime.Now, UserID = 1};
         }
 
         [Test]
