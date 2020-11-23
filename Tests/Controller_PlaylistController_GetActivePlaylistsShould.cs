@@ -43,7 +43,7 @@ namespace Tests
             _testPlaylist2.ActivePlaylist = false;
             _playlistController.UpdateItem(_testPlaylist2);
 
-            var result = _playlistController.GetActivePlaylists(DataContext.Instance.CurrentUser.ID);
+            var result = _playlistController.GetActivePlaylists(1);
             Assert.True(result.Contains(_testPlaylist1));
             Assert.False(result.Contains(_testPlaylist2));
         }
