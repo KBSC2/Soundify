@@ -38,6 +38,7 @@ namespace Tests
 
             Song = new Song() { Artist = "test", Duration = 11, Name = "test", Path = "songs/dansenaandegracht.mp3" };
             Song2 = new Song() { Artist = "test2", Duration = 11, Name = "test2", Path = "songs/untrago.mp3" };
+
             SongController.CreateItem(Song);
             SongController.CreateItem(Song2);
         }
@@ -63,7 +64,7 @@ namespace Tests
             bool areEqual = true;
             for (int i = 0; i < playlistsongs.Count; i++)
             {
-                if (playlistsongs[i].ID != AudioPlayer.SongQueue[i].ID) areEqual = false;
+                if (playlistsongs[i].Song.ID != AudioPlayer.SongQueue[i].ID) areEqual = false;
             }
             Assert.IsTrue(areEqual);
             PlaylistSongController.RemoveFromPlaylist(Song.ID, Playlist.ID);
