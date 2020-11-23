@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using NAudio.Wave;
 using Controller;
 using Controller.DbControllers;
@@ -9,6 +11,7 @@ using Model.Data;
 using Model.DbModels;
 using Model.EventArgs;
 using View;
+using View.DataContexts;
 
 namespace Soundify
 {
@@ -41,14 +44,14 @@ namespace Soundify
 
             SetScreen(ScreenNames.HomeScreen);
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
-
+            /*
             if (View.DataContext.Instance.CurrentUser == null)
             {
                 var login = new LoginScreen();
                 login.Show();
                 login.Focus();
                 this.Hide();
-            }
+            } */
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -126,7 +129,20 @@ namespace Soundify
         {
             AudioPlayer.Shuffle();
         }
-        
+
+        public void SetSearchTerms(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                var textBox = (TextBox) sender;
+                var text = textBox.Text;
+                SetScreen(ScreenNames.SearchScreen);
+                SearchDataContext.Instance.SearchTerms = text.Split(" ").ToList();
+                SearchDataContext.Instance.OnPropertyChanged("");
+            }
+            
+        }
+
     }
 
 }

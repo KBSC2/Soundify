@@ -8,22 +8,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using View.DataContexts;
 
-namespace View.Screens
+namespace View
 {
     /// <summary>
-    /// Interaction logic for SearchScreen.xaml
+    /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class SearchScreen : ResourceDictionary
+    public partial class Window1 : Window
     {
-        private SearchDataContext searchDataContext;
-        public SearchScreen()
+        public Window1()
         {
             InitializeComponent();
-
         }
     }
 }

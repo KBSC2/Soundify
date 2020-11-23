@@ -33,5 +33,17 @@ namespace View
 
             return returnList;
         }
+
+        public static List<SongInfo> ConvertSongListToSongInfo(List<Song> songs)
+        {
+            var returnList = new List<SongInfo>();
+
+            foreach (var song in songs)
+            {
+                returnList.Add(new SongInfo(song, DateTime.Now));
+            }
+
+            return returnList;
+        }
     }
 }
