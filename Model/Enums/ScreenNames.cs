@@ -8,7 +8,7 @@ namespace Model
         QueueScreen,
         PlaylistMenuScreen,
         Logout,
-        SettingScreen
+        SettingScreen,
         SearchScreen
     }
 }

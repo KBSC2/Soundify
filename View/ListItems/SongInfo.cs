@@ -24,6 +24,11 @@ namespace View
             Index = playlistSong.Index;
         }
 
+        public SongInfo(Song song)
+        {
+            Song = song;
+        }
+
         public static List<SongInfo> ConvertSongListToSongInfo(Playlist playlist, List<PlaylistSong> songs)
         {
             var playlistSongController = new PlaylistSongController(new DatabaseContext());
@@ -39,7 +44,7 @@ namespace View
 
             foreach (var song in songs)
             {
-                returnList.Add(new SongInfo(song, DateTime.Now));
+                returnList.Add(new SongInfo(song));
             }
 
             return returnList;
