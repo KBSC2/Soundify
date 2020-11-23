@@ -10,13 +10,18 @@
     <Window.DataContext>
         <DataContexts:SongInfoDataContext/>
     </Window.DataContext>
+    <Window.Resources>
+        <BitmapImage x:Key="masterImage" UriSource="Gangnam_Style_Official_Cover.png" />
+        <CroppedBitmap x:Key="SongImage" 
+      Source="{StaticResource masterImage}" SourceRect="0 200 1782 950"/>
+    </Window.Resources>
     <Grid Background="#FF303651">
         <Grid VerticalAlignment="Center">
-            <Image Source="Gangnam_Style_Official_Cover.png" Stretch="UniformToFill" VerticalAlignment="Center">
+            <Image Source="{StaticResource SongImage}" Stretch="UniformToFill" VerticalAlignment="Top">
                 <Image.OpacityMask>
                     <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
                         <GradientStop Color="White" Offset="1"/>
-                        <GradientStop Offset="0.2"/>
+                        <GradientStop Offset="0.5"/>
                     </LinearGradientBrush>
                 </Image.OpacityMask>
             </Image>
