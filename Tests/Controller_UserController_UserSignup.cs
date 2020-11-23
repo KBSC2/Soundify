@@ -20,6 +20,7 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
+            DatabaseContext.TEST_DB = true;
             SSHController.Instance.OpenSSHTunnel();
             Controller.CreateAccount(new User() {Email = "duplicate@gmail.com", Username = "test"}, "Sterk_W@chtw000rd2",
                 "Sterk_W@chtw000rd2"); // create account to test already exists

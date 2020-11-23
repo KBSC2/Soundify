@@ -25,6 +25,7 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
+            DatabaseContext.TEST_DB = true;
             SSHController.Instance.OpenSSHTunnel();
             _context = new DatabaseContext();
             _playlistController = new PlaylistController(_context);

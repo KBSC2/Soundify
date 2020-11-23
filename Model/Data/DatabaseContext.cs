@@ -5,6 +5,7 @@ namespace Model.Data
 {
     public class DatabaseContext : DbContext
     {
+        public static bool TEST_DB { get; set; } = false;
 
         public DbSet<Song> Songs { get; set; }
         public DbSet<Playlist> Playlists{ get; set; }
@@ -15,7 +16,7 @@ namespace Model.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Data Source=127.0.0.1;Initial Catalog=Soundify;User ID=SA;Password=Sterk_W@chtw00rd2");
+                optionsBuilder.UseSqlServer(@"Data Source=127.0.0.1;Initial Catalog=" + (TEST_DB ? "Test_Soundify" : "Soundify") + ";User ID=SA;Password=Sterk_W@chtw00rd2");
             }
         }
 
