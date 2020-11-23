@@ -12,6 +12,7 @@ using Model.Data;
 using Model.DbModels;
 using Model.EventArgs;
 using Soundify;
+using View.DataContexts;
 
 namespace View.Screens
 {

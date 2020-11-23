@@ -38,13 +38,13 @@ namespace Soundify
             SetScreen(ScreenNames.HomeScreen);
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
 
-           /* if (View.DataContext.Instance.CurrentUser == null)
+            if (View.DataContexts.DataContext.Instance.CurrentUser == null)
             {
                 var login = new LoginScreen();
                 login.Show();
                 login.Focus();
                 this.Hide();
-            }*/
+            }
 
             /*var test = new PlaylistController(Context).GetList();
 
@@ -81,7 +81,7 @@ namespace Soundify
         {
             if (screenName == ScreenNames.Logout)
             {
-                View.DataContext.Instance.CurrentUser = null;
+                View.DataContexts.DataContext.Instance.CurrentUser = null;
                 var login = new LoginScreen();
                 login.Show();
                 login.Focus();
