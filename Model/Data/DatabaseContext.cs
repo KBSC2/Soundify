@@ -15,7 +15,7 @@ namespace Model.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Data Source=127.0.0.1;Initial Catalog=Soundify;User ID=SA;Password=Sterk_W@chtw00rd2");
+                optionsBuilder.UseSqlServer(@"Data Source=127.0.0.1;Initial Catalog=TEST_Soundify;User ID=SA;Password=Sterk_W@chtw00rd2");
             }
         }
 

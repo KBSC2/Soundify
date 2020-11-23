@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Model.DbModels;
 using View.DataContexts;
 
 namespace View.Screens
@@ -24,6 +25,13 @@ namespace View.Screens
         {
             InitializeComponent();
 
+        }
+
+        
+        private void MenuItem_LeftClick(object sender, MouseButtonEventArgs e)
+        {
+            var playlist = ((Playlist)((MenuItem)sender).DataContext);
+            var song = ((MenuItem) sender).Parent.GetType();
         }
     }
 }
