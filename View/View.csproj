@@ -35,6 +35,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Screens\SettingScreen.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="Screens\PlaylistMenuScreen.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
