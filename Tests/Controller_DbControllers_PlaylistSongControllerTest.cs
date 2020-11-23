@@ -44,8 +44,8 @@ namespace Tests
         {
             playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
 
-            var lastSongID = songController.GetLastItem().ID;
-            var playlistID = playlistController.GetLastItem().ID;
+            var lastSongID = song.ID;
+            var playlistID = playlist.ID;
 
             var existsInPlaylist = playlistSongController.RowExists(lastSongID, playlistID);
             Assert.IsTrue(existsInPlaylist);
@@ -63,8 +63,8 @@ namespace Tests
         {
             //Same Concept as in AddToPlaylist, but it's more explicit for deleting from the playlist.
             //Just use a songID that exists.
-            var songID = songController.GetLastItem().ID;
-            var playlistID = playlistController.GetLastItem().ID;
+            var songID = song.ID;
+            var playlistID = playlist.ID;
 
             //Before adding
             var existsInPlaylist = playlistSongController.RowExists(songID, playlistID);
@@ -87,8 +87,8 @@ namespace Tests
         [TearDown]
         public void TearDown()
         {
-            songController.DeleteItem(songController.GetLastItem().ID);
-            playlistController.DeleteItem(playlistController.GetLastItem().ID);
+            songController.DeleteItem(song.ID);
+            playlistController.DeleteItem(playlist.ID);
         }
     }
 }

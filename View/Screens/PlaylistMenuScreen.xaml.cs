@@ -29,7 +29,9 @@ namespace View.Screens
 
             var playlist = new Playlist
             {
-                Name = $"Playlist {playlistController.GetList().Count + 1}"
+                Name = $"Playlist {playlistController.GetList().Count + 1}",
+                CreationDate = DateTime.Now,
+                UserID = DataContext.Instance.CurrentUser.ID
             };
 
             playlistController.CreateItem(playlist);

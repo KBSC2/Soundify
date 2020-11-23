@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace Model
 {
     public enum ScreenNames
@@ -11,6 +8,7 @@ namespace Model
         QueueScreen,
         PlaylistMenuScreen,
         Logout,
+        SettingScreen
         SearchScreen
     }
 }

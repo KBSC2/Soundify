@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using Controller.DbControllers;
 using Model.Data;
 using Model.Enums;
@@ -38,11 +27,13 @@ namespace View
             {
                 case LoginResults.Success:
                 {
-                    View.DataContext.Instance.CurrentUser = controller.GetUserFromEmailOrUsername(emailOrUsername);
+                    DataContexts.DataContext.Instance.CurrentUser = controller.GetUserFromEmailOrUsername(emailOrUsername);
                     var main = new MainWindow();
                     main.Show();
                     main.Focus();
                     this.Hide();
+                    this.UsernameLogin.Text = "Email";
+                    this.PasswordLogin.Password = "Password";
                     break;
                 }
                 case LoginResults.EmailNotFound:

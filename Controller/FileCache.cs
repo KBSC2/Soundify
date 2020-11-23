@@ -42,8 +42,16 @@ namespace Controller
             foreach (string path in Directory.GetFiles(Path.GetTempPath() + "Soundify", "*.*" , SearchOption.AllDirectories))
             {
                 DateTime creation = File.GetCreationTime(path);
-                if(creation + timeSpan <= DateTime.Now)
-                    File.Delete(path);
+                if (creation + timeSpan <= DateTime.Now)
+                    try 
+                    {
+                        File.Delete(path);
+                    }
+                    catch (IOException)
+                    {
+
+                    }
+                    
             }
         }
     }

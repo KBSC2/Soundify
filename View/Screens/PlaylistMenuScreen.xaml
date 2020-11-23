@@ -7,7 +7,7 @@
     <DataTemplate x:Key="PlaylistMenuScreen">
         <!-- Start playlist screen -->
         <Grid x:Name="MainGrid" Background="#FF303651">
-            <Grid.DataContext>
+            <Grid.DataContext >
                 <DataContexts:PlaylistMenuDataContext/>
             </Grid.DataContext>
             <Grid Height="58" VerticalAlignment="Top">

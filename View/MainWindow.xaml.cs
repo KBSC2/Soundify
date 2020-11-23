@@ -11,6 +11,7 @@ using Model.Data;
 using Model.DbModels;
 using Model.EventArgs;
 using View;
+using System.Collections.Generic;
 using View.DataContexts;
 
 namespace Soundify
@@ -25,16 +26,33 @@ namespace Soundify
         #endregion
 
         public DatabaseContext Context { get; set; }
-        public PlaylistSongController PlaylistSongController { get; set; }
-        public SongController SongController { get; set; }
-        public PlaylistController PlaylistController { get; set; }
         public static Playlist CurrentPlayList { get; internal set; }
+
+        public static MainWindow InstanceMainWindow
+        {
+            get
+            {
+                if (_instanceMainWindow == null) _instanceMainWindow = new MainWindow();
+                return _instanceMainWindow;
+            }
+        }
+
+        public static LoginScreen InstanceLoginScreen
+        {
+            get
+            {
+                if (_instanceLoginScreen == null) _instanceLoginScreen = new LoginScreen();
+                return _instanceLoginScreen;
+            }
+        }
+
+        public static MainWindow _instanceMainWindow;
+        public static LoginScreen _instanceLoginScreen;
 
         public MainWindow()
         {
             AudioPlayer.Initialize();
-            AudioPlayer.AddSong(new SongAudioFile("dansenaandegracht.mp3"));
-            AudioPlayer.AddSong(new SongAudioFile("untrago.mp3"));
+            _instanceMainWindow = this;
 
             InitializeComponent();
             SSHController.Instance.OpenSSHTunnel();
@@ -44,17 +62,22 @@ namespace Soundify
 
             SetScreen(ScreenNames.HomeScreen);
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
-            /*
-            if (View.DataContext.Instance.CurrentUser == null)
+
+            if (View.DataContexts.DataContext.Instance.CurrentUser == null)
             {
-                var login = new LoginScreen();
-                login.Show();
-                login.Focus();
-                this.Hide();
-            } */
+                InstanceLoginScreen.Show();
+                InstanceMainWindow.Hide();
+            }
+
+            /*var test = new PlaylistController(Context).GetList();
+
+            new PlaylistSongController(Context).AddSongToPlaylist(9, 965);
+            new PlaylistSongController(Context).AddSongToPlaylist(10, 965);
+            new PlaylistSongController(Context).AddSongToPlaylist(11, 965);
+            new PlaylistSongController(Context).AddSongToPlaylist(12, 965);*/
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Play_Button_Click(object sender, RoutedEventArgs e)
         {
             if (AudioPlayer.CurrentSong == null)
                 AudioPlayer.Next();
@@ -81,7 +104,7 @@ namespace Soundify
         {
             if (screenName == ScreenNames.Logout)
             {
-                View.DataContext.Instance.CurrentUser = null;
+                View.DataContexts.DataContext.Instance.CurrentUser = null;
                 var login = new LoginScreen();
                 login.Show();
                 login.Focus();
@@ -90,7 +113,6 @@ namespace Soundify
             }
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
         }
-
         public void SetScreen(ScreenNames screenName, Playlist playlist)
         {
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
