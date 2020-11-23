@@ -6,7 +6,7 @@
     xmlns:View="clr-namespace:View"
     xmlns:local="clr-namespace:View.Screens">
     <DataTemplate x:Key="SearchScreen">
-        <Grid DataContext="{x:Static DataContexts:SearchDataContext.Instance}">
+        <Grid DataContext="{x:Static DataContexts:SearchDataContext.Instance}" ShowGridLines="False">
             <Grid.Resources>
                 <CollectionViewSource x:Key="AllPlaylists" Source="{Binding AllPlaylists}"></CollectionViewSource>
             </Grid.Resources>
@@ -14,7 +14,7 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <ListView Grid.Row="0" Name="SearchSongs" Background="#FF303651" BorderBrush="#FF303651" Foreground="White"
+            <ListView Grid.Row="0" Name="SearchSongs" Background="#FF303651" BorderBrush="{x:Null}" Foreground="White"
                       ItemsSource="{Binding SearchSongs}">
                 <ListView.View>
                     <GridView>
@@ -43,7 +43,7 @@
                     </ContextMenu>
                 </ListView.Resources>
                 <ListView.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListViewItem}"  >
+                    <Style TargetType="{x:Type ListViewItem}">
 <!--                        <EventSetter Event="MouseDoubleClick" Handler="SongRow_Click"/>-->
                         <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}"></Setter>
                         <Setter Property="Background" Value="#FF445399" />
@@ -61,7 +61,7 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
-            <ListView Grid.Row="1" Name="SearchPlaylists" Background="#FF303651" BorderBrush="#FF303651"
+            <ListView Grid.Row="1" Name="SearchPlaylists" Background="#FF303651" BorderBrush="{x:Null}"
                       Foreground="White" ItemsSource="{Binding SearchPlaylists}">
                 <ListView.View>
                     <GridView>

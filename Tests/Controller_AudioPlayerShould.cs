@@ -1,12 +1,8 @@
 ﻿using NUnit.Framework;
 using Controller;
-using Model;
 using Controller.DbControllers;
 using Model.DbModels;
 using Model.Data;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System;
 
 namespace Tests

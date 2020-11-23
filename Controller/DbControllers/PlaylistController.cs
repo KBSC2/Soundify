@@ -35,7 +35,7 @@ namespace Controller.DbControllers
         public List<Playlist> SearchPlayListOnString(List<string> searchTerms, int userID)
         {
             /*var playlists = Context.Playlists.AsEnumerable();*/
-            List<Playlist> searchPlaylists = GetList(userID)
+            List<Playlist> searchPlaylists = GetActivePlaylists(userID)
                 .Where(playlist => searchTerms.Any(s => playlist.Name != null && playlist.Name.Contains(s)) ||
                                    searchTerms.Any(
                                        s => playlist.Description != null && playlist.Description.ToLower().Contains(s.ToLower())) ||

@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
+﻿using System.Windows;
 using Controller;
 using Controller.DbControllers;
-using Model;
 using Model.Data;
 using Model.Enums;
-using Soundify;
 
 namespace View
 {
@@ -55,6 +48,7 @@ namespace View
 
                     user.Password = PasswordController.EncryptPassword(newPassword);
                     controller.UpdateItem(user);
+                    this.Close();
                     break;
                 }
 
@@ -64,7 +58,6 @@ namespace View
                     break;
                 }
             }
-            this.Close();
         }
     }
 }

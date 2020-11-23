@@ -9,31 +9,31 @@
     xmlns:dataContexts="clr-namespace:View.DataContexts"
     x:Class="Soundify.MainWindow"
     mc:Ignorable="d"
-    Title="MainWindow" Height="450" Width="800" MinHeight="450" MinWidth="800"
+    Title="MainWindow" Height="720" Width="1280" MinHeight="720" MinWidth="1280"
     DataContext="{x:Static dataContexts:DataContext.Instance}">
 
     <Grid>
-        <Grid Background="#FF424D82" HorizontalAlignment="Left" Width="92">
-            <components:MenuButton ScreenName="HomeScreen"     Content="Home"           Margin="21,10, 21,0" />
-            <components:MenuButton ScreenName="PlaylistMenuScreen" Content="Playlists"  Margin="16,43, 16,0" />
-            <components:MenuButton ScreenName="QueueScreen"    Content="Queue"          Margin="24,76, 24,0" />
-        </Grid>
-        <Grid Margin="92,0,0,0" Background="#FF363F63" Height="74" VerticalAlignment="Bottom">
-            <Button x:Name="Play" MaxWidth="40" MaxHeight="34"  Content="=" Margin="334,20,334,0" VerticalAlignment="Top" Click="Play_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="#FF424D82" Grid.RowSpan="2"/>
-            <Label x:Name="CurrentTime" Content="{Binding CurrentTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="0,-26,0,0" VerticalAlignment="Top" />
-            <Label x:Name="TotalTime" Content="{Binding TotalTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="659,-26,0,0" VerticalAlignment="Top" Width="49" />
-            <Button x:Name="Prev" MaxWidth="60" Content="Prev" Margin="254,20,394,0" VerticalAlignment="Top" Click="Prev_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="#FF424D82" RenderTransformOrigin="0.91,0.588" Grid.RowSpan="2"/>
-            <Button x:Name="Next" MaxWidth="60" Content="Next" Margin="394,20,254,0" VerticalAlignment="Top" Click="Next_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="#FF424D82" Grid.RowSpan="2"/>
-            <Button x:Name="Loop" MaxWidth="60" Content="Loop" Margin="174,20,474,0" VerticalAlignment="Top" Click="Loop_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="#FF424D82" Grid.RowSpan="2"/>
-            <Button x:Name="Shuffle" MaxWidth="60" Content="Shuffle" Margin="476,20,172,0" VerticalAlignment="Top" Click="Shuffle_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="#FF424D82" Grid.RowSpan="2"/>
-            <Slider x:Name="Volume" Margin="0,28,10,0" IsMoveToPointEnabled="True" VerticalAlignment="Top" Maximum="0.1" ValueChanged="Volume_ValueChanged" Value="{Binding Volume, Mode=OneWay}" SmallChange="0.001" LargeChange="0.01" Grid.RowSpan="2" HorizontalAlignment="Right" Width="100"/>
-            <Slider x:Name="Duration" Margin="-6,-8,0,64" IsMoveToPointEnabled="True" Foreground="White" Minimum="0.00" Maximum="{Binding TotalTime, Mode=OneWay}" Value="{Binding CurrentTime, Mode=OneWay}" ValueChanged="Duration_ValueChanged"/>
-        </Grid>
-        <Grid Margin="92,0,0,0" Background="#FF303651" Height="54" VerticalAlignment="Top">
-            <Label Content="{Binding PageName}" HorizontalAlignment="Left" Margin="41,10,0,0" VerticalAlignment="Top" FontSize="22" Foreground="White" Width="191" Height="17"/>
-            <TextBox HorizontalAlignment="Center" Text="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="192" Height="25" KeyDown="SetSearchTerms"/>
-            <components:MenuButton MaxHeight="34" MaxWidth="70" ScreenName="SettingScreen"         Content="Settings"        Margin="0,0,-4,0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="78"/>
-        </Grid>
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="92,59,0,74" ContentTemplate="{StaticResource HomeScreen}"/>
+        <Grid Margin="89,0,0,0" Background="{DynamicResource Background2Color}" Height="74" VerticalAlignment="Bottom" ShowGridLines="False">
+            <Button x:Name="Play" MaxWidth="40" MaxHeight="34"  Content=">" Margin="334,20,334,0" VerticalAlignment="Top" Click="Play_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" Grid.RowSpan="2"/>
+            <Label x:Name="CurrentTime" Content="{Binding CurrentTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top" Foreground="White"/>
+            <Label x:Name="TotalTime" Content="{Binding TotalTimeLabel, Mode=OneWay}" Margin="0,5,0,0" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Right" />
+            <Button x:Name="Prev" MaxWidth="60" Content="Prev" Margin="254,20,394,0" VerticalAlignment="Top" Click="Prev_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" RenderTransformOrigin="0.91,0.588" Grid.RowSpan="2"/>
+            <Button x:Name="Next" MaxWidth="60" Content="Next" Margin="394,20,254,0" VerticalAlignment="Top" Click="Next_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" Grid.RowSpan="2"/>
+            <Button x:Name="Loop" MaxWidth="60" Content="Loop" Margin="174,20,474,0" VerticalAlignment="Top" Click="Loop_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" Grid.RowSpan="2"/>
+            <Button x:Name="Shuffle" MaxWidth="60" Content="Shuffle" Margin="476,20,172,0" VerticalAlignment="Top" Click="Shuffle_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" Grid.RowSpan="2"/>
+            <Slider x:Name="Volume" Margin="0,28,10,0" IsMoveToPointEnabled="True" VerticalAlignment="Top" Maximum="0.1" ValueChanged="Volume_ValueChanged" Value="{Binding Volume, Mode=OneWay}" SmallChange="0.001" LargeChange="0.01" Grid.RowSpan="2" HorizontalAlignment="Right" Width="100"/>
+            <Slider x:Name="Duration" Margin="-6,-8,-4,64" IsMoveToPointEnabled="True" Foreground="White" Minimum="0.00" Maximum="{Binding TotalTime, Mode=OneWay}" Value="{Binding CurrentTime, Mode=OneWay}" ValueChanged="Duration_ValueChanged"/>
+        </Grid>
+        <Grid Margin="89,0,0,0" Background="{DynamicResource Background2Color}" Height="54" VerticalAlignment="Top" ShowGridLines="False">
+            <TextBox HorizontalAlignment="Center" Text="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="192" Height="25" KeyDown="SetSearchTerms" BorderBrush="{x:Null}"/>
+            <components:MenuButton MaxHeight="34" MaxWidth="70" ScreenName="SettingScreen"         Content="Settings"        Margin="0,0,10,0" VerticalAlignment="Center" Height="30" HorizontalAlignment="Right" Width="78"/>
+        </Grid>
+        <Grid Background="{DynamicResource BackgroundColor}" HorizontalAlignment="Left" Width="92" ShowGridLines="False">
+            <Image Margin="26,6,26,0" Stretch="Fill" Source="Assets/soundify.png" Width="40" Height="40" MaxHeight="40" VerticalAlignment="Top"/>
+            <components:MenuButton ScreenName="HomeScreen"     Content="Home"           Margin="0,65,0,339" HorizontalAlignment="Center" Width="92" Height="30" MaxHeight="30" VerticalAlignment="Top"/>
+            <components:MenuButton ScreenName="PlaylistMenuScreen" Content="Playlists"  Margin="0,110,0,294" Height="30" MaxHeight="30" VerticalAlignment="Top" />
+            <!-- <components:MenuButton ScreenName="QueueScreen"    Content="Queue"          Margin="24,76, 24,0" /> -->
+        </Grid>
     </Grid>
 </Window>
