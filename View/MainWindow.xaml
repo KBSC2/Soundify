@@ -11,6 +11,13 @@
     mc:Ignorable="d"
     Title="MainWindow" Height="450" Width="800" MinHeight="450" MinWidth="800"
     DataContext="{x:Static dataContexts:DataContext.Instance}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Watermark.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
 
     <Grid>
         <Grid Background="#FF424D82" HorizontalAlignment="Left" Width="92">
@@ -31,7 +38,7 @@
         </Grid>
         <Grid Margin="92,0,0,0" Background="#FF303651" Height="54" VerticalAlignment="Top">
             <Label Content="{Binding PageName}" HorizontalAlignment="Left" Margin="41,10,0,0" VerticalAlignment="Top" FontSize="22" Foreground="White" Width="191" Height="17"/>
-            <TextBox HorizontalAlignment="Center" Text="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="192" Height="25" KeyDown="SetSearchTerms"/>
+            <TextBox Style="{StaticResource WatermarkTextbox }" HorizontalAlignment="Center" Tag="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="192" Height="25" KeyDown="SetSearchTerms"/>
             <components:MenuButton MaxHeight="34" MaxWidth="70" ScreenName="SettingScreen"         Content="Settings"        Margin="0,0,-4,0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="78"/>
         </Grid>
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="92,59,0,74" ContentTemplate="{StaticResource HomeScreen}"/>

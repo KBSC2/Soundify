@@ -7,13 +7,20 @@
         xmlns:DataContexts="clr-namespace:View.DataContexts" x:Class="View.RegisterScreen"
         mc:Ignorable="d"
         Title="LoginScreen" Height="715" Width="617">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Watermark.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid Background="#FF09132E">
         <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" Height="79"/>
         <Label Content="Register" HorizontalAlignment="Center" Margin="0,172,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
-        <TextBox x:Name="UsernameRegister" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,259,0,0" Text="Username" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White"/>
-        <TextBox x:Name="EmailRegister" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,335,0,0" Text="Email" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White"/>
-        <PasswordBox x:Name="PasswordRegister" Password="Password" HorizontalAlignment="Center" Margin="0,411,0,0" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" />
-        <PasswordBox x:Name="PasswordConfirmRegister" Password="Password"  Margin="0,487,0,0" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" />
+        <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="UsernameRegister" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,259,0,0" Tag="Username" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White"/>
+        <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="EmailRegister" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,335,0,0" Tag="Email" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White"/>
+        <PasswordBox Style="{StaticResource WatermarkPasswordBox}" x:Name="PasswordRegister" Tag="Password" HorizontalAlignment="Center" Margin="0,411,0,0" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" />
+        <PasswordBox Style="{StaticResource WatermarkPasswordBox}" x:Name="PasswordConfirmRegister" Tag="Password"  Margin="0,487,0,0" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" />
         <Label x:Name="Error" Content="" HorizontalAlignment="Center" Margin="0,562,0,0" VerticalAlignment="Top" Width="355" Foreground="Red" FontSize="16" HorizontalContentAlignment="Center"/>
         <Button x:Name="Join" Content="Join" Click="Register_Button_Click"  HorizontalAlignment="Left" Margin="331,598,0,0" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Width="237" Height="55" Background="#FFF78D0E" Foreground="White"/>
         <Button Content="Cancel " HorizontalAlignment="Left" Margin="39,598,0,0" VerticalAlignment="Top" Foreground="White" FontSize="40" FontWeight="Bold" Background="Red" Width="237" Height="55" BorderThickness="0,0,0,0" Click="BackToLogin_Button_Click"/>
