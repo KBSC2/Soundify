@@ -24,6 +24,11 @@ namespace View
             Index = playlistSong.Index;
         }
 
+        public SongInfo(Song song)
+        {
+            Song = song;
+        }
+
         public static List<SongInfo> ConvertSongListToSongInfo(Playlist playlist, List<PlaylistSong> songs)
         {
             var playlistSongController = new PlaylistSongController(new DatabaseContext());
@@ -31,6 +36,18 @@ namespace View
 
             return songs.Select(song => new SongInfo(song.Song, playlistSongController.GetPlaylistSong(playlist.ID, song.SongID)))
                 .ToList();
+        }
+
+        public static List<SongInfo> ConvertSongListToSongInfo(List<Song> songs)
+        {
+            var returnList = new List<SongInfo>();
+
+            foreach (var song in songs)
+            {
+                returnList.Add(new SongInfo(song));
+            }
+
+            return returnList;
         }
     }
 }

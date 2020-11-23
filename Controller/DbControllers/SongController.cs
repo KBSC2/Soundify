@@ -22,10 +22,12 @@ namespace Controller.DbControllers
         
         public List<Song> SearchSongsOnString(List<string> searchterms)
         {
+            
             var songs = Context.Songs.AsEnumerable();
             List<Song> searchSongs = songs
-                .Where(song => searchterms.Any(s => song.Name != null && song.Name.Contains(s)) ||
-                               searchterms.Any(s => song.Artist != null && song.Artist.Contains(s)))
+                .Where(song => searchterms.Any(s => song.Name != null && song.Name.ToLower().Contains(s.ToLower())) ||
+                               searchterms.Any(s => song.Artist != null && song.Artist.ToLower().Contains(s.ToLower())))
+                .Take(8)
                 .ToList();
             return searchSongs;
         }

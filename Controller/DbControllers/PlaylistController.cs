@@ -36,10 +36,11 @@ namespace Controller.DbControllers
         {
             var playlists = Context.Playlists.AsEnumerable();
             List<Playlist> searchPlaylists = playlists
-                .Where(playlist => searchTerms.Any(s => playlist.Name != null && playlist.Name.Contains(s)) ||
+                .Where(playlist => searchTerms.Any(s => playlist.Name != null && playlist.Name.ToLower().Contains(s.ToLower())) ||
                                    searchTerms.Any(
-                                       s => playlist.Description != null && playlist.Description.Contains(s)) ||
-                                   searchTerms.Any(s => playlist.Genre != null && playlist.Genre.Contains(s)))
+                                       s => playlist.Description != null && playlist.Description.ToLower().Contains(s.ToLower())) ||
+                                   searchTerms.Any(s => playlist.Genre != null && playlist.Genre.ToLower().Contains(s.ToLower())))
+                .Take(8)
                 .ToList();
             return searchPlaylists;
         }
