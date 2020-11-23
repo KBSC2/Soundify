@@ -1,12 +1,9 @@
-﻿using System;
-using System.Drawing;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Model;
 using Model.EventArgs;
 using Soundify;
-using Color = System.Drawing.Color;
 
 namespace View.Components
 {
@@ -18,7 +15,7 @@ namespace View.Components
         public MenuButton()
         {
             VerticalAlignment = VerticalAlignment.Top;
-            Background = (Brush) new BrushConverter().ConvertFrom("#FF424D82");
+            Background = (Brush) new BrushConverter().ConvertFrom("#FF2D7AC8");
             Foreground = (Brush) new BrushConverter().ConvertFrom("#FFFFFF");
             BorderBrush = null;
         }

@@ -10,6 +10,17 @@ namespace View.DataContexts
 {
     public class PlaylistDataContext : INotifyPropertyChanged
     {
+        private static PlaylistDataContext _instance;
+        public static PlaylistDataContext Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new PlaylistDataContext();
+                return _instance;
+            }
+        }
+
         public List<SongInfo> PlaylistItems => SongInfo.ConvertSongListToSongInfo(Soundify.MainWindow.CurrentPlayList,
             new PlaylistSongController(new DatabaseContext()).GetSongsFromPlaylist(Soundify.MainWindow.CurrentPlayList.ID));
         public Playlist Playlist => Soundify.MainWindow.CurrentPlayList;

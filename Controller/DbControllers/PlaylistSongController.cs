@@ -23,9 +23,18 @@ namespace Controller.DbControllers
         public void AddSongToPlaylist(int songID, int playlistID)
         {
             ReorderSongIndexes(playlistID);
+
+            if (GetSongsFromPlaylist(playlistID).Any(x => x.SongID == songID))
+                return;
+
             var playlistSong = new PlaylistSong()
             {
-                PlaylistID = playlistID, SongID = songID, Index = _context.PlaylistSongs.Count(), Song = _songController.GetItem(songID), Playlist = _playlistController.GetItem(playlistID)
+                PlaylistID = playlistID, 
+                SongID = songID, 
+                Index = _context.PlaylistSongs.Count(), 
+                Song = _songController.GetItem(songID), 
+                Playlist = _playlistController.GetItem(playlistID), 
+                Added = DateTime.Now
             };
             _context.PlaylistSongs.Add(playlistSong);
             _context.Entry(playlistSong).State = EntityState.Added;

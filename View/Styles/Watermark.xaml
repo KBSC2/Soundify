@@ -1,0 +1,57 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:View.Styles"
+                    xmlns:components="clr-namespace:View.Components">
+    <Style x:Key="WatermarkTextbox" TargetType="{x:Type TextBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Grid>
+                        <Border Background="Gray" BorderBrush="#FF7D8683" BorderThickness="1" />
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Center" />
+                        <Label Margin="5,0,0,0" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}"
+                               VerticalAlignment="Center"
+                               Visibility="Collapsed" Foreground="White" FontFamily="Arial" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Text" Value="" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Visibility" TargetName="WaterMarkLabel" Value="Visible" />
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="WatermarkPasswordBox" TargetType="{x:Type PasswordBox}">
+        <Setter Property="components:PasswordBoxMonitor.IsMonitoring" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type PasswordBox}">
+                    <Grid>
+                        <Border Background="Gray" BorderBrush="#FF7D8683" BorderThickness="1" />
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Center" />
+                        <Label Margin="5,0,0,0" x:Name="WaterMarkLabelPassword" Content="{TemplateBinding Tag}"
+                               VerticalAlignment="Center"
+                               Visibility="Collapsed" Foreground="White" FontFamily="Arial" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="WaterMarkLabelPassword" Property="Background" Value="Gray"></Setter>
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                        <Trigger Property="components:PasswordBoxMonitor.PasswordLength" Value="0">
+                            <Setter Property="Visibility" TargetName="WaterMarkLabelPassword" Value="Visible"></Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

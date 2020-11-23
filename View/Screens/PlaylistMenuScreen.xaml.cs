@@ -31,6 +31,7 @@ namespace View.Screens
             };
 
             playlistController.CreateItem(playlist);
+            PlaylistMenuDataContext.Instance.OnPropertyChanged("");
         }
 
         private void PlaylistsRow_Click(object sender, MouseButtonEventArgs e)

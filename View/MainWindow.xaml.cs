@@ -1,17 +1,16 @@
-using System;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using NAudio.Wave;
 using Controller;
 using Controller.DbControllers;
 using Model;
 using Model.Data;
 using Model.DbModels;
 using Model.EventArgs;
+using NAudio.Wave;
+using System;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using View;
-using System.Collections.Generic;
 using View.DataContexts;
 
 namespace Soundify
@@ -66,15 +65,8 @@ namespace Soundify
             if (View.DataContexts.DataContext.Instance.CurrentUser == null)
             {
                 InstanceLoginScreen.Show();
-               InstanceMainWindow.Hide();
+                InstanceMainWindow.Hide();
             }
-
-            /*var test = new PlaylistController(Context).GetList();
-
-            new PlaylistSongController(Context).AddSongToPlaylist(9, 965);
-            new PlaylistSongController(Context).AddSongToPlaylist(10, 965);
-            new PlaylistSongController(Context).AddSongToPlaylist(11, 965);
-            new PlaylistSongController(Context).AddSongToPlaylist(12, 965);*/
         }
 
         private void Play_Button_Click(object sender, RoutedEventArgs e)
@@ -84,8 +76,11 @@ namespace Soundify
 
             if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
             {
-                AudioPlayer.WaveOutDevice.Play();
-                Play.Content = "=";
+                if (AudioPlayer.SongQueue.Count > 0)
+                {
+                    AudioPlayer.WaveOutDevice.Play();
+                    Play.Content = "=";
+                }
             }
             else
             {
@@ -161,10 +156,7 @@ namespace Soundify
                 SetScreen(ScreenNames.SearchScreen);
                 SearchDataContext.Instance.SearchTerms = text.Split(" ").ToList();
                 SearchDataContext.Instance.OnPropertyChanged("");
-            }
-            
+            }   
         }
-
     }
-
 }
