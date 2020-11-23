@@ -21,6 +21,7 @@ namespace Tests.ControlersTests.SearchTests
         [SetUp]
         public void SetUp()
         {
+            DatabaseContext.TEST_DB = true;
             SSHController.Instance.OpenSSHTunnel();
             context = new DatabaseContext();
             songController = new SongController(context);

@@ -28,6 +28,10 @@ namespace View.DataContexts
         public event PropertyChangedEventHandler PropertyChanged;
 
         public List<string> SearchTerms { get; set; } = new List<string>();
+        
+        public List<SongInfo> SearchSongs => SongInfo.ConvertSongListToSongInfo(new SongController(new DatabaseContext()).SearchSongsOnString(SearchTerms));
+        
+        public List<Playlist> SearchPlaylists => new PlaylistController(new DatabaseContext()).SearchPlayListOnString(SearchTerms);
 
         public List<SongInfo> SearchSongs =>
             SongInfo.ConvertSongListToSongInfo(
