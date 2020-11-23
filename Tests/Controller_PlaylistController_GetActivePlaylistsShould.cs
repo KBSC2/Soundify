@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 using Controller;
 using Controller.DbControllers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.Data;
 using Model.DbModels;
 using NUnit.Framework;
-using View.DataContexts;
 using Assert = NUnit.Framework.Assert;
 
 namespace Tests

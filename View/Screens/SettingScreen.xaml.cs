@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.DirectoryServices.ActiveDirectory;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using Soundify;
 using View.DataContexts;
 
