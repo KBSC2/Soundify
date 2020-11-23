@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.Data;
 using Model.DbModels;
 using NUnit.Framework;
+using View.DataContexts;
 using Assert = NUnit.Framework.Assert;
 
 namespace Tests
@@ -42,7 +43,7 @@ namespace Tests
             _testPlaylist2.ActivePlaylist = false;
             _playlistController.UpdateItem(_testPlaylist2);
 
-            var result = _playlistController.GetActivePlaylists();
+            var result = _playlistController.GetActivePlaylists(DataContext.Instance.CurrentUser.ID);
             Assert.True(result.Contains(_testPlaylist1));
             Assert.False(result.Contains(_testPlaylist2));
         }
