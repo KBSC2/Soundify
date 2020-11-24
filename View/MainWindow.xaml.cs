@@ -76,8 +76,11 @@ namespace Soundify
 
             if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
             {
-                AudioPlayer.WaveOutDevice.Play();
-                Play.Content = "=";
+                if (AudioPlayer.SongQueue.Count > 0)
+                {
+                    AudioPlayer.WaveOutDevice.Play();
+                    Play.Content = "=";
+                }
             }
             else
             {
@@ -143,5 +146,17 @@ namespace Soundify
         {
             AudioPlayer.Shuffle();
         }
+
+        public void SetSearchTerms(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                var textBox = (TextBox)sender;
+                var text = textBox.Text;
+                SetScreen(ScreenNames.SearchScreen);
+                SearchDataContext.Instance.SearchTerms = text.Split(" ").ToList();
+                SearchDataContext.Instance.OnPropertyChanged("");
+            }
+        }
     }
-}    
+}
