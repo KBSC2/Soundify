@@ -26,10 +26,10 @@ namespace Tests
 
         [TestCase("", ExpectedResult = PasswordScore.Blank)]                            // empty
         [TestCase("hallo", ExpectedResult = PasswordScore.VeryWeak)]                    // too short,       no uppercase,   no numbers,     no characters
-        [TestCase("wachtwoord", ExpectedResult = PasswordScore.Weak)]                   // medium length,  no uppercase,   no numbers,     no characters
+        [TestCase("wachtwoord", ExpectedResult = PasswordScore.Weak)]                   // medium length,   no uppercase,   no numbers,     no characters
         [TestCase("HalloLangWachtwoord", ExpectedResult = PasswordScore.Medium)]        // correct length,  with uppercase, no numbers,     no characters
-        [TestCase("Wachtw00rdMetC1jfers", ExpectedResult = PasswordScore.Strong)]       // correct length, with uppercase, with numbers,   no characters
-        [TestCase("W@chtw00rdMetAll4s", ExpectedResult = PasswordScore.VeryStrong)]     // correct length, with uppercase, with numbers,   no characters
+        [TestCase("Wachtw00rdMetC1jfers", ExpectedResult = PasswordScore.Strong)]       // correct length,  with uppercase, with numbers,   no characters
+        [TestCase("W@chtw00rdMetAll4s", ExpectedResult = PasswordScore.VeryStrong)]     // correct length,  with uppercase, with numbers,   with characters
         public PasswordScore PasswordController_TestPasswordScore(string password)
         {
             return PasswordController.CheckStrength(password);
@@ -58,6 +58,7 @@ namespace Tests
         [TearDown]
         public void TearDown()
         {
+            // Remove all acounts from the database, if they exist
             AccountsToRemove.ForEach(email =>
             {
                 var user = Controller.GetUserFromEmailOrUsername(email);

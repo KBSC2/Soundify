@@ -151,12 +151,12 @@ namespace Soundify
         {
             if (e.Key == Key.Return)
             {
-                var textBox = (TextBox) sender;
+                var textBox = (TextBox)sender;
                 var text = textBox.Text;
                 SetScreen(ScreenNames.SearchScreen);
                 SearchDataContext.Instance.SearchTerms = text.Split(" ").ToList();
                 SearchDataContext.Instance.OnPropertyChanged("");
-            }   
+            }
         }
     }
 }
