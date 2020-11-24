@@ -1,4 +1,6 @@
 ﻿using System.Threading;
+using System.Collections.Generic;
+using System.Configuration;
 using Renci.SshNet;
 
 namespace Controller
@@ -29,7 +31,12 @@ public class SSHController
 
         public void TunnelThread()
         {
-            using (var client = new SshClient("145.44.235.172", "student", "Sterk_W@chtw00rd2"))
+            var conf = GetSSHConfiguration();
+
+            using (var client = new SshClient(
+                conf.GetValueOrDefault("Host"), 
+                conf.GetValueOrDefault("Username"),
+                conf.GetValueOrDefault("Password")))
             {
                 client.Connect();
 
@@ -44,6 +51,28 @@ public class SSHController
             }
         }
 
+        /**
+         * Get the configurations from the App.Config
+         *
+         * @return Dictionary<string, string> : 
+         */
+        public Dictionary<string, string> GetSSHConfiguration()
+        {
+            Dictionary<string, string> result = new Dictionary<string, string>();
+
+            foreach (var s in ConfigurationManager.ConnectionStrings["SSH"].ConnectionString.Split(";"))
+            {
+                string[] split = s.Trim().Split("=");
+                if(split.Length == 2)
+                    result.Add(split[0].Trim(), split[1].Trim());
+            }
+
+            return result;
+        }
+
+        /**
+         * Open an SSHtunnel if no current connection is found
+         */
         public void OpenSSHTunnel()
         {
             if (!CreateSSHTunnel)
@@ -55,11 +84,6 @@ public class SSHController
 
             thread = new Thread(TunnelThread);
             thread.Start();
-        }
-
-        public void CloseSSHTunnel()
-        {
-            thread.Abort();
         }
     }
 }
