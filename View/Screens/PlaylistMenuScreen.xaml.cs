@@ -25,12 +25,13 @@ namespace View.Screens
 
             var playlist = new Playlist
             {
-                Name = $"Playlist {playlistController.GetList().Count + 1}",
+                Name = $"Playlist {playlistController.GetActivePlaylists(DataContext.Instance.CurrentUser.ID).Count + 1}",
                 CreationDate = DateTime.Now,
                 UserID = DataContext.Instance.CurrentUser.ID
             };
 
             playlistController.CreateItem(playlist);
+            PlaylistMenuDataContext.Instance.OnPropertyChanged("");
         }
 
         private void PlaylistsRow_Click(object sender, MouseButtonEventArgs e)

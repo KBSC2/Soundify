@@ -19,9 +19,18 @@ namespace View.Screens
             this.InitializeComponent();
         }
 
+        public void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
+        {
+            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
+            var playlist = MainWindow.CurrentPlayList;
+            new PlaylistSongController(new DatabaseContext()).RemoveFromPlaylist(song.ID, playlist.ID);
+
+            PlaylistDataContext.Instance.OnPropertyChanged("");
+        }
+
         private void Play_Playlist_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer.PlayPlaylist(Soundify.MainWindow.CurrentPlayList);
+            AudioPlayer.PlayPlaylist(MainWindow.CurrentPlayList);
         }
 
         private void SongRow_Click(object sender, MouseButtonEventArgs e)
@@ -30,7 +39,7 @@ namespace View.Screens
             var listViewItem = (ListViewItem)sender;
             var songInfo = (SongInfo)listViewItem.Content;
 
-            AudioPlayer.PlayPlaylist(Soundify.MainWindow.CurrentPlayList, songInfo.Index);
+            AudioPlayer.PlayPlaylist(MainWindow.CurrentPlayList, songInfo.Index);
         }
 
         private void RemovePlaylistButton_Click(object sender, RoutedEventArgs e)
@@ -56,31 +65,29 @@ namespace View.Screens
         private void MoveUp_Click(object sender, RoutedEventArgs e)
         {
             var mainGrid = (Grid)((Button)sender).Tag;
-
             var selectedSongInfo = (SongInfo)((ListView)mainGrid.FindName("SongList"))?.SelectedItem;
 
             if (selectedSongInfo == null || selectedSongInfo.Index - 1 < 0) return;
 
 
-            SwapSongs(selectedSongInfo.Index, selectedSongInfo.Index - 1, mainGrid);
+            SwapSongs(selectedSongInfo.Index, selectedSongInfo.Index - 1);
         }
 
         private void MoveDown_Click(object sender, RoutedEventArgs e)
         {
             var mainGrid = (Grid)((Button)sender).Tag;
-
             var listView = (ListView) mainGrid.FindName("SongList");
             var selectedSongInfo = (SongInfo)listView?.SelectedItem;
 
             if (selectedSongInfo == null || selectedSongInfo.Index + 1 >= listView.Items.Count) return;
 
-            SwapSongs(selectedSongInfo.Index, selectedSongInfo.Index + 1, mainGrid);
+            SwapSongs(selectedSongInfo.Index, selectedSongInfo.Index + 1);
         }
 
-        public void SwapSongs(int indexOne, int indexTwo, Grid mainGrid)
+        public void SwapSongs(int indexOne, int indexTwo)
         {
             var playlistSongController = new PlaylistSongController(new DatabaseContext());
-            int playlistID = Soundify.MainWindow.CurrentPlayList.ID;
+            int playlistID = MainWindow.CurrentPlayList.ID;
             var songOne = playlistSongController.GetPlaylistSongFromIndex(playlistID, indexOne);
             var songTwo = playlistSongController.GetPlaylistSongFromIndex(playlistID, indexTwo);
 
@@ -90,15 +97,7 @@ namespace View.Screens
             playlistSongController.UpdatePlaylistSong(songOne);
             playlistSongController.UpdatePlaylistSong(songTwo);
 
-            ((PlaylistDataContext)mainGrid.DataContext).OnPropertyChanged("");
-        }
-
-        private static void FinishMoving(PlaylistSong selectedSong, PlaylistSong replacedSong, PlaylistSongController playlistSongController, PlaylistDataContext dataContext)
-        {
-            playlistSongController.UpdatePlaylistSong(selectedSong);
-            playlistSongController.UpdatePlaylistSong(replacedSong);
-
-            dataContext.OnPropertyChanged("");
+            PlaylistDataContext.Instance.OnPropertyChanged("");
         }
     }
 }

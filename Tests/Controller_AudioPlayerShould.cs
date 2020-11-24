@@ -22,6 +22,7 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
+            DatabaseContext.TEST_DB = true;
             SSHController.Instance.OpenSSHTunnel();
             AudioPlayer.Initialize();
             Context = new DatabaseContext();

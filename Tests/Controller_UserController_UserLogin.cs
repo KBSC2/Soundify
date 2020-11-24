@@ -16,8 +16,9 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
+            DatabaseContext.TEST_DB = true;
             SSHController.Instance.OpenSSHTunnel();
-            User = new User() { Email = "test@gmail.com", Username = "test" };;
+            User = new User() { Email = "test@gmail.com", Username = "test" };
             Controller.CreateAccount(User, "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2");
         }
 

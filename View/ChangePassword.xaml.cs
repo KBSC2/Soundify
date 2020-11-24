@@ -23,9 +23,9 @@ namespace View
 
         private void Confirm_Button_Click(object sender, RoutedEventArgs e)
         {
-            var currentPassword = this.CurrentPassword.Text;
-            var newPassword = this.NewPassword.Text;
-            var repeatPassword = this.RepeatPassword.Text;
+            var currentPassword = this.CurrentPassword.Password;
+            var newPassword = this.NewPassword.Password;
+            var repeatPassword = this.RepeatPassword.Password;
 
             var controller = new UserController(new DatabaseContext());
             var user = controller.GetUserFromEmailOrUsername(DataContexts.DataContext.Instance.CurrentUser.Email);
@@ -48,6 +48,7 @@ namespace View
 
                     user.Password = PasswordController.EncryptPassword(newPassword);
                     controller.UpdateItem(user);
+                    this.Close();
                     break;
                 }
 
@@ -57,7 +58,6 @@ namespace View
                     break;
                 }
             }
-            this.Close();
         }
     }
 }

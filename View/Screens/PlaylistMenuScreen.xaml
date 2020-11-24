@@ -6,10 +6,7 @@
                     x:Class="View.Screens.PlaylistMenuScreen">
     <DataTemplate x:Key="PlaylistMenuScreen">
         <!-- Start playlist screen -->
-        <Grid x:Name="MainGrid" Background="#FF303651">
-            <Grid.DataContext >
-                <DataContexts:PlaylistMenuDataContext/>
-            </Grid.DataContext>
+        <Grid x:Name="MainGrid" Background="#FF303651" DataContext="{x:Static DataContexts:PlaylistMenuDataContext.Instance}">
             <Grid Height="58" VerticalAlignment="Top">
                 <Button Content="Create new playlist" HorizontalAlignment="Center" VerticalAlignment="Top" Height="38" Width="166" Background="#FF303651" Foreground="White" BorderBrush="{x:Null}" FontSize="18" Margin="0,10,0,0" Click="CreatePlaylist_Click"/>
             </Grid>

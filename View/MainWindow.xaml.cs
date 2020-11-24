@@ -1,14 +1,17 @@
-using System;
-using System.Windows;
-using System.Windows.Controls;
-using NAudio.Wave;
 using Controller;
 using Controller.DbControllers;
 using Model;
 using Model.Data;
 using Model.DbModels;
 using Model.EventArgs;
+using NAudio.Wave;
+using System;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using View;
+using View.DataContexts;
 
 namespace Soundify
 {
@@ -64,13 +67,6 @@ namespace Soundify
                 InstanceLoginScreen.Show();
                 InstanceMainWindow.Hide();
             }
-
-            /*var test = new PlaylistController(Context).GetList();
-
-            new PlaylistSongController(Context).AddSongToPlaylist(9, 965);
-            new PlaylistSongController(Context).AddSongToPlaylist(10, 965);
-            new PlaylistSongController(Context).AddSongToPlaylist(11, 965);
-            new PlaylistSongController(Context).AddSongToPlaylist(12, 965);*/
         }
 
         private void Play_Button_Click(object sender, RoutedEventArgs e)
@@ -148,5 +144,4 @@ namespace Soundify
             AudioPlayer.Shuffle();
         }
     }
-
-}
+}    
