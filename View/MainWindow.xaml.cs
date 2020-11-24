@@ -9,7 +9,6 @@ using Model.Data;
 using Model.DbModels;
 using Model.EventArgs;
 using View;
-using System.Collections.Generic;
 
 namespace Soundify
 {

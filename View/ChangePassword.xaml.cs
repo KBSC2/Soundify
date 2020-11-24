@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
+﻿using System.Windows;
 using Controller;
 using Controller.DbControllers;
-using Model;
 using Model.Data;
 using Model.Enums;
-using Soundify;
 
 namespace View
 {

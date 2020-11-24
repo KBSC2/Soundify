@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Controller;
+﻿using Controller;
 using Controller.DbControllers;
 using Model.Data;
 using Model.DbModels;
 using Model.Enums;
 using NUnit.Framework;
-using View;
 
 namespace Tests
 {
