@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace Tests.FileCache
+namespace Tests.Local
 {
     [TestFixture]
     public class Controller_FileCacheShould
@@ -15,7 +15,7 @@ namespace Tests.FileCache
             Path = Controller.FileCache.Instance.GetFile("songs/untrago.mp3");
         }
 
-        [Test]
+        [Test, Category("Local")]
         public void GetFile_Path_Exists()
         {
             Assert.IsTrue(File.Exists(Path));
