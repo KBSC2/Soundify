@@ -1,25 +1,23 @@
 ﻿using System.Collections.Generic;
 using Controller;
 using Controller.DbControllers;
-using Model.Data;
+using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
 using NUnit.Framework;
 using static Controller.PasswordController;
 
-namespace Tests
+namespace Tests.Users
 {
     [TestFixture]
     public class Controller_UserController_UserSignup
     {
         private List<string> AccountsToRemove { get; }= new List<string>() { "test@gmail.com", "duplicate@gmail.com", "testindb@gmail.com" };
-        private UserController Controller { get; } = new UserController(new DatabaseContext());
+        private UserController Controller { get; } = new UserController(new MockDatabaseContext());
 
         [SetUp]
         public void SetUp()
         {
-            DatabaseContext.TEST_DB = true;
-            SSHController.Instance.OpenSSHTunnel();
             Controller.CreateAccount(new User() {Email = "duplicate@gmail.com", Username = "test"}, "Sterk_W@chtw000rd2",
                 "Sterk_W@chtw000rd2"); // create account to test already exists
         }

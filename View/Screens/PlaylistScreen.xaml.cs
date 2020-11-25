@@ -2,8 +2,7 @@
 using Controller;
 using System.Windows.Controls;
 using Controller.DbControllers;
-using Model.Data;
-using Model.DbModels;
+using Model.Database.Contexts;
 using View.DataContexts;
 using System.Windows.Input;
 using Model;

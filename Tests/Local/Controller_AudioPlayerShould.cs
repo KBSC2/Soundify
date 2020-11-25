@@ -2,10 +2,10 @@
 using Controller;
 using Controller.DbControllers;
 using Model.DbModels;
-using Model.Data;
+using Model.Database.Contexts;
 using System;
 
-namespace Tests
+namespace Tests.Local
 {
     [TestFixture]
     public class Controller_AudioPlayerShould
@@ -22,8 +22,8 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
-            DatabaseContext.TEST_DB = true;
             SSHController.Instance.OpenSSHTunnel();
+
             AudioPlayer.Initialize();
             Context = new DatabaseContext();
             SongController = new SongController(Context);

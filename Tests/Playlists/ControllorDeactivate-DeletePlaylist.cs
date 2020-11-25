@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Threading;
-using Controller;
 using Controller.DbControllers;
-using Model.Data;
+using Model.Database.Contexts;
 using Model.DbModels;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
 
-namespace Tests
+namespace Tests.Playlists
 {
     [TestFixture]
     public class ControllorDeactivate_DeletePlaylist
     {
-        private DatabaseContext context;
+        private MockDatabaseContext context;
         private PlaylistController playlistController;
         private Playlist playlist;
         private Playlist playlistDelete;
@@ -21,9 +20,7 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
-            DatabaseContext.TEST_DB = true;
-            SSHController.Instance.OpenSSHTunnel();
-            context = new DatabaseContext();
+            context = new MockDatabaseContext();
             playlistController = new PlaylistController(context);
             playlist = new Playlist()
                 {Name = "TestDeactivateDelete", ActivePlaylist = true, CreationDate = DateTime.Now};

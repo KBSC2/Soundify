@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using Controller.DbControllers;
 using Model.DbModels;
 using Model.Annotations;
-using Model.Data;
+using Model.Database.Contexts;
 
 namespace View.DataContexts
 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -7,7 +8,7 @@ namespace Controller
 {
     public class PasswordController
     {
-        private static string salt = "Sterk_W@chtw00rd2";
+        private static string salt = ConfigurationManager.AppSettings["MD5SALT"];
 
         /**
          * Transform a password to an md5, hashed password
