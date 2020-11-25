@@ -43,6 +43,10 @@
                                 <Setter Property="Background" Value="White" />
                                 <Setter Property="Foreground" Value="Black"/>
                             </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#FF8390E4" />
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
                         </Style.Triggers>
                     </Style>
                 </ListView.ItemContainerStyle>
