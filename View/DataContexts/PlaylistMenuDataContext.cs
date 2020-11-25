@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Text;
-using System.Timers;
+using System.Runtime.CompilerServices;
 using Controller.DbControllers;
+using Model.Annotations;
 using Model.Data;
 using Model.DbModels;
 
@@ -14,15 +13,23 @@ namespace View.DataContexts
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public List<Playlist> PlaylistsSource => new PlaylistController(new DatabaseContext()).GetActivePlaylists();
-
-        public PlaylistMenuDataContext()
+        private static PlaylistMenuDataContext _instance;
+        public static PlaylistMenuDataContext Instance
         {
+            get
+            {
+                if (_instance == null)
+                    _instance = new PlaylistMenuDataContext();
+                return _instance;
+            }
         }
 
-        public void OnTimedEvent(object sender, EventArgs e)
+        public List<Playlist> PlaylistsSource => new PlaylistController(new DatabaseContext()).GetActivePlaylists(View.DataContexts.DataContext.Instance.CurrentUser.ID);
+
+        [NotifyPropertyChangedInvocator]
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(""));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

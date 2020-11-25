@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Controller;
 using Controller.DbControllers;
 using Model.Data;
 using Model.DbModels;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 /*It's important to notice that the database should stay unchanged after running the tests.
  At the start of the test, the database should be in the same state as at the end of the test. */
@@ -27,6 +24,7 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
+            DatabaseContext.TEST_DB = true;
             SSHController.Instance.OpenSSHTunnel();
 
             song = new Song() { Duration = 60, Artist = "Rick Astley", Name = "Never gonna give you up", Path = "../Dit/is/een/path" };
@@ -47,8 +45,8 @@ namespace Tests
         {
             playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
 
-            var lastSongID = songController.GetLastItem().ID;
-            var playlistID = playlistController.GetLastItem().ID;
+            var lastSongID = song.ID;
+            var playlistID = playlist.ID;
 
             var existsInPlaylist = playlistSongController.RowExists(lastSongID, playlistID);
             Assert.IsTrue(existsInPlaylist);
@@ -66,8 +64,8 @@ namespace Tests
         {
             //Same Concept as in AddToPlaylist, but it's more explicit for deleting from the playlist.
             //Just use a songID that exists.
-            var songID = songController.GetLastItem().ID;
-            var playlistID = playlistController.GetLastItem().ID;
+            var songID = song.ID;
+            var playlistID = playlist.ID;
 
             //Before adding
             var existsInPlaylist = playlistSongController.RowExists(songID, playlistID);
@@ -98,8 +96,8 @@ namespace Tests
         [TearDown]
         public void TearDown()
         {
-            songController.DeleteItem(songController.GetLastItem().ID);
-            playlistController.DeleteItem(playlistController.GetLastItem().ID);
+            songController.DeleteItem(song.ID);
+            playlistController.DeleteItem(playlist.ID);
         }
     }
 }

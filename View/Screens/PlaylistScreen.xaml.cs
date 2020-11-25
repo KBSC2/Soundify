@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using Controller;
 using System.Windows.Controls;
 using Controller.DbControllers;
-using Microsoft.Extensions.Options;
 using Model.Data;
 using Model.DbModels;
 using View.DataContexts;
+using System.Windows.Input;
+using Model;
+using Model.EventArgs;
+using Soundify;
 
 namespace View.Screens
 {
@@ -26,7 +25,29 @@ namespace View.Screens
             SongInfoScreen songInfoScreen = new SongInfoScreen(song);
             songInfoScreen.Show();
 
+        public void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
+        {
+            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
+            var playlist = MainWindow.CurrentPlayList;
+            new PlaylistSongController(new DatabaseContext()).RemoveFromPlaylist(song.ID, playlist.ID);
+
+            PlaylistDataContext.Instance.OnPropertyChanged("");
         }
+
+        private void Play_Playlist_Button_Click(object sender, RoutedEventArgs e)
+        {
+            AudioPlayer.PlayPlaylist(MainWindow.CurrentPlayList);
+        }
+
+        private void SongRow_Click(object sender, MouseButtonEventArgs e)
+        {
+
+            var listViewItem = (ListViewItem)sender;
+            var songInfo = (SongInfo)listViewItem.Content;
+
+            AudioPlayer.PlayPlaylist(MainWindow.CurrentPlayList, songInfo.Index);
+        }
+
         private void RemovePlaylistButton_Click(object sender, RoutedEventArgs e)
         {
             var playlistID = (int)((Button)sender).Tag;
@@ -39,6 +60,7 @@ namespace View.Screens
             {
                 case MessageBoxResult.Yes:
                     playlistController.DeactivatePlaylist(playlistID);
+                    MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs() { ScreenName = ScreenNames.PlaylistMenuScreen } );
                     break;
                 case MessageBoxResult.No:
                 case MessageBoxResult.Cancel:
@@ -49,52 +71,39 @@ namespace View.Screens
         private void MoveUp_Click(object sender, RoutedEventArgs e)
         {
             var mainGrid = (Grid)((Button)sender).Tag;
-
             var selectedSongInfo = (SongInfo)((ListView)mainGrid.FindName("SongList"))?.SelectedItem;
 
-            if (selectedSongInfo == null || selectedSongInfo.Index == 1) return;
+            if (selectedSongInfo == null || selectedSongInfo.Index - 1 < 0) return;
 
-            var playlistID = Soundify.MainWindow.CurrentPlayList.ID;
 
-            var playlistSongController = new PlaylistSongController(new DatabaseContext());
-
-            var selectedSong = playlistSongController.GetPlaylistSong(playlistID, selectedSongInfo.Song.ID);
-            selectedSong.Index = selectedSongInfo.Index - 1;
-
-            var replacedSong = playlistSongController.GetPlaylistSongFromIndex(playlistID, selectedSong.Index);
-            replacedSong.Index = selectedSongInfo.Index;
-
-            FinishMoving(selectedSong, replacedSong, playlistSongController, (PlaylistDataContext)mainGrid.DataContext);
+            SwapSongs(selectedSongInfo.Index, selectedSongInfo.Index - 1);
         }
 
         private void MoveDown_Click(object sender, RoutedEventArgs e)
         {
             var mainGrid = (Grid)((Button)sender).Tag;
-
             var listView = (ListView) mainGrid.FindName("SongList");
             var selectedSongInfo = (SongInfo)listView?.SelectedItem;
 
-            if (selectedSongInfo == null || selectedSongInfo.Index >= listView.Items.Count) return;
+            if (selectedSongInfo == null || selectedSongInfo.Index + 1 >= listView.Items.Count) return;
 
-            var playlistID = Soundify.MainWindow.CurrentPlayList.ID;
-
-            var playlistSongController = new PlaylistSongController(new DatabaseContext());
-
-            var selectedSong = playlistSongController.GetPlaylistSong(playlistID, selectedSongInfo.Song.ID);
-            selectedSong.Index = selectedSongInfo.Index + 1;
-
-            var replacedSong = playlistSongController.GetPlaylistSongFromIndex(playlistID, selectedSong.Index);
-            replacedSong.Index = selectedSongInfo.Index;
-
-            FinishMoving(selectedSong, replacedSong, playlistSongController, (PlaylistDataContext)mainGrid.DataContext);
+            SwapSongs(selectedSongInfo.Index, selectedSongInfo.Index + 1);
         }
 
-        private static void FinishMoving(PlaylistSong selectedSong, PlaylistSong replacedSong, PlaylistSongController playlistSongController, PlaylistDataContext dataContext)
+        public void SwapSongs(int indexOne, int indexTwo)
         {
-            playlistSongController.UpdatePlaylistSong(selectedSong);
-            playlistSongController.UpdatePlaylistSong(replacedSong);
+            var playlistSongController = new PlaylistSongController(new DatabaseContext());
+            int playlistID = MainWindow.CurrentPlayList.ID;
+            var songOne = playlistSongController.GetPlaylistSongFromIndex(playlistID, indexOne);
+            var songTwo = playlistSongController.GetPlaylistSongFromIndex(playlistID, indexTwo);
 
-            dataContext.OnPropertyChanged("");
+            songOne.Index = indexTwo;
+            songTwo.Index = indexOne;
+
+            playlistSongController.UpdatePlaylistSong(songOne);
+            playlistSongController.UpdatePlaylistSong(songTwo);
+
+            PlaylistDataContext.Instance.OnPropertyChanged("");
         }
     }
 }

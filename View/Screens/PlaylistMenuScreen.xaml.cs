@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -29,10 +25,13 @@ namespace View.Screens
 
             var playlist = new Playlist
             {
-                Name = $"Playlist {playlistController.GetList().Count + 1}"
+                Name = $"Playlist {playlistController.GetActivePlaylists(DataContext.Instance.CurrentUser.ID).Count + 1}",
+                CreationDate = DateTime.Now,
+                UserID = DataContext.Instance.CurrentUser.ID
             };
 
             playlistController.CreateItem(playlist);
+            PlaylistMenuDataContext.Instance.OnPropertyChanged("");
         }
 
         private void PlaylistsRow_Click(object sender, MouseButtonEventArgs e)

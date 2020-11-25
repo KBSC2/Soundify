@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using Controller.DbControllers;
 using Model.DbModels;
-using Model;
 using Model.Annotations;
 using Model.Data;
 
@@ -13,9 +10,19 @@ namespace View.DataContexts
 {
     public class PlaylistDataContext : INotifyPropertyChanged
     {
+        private static PlaylistDataContext _instance;
+        public static PlaylistDataContext Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new PlaylistDataContext();
+                return _instance;
+            }
+        }
+
         public List<SongInfo> PlaylistItems => SongInfo.ConvertSongListToSongInfo(Soundify.MainWindow.CurrentPlayList,
-            new PlaylistSongController(new DatabaseContext()).GetSongsFromPlaylist(Soundify.MainWindow.CurrentPlayList
-                .ID));
+            new PlaylistSongController(new DatabaseContext()).GetSongsFromPlaylist(Soundify.MainWindow.CurrentPlayList.ID));
         public Playlist Playlist => Soundify.MainWindow.CurrentPlayList;
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using SshNet.Security.Cryptography;
-using MD5 = SshNet.Security.Cryptography.MD5;
 
 namespace Controller
 {
@@ -12,6 +9,13 @@ namespace Controller
     {
         private static string salt = "Sterk_W@chtw00rd2";
 
+        /**
+         * Transform a password to an md5, hashed password
+         *
+         * @param password Password string to encrypt
+         *
+         * @return string : Encrypted password, md5 salted hash
+         */
         public static string EncryptPassword(string password)
         {
             var provider = (HashAlgorithm)CryptoConfig.CreateFromName("MD5");
@@ -21,12 +25,14 @@ namespace Controller
             return computedHash.Replace("-", "");
         }
 
-        public static bool PasswordsAreEqual(string password, string hash)
-        {
-            var passwordHash = EncryptPassword(password);
-            return passwordHash.Equals(hash);
-        }
-
+        /**
+         * Get the password strength of a string
+         * Check multiple test cases, and increment score if check is succesfull 
+         *
+         * @param password Password to check strength
+         *
+         * @ return PasswordScore : strength of password
+         */
         public static PasswordScore CheckStrength(string password)
         {
             int score = 0;
@@ -50,6 +56,9 @@ namespace Controller
             return (PasswordScore)score;
         }
 
+        /**
+         * Enum to define password strenghts
+         */
         public enum PasswordScore
         {
             Blank = 0,

@@ -3,7 +3,7 @@
     <DataTemplate x:Key="HomeScreen">
         <!-- Start homescreen screen -->
         <StackPanel>
-            <TextBlock Margin="10" Text="Some default content here.."/>
+            <TextBlock FontSize="24"  Margin="10" Text="Welcome to Soundify!"/>
         </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

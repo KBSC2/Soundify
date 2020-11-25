@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Controller;
 using Controller.DbControllers;
 using Model.Data;
@@ -21,6 +19,7 @@ namespace Tests.ControlersTests.SearchTests
         [SetUp]
         public void SetUp()
         {
+            DatabaseContext.TEST_DB = true;
             SSHController.Instance.OpenSSHTunnel();
             context = new DatabaseContext();
             songController = new SongController(context);
