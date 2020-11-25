@@ -66,7 +66,7 @@ public class SSHController
          *
          * @return Dictionary<string, string> : The configuration for the SSH client
          */
-        public Dictionary<string, string> GetSSHConfiguration()
+        public static Dictionary<string, string> GetSSHConfiguration()
         {
             Dictionary<string, string> result = new Dictionary<string, string>();
 

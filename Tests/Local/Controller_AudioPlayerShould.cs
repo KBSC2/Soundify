@@ -11,7 +11,7 @@ namespace Tests.Local
     public class Controller_AudioPlayerShould
     {
 
-        private DatabaseContext Context { get; set; }
+        private MockDatabaseContext Context { get; set; }
         private Song Song { get; set; }
         private Song Song2 { get; set; }
         private Playlist Playlist { get; set; }
@@ -25,7 +25,7 @@ namespace Tests.Local
             SSHController.Instance.OpenSSHTunnel();
 
             AudioPlayer.Initialize();
-            Context = new DatabaseContext();
+            Context = new MockDatabaseContext();
             SongController = new SongController(Context);
             PlaylistSongController = new PlaylistSongController(Context);
             PlaylistController = new PlaylistController(Context);
@@ -33,8 +33,8 @@ namespace Tests.Local
             Playlist = new Playlist() { Name = "Test", ActivePlaylist = true, CreationDate = DateTime.Now };
             PlaylistController.CreateItem(Playlist);
 
-            Song = new Song() { Artist = "test", Duration = 11, Name = "test", Path = "songs/dansenaandegracht.mp3" };
-            Song2 = new Song() { Artist = "test2", Duration = 11, Name = "test2", Path = "songs/untrago.mp3" };
+            Song = new Song() { ID = 1, Artist = "test", Duration = 11, Name = "test", Path = "songs/dansenaandegracht.mp3" };
+            Song2 = new Song() { ID = 2, Artist = "test2", Duration = 11, Name = "test2", Path = "songs/untrago.mp3" };
 
             SongController.CreateItem(Song);
             SongController.CreateItem(Song2);
@@ -55,7 +55,7 @@ namespace Tests.Local
             PlaylistSongController.AddSongToPlaylist(Song.ID, Playlist.ID);
             PlaylistSongController.AddSongToPlaylist(Song2.ID, Playlist.ID);
 
-            AudioPlayer.PlayPlaylist(Playlist);
+            AudioPlayer.PlayPlaylist(PlaylistSongController.GetSongsFromPlaylist(Playlist.ID));
             var playlistsongs = new PlaylistSongController(Context).GetSongsFromPlaylist(Playlist.ID);
 
             bool areEqual = true;
