@@ -28,7 +28,7 @@ namespace Tests.Users
         [TestCase("HalloLangWachtwoord", ExpectedResult = PasswordScore.Medium)]        // correct length,  with uppercase, no numbers,     no characters
         [TestCase("Wachtw00rdMetC1jfers", ExpectedResult = PasswordScore.Strong)]       // correct length,  with uppercase, with numbers,   no characters
         [TestCase("W@chtw00rdMetAll4s", ExpectedResult = PasswordScore.VeryStrong)]     // correct length,  with uppercase, with numbers,   with characters
-        public PasswordScore PasswordController_TestPasswordScore(string password)
+        public PasswordScore Controller_PasswordController_TestPasswordScore(string password)
         {
             return PasswordController.CheckStrength(password);
         }
@@ -37,14 +37,14 @@ namespace Tests.Users
         [TestCase("match", "no match", "test2@gmail.com", ExpectedResult = RegistrationResults.PasswordNoMatch)]                        // password mismatch
         [TestCase("Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2", "test@gmail.com", ExpectedResult = RegistrationResults.Succeeded)]          // succcess
         [TestCase("Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2", "duplicate@gmail.com", ExpectedResult = RegistrationResults.EmailTaken)]    // email taken
-        public RegistrationResults UserController_SignupResults(string password, string repeatPassword, string email)
+        public RegistrationResults Controller_UserController_SignupResults(string password, string repeatPassword, string email)
         {
             var result = Controller.CreateAccount(new User() {Email = email, Username = "test"}, password, repeatPassword);
             return result;
         }
 
         [TestCase("testindb@gmail.com", "SterkWachtw00rd@", ExpectedResult = true)]
-        public bool UserController_AccountInDatabase(string email, string password)
+        public bool Controller_UserController_AccountInDatabase(string email, string password)
         {
             var result = Controller.CreateAccount(new User() { Email = email, Username = "test" }, password, password);
             if (result != RegistrationResults.Succeeded)
