@@ -1,6 +1,7 @@
-﻿using System.Threading;
+﻿﻿using System.Threading;
 using System.Collections.Generic;
 using System.Configuration;
+using System;
 using Renci.SshNet;
 
 namespace Controller
@@ -8,27 +9,28 @@ namespace Controller
 
 public class SSHController
     {
+        // Set this to false, if using local Docker MSSQL database
         private bool CreateSSHTunnel = true;
-
-        private static SSHController _instance;
+        
 
         private Thread thread;
+
+        private static SSHController instance;
 
         public static SSHController Instance
         {
             get
             {
-                if (_instance == null)
-                    _instance = new SSHController();
-                return _instance;
+                if (instance == null)
+                    instance = new SSHController();
+                return instance;
             }
         }
 
-        private SSHController()
-        {
-            _instance = this;
-        }
-
+        /**
+         * Open an SSH tunnel to our Ubunut machine
+         * Start an SSHClient to connect
+         */
         public void TunnelThread()
         {
             var conf = GetSSHConfiguration();
@@ -43,7 +45,15 @@ public class SSHController
                 var port = new ForwardedPortLocal("127.0.0.1", 1433, "localhost", 1433);
                 client.AddForwardedPort(port);
 
-                port.Start();
+                try
+                {
+                    // Try to start the port, if port is being used close
+                    port.Start();
+                }
+                catch (Exception)
+                {
+                    return;
+                }
 
                 for (;;)
                 {
@@ -54,7 +64,7 @@ public class SSHController
         /**
          * Get the configurations from the App.Config
          *
-         * @return Dictionary<string, string> : 
+         * @return Dictionary<string, string> : The configuration for the SSH client
          */
         public Dictionary<string, string> GetSSHConfiguration()
         {

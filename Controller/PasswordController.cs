@@ -10,6 +10,13 @@ namespace Controller
     {
         private static string salt = ConfigurationManager.AppSettings["MD5SALT"];
 
+        /**
+         * Transform a password to an md5, hashed password
+         *
+         * @param password Password string to encrypt
+         *
+         * @return string : Encrypted password, md5 salted hash
+         */
         public static string EncryptPassword(string password)
         {
             var provider = (HashAlgorithm)CryptoConfig.CreateFromName("MD5");
@@ -19,6 +26,14 @@ namespace Controller
             return computedHash.Replace("-", "");
         }
 
+        /**
+         * Get the password strength of a string
+         * Check multiple test cases, and increment score if check is succesfull 
+         *
+         * @param password Password to check strength
+         *
+         * @ return PasswordScore : strength of password
+         */
         public static PasswordScore CheckStrength(string password)
         {
             int score = 0;
@@ -42,6 +57,9 @@ namespace Controller
             return (PasswordScore)score;
         }
 
+        /**
+         * Enum to define password strenghts
+         */
         public enum PasswordScore
         {
             Blank = 0,

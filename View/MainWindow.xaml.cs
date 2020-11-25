@@ -51,8 +51,6 @@ namespace Soundify
 
         public MainWindow()
         {
-            var configLocation = Assembly.GetEntryAssembly().Location;
-
             AudioPlayer.Initialize();
             _instanceMainWindow = this;
 
