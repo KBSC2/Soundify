@@ -11,6 +11,7 @@
 *.sln.docstates
 
 /View/App.Config
+View/App.Config
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

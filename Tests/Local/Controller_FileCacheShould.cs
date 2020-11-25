@@ -21,7 +21,7 @@ namespace Tests.Local
             Assert.IsTrue(File.Exists(Path));
         }
 
-        [Test]
+        [Test, Category("Local")]
         public void ClearCache_Path_NotExists()
         {
             Controller.FileCache.Instance.ClearCache(TimeSpan.FromSeconds(-1));
