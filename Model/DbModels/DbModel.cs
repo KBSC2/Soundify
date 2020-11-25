@@ -7,6 +7,6 @@ namespace Model.DbModels
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; protected set; }
+        public int ID { get; set; }
     }
 }

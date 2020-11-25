@@ -1,24 +1,24 @@
 ﻿using System.Configuration;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Model.DbModels;
 
-namespace Model.Data
+namespace Model.Database.Contexts
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : IDatabaseContext
     {
         // @Deprecated, will be removed
-        public static bool TEST_DB { get; set; } = false;
-
-        public DbSet<Song> Songs { get; set; }
-        public DbSet<Playlist> Playlists{ get; set; }
-        public DbSet<PlaylistSong> PlaylistSongs{ get; set; }
-        public DbSet<User> Users { get; set; }
+        public override DbSet<Song> Songs { get; set; }
+        public override DbSet<Playlist> Playlists { get; set; }
+        public override DbSet<PlaylistSong> PlaylistSongs { get; set; }
+        public override DbSet<User> Users { get; set;  }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionString = ConfigurationManager.ConnectionStrings["MSSQL"].ConnectionString;
+                Configuration configuration = ConfigurationManager.OpenExeConfiguration(@"View.dll");
+                var connectionString = configuration.ConnectionStrings.ConnectionStrings["MSSQL"].ConnectionString;
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }

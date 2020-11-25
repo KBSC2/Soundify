@@ -60,7 +60,8 @@ public class SSHController
         {
             Dictionary<string, string> result = new Dictionary<string, string>();
 
-            foreach (var s in ConfigurationManager.ConnectionStrings["SSH"].ConnectionString.Split(";"))
+            Configuration configuration = ConfigurationManager.OpenExeConfiguration(@"View.dll");
+            foreach (var s in configuration.ConnectionStrings.ConnectionStrings["SSH"].ConnectionString.Split(";"))
             {
                 string[] split = s.Trim().Split("=");
                 if(split.Length == 2)

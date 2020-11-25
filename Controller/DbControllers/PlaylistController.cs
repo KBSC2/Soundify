@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Model.Data;
+using Model.Database.Contexts;
 using Model.DbModels;
 
 namespace Controller.DbControllers
@@ -9,7 +9,7 @@ namespace Controller.DbControllers
     public class PlaylistController : DbController<Playlist>
     {
 
-        public PlaylistController(DatabaseContext context) : base(context, context.Playlists)
+        public PlaylistController(IDatabaseContext context) : base(context, context.Playlists)
         {
         }
 
@@ -25,7 +25,7 @@ namespace Controller.DbControllers
         public void DeletePlaylistOnDateStamp()
         {
             var currentTime = DateTime.Now;
-            var playlists = Context.Playlists.Where(p => p.ActivePlaylist == false).ToList();
+            var playlists = GetList().Where(p => p.ActivePlaylist == false).ToList();
             foreach (var VARIABLE in playlists.Where(VARIABLE => VARIABLE.DeleteDateTime < currentTime))
             {
                 DeleteItem(VARIABLE.ID);

@@ -1,5 +1,5 @@
 ﻿using Controller;
-using Model.Data;
+using Model.Database.Contexts;
 using NUnit.Framework;
 
 namespace Tests.Local

@@ -1,7 +1,7 @@
 ﻿using System;
 using Controller;
 using Controller.DbControllers;
-using Model.Data;
+using Model.Database.Contexts;
 using Model.DbModels;
 using NUnit.Framework;
 
@@ -14,7 +14,7 @@ namespace Tests.Playlists
     [TestFixture]
     public class Controller_DbControllers_PlaylistSongControllerTest
     {
-        private DatabaseContext context;
+        private MockDatabaseContext context;
         private SongController songController;
         private PlaylistController playlistController;
         private PlaylistSongController playlistSongController;
@@ -23,12 +23,9 @@ namespace Tests.Playlists
         [SetUp]
         public void SetUp()
         {
-            DatabaseContext.TEST_DB = true;
-            SSHController.Instance.OpenSSHTunnel();
-
             song = new Song() { Duration = 60, Artist = "Rick Astley", Name = "Never gonna give you up", Path = "../Dit/is/een/path" };
             playlist = new Playlist() {Name = "TESTPLAYLIST", CreationDate = DateTime.Now};
-            context = new DatabaseContext();
+            context = new MockDatabaseContext();
             
             songController = new SongController(context);
             playlistController = new PlaylistController(context);

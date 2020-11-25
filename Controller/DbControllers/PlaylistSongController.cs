@@ -2,20 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Model.Data;
+using Model.Database.Contexts;
 using Model.DbModels;
 
 namespace Controller.DbControllers
 {
     public class PlaylistSongController
     {
-        private DatabaseContext _context;
+        private IDatabaseContext _context;
         private SongController _songController;
         private PlaylistController _playlistController;
 
-        public PlaylistSongController(DatabaseContext context)
+        private DbSet<PlaylistSong> _set;
+
+        public PlaylistSongController(IDatabaseContext context)
         {
             this._context = context;
+            _set = _context.PlaylistSongs;
             _songController = new SongController(context);
             _playlistController = new PlaylistController(context);
         }
@@ -36,7 +39,11 @@ namespace Controller.DbControllers
                 Playlist = _playlistController.GetItem(playlistID), 
                 Added = DateTime.Now
             };
-            _context.PlaylistSongs.Add(playlistSong);
+
+            _set.Add(playlistSong);
+
+            if (!RealDatabase()) return;
+
             _context.Entry(playlistSong).State = EntityState.Added;
             _context.SaveChanges();
         }
@@ -63,16 +70,20 @@ namespace Controller.DbControllers
 
             var playlistSong = GetPlaylistSong(playlistID, songID);
 
-            _context.PlaylistSongs.Remove(playlistSong);
-            _context.Entry(playlistSong).State = EntityState.Deleted;
-            _context.SaveChanges();
+            _set.Remove(playlistSong);
+
+            if (RealDatabase())
+            {
+                _context.Entry(playlistSong).State = EntityState.Deleted;
+                _context.SaveChanges();
+            }
 
             ReorderSongIndexes(playlistID);
         }
 
         public bool RowExists(int songID, int playlistID)
         {
-            return _context.PlaylistSongs
+            return _set
                 .Where(p => p.PlaylistID == playlistID)
                 .Any(s => s.SongID == songID);
         }
@@ -80,7 +91,7 @@ namespace Controller.DbControllers
         public List<PlaylistSong> GetSongsFromPlaylist(int playlistID)
         {
             ReorderSongIndexes(playlistID);
-            var songs = _context.PlaylistSongs.Where(ps => ps.PlaylistID == playlistID).OrderBy(ps => ps.Index).ToList();
+            var songs = _set.Where(ps => ps.PlaylistID == playlistID).OrderBy(ps => ps.Index).ToList();
             songs.ForEach(s =>
             {
                 s.Song = _songController.GetItem(s.SongID);
@@ -104,9 +115,17 @@ namespace Controller.DbControllers
 
         public void UpdatePlaylistSong(PlaylistSong playlistSong)
         {
-            _context.PlaylistSongs.Update(playlistSong);
+            _set.Update(playlistSong);
+
+            if (!RealDatabase()) return;
+
             _context.Entry(playlistSong).State = EntityState.Modified;
             _context.SaveChanges();
+        }
+
+        public bool RealDatabase()
+        {
+            return _context is DatabaseContext;
         }
     }
 }

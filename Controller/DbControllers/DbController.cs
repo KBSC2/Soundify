@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Model.Data;
+using Model.Database.Contexts;
 using Model.DbModels;
 
 namespace Controller
 {
     public abstract class DbController<T> where T : DbModel
     {
-        protected DatabaseContext Context { get; set; }
+        protected IDatabaseContext Context { get; set; }
         protected DbSet<T> Set { get; set; }
 
-        protected DbController(DatabaseContext context, DbSet<T> set)
+        protected DbController(IDatabaseContext context, DbSet<T> set)
         {
             Context = context;
             Set = set;
@@ -36,6 +36,10 @@ namespace Controller
         // CREATE
         public virtual void CreateItem(T item)
         {
+            Set.Add(item);
+
+            if (!RealDatabase()) return;
+
             Context.Add(item);
             Context.Entry(item).State = EntityState.Added;
             Context.SaveChanges();
@@ -47,6 +51,8 @@ namespace Controller
             var dbItem = GetItem(item.ID);
             dbItem = item;
 
+            if (!RealDatabase()) return;
+
             Context.Entry(dbItem).State = EntityState.Modified;
             Context.SaveChanges();
         }
@@ -55,8 +61,11 @@ namespace Controller
         public virtual void DeleteItem(int id)
         {
             var item = GetItem(id);
-            Context.Entry(item).State = EntityState.Deleted;
             Set.Remove(item);
+
+            if (!RealDatabase()) return;
+
+            Context.Entry(item).State = EntityState.Deleted;
             Context.SaveChanges();
         }
 
@@ -74,6 +83,11 @@ namespace Controller
         public virtual T GetLastItem()
         {
             return Set.OrderBy(i => i.ID).Last();
+        }
+
+        public bool RealDatabase()
+        {
+            return Context is DatabaseContext;
         }
     }
 }

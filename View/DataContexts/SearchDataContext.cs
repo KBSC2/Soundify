@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Controller.DbControllers;
 using Model.Annotations;
-using Model.Data;
+using Model.Database.Contexts;
 using Model.DbModels;
 
 namespace View.DataContexts

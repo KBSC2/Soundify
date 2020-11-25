@@ -1,7 +1,7 @@
 ﻿using System;
 using Controller;
 using Controller.DbControllers;
-using Model.Data;
+using Model.Database.Contexts;
 using Model.DbModels;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
@@ -11,7 +11,7 @@ namespace Tests.Playlists
     [TestFixture]
     public class Controller_PlaylistController_GetActivePlaylistsShould
     {
-        private DatabaseContext _context;
+        private MockDatabaseContext _context;
         private PlaylistController _playlistController;
         private Playlist _testPlaylist1;
         private Playlist _testPlaylist2;
@@ -20,9 +20,7 @@ namespace Tests.Playlists
         [SetUp]
         public void SetUp()
         {
-            DatabaseContext.TEST_DB = true;
-            SSHController.Instance.OpenSSHTunnel();
-            _context = new DatabaseContext();
+            _context = new MockDatabaseContext();
             _playlistController = new PlaylistController(_context);
             _testPlaylist1 = new Playlist()
                 {Name = "TestPlaylist1", ActivePlaylist = true, CreationDate = DateTime.Now, UserID = 1};

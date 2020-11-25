@@ -1,12 +1,13 @@
 using Controller;
 using Controller.DbControllers;
 using Model;
-using Model.Data;
+using Model.Database.Contexts;
 using Model.DbModels;
 using Model.EventArgs;
 using NAudio.Wave;
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -50,6 +51,8 @@ namespace Soundify
 
         public MainWindow()
         {
+            var configLocation = Assembly.GetEntryAssembly().Location;
+
             AudioPlayer.Initialize();
             _instanceMainWindow = this;
 

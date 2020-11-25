@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Controller;
 using Controller.DbControllers;
-using Model.Data;
+using Model.Database.Contexts;
 using Model.DbModels;
 using NUnit.Framework;
 using View.DataContexts;
@@ -11,7 +11,7 @@ namespace Tests.SearchTests
     [TestFixture]
     public class Controller_Playlist_SearchOnString
     {
-        private DatabaseContext context;
+        private MockDatabaseContext context;
         private PlaylistController playlistController;
         private Playlist playlistName;
         private Playlist playlistDescription;
@@ -21,15 +21,13 @@ namespace Tests.SearchTests
         [SetUp]
         public void SetUp()
         {
-            DatabaseContext.TEST_DB = true;
-            SSHController.Instance.OpenSSHTunnel();
-            context = new DatabaseContext();
+            context = new MockDatabaseContext();
             playlistController = new PlaylistController(context);
-            DataContext.Instance.CurrentUser = new UserController(context).GetItem(52);
-            playlistName = new Playlist() {Name = "PlaylistNameTest", UserID = DataContext.Instance.CurrentUser.ID};
+            DataContext.Instance.CurrentUser = new UserController(context).GetItem(1);
+            playlistName = new Playlist() {Name = "PlaylistNameTest", UserID = DataContext.Instance.CurrentUser.ID, ActivePlaylist = true};
             playlistDescription = new Playlist()
-                {Name = "PlaylistDescriptionTest", Description = "I really wanna test this", UserID = DataContext.Instance.CurrentUser.ID };
-            playlistGenre = new Playlist() {Name = "PlaylistGenreTest", Genre = "Metal", UserID = DataContext.Instance.CurrentUser.ID };
+                {Name = "PlaylistDescriptionTest", Description = "I really wanna test this", UserID = DataContext.Instance.CurrentUser.ID, ActivePlaylist = true };
+            playlistGenre = new Playlist() {Name = "PlaylistGenreTest", Genre = "Metal", UserID = DataContext.Instance.CurrentUser.ID, ActivePlaylist = true };
             playlistController.CreateItem(playlistName);
             playlistController.CreateItem(playlistDescription);
             playlistController.CreateItem(playlistGenre);
