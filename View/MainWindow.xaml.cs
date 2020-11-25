@@ -1,7 +1,7 @@
 using Controller;
 using Controller.DbControllers;
 using Model;
-using Model.Data;
+using Model.Database.Contexts;
 using Model.DbModels;
 using Model.EventArgs;
 using NAudio.Wave;
@@ -151,12 +151,12 @@ namespace Soundify
         {
             if (e.Key == Key.Return)
             {
-                var textBox = (TextBox)sender;
+                var textBox = (TextBox) sender;
                 var text = textBox.Text;
                 SetScreen(ScreenNames.SearchScreen);
                 SearchDataContext.Instance.SearchTerms = text.Split(" ").ToList();
                 SearchDataContext.Instance.OnPropertyChanged("");
-            }
+            }   
         }
     }
 }

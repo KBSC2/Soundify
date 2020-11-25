@@ -1,5 +1,7 @@
-﻿using System;
-using System.Threading;
+﻿﻿using System.Threading;
+using System.Collections.Generic;
+using System.Configuration;
+using System;
 using Renci.SshNet;
 
 namespace Controller
@@ -31,7 +33,12 @@ public class SSHController
          */
         public void TunnelThread()
         {
-            using (var client = new SshClient("145.44.235.172", "student", "Sterk_W@chtw00rd2"))
+            var conf = GetSSHConfiguration();
+
+            using (var client = new SshClient(
+                conf.GetValueOrDefault("Host"), 
+                conf.GetValueOrDefault("Username"),
+                conf.GetValueOrDefault("Password")))
             {
                 client.Connect();
 
@@ -52,6 +59,26 @@ public class SSHController
                 {
                 }
             }
+        }
+
+        /**
+         * Get the configurations from the App.Config
+         *
+         * @return Dictionary<string, string> : The configuration for the SSH client
+         */
+        public Dictionary<string, string> GetSSHConfiguration()
+        {
+            Dictionary<string, string> result = new Dictionary<string, string>();
+
+            Configuration configuration = ConfigurationManager.OpenExeConfiguration(@"View.dll");
+            foreach (var s in configuration.ConnectionStrings.ConnectionStrings["SSH"].ConnectionString.Split(";"))
+            {
+                string[] split = s.Trim().Split("=");
+                if(split.Length == 2)
+                    result.Add(split[0].Trim(), split[1].Trim());
+            }
+
+            return result;
         }
 
         /**

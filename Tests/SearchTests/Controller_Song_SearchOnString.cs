@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
-using Controller;
 using Controller.DbControllers;
-using Model.Data;
+using Model.Database.Contexts;
 using Model.DbModels;
 using NUnit.Framework;
 
-namespace Tests.ControlersTests.SearchTests
+namespace Tests.SearchTests
 {
     [TestFixture]
     public class Controller_Song_SearchOnString
     {
-        private DatabaseContext context;
+        private MockDatabaseContext context;
         private SongController songController;
         private Song songNameTest;
         private Song songArtistTest;
@@ -19,9 +18,7 @@ namespace Tests.ControlersTests.SearchTests
         [SetUp]
         public void SetUp()
         {
-            DatabaseContext.TEST_DB = true;
-            SSHController.Instance.OpenSSHTunnel();
-            context = new DatabaseContext();
+            context = new MockDatabaseContext();
             songController = new SongController(context);
             songNameTest = new Song(){Name = "SongNameTest", Artist = "Coder", Duration = 10, Path = "../path"};
             songArtistTest = new Song() { Name = "Ik WIl Testen, liefst ieder kwartier", Artist = "Tester", Duration = 10, Path = "../path" };

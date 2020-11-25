@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Model.Data;
+using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
 
@@ -7,7 +7,7 @@ namespace Controller.DbControllers
 {
     public class UserController : DbController<User>
     {
-        public UserController(DatabaseContext context) : base(context, context.Users)
+        public UserController(IDatabaseContext context) : base(context, context.Users)
         {
         }
 
@@ -33,7 +33,7 @@ namespace Controller.DbControllers
          */
         public LoginResults UserLogin(string emailOrUsername, string password)
         {
-            var user = new UserController(new DatabaseContext()).GetUserFromEmailOrUsername(emailOrUsername);
+            var user = GetUserFromEmailOrUsername(emailOrUsername);
             if (user == null)
                 return LoginResults.EmailNotFound;
 

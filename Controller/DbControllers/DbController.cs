@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Model.Data;
+using Model.Database.Contexts;
 using Model.DbModels;
 
 namespace Controller
 {
     public abstract class DbController<T> where T : DbModel
     {
-        protected DatabaseContext Context { get; set; }
+        protected IDatabaseContext Context { get; set; }
         protected DbSet<T> Set { get; set; }
 
-        protected DbController(DatabaseContext context, DbSet<T> set)
+        protected DbController(IDatabaseContext context, DbSet<T> set)
         {
             Context = context;
             Set = set;
@@ -36,6 +36,11 @@ namespace Controller
         // CREATE
         public virtual void CreateItem(T item)
         {
+            Set.Add(item);
+
+            // If the database is a mock one, do not use the context (not required)
+            if (!RealDatabase()) return;
+
             Context.Add(item);
             Context.Entry(item).State = EntityState.Added;
             Context.SaveChanges();
@@ -47,6 +52,9 @@ namespace Controller
             var dbItem = GetItem(item.ID);
             dbItem = item;
 
+            // If the database is a mock one, do not use the context (not required)
+            if (!RealDatabase()) return;
+
             Context.Entry(dbItem).State = EntityState.Modified;
             Context.SaveChanges();
         }
@@ -55,8 +63,12 @@ namespace Controller
         public virtual void DeleteItem(int id)
         {
             var item = GetItem(id);
-            Context.Entry(item).State = EntityState.Deleted;
             Set.Remove(item);
+
+            // If the database is a mock one, do not use the context (not required)
+            if (!RealDatabase()) return;
+
+            Context.Entry(item).State = EntityState.Deleted;
             Context.SaveChanges();
         }
 
@@ -71,9 +83,13 @@ namespace Controller
         {
             return Set.Where(filter).ToList();
         }
-        public virtual T GetLastItem()
+
+        /**
+         * Determine if the database is a real databse, or a mock database
+         */
+        public bool RealDatabase()
         {
-            return Set.OrderBy(i => i.ID).Last();
+            return Context is DatabaseContext;
         }
     }
 }

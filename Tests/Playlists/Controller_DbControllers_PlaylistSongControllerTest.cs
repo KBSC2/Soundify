@@ -1,7 +1,6 @@
 ﻿using System;
-using Controller;
 using Controller.DbControllers;
-using Model.Data;
+using Model.Database.Contexts;
 using Model.DbModels;
 using NUnit.Framework;
 
@@ -9,12 +8,12 @@ using NUnit.Framework;
  At the start of the test, the database should be in the same state as at the end of the test. */
 /*It's important the entries to the database are 0. So at the start and the end the database should
 remain untouched*/
-namespace Tests
+namespace Tests.Playlists
 {
     [TestFixture]
     public class Controller_DbControllers_PlaylistSongControllerTest
     {
-        private DatabaseContext context;
+        private MockDatabaseContext context;
         private SongController songController;
         private PlaylistController playlistController;
         private PlaylistSongController playlistSongController;
@@ -24,13 +23,10 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
-            DatabaseContext.TEST_DB = true;
-            SSHController.Instance.OpenSSHTunnel();
-
             song = new Song() { Duration = 60, Artist = "Rick Astley", Name = "Never gonna give you up", Path = "../Dit/is/een/path" };
             song2 = new Song() { Duration = 60, Artist = "PSY", Name = "Gangnam Style", Path = "../Dit/is/een/path", WrittenBy = "Park Jae-Sang, Yoo Gun Hyung", ProducedBy = "Park Jae-Sang, Yoo Gun Hyung", Description = "PSY - ‘I LUV IT’ M/V @ https://youtu.be/Xvjnoagk6GU PSY - ‘New Face’ M / V @https://youtu.be/OwJPPaEyqhI PSY - 8TH ALBUM '4X2=8' on iTunes @ https://smarturl.it/PSY_8thAlbum PSY - GANGNAM STYLE(강남스타일) on iTunes @ http://smarturl.it/PsyGangnam #PSY #싸이 #GANGNAMSTYLE #강남스타일"};
             playlist = new Playlist() {Name = "TESTPLAYLIST", CreationDate = DateTime.Now};
-            context = new DatabaseContext();
+            context = new MockDatabaseContext();
             
             songController = new SongController(context);
             playlistController = new PlaylistController(context);

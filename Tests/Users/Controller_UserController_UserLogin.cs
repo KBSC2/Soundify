@@ -1,23 +1,20 @@
-﻿using Controller;
-using Controller.DbControllers;
-using Model.Data;
+﻿using Controller.DbControllers;
+using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
 using NUnit.Framework;
 
-namespace Tests
+namespace Tests.Users
 {
     [TestFixture]
     public class Controller_UserController_UserLogin
     {
-        private UserController Controller { get; } = new UserController(new DatabaseContext());
+        private UserController Controller { get; } = new UserController(new MockDatabaseContext());
         private User User { get; set; }
 
         [SetUp]
         public void SetUp()
         {
-            DatabaseContext.TEST_DB = true;
-            SSHController.Instance.OpenSSHTunnel();
             User = new User() { Email = "test@gmail.com", Username = "test" };
             Controller.CreateAccount(User, "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2");
         }

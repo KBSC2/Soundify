@@ -2,7 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Model.Data;
+using Model.Database.Contexts;
 
 namespace Model.Migrations
 {

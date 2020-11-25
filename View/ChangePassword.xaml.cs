@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using Controller;
 using Controller.DbControllers;
-using Model.Data;
+using Model.Database.Contexts;
 using Model.Enums;
 
 namespace View

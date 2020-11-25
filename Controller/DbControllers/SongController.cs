@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Model.Data;
+using Model.Database.Contexts;
 using Model.DbModels;
 
 namespace Controller.DbControllers
 {
     public class SongController : DbController<Song>
     {
-        public SongController(DatabaseContext context) : base(context, context.Songs)
+        public SongController(IDatabaseContext context) : base(context, context.Songs)
         {
         }
 
