@@ -28,7 +28,7 @@ namespace Tests.Playlists
         }
 
         [Test]
-        public void DeactivatePlaylistTest()
+        public void Controller_PlaylistController_DeactivatePlaylistTest()
         {
             playlistController.CreateItem(playlist);
             playlistController.DeactivatePlaylist(playlist.ID);
@@ -38,7 +38,7 @@ namespace Tests.Playlists
         }
 
         [Test]
-        public void DeletePlaylistTest()
+        public void Controller_PlaylistController_DeletePlaylistTest()
         {
             playlistController.CreateItem(playlistDelete);
             playlistController.DeactivatePlaylist(playlistDelete.ID);

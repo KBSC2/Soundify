@@ -28,7 +28,7 @@ namespace Tests.SearchTests
         }
 
         [Test]
-        public void SearchOnFullName()
+        public void Controller_SongController_SearchOnFullName()
         {
             var confirm = false;
             songSearchResults = songController.SearchSongsOnString(new List<string>() { "SongNameTest" });
@@ -43,7 +43,7 @@ namespace Tests.SearchTests
         }
 
         [Test]
-        public void SearchOnPartialName()
+        public void Controller_SongController_SearchOnPartialName()
         {
             var confirm = false;
             songSearchResults = songController.SearchSongsOnString(new List<string>() { "meTest" });
@@ -57,7 +57,7 @@ namespace Tests.SearchTests
             Assert.IsTrue(confirm);
         }
         [Test]
-        public void SearchOnFullArtist()
+        public void Controller_SongController_SearchOnFullArtist()
         {
             var confirm = false;
             songSearchResults = songController.SearchSongsOnString(new List<string>() { "Tester" });
@@ -72,7 +72,7 @@ namespace Tests.SearchTests
         }
 
         [Test]
-        public void SearchOnPartialArtist()
+        public void Controller_SongController_SearchOnPartialArtist()
         {
             var confirm = false;
             songSearchResults = songController.SearchSongsOnString(new List<string>() { "ste" });
@@ -87,7 +87,7 @@ namespace Tests.SearchTests
         }
 
         [Test]
-        public void SearchOnSearchOnMultipleFullSearchTerms()
+        public void Controller_SongController_SearchOnSearchOnMultipleFullSearchTerms()
         {
             var confirm1 = false;
             var confirm2 = false;
@@ -109,7 +109,7 @@ namespace Tests.SearchTests
         }
 
         [Test]
-        public void SearchOnSearchOnMultiplePartialSearchTerms()
+        public void Controller_SongController_SearchOnSearchOnMultiplePartialSearchTerms()
         {
             var confirm1 = false;
             var confirm2 = false;

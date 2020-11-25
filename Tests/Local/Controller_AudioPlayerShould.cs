@@ -41,14 +41,14 @@ namespace Tests.Local
         }
 
         [Test, Category("Local")]
-        public void AddSong_Queue_Contains()
+        public void Controller_AudioPlayer_AddSong_Queue_Contains()
         {
             AudioPlayer.AddSong(Song);
             Assert.IsTrue(AudioPlayer.SongQueue.Contains(Song));
         }
 
         [Test, Category("Local")]
-        public void PlayPlaylist_SongQueue_ContainsSongs()
+        public void Controller_AudioPlayer_PlayPlaylist_SongQueue_ContainsSongs()
         {
             AudioPlayer.SongQueue.Clear();
 

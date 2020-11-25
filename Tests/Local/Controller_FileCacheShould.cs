@@ -16,13 +16,13 @@ namespace Tests.Local
         }
 
         [Test, Category("Local")]
-        public void GetFile_Path_Exists()
+        public void Controller_FileCache_GetFile_Path_Exists()
         {
             Assert.IsTrue(File.Exists(Path));
         }
 
         [Test, Category("Local")]
-        public void ClearCache_Path_NotExists()
+        public void Controller_FileCache_ClearCache_Path_NotExists()
         {
             Controller.FileCache.Instance.ClearCache(TimeSpan.FromSeconds(-1));
             Assert.IsFalse(File.Exists(Path));
