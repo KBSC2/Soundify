@@ -5,7 +5,7 @@ using Model.DbModels;
 using Model.Data;
 using System;
 
-namespace Tests
+namespace Tests.Local
 {
     [TestFixture]
     public class Controller_AudioPlayerShould

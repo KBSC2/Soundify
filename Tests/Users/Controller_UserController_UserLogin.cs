@@ -5,7 +5,7 @@ using Model.DbModels;
 using Model.Enums;
 using NUnit.Framework;
 
-namespace Tests
+namespace Tests.Users
 {
     [TestFixture]
     public class Controller_UserController_UserLogin

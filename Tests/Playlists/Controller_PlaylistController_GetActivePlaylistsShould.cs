@@ -6,7 +6,7 @@ using Model.DbModels;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
 
-namespace Tests
+namespace Tests.Playlists
 {
     [TestFixture]
     public class Controller_PlaylistController_GetActivePlaylistsShould

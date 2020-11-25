@@ -7,7 +7,7 @@ using Model.Enums;
 using NUnit.Framework;
 using static Controller.PasswordController;
 
-namespace Tests
+namespace Tests.Users
 {
     [TestFixture]
     public class Controller_UserController_UserSignup

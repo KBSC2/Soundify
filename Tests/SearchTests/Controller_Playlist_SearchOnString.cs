@@ -6,7 +6,7 @@ using Model.DbModels;
 using NUnit.Framework;
 using View.DataContexts;
 
-namespace Tests.ControlersTests.SearchTests
+namespace Tests.SearchTests
 {
     [TestFixture]
     public class Controller_Playlist_SearchOnString

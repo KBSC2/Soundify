@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -7,7 +8,7 @@ namespace Controller
 {
     public class PasswordController
     {
-        private static string salt = "Sterk_W@chtw00rd2";
+        private static string salt = ConfigurationManager.AppSettings["MD5SALT"];
 
         public static string EncryptPassword(string password)
         {
@@ -16,12 +17,6 @@ namespace Controller
             var computedHash = BitConverter.ToString(bytes);
 
             return computedHash.Replace("-", "");
-        }
-
-        public static bool PasswordsAreEqual(string password, string hash)
-        {
-            var passwordHash = EncryptPassword(password);
-            return passwordHash.Equals(hash);
         }
 
         public static PasswordScore CheckStrength(string password)

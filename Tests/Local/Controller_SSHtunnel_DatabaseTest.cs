@@ -2,10 +2,10 @@
 using Model.Data;
 using NUnit.Framework;
 
-namespace Tests
+namespace Tests.Local
 {
     [TestFixture]
-    public class Controller_SSHtunnel_DatabaseTest
+    public class Controller_SSHTunnel_DatabaseTest
     {
         [SetUp]
         public void SetUp()
@@ -13,7 +13,7 @@ namespace Tests
             SSHController.Instance.OpenSSHTunnel();
         }
 
-        [Test]
+        [Test, Category("Local")]
         public void IsConnected()
         {
             Assert.IsTrue(new DatabaseContext().Database.CanConnect());

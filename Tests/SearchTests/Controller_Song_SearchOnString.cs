@@ -5,7 +5,7 @@ using Model.Data;
 using Model.DbModels;
 using NUnit.Framework;
 
-namespace Tests.ControlersTests.SearchTests
+namespace Tests.SearchTests
 {
     [TestFixture]
     public class Controller_Song_SearchOnString

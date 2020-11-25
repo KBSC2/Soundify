@@ -9,7 +9,7 @@ using NUnit.Framework;
  At the start of the test, the database should be in the same state as at the end of the test. */
 /*It's important the entries to the database are 0. So at the start and the end the database should
 remain untouched*/
-namespace Tests
+namespace Tests.Playlists
 {
     [TestFixture]
     public class Controller_DbControllers_PlaylistSongControllerTest
