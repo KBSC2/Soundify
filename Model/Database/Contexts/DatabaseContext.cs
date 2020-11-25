@@ -1,5 +1,4 @@
 ﻿using System.Configuration;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Model.DbModels;
 
@@ -17,6 +16,7 @@ namespace Model.Database.Contexts
         {
             if (!optionsBuilder.IsConfigured)
             {
+                // Fetch database settings from the App.Config
                 Configuration configuration = ConfigurationManager.OpenExeConfiguration(@"View.dll");
                 var connectionString = configuration.ConnectionStrings.ConnectionStrings["MSSQL"].ConnectionString;
                 optionsBuilder.UseSqlServer(connectionString);

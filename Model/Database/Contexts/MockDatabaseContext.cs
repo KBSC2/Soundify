@@ -1,23 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.Extensions.Caching.Memory;
 using Model.DbModels;
 using Moq;
 
 namespace Model.Database.Contexts
 {
+    /**
+     * This is database context for mocking
+     */
     public class MockDatabaseContext : IDatabaseContext
     {
         public override DbSet<Song> Songs { get; set; }
-
         public override DbSet<Playlist> Playlists { get; set; }
         public override DbSet<PlaylistSong> PlaylistSongs { get; set; }
         public override DbSet<User> Users{ get; set; }
 
+        /**
+         * Create a database mock, to use for all unit tests
+         * Default rows in the mock database, can be added here.
+         *
+         * @return void
+         */
         public MockDatabaseContext()
         {
             Songs = GetQueryableMockDbSet(new List<Song>());
@@ -29,6 +33,13 @@ namespace Model.Database.Contexts
             });
         }
 
+        /**
+         * Convert a list to a mock DbSet
+         *
+         * @param sourceList list to convert
+         *
+         * @return DbSet : transformed dbset from sourcelist
+         */
         public DbSet<T> GetQueryableMockDbSet<T>(List<T> sourceList) where T : class
         {
             var queryable = sourceList.AsQueryable();

@@ -38,6 +38,7 @@ namespace Controller
         {
             Set.Add(item);
 
+            // If the database is a mock one, do not use the context (not required)
             if (!RealDatabase()) return;
 
             Context.Add(item);
@@ -51,6 +52,7 @@ namespace Controller
             var dbItem = GetItem(item.ID);
             dbItem = item;
 
+            // If the database is a mock one, do not use the context (not required)
             if (!RealDatabase()) return;
 
             Context.Entry(dbItem).State = EntityState.Modified;
@@ -63,6 +65,7 @@ namespace Controller
             var item = GetItem(id);
             Set.Remove(item);
 
+            // If the database is a mock one, do not use the context (not required)
             if (!RealDatabase()) return;
 
             Context.Entry(item).State = EntityState.Deleted;
@@ -80,11 +83,10 @@ namespace Controller
         {
             return Set.Where(filter).ToList();
         }
-        public virtual T GetLastItem()
-        {
-            return Set.OrderBy(i => i.ID).Last();
-        }
 
+        /**
+         * Determine if the database is a real databse, or a mock database
+         */
         public bool RealDatabase()
         {
             return Context is DatabaseContext;
