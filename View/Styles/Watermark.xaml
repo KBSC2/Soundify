@@ -41,11 +41,11 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="WaterMarkLabelPassword" Property="Background" Value="Gray"></Setter>
+                            <Setter TargetName="WaterMarkLabelPassword" Property="Background" Value="Gray"/>
                             <Setter Property="Foreground" Value="White" />
                         </Trigger>
                         <Trigger Property="components:PasswordBoxMonitor.PasswordLength" Value="0">
-                            <Setter Property="Visibility" TargetName="WaterMarkLabelPassword" Value="Visible"></Setter>
+                            <Setter Property="Visibility" TargetName="WaterMarkLabelPassword" Value="Visible"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
