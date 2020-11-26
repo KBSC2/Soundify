@@ -14,6 +14,7 @@
     <None Remove="Assets\soundify.png" />
     <None Remove="dansenaandegracht.mp3" />
     <None Remove="dansenaandegracht2.mp3" />
+    <None Remove="gangnam_style_official_cover.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +31,9 @@
 
   <ItemGroup>
     <Resource Include="Assets\soundify.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="gangnam_style_official_cover.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

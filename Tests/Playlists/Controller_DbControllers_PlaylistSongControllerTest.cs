@@ -93,6 +93,7 @@ namespace Tests.Playlists
         public void TearDown()
         {
             songController.DeleteItem(song.ID);
+            songController.DeleteItem(song2.ID);
             playlistController.DeleteItem(playlist.ID);
         }
     }

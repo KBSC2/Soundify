@@ -11,7 +11,7 @@
         <DataContexts:SongInfoDataContext/>
     </Window.DataContext>
     <Window.Resources>
-        <BitmapImage x:Key="masterImage" UriSource="Gangnam_Style_Official_Cover.png" />
+        <BitmapImage x:Key="masterImage" UriSource="gangnam_style_official_cover.png" />
         <CroppedBitmap x:Key="SongImage" 
       Source="{StaticResource masterImage}" SourceRect="0 200 1782 950"/>
     </Window.Resources>
@@ -35,9 +35,9 @@
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="1" Content="Song Name:" FontSize="25" HorizontalAlignment="Right" Foreground="White"/>
+                <Label Grid.Row="1" Content="Song name" FontSize="25" HorizontalAlignment="Right" Foreground="White"/>
                 <Label Grid.Row="2" Content="{Binding Song.Name}" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Right" Foreground="#ACAEB9"/>
-                <Label Grid.Row="3" Content="Artist Name:" FontSize="25" HorizontalAlignment="Right" Foreground="White"/>
+                <Label Grid.Row="3" Content="Artist name" FontSize="25" HorizontalAlignment="Right" Foreground="White"/>
                 <Label Grid.Row="4" Content="{Binding Song.Artist}" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Right" Foreground="#ACAEB9"/>
             </Grid>
             <Grid>
@@ -48,9 +48,9 @@
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="1" Content="Written By:" FontSize="25" HorizontalAlignment="Center" Foreground="White"/>
+                <Label Grid.Row="1" Content="Written by" FontSize="25" HorizontalAlignment="Center" Foreground="White"/>
                 <Label Grid.Row="2" Content="{Binding Song.WrittenBy}" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Center" Foreground="#ACAEB9"/>
-                <Label Grid.Row="3" Content="Produced By:" FontSize="25" HorizontalAlignment="Center" Foreground="White"/>
+                <Label Grid.Row="3" Content="Produced by" FontSize="25" HorizontalAlignment="Center" Foreground="White"/>
                 <Label Grid.Row="4" Content="{Binding Song.ProducedBy}" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Center" Foreground="#ACAEB9"/>
             </Grid>
             <Grid Margin="500,0,0,0">
@@ -59,7 +59,7 @@
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="100"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="1" Content="Description:" FontSize="25" HorizontalAlignment="Left" Foreground="White"/>
+                <Label Grid.Row="1" Content="Description" FontSize="25" HorizontalAlignment="Left" Foreground="White"/>
                 <TextBox Grid.Row="2" Text="{Binding Song.Description}" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Left" Foreground="#FFACAEB9" SelectionTextBrush="White" TextWrapping="Wrap" IsReadOnly="true" BorderBrush="{x:Null}"  Background="{x:Null}"/>
             </Grid>
         </Grid>

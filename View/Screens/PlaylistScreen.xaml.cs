@@ -19,11 +19,11 @@ namespace View.Screens
         }
         private void ListViewItem_RightClick(object sender, RoutedEventArgs e)
         {
-            var song = ((SongInfo)((MenuItem) sender).DataContext).Song;
+            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
 
             SongInfoScreen songInfoScreen = new SongInfoScreen(song);
             songInfoScreen.Show();
-
+        }
         public void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
         {
             var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
