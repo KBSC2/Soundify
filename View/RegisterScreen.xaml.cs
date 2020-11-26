@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
@@ -58,6 +59,13 @@ namespace View
                     break;
                 }
 
+            }
+        }
+        private void Register_On_Enter_Key(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                Register_Button_Click(sender, new RoutedEventArgs());
             }
         }
         private void BackToLogin_Button_Click(object sender, RoutedEventArgs e)

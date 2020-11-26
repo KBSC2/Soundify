@@ -6,13 +6,14 @@
         xmlns:local="clr-namespace:View"
         xmlns:DataContexts="clr-namespace:View.DataContexts" x:Class="View.LoginScreen"
         mc:Ignorable="d"
-        Title="LoginScreen" Height="715" Width="617">
-    <Grid Background="{DynamicResource BackgroundColor}">
+        Title="LoginScreen" Height="715" Width="617"
+        WindowStartupLocation="CenterScreen">
+    <Grid Background="{DynamicResource BackgroundColor}" KeyDown="Login_On_Enter_Key">
         <Image Margin="263,32,263,576" Stretch="Fill" Source="Assets/soundify.png" Width="66" Height="66"/>
         <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,123,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50"/>
         <Label Content="Welcome" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
         <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="UsernameLogin" HorizontalAlignment="Center" Margin="0,290,0,0" Tag="Email" TextWrapping="NoWrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="{DynamicResource InputBackground}" Foreground="White"/>
-        <PasswordBox Style="{StaticResource WatermarkPasswordBox}" x:Name="PasswordLogin" HorizontalAlignment="Center" Margin="0,376,0,0" Tag="Password" VerticalAlignment="Top" Width="356" Height="60" FontSize="40" Foreground="White" Background="{DynamicResource InputBackground}"/>
+        <PasswordBox Style="{StaticResource WatermarkPasswordBox}"  x:Name="PasswordLogin" HorizontalAlignment="Center" Margin="0,376,0,0" Tag="Password" VerticalAlignment="Top" Width="356" Height="60" FontSize="40" Foreground="White" Background="{DynamicResource InputBackground}"/>
         <Button x:Name="Login" Content="Login" HorizontalAlignment="Center" Margin="0,477,0,0" VerticalAlignment="Top" FontSize="40" Width="198" Height="60" Background="{DynamicResource Orange}" Click="Login_Button_Click"/>
         <Label x:Name="Error" Content="" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,542,0,0" VerticalAlignment="Top" Foreground="{DynamicResource Red}" FontSize="15" Height="26" Width="252"/>
         <!-- <Button x:Name="ForgotPassword" Content="Forgot your password?" HorizontalAlignment="Center" Margin="0,572,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20" Width="214" Background="Transparent" BorderThickness="0,0,0,0" Click="ForgotPassword_Click"/> -->
