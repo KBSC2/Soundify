@@ -34,7 +34,7 @@ namespace Tests.SearchTests
         }
 
         [Test]
-        public void Controller_PlaylistController_SearchOnFullName()
+        public void PlaylistController_SearchOnFullName()
         {
             var confirm = false;
             playlistsResults = playlistController.SearchPlayListOnString(new List<string>() {"PlaylistNameTest"}, DataContext.Instance.CurrentUser.ID);
@@ -48,7 +48,7 @@ namespace Tests.SearchTests
             Assert.IsTrue(confirm);
         }
         [Test]
-        public void Controller_PlaylistController_SearchOnPartialName()
+        public void PlaylistController_SearchOnPartialName()
         {
             var confirm = false;
             playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "stNa" }, DataContext.Instance.CurrentUser.ID);
@@ -62,7 +62,7 @@ namespace Tests.SearchTests
             Assert.IsTrue(confirm);
         }
         [Test]
-        public void Controller_PlaylistController_SearchOnFullDescription()
+        public void PlaylistController_SearchOnFullDescription()
         {
             var confirm = false;
             playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "I really wanna test this" }, DataContext.Instance.CurrentUser.ID);
@@ -77,7 +77,7 @@ namespace Tests.SearchTests
         }
 
         [Test]
-        public void Controller_PlaylistController_SearchOnPartialDescription()
+        public void PlaylistController_SearchOnPartialDescription()
         {
             var confirm = false;
             playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "wanna test" }, DataContext.Instance.CurrentUser.ID);
@@ -93,7 +93,7 @@ namespace Tests.SearchTests
         }
 
         [Test]
-        public void Controller_PlaylistController_SearchOnFullGenre()
+        public void PlaylistController_SearchOnFullGenre()
         {
             var confirm = false;
             playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "Metal" }, DataContext.Instance.CurrentUser.ID);
@@ -108,7 +108,7 @@ namespace Tests.SearchTests
         }
 
         [Test]
-        public void Controller_PlaylistController_SearchOnPartialGenre()
+        public void PlaylistController_SearchOnPartialGenre()
         {
             var confirm = false;
             playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "etal" }, DataContext.Instance.CurrentUser.ID);
@@ -123,7 +123,7 @@ namespace Tests.SearchTests
         }
 
         [Test]
-        public void Controller_PlaylistController_SearchOnMultipleFullSearchTerms()
+        public void PlaylistController_SearchOnMultipleFullSearchTerms()
         {
             var confirm1 = false;
             var confirm2 = false;
@@ -150,7 +150,7 @@ namespace Tests.SearchTests
             Assert.IsTrue(confirm1 && confirm2 && confirm3 );
         }
         [Test]
-        public void Controller_PlaylistController_SearchOnMultiplePartialSearchTerms()
+        public void PlaylistController_SearchOnMultiplePartialSearchTerms()
         {
             var confirm1 = false;
             var confirm2 = false;

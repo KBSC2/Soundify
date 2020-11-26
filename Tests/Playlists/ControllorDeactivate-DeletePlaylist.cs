@@ -9,7 +9,7 @@ using Assert = NUnit.Framework.Assert;
 namespace Tests.Playlists
 {
     [TestFixture]
-    public class ControllorDeactivate_DeletePlaylist
+    public class Controller_PlaylistControllor_DeactivateDeletePlaylist
     {
         private MockDatabaseContext context;
         private PlaylistController playlistController;
@@ -28,7 +28,7 @@ namespace Tests.Playlists
         }
 
         [Test]
-        public void Controller_PlaylistController_DeactivatePlaylistTest()
+        public void PlaylistController_DeactivatePlaylistTest_DeactivatedPlaylist()
         {
             playlistController.CreateItem(playlist);
             playlistController.DeactivatePlaylist(playlist.ID);
@@ -38,7 +38,7 @@ namespace Tests.Playlists
         }
 
         [Test]
-        public void Controller_PlaylistController_DeletePlaylistTest()
+        public void PlaylistController_DeletePlaylistTest_DeletedPlaylist()
         {
             playlistController.CreateItem(playlistDelete);
             playlistController.DeactivatePlaylist(playlistDelete.ID);

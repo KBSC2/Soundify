@@ -28,7 +28,7 @@ namespace Tests.Playlists
         }
 
         [Test]
-        public void Controller_PlaylistController_GetActivePlaylists()
+        public void PlaylistController_GetActivePlaylists()
         {
             _playlistController.CreateItem(_testPlaylist1);
             _playlistController.CreateItem(_testPlaylist2);

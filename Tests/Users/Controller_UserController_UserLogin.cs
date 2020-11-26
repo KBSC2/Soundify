@@ -23,7 +23,7 @@ namespace Tests.Users
         [TestCase("no@gmail.com", "Sterk_W@chtw00rd2", ExpectedResult = LoginResults.EmailNotFound)]    // Email not found
         [TestCase("test@gmail.com", "oopsie", ExpectedResult = LoginResults.PasswordIncorrect)]         // Succesfull acocunt login
         [TestCase("test", "Sterk_W@chtw00rd2", ExpectedResult = LoginResults.Success)]                  // Account from username
-        public LoginResults Controller_UserController_SignupResults(string emailOrUsername, string password)
+        public LoginResults UserController_SignupResults(string emailOrUsername, string password)
         {
             var result = Controller.UserLogin(emailOrUsername, password);
             return result;
