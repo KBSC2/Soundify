@@ -77,5 +77,11 @@ namespace Controller.DbControllers
             user.RoleID = 3;
             UpdateItem(user);
         }
+
+        public void RevokeArtist(User user)
+        {
+            user.RoleID = 2;
+            UpdateItem(user);
+        }
     }
 }

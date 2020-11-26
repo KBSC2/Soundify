@@ -23,6 +23,7 @@
                     <Brush x:Key="Orange">#FFF78D0E</Brush>
                     <Brush x:Key="Red">#FFFF0000</Brush>
                     <Brush x:Key="InputBackground">#FF707070</Brush>
+	                <View:ColorConverter x:Key="colorConverter"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
