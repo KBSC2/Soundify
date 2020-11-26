@@ -23,6 +23,8 @@ namespace Model.DbModels
 
         public string Description { get; set; }
 
+        public string PathToImage { get; set; }
+
         public IList<PlaylistSong> PlaylistSongs { get; set; }
     }
 }

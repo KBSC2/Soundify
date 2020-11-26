@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:View"
         xmlns:DataContexts="clr-namespace:View.DataContexts" x:Class="View.SongInfoScreen"
+        xmlns:components="clr-namespace:View.Components"
         mc:Ignorable="d"
         Title="SongInfoScreen" Height="450" Width="800">
     <Window.DataContext>
         <DataContexts:SongInfoDataContext/>
     </Window.DataContext>
     <Window.Resources>
-        <BitmapImage x:Key="masterImage" UriSource="gangnam_style_official_cover.png" />
+        <BitmapImage x:Key="masterImage" UriSource="{Binding PathToImage, Mode=OneWay, Converter={ ImageConverter}}" />
         <CroppedBitmap x:Key="SongImage" 
       Source="{StaticResource masterImage}" SourceRect="0 200 1782 950"/>
     </Window.Resources>

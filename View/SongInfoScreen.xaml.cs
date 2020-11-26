@@ -26,6 +26,5 @@ namespace View
             ((SongInfoDataContext)DataContext).Song = song;
             ((SongInfoDataContext)DataContext).OnPropertyChanged();
         }
-        
     }
 }
