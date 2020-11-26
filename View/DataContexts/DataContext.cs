@@ -2,6 +2,8 @@
 using System;
 using System.ComponentModel;
 using System.Timers;
+using Controller.DbControllers;
+using Model.Database.Contexts;
 using Model.DbModels;
 
 namespace View.DataContexts
@@ -32,6 +34,7 @@ namespace View.DataContexts
             "" : Math.Floor(AudioPlayer.CurrentSong.CurrentTimeSong / 60) + ":" + string.Format("{0:00}",Math.Floor(AudioPlayer.CurrentSong.CurrentTimeSong % 60));
 
         public User CurrentUser { get; set; }
+        public Role CurrentUserRole => CurrentUser == null ? new Role() : new RoleController(new DatabaseContext()).GetItem(CurrentUser.RoleID);
 
         private Timer _timer;
 
