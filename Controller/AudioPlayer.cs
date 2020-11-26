@@ -77,8 +77,12 @@ namespace Controller
 
         public static void PlayPlaylist(Playlist playlist, int startIndex = 0)
         {
+            PlayPlaylist(new PlaylistSongController(new Model.Database.Contexts.DatabaseContext()).GetSongsFromPlaylist(playlist.ID), startIndex);
+        }
+
+        public static void PlayPlaylist(List<PlaylistSong> songs, int startIndex = 0)
+        {
             ClearSongQueue();
-            var songs = new PlaylistSongController(new Model.Database.Contexts.DatabaseContext()).GetSongsFromPlaylist(playlist.ID);
             CurrentSongIndex = -1;
 
             for (int i = startIndex; i < songs.Count; i++)
