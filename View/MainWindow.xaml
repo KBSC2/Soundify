@@ -11,9 +11,7 @@
     mc:Ignorable="d"
     Title="MainWindow" Height="720" Width="1280" MinHeight="720" MinWidth="1280"
     DataContext="{x:Static dataContexts:DataContext.Instance}">
-    <Window.Resources>
-	    <View:ColorConverter x:Key="colorConverter"/>
-    </Window.Resources>
+    
 	<Grid>
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="92,59,0,74" ContentTemplate="{StaticResource HomeScreen}"/>
         <Grid Margin="89,0,0,0" Background="{DynamicResource Background2Color}" Height="74" VerticalAlignment="Bottom" ShowGridLines="False">
