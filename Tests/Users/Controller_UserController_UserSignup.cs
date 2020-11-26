@@ -28,7 +28,7 @@ namespace Tests.Users
         [TestCase("HalloLangWachtwoord", ExpectedResult = PasswordScore.Medium)]        // correct length,  with uppercase, no numbers,     no characters
         [TestCase("Wachtw00rdMetC1jfers", ExpectedResult = PasswordScore.Strong)]       // correct length,  with uppercase, with numbers,   no characters
         [TestCase("W@chtw00rdMetAll4s", ExpectedResult = PasswordScore.VeryStrong)]     // correct length,  with uppercase, with numbers,   with characters
-        public PasswordScore PasswordController_TestPasswordScore(string password)
+        public PasswordScore Controller_PasswordController_TestPasswordScore(string password)
         {
             return PasswordController.CheckStrength(password);
         }
