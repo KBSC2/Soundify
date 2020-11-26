@@ -55,8 +55,8 @@ namespace Tests.Local
             PlaylistSongController.AddSongToPlaylist(Song.ID, Playlist.ID);
             PlaylistSongController.AddSongToPlaylist(Song2.ID, Playlist.ID);
 
-            AudioPlayer.PlayPlaylist(PlaylistSongController.GetSongsFromPlaylist(Playlist.ID));
             var playlistsongs = new PlaylistSongController(Context).GetSongsFromPlaylist(Playlist.ID);
+            AudioPlayer.PlayPlaylist(playlistsongs);
 
             bool areEqual = true;
             for (int i = 0; i < playlistsongs.Count; i++)
