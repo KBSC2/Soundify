@@ -14,9 +14,7 @@
     WindowStyle="SingleBorderWindow"
     WindowStartupLocation="CenterScreen"
     DataContext="{x:Static dataContexts:DataContext.Instance}">
-    <Window.Resources>
-	    <View:ColorConverter x:Key="colorConverter"/>
-    </Window.Resources>
+    
 	<Grid>
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="92,59,0,74" ContentTemplate="{StaticResource HomeScreen}"/>
         <Grid Margin="89,0,0,0" Background="{DynamicResource Background2Color}" Height="74" VerticalAlignment="Bottom" ShowGridLines="False">

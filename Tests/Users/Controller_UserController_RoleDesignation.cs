@@ -20,7 +20,7 @@ namespace Tests.Users
         }
 
         [Test]
-        public void UserController_UserRoleIDShouldBeUser()
+        public void UserController_CreateAccount_UserRoleIDShouldBeUser()
         {
             var result = Controller.GetItem(User.ID);
             Assert.AreEqual(result.RoleID, 2);
@@ -32,6 +32,14 @@ namespace Tests.Users
             Controller.MakeArtist(User);
             var result = User.RoleID;
             Assert.AreEqual(result, 3);
+        }
+
+        [Test]
+        public void UserController_RevokeArtiest_UserRoleIDShouldBeUser()
+        {
+            Controller.RevokeArtist(User);
+            var result = User.RoleID;
+            Assert.AreEqual(result, 2);
         }
 
         [TearDown]
