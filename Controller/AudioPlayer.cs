@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Controller.DbControllers;
 using Model;
@@ -11,12 +12,10 @@ namespace Controller
     {
         public static IWavePlayer WaveOutDevice { get; set; }
         public static SongAudioFile CurrentSong { get; set; }
+        public static double MaxVolume { get; set; }
+        public static event EventHandler NextSong;
 
-        /*private static int _currentSongIndex = -1;*/
-        public static int CurrentSongIndex
-        {
-            get; set;
-        }
+        public static int CurrentSongIndex  { get; set; }
 
         public static List<Song> SongQueue { get; set; } = new List<Song>();
         public static bool _looping = false;
@@ -25,6 +24,7 @@ namespace Controller
         {
             WaveOutDevice = new WaveOut();
             WaveOutDevice.Volume = 0.05f;
+            MaxVolume = 0.2;
         }
 
         public static void Next()
@@ -59,6 +59,7 @@ namespace Controller
 
         public static void PlaySong(Song song)
         {
+            NextSong?.Invoke(null, new EventArgs());
             CurrentSong = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
             WaveOutDevice.Init(CurrentSong.AudioFile);
             Task.Delay(500).ContinueWith(x => WaveOutDevice.Play());
@@ -83,19 +84,11 @@ namespace Controller
         public static void PlayPlaylist(List<PlaylistSong> songs, int startIndex = 0)
         {
             ClearSongQueue();
-            CurrentSongIndex = -1;
+            CurrentSongIndex = startIndex;
 
-            for (int i = startIndex; i < songs.Count; i++)
+            foreach(PlaylistSong playlistSong in songs)
             {
-                AddSong(songs[i].Song);
-            }
-
-            if (_looping)
-            {
-                for (int i = 0; i < startIndex; i++)
-                {
-                    AddSong(songs[i].Song);
-                }
+                AddSong(playlistSong.Song);
             }
 
             Next();

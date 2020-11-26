@@ -62,6 +62,8 @@ namespace Soundify
             SetScreen(ScreenNames.HomeScreen);
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
 
+            FileCache.Instance.GetFile("images/gangnamstyle.png");
+
             if (View.DataContexts.DataContext.Instance.CurrentUser == null)
             {
                 InstanceLoginScreen.Show();

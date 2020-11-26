@@ -5,11 +5,11 @@
         <!-- Start homescreen screen -->
         <Grid Margin="0,0,0,0" Background="#FF303651" >
             <Button Content="Change Password" HorizontalAlignment="Left" Margin="59,43,0,0" VerticalAlignment="Top" Width="187" Height="27" FontSize="16.5" Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="ChangePassword_Button_Click"/>
-            <!--<ComboBox HorizontalAlignment="Left" Margin="104,97,0,0" VerticalAlignment="Top" Width="98" Height="27" Background="#FF707070">
+            <ComboBox x:Name="VolumeComboBox" HorizontalAlignment="Left" Margin="104,97,0,0" VerticalAlignment="Top" Width="98" Height="27" Background="#FF707070" SelectionChanged="VolumeComboBox_SelectedChanged">
                 <ComboBoxItem>Quiet</ComboBoxItem >
                 <ComboBoxItem IsSelected="True">Normal</ComboBoxItem>
                 <ComboBoxItem>Loud</ComboBoxItem>
-            </ComboBox>-->
+            </ComboBox>
             <Image Margin="59,97,617,177" Stretch="Fill" Source="Assets/Sound.png" Width="30" Height="25"/>
             <Button Content="Logout" HorizontalAlignment="Left" Margin="112,218,0,0" VerticalAlignment="Top" Width="81" Height="25" Background="#FFF70E0E" Foreground="White" BorderThickness="0" FontSize="16.5" FontWeight="Bold" Click="Logout_Button_Click"/>
         </Grid>

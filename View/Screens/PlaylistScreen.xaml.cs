@@ -8,6 +8,8 @@ using System.Windows.Input;
 using Model;
 using Model.EventArgs;
 using Soundify;
+using System;
+using System.Windows.Media;
 
 namespace View.Screens
 {
@@ -16,6 +18,24 @@ namespace View.Screens
         public PlaylistScreen()
         {
             this.InitializeComponent();
+            AudioPlayer.NextSong += OnNextSong;
+        }
+
+        private void OnNextSong(object sender, EventArgs e)
+        {
+            DataTemplate SongList = (DataTemplate)this["PlaylistScreen"];
+            var test = SongList.FindName("SongList", (ContentPresenter)((MainWindow) Application.Current.MainWindow).FindName("MainContent"));
+
+
+            /*for (int i = 0; i < SongList.Items.Count; i++)
+            {
+                var item = (SongInfo)SongList.Items[i];
+                var itemStyle = (ListViewItem)SongList.Items[i];
+                if (item.Song == AudioPlayer.SongQueue[AudioPlayer.CurrentSongIndex])
+                {
+                    itemStyle.Foreground = new SolidColorBrush(Colors.Red);
+                }
+            }*/
         }
 
         public void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
@@ -38,7 +58,7 @@ namespace View.Screens
             var listViewItem = (ListViewItem)sender;
             var songInfo = (SongInfo)listViewItem.Content;
 
-            AudioPlayer.PlayPlaylist(MainWindow.CurrentPlayList, songInfo.Index);
+            AudioPlayer.PlayPlaylist(MainWindow.CurrentPlayList, songInfo.Index-1);
         }
 
         private void RemovePlaylistButton_Click(object sender, RoutedEventArgs e)

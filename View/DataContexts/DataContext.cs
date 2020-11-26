@@ -24,6 +24,7 @@ namespace View.DataContexts
         public event PropertyChangedEventHandler PropertyChanged;
 
         public double Volume => AudioPlayer.WaveOutDevice.Volume;
+        public double MaxVolume => AudioPlayer.MaxVolume;
         public double TotalTime => AudioPlayer.CurrentSong == null ? 0 : AudioPlayer.CurrentSong.TotalTimeSong;
         public double CurrentTime => AudioPlayer.CurrentSong == null ? 0 : AudioPlayer.CurrentSong.CurrentTimeSong;
         public string TotalTimeLabel => AudioPlayer.CurrentSong == null ? 

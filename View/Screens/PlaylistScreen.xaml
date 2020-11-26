@@ -3,7 +3,7 @@
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:local="clr-namespace:View.Screens" 
                     xmlns:dataContexts="clr-namespace:View.DataContexts"
-    x:Class="View.Screens.PlaylistScreen">
+                    x:Class="View.Screens.PlaylistScreen">
     <DataTemplate x:Key="PlaylistScreen">
         <!-- Start playlist screen -->
         <Grid x:Name="MainGrid" DataContext="{x:Static dataContexts:PlaylistDataContext.Instance}">
