@@ -34,7 +34,7 @@ namespace Controller.DbControllers
             {
                 PlaylistID = playlistID, 
                 SongID = songID, 
-                Index = _context.PlaylistSongs.Count(), 
+                Index = _set.Count(), 
                 Song = _songController.GetItem(songID), 
                 Playlist = _playlistController.GetItem(playlistID), 
                 Added = DateTime.Now
@@ -50,7 +50,7 @@ namespace Controller.DbControllers
 
         public void ReorderSongIndexes(int playlistID)
         {
-            var playlistSongs = _context.PlaylistSongs.Where(x => x.PlaylistID == playlistID).OrderBy(x => x.Index)
+            var playlistSongs = _set.Where(x => x.PlaylistID == playlistID).OrderBy(x => x.Index)
                 .ToList();
             for (var index = 0; index < playlistSongs.Count; index++)
             {

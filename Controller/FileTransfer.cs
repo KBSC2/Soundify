@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using Renci.SshNet;
 
 namespace Controller
@@ -8,11 +9,18 @@ namespace Controller
         public static void DownloadFile(string inputPath)
         {
             if (!Directory.Exists(Path.GetTempPath() + "Soundify"))
+            {
                 Directory.CreateDirectory(Path.GetTempPath() + "Soundify");
                 Directory.CreateDirectory(Path.GetTempPath() + "Soundify/songs");
                 Directory.CreateDirectory(Path.GetTempPath() + "Soundify/images");
+            }
 
-            using (ScpClient client = new ScpClient("145.44.235.172", "student", "Sterk_W@chtw00rd2"))
+            var conf = SSHController.GetSSHConfiguration();
+
+            using (ScpClient client = new ScpClient(
+                conf.GetValueOrDefault("Host"),
+                conf.GetValueOrDefault("Username"),
+                conf.GetValueOrDefault("Password")))
             {
                 client.Connect();
                 string localpath = RemotePathToLocalPath(inputPath);
@@ -25,7 +33,11 @@ namespace Controller
 
         public static string UploadFile(string inputPath, string outputPath)
         {
-            using (SftpClient client = new SftpClient("145.44.235.172", "student", "Sterk_W@chtw00rd2"))
+            var conf = SSHController.GetSSHConfiguration();
+            using (SftpClient client = new SftpClient(
+                conf.GetValueOrDefault("Host"),
+                conf.GetValueOrDefault("Username"),
+                conf.GetValueOrDefault("Password")))
             {
                 client.Connect();
                 using (Stream localfile = File.OpenRead(inputPath))
