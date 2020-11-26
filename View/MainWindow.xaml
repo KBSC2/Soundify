@@ -14,7 +14,10 @@
     WindowStyle="SingleBorderWindow"
     WindowStartupLocation="CenterScreen"
     DataContext="{x:Static dataContexts:DataContext.Instance}">
-    <Grid>
+    <Window.Resources>
+	    <View:ColorConverter x:Key="colorConverter"/>
+    </Window.Resources>
+	<Grid>
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="92,59,0,74" ContentTemplate="{StaticResource HomeScreen}"/>
         <Grid Margin="89,0,0,0" Background="{DynamicResource Background2Color}" Height="74" VerticalAlignment="Bottom" ShowGridLines="False">
             <Button x:Name="Play" MaxWidth="40" MaxHeight="34"  Content=">" Margin="334,20,334,0" VerticalAlignment="Top" Click="Play_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" Grid.RowSpan="2"/>
@@ -30,6 +33,7 @@
         <Grid Margin="89,0,0,0" Background="{DynamicResource Background2Color}" Height="54" VerticalAlignment="Top" ShowGridLines="False">
             <TextBox Style="{StaticResource WatermarkTextbox }" HorizontalAlignment="Center" Tag="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="192" Height="25" KeyDown="SetSearchTerms" BorderBrush="{x:Null}" Background="White"/>
             <components:MenuButton MaxHeight="34" MaxWidth="70" ScreenName="SettingScreen"         Content="Settings"        Margin="0,0,10,0" VerticalAlignment="Center" Height="30" HorizontalAlignment="Right" Width="78"/>
+            <Label Content="{Binding CurrentUser.Username}" Foreground="{Binding CurrentUserRole.ColorCode, Converter={StaticResource colorConverter}}" HorizontalAlignment="Left" Margin="712,0,0,0" VerticalAlignment="Center" Width="175" FontSize="16" FontWeight="Bold"/>
         </Grid>
         <Grid Background="{DynamicResource BackgroundColor}" HorizontalAlignment="Left" Width="92" ShowGridLines="False">
             <Image Margin="26,6,26,0" Stretch="Fill" Source="Assets/soundify.png" Width="40" Height="40" MaxHeight="40" VerticalAlignment="Top"/>

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Model.Database.Contexts;
 
 namespace Model.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20201126114946_AddedRoleTableAndColumnToUser")]
+    partial class AddedRoleTableAndColumnToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,9 +132,6 @@ namespace Model.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("Coins")
-                        .HasColumnType("int");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -140,7 +139,7 @@ namespace Model.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleID")
+                    b.Property<int?>("RoleID")
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
@@ -148,6 +147,8 @@ namespace Model.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("RoleID");
 
                     b.ToTable("Users");
                 });
@@ -169,6 +170,15 @@ namespace Model.Migrations
                     b.Navigation("Playlist");
 
                     b.Navigation("Song");
+                });
+
+            modelBuilder.Entity("Model.DbModels.User", b =>
+                {
+                    b.HasOne("Model.DbModels.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleID");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Model.DbModels.Playlist", b =>

@@ -15,5 +15,6 @@ namespace Model.Database.Contexts
         public abstract DbSet<Playlist> Playlists { get; set;  }
         public abstract DbSet<PlaylistSong> PlaylistSongs { get; set; }
         public abstract DbSet<User> Users { get; set; }
+        public abstract DbSet<Role> Roles { get; set; }
     }
 }
