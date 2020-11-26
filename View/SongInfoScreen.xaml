@@ -7,18 +7,17 @@
         xmlns:DataContexts="clr-namespace:View.DataContexts" x:Class="View.SongInfoScreen"
         xmlns:components="clr-namespace:View.Components"
         mc:Ignorable="d"
-        Title="SongInfoScreen" Height="450" Width="800">
+        Title="SongInfoScreen" Height="450" Width="800"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        >
     <Window.DataContext>
         <DataContexts:SongInfoDataContext/>
     </Window.DataContext>
-    <Window.Resources>
-        <BitmapImage x:Key="masterImage" UriSource="{Binding PathToImage, Mode=OneWay, Converter={ ImageConverter}}" />
-        <CroppedBitmap x:Key="SongImage" 
-      Source="{StaticResource masterImage}" SourceRect="0 200 1782 950"/>
-    </Window.Resources>
-    <Grid Background="#FF303651">
+    <Grid Background="#FF303651" >
         <Grid VerticalAlignment="Center">
-            <Image Source="{StaticResource SongImage}" Stretch="UniformToFill" VerticalAlignment="Top">
+            <Image Source="{Binding PathToImage}" Margin="0 -200 0 0 " Height="950" Stretch="UniformToFill" VerticalAlignment="Top">
                 <Image.OpacityMask>
                     <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
                         <GradientStop Color="White" Offset="1"/>
