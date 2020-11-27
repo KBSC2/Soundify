@@ -24,7 +24,7 @@ namespace View.Screens
         private void OnNextSong(object sender, EventArgs e)
         {
             DataTemplate SongList = (DataTemplate)this["PlaylistScreen"];
-            var test = SongList.FindName("SongList", (ContentPresenter)((MainWindow) Application.Current.MainWindow).FindName("MainContent"));
+            //var test = SongList.FindName("SongList", (ContentPresenter)((MainWindow) Application.Current.MainWindow).FindName("MainContent"));
 
 
             /*for (int i = 0; i < SongList.Items.Count; i++)

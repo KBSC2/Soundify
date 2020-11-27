@@ -10,7 +10,7 @@ namespace View
     public class SongInfo
     {
         public Song Song { get; set; }
-        public TimeSpan Duration { get; set; }
+        public string Duration { get; set; }
         public DateTime Added { get; set; }
         public int Index { get; set; }
 
@@ -23,7 +23,7 @@ namespace View
         public SongInfo(Song song)
         {
             Song = song;
-            Duration = TimeSpan.FromSeconds(song.Duration);
+            Duration = TimeSpan.FromSeconds(song.Duration).ToString("m':'ss");
         }
 
         public static List<SongInfo> ConvertSongListToSongInfo(Playlist playlist, List<PlaylistSong> songs)

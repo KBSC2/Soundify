@@ -11,7 +11,8 @@ namespace Controller
     public static class AudioPlayer
     {
         public static IWavePlayer WaveOutDevice { get; set; }
-        public static SongAudioFile CurrentSong { get; set; }
+        public static SongAudioFile CurrentSongFile { get; set; }
+        public static Song CurrentSong { get; set; }
         public static double MaxVolume { get; set; }
         public static event EventHandler NextSong;
 
@@ -60,8 +61,9 @@ namespace Controller
         public static void PlaySong(Song song)
         {
             NextSong?.Invoke(null, new EventArgs());
-            CurrentSong = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
-            WaveOutDevice.Init(CurrentSong.AudioFile);
+            CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
+            CurrentSong = song;
+            WaveOutDevice.Init(CurrentSongFile.AudioFile);
             Task.Delay(500).ContinueWith(x => WaveOutDevice.Play());
         }
 
@@ -76,12 +78,12 @@ namespace Controller
             SongQueue.Clear();
         }
 
-        public static void PlayPlaylist(Playlist playlist, int startIndex = 0)
+        public static void PlayPlaylist(Playlist playlist, int startIndex = -1)
         {
             PlayPlaylist(new PlaylistSongController(new Model.Database.Contexts.DatabaseContext()).GetSongsFromPlaylist(playlist.ID), startIndex);
         }
 
-        public static void PlayPlaylist(List<PlaylistSong> songs, int startIndex = 0)
+        public static void PlayPlaylist(List<PlaylistSong> songs, int startIndex = -1)
         {
             ClearSongQueue();
             CurrentSongIndex = startIndex;

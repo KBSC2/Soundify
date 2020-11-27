@@ -25,12 +25,10 @@ namespace View.DataContexts
 
         public double Volume => AudioPlayer.WaveOutDevice.Volume;
         public double MaxVolume => AudioPlayer.MaxVolume;
-        public double TotalTime => AudioPlayer.CurrentSong == null ? 0 : AudioPlayer.CurrentSong.TotalTimeSong;
-        public double CurrentTime => AudioPlayer.CurrentSong == null ? 0 : AudioPlayer.CurrentSong.CurrentTimeSong;
-        public string TotalTimeLabel => AudioPlayer.CurrentSong == null ? 
-            "" : Math.Floor(AudioPlayer.CurrentSong.TotalTimeSong / 60) + ":" + string.Format("{0:00}",Math.Floor(AudioPlayer.CurrentSong.TotalTimeSong % 60));
-        public string CurrentTimeLabel => AudioPlayer.CurrentSong == null ? 
-            "" : Math.Floor(AudioPlayer.CurrentSong.CurrentTimeSong / 60) + ":" + string.Format("{0:00}",Math.Floor(AudioPlayer.CurrentSong.CurrentTimeSong % 60));
+        public double TotalTime => AudioPlayer.CurrentSongFile == null ? 0 : AudioPlayer.CurrentSongFile.TotalTimeSong;
+        public double CurrentTime => AudioPlayer.CurrentSongFile == null ? 0 : AudioPlayer.CurrentSongFile.CurrentTimeSong;
+        public string TotalTimeLabel => AudioPlayer.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.CurrentSongFile.TotalTimeSong).ToString("m':'ss");
+        public string CurrentTimeLabel => AudioPlayer.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.CurrentSongFile.CurrentTimeSong).ToString("m':'ss");
 
         public User CurrentUser { get; set; }
 
@@ -47,6 +45,7 @@ namespace View.DataContexts
         public void OnTimedEvent(object sender, EventArgs e)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(""));
+            QueueDataContext.Instance.OnPropertyChanged();
         }
     }
 }

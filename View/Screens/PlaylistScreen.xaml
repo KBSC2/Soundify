@@ -21,7 +21,7 @@
             <ListView x:Name="SongList" Margin="0,178,0,0" Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding PlaylistItems}" FontSize="16">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Titel" Width="200" DisplayMemberBinding="{Binding Song.Name}"/>
+                        <GridViewColumn Header="Title" Width="200" DisplayMemberBinding="{Binding Song.Name}"/>
                         <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Song.Artist}"/>
                         <GridViewColumn Header="Duration" Width="75" DisplayMemberBinding="{Binding Duration}"/>
                         <GridViewColumn Header="Added" Width="150" DisplayMemberBinding="{Binding Added}"/>

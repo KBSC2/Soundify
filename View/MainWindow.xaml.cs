@@ -73,7 +73,7 @@ namespace Soundify
 
         private void Play_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (AudioPlayer.CurrentSong == null)
+            if (AudioPlayer.CurrentSongFile == null)
                 AudioPlayer.Next();
 
             if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
@@ -94,7 +94,7 @@ namespace Soundify
         private void Duration_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Slider slider = sender as Slider;
-            AudioPlayer.CurrentSong.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSong.CurrentTimeSong));
+            AudioPlayer.CurrentSongFile.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSongFile.CurrentTimeSong));
         }
 
         public void SetScreen(ScreenNames screenName)

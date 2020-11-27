@@ -42,9 +42,6 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Screens\QueueScreen.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Screens\PlaylistScreen.xaml">
       <SubType>Designer</SubType>
     </Page>

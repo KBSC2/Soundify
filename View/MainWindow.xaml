@@ -12,7 +12,7 @@
     Title="MainWindow" Height="720" Width="1280" MinHeight="720" MinWidth="1280"
     DataContext="{x:Static dataContexts:DataContext.Instance}">
     <Grid>
-        <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="92,59,0,74" ContentTemplate="{StaticResource HomeScreen}"/>
+        <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="92,54,0,74" ContentTemplate="{StaticResource HomeScreen}"/>
         <Grid Margin="89,0,0,0" Background="{DynamicResource Background2Color}" Height="74" VerticalAlignment="Bottom" ShowGridLines="False">
             <Button x:Name="Play" MaxWidth="40" MaxHeight="34"  Content=">" Margin="334,20,334,0" VerticalAlignment="Top" Click="Play_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" Grid.RowSpan="2"/>
             <Label x:Name="CurrentTime" Content="{Binding CurrentTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top" Foreground="White"/>
