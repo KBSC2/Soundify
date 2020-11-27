@@ -4,10 +4,11 @@ using System.Configuration;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using Model.MailTemplates;
 
 namespace Controller
 {
-    public class EmailController
+    public class EmailController<T> where T: MailTemplate
     {
         public SmtpClient smtpClient { get;} 
 
@@ -38,13 +39,13 @@ namespace Controller
 
             return result;
         }
-        public void SendEmail()
+        public void SendEmail(T mailTemplate)
         {
             var mailMessage = new MailMessage()
             {
-                From = new MailAddress("info.soundify@gmail.com"),
-                Subject = "Test",
-                Body = "<h1>HELLO</H1>",
+                From = mailTemplate.MailAddress,
+                Subject = mailTemplate.Subject,
+                Body = mailTemplate.Body,
                 IsBodyHtml = true
             };
             mailMessage.To.Add("sander__pol@outlook.com");

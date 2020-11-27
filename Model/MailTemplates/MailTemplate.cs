@@ -1,10 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Mail;
 using System.Text;
 
 namespace Model.MailTemplates
 {
-    class MailTemplate
+    public class MailTemplate
     {
+        public MailAddress MailAddress { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
+        public string Title { get; set; }
+        public string Text { get; set; }
+
+        public MailTemplate(MailAddress mailAddress)
+        {
+            MailAddress = mailAddress;
+        }
+
+        public void buildBody()
+        {
+            Body = $"<h1> {Title} </h1>" +
+                   $"<p> {Text} </p>";
+        }
+
     }
 }
