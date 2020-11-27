@@ -57,9 +57,9 @@ namespace View
                         File.WriteAllText(path, Text);
                     }
 
-                    this.UsernameLogin.Text = "Email";
-                    this.PasswordLogin.Password = "Password";
-                        break;
+                    this.UsernameLogin.Text = "";
+                    this.PasswordLogin.Password = "";
+                    break;
                 }
                 case LoginResults.EmailNotFound:
                 {

@@ -13,7 +13,6 @@ namespace View.Screens
     /// </summary>
     public partial class SearchScreen : ResourceDictionary
     {
-        private SearchDataContext searchDataContext;
         public SearchScreen()
         {
             InitializeComponent();
