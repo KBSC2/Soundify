@@ -10,6 +10,9 @@
     x:Class="Soundify.MainWindow"
     mc:Ignorable="d"
     Title="MainWindow" Height="720" Width="1280" MinHeight="720" MinWidth="1280"
+    WindowState="Maximized"
+    WindowStyle="SingleBorderWindow"
+    WindowStartupLocation="CenterScreen"
     DataContext="{x:Static dataContexts:DataContext.Instance}">
     <Grid>
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="92,59,0,74" ContentTemplate="{StaticResource HomeScreen}"/>
