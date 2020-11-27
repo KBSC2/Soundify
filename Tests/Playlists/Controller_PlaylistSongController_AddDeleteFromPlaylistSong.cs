@@ -11,7 +11,7 @@ remain untouched*/
 namespace Tests.Playlists
 {
     [TestFixture]
-    public class Controller_DbControllers_PlaylistSongControllerTest
+    public class Controller_PlaylistSongController_AddDeleteFromPlaylistSong
     {
         private MockDatabaseContext context;
         private SongController songController;
@@ -37,7 +37,7 @@ namespace Tests.Playlists
             playlistController.CreateItem(playlist);
         }
         [Test]
-        public void AddToPlayList()
+        public void PlaylistSongController_AddToPlayList()
         {
             playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
 
@@ -56,7 +56,7 @@ namespace Tests.Playlists
             Assert.IsFalse(existsInPlaylist);
         }
         [Test]
-        public void DeleteFromPlayList()
+        public void PlaylistSongController_DeleteFromPlayList()
         {
             //Same Concept as in AddToPlaylist, but it's more explicit for deleting from the playlist.
             //Just use a songID that exists.
