@@ -1,7 +1,11 @@
-﻿using System.Windows;
+﻿using System;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 using Controller.DbControllers;
 using Model.Database.Contexts;
+using Model.DbModels;
 using Model.Enums;
 using Soundify;
 
@@ -15,6 +19,17 @@ namespace View
         public LoginScreen()
         {
             InitializeComponent();
+            if(File.Exists(Path.GetTempPath() + "Soundify/settings/loginInfo"))
+            {
+                string text = File.ReadAllText(Path.GetTempPath() + "Soundify/settings/loginInfo");
+                if (text != String.Empty)
+                {
+                    string[] split = text.Split(",");
+
+                    UsernameLogin.Text = split[1];
+                    PasswordLogin.Password = split[0];
+                }
+            }
         }
 
         private void Login_Button_Click(object sender, RoutedEventArgs e)
@@ -33,9 +48,18 @@ namespace View
                     main.Show();
                     main.Focus();
                     this.Hide();
+                    File.Create(Path.GetTempPath() + "Soundify/settings/loginInfo").Close();
+
+                    if (RememberData.IsChecked ?? false)
+                    {
+                        string path = Path.GetTempPath() + "Soundify/settings/loginInfo";
+                        string Text = password + "," + emailOrUsername;
+                        File.WriteAllText(path, Text);
+                    }
+
                     this.UsernameLogin.Text = "Email";
                     this.PasswordLogin.Password = "Password";
-                    break;
+                        break;
                 }
                 case LoginResults.EmailNotFound:
                 {

@@ -6,6 +6,7 @@ using Model.DbModels;
 using Model.EventArgs;
 using NAudio.Wave;
 using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -66,6 +67,14 @@ namespace Soundify
             {
                 InstanceLoginScreen.Show();
                 InstanceMainWindow.Hide();
+            }
+
+            if (!Directory.Exists(Path.GetTempPath() + "Soundify"))
+            {
+                Directory.CreateDirectory(Path.GetTempPath() + "Soundify");
+                Directory.CreateDirectory(Path.GetTempPath() + "Soundify/songs");
+                Directory.CreateDirectory(Path.GetTempPath() + "Soundify/images");
+                Directory.CreateDirectory(Path.GetTempPath() + "Soundify/settings");
             }
         }
 
