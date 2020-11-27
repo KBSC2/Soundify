@@ -53,8 +53,8 @@ namespace View
                     if (RememberData.IsChecked ?? false)
                     {
                         string path = Path.GetTempPath() + "Soundify/settings/loginInfo";
-                        string Text = password + "," + emailOrUsername;
-                        File.WriteAllText(path, Text);
+                        string text = password + "," + emailOrUsername;
+                        File.WriteAllText(path, text);
                     }
 
                     this.UsernameLogin.Text = "";
