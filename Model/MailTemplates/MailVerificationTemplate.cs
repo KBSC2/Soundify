@@ -12,7 +12,7 @@ namespace Model.MailTemplates
             base.Subject = "Mail verification";
             base.Title = "HELLO";
             base.Text = "This is verifiy";
-            base.buildBody();
+            base.BuildBody();
         }
     }
 }
