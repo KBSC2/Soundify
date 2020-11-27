@@ -8,12 +8,6 @@ namespace Controller
     {
         public static void DownloadFile(string inputPath)
         {
-            if (!Directory.Exists(Path.GetTempPath() + "Soundify"))
-            {
-                Directory.CreateDirectory(Path.GetTempPath() + "Soundify");
-                Directory.CreateDirectory(Path.GetTempPath() + "Soundify/songs");
-                Directory.CreateDirectory(Path.GetTempPath() + "Soundify/images");
-            }
 
             var conf = SSHController.GetSSHConfiguration();
 
