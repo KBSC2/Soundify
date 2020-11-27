@@ -15,7 +15,7 @@
             <Label Content="Je bent nu " HorizontalAlignment="Left" Margin="176,25,0,0" VerticalAlignment="Top" FontSize="26.5" Foreground="White" FontWeight="Bold"/>
             <!-- Data binding for the role goes here -->
             <Label Content="cringe" HorizontalAlignment="Left" Margin="312,25,0,0" VerticalAlignment="Top" FontSize="26.5" Foreground="Green" FontWeight="Bold"/>
-            <Button Content="Request to be artist" HorizontalAlignment="Left" Margin="104,410,0,0" VerticalAlignment="Top" Width="368" Height="40" Background="#FF3EBF65" Foreground="White" BorderThickness="0" FontSize="26.6" FontWeight="Bold" Click="Logout_Button_Click"/>
+            <Button Content="Request to be artist" HorizontalAlignment="Left" Margin="104,410,0,0" VerticalAlignment="Top" Width="368" Height="40" Background="#FF3EBF65" Foreground="White" BorderThickness="0" FontSize="26.6" FontWeight="Bold" Click="Request_Button_Click"/>
             <!-- Data binding for the username goes here -->
             <Label Content="Welkom Naamnaam!" HorizontalAlignment="Left" Margin="741
                    ,25,0,0" VerticalAlignment="Top" FontSize="26.5" Foreground="White" FontWeight="Bold"/>
