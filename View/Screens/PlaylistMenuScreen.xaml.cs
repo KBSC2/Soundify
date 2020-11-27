@@ -14,6 +14,7 @@ namespace View.Screens
 {
     partial class PlaylistMenuScreen : ResourceDictionary
     {
+        private bool rights = false;
         public PlaylistMenuScreen()
         {
             this.InitializeComponent();
@@ -21,17 +22,26 @@ namespace View.Screens
 
         private void CreatePlaylist_Click(object sender, RoutedEventArgs e)
         {
-            var playlistController = new PlaylistController(new DatabaseContext());
-
-            var playlist = new Playlist
+            if (rights)
             {
-                Name = $"Playlist {playlistController.GetActivePlaylists(DataContext.Instance.CurrentUser.ID).Count + 1}",
-                CreationDate = DateTime.Now,
-                UserID = DataContext.Instance.CurrentUser.ID
-            };
+                var playlistController = new PlaylistController(new DatabaseContext());
 
-            playlistController.CreateItem(playlist);
-            PlaylistMenuDataContext.Instance.OnPropertyChanged("");
+                var playlist = new Playlist
+                {
+                    Name = $"Playlist {playlistController.GetActivePlaylists(DataContext.Instance.CurrentUser.ID).Count + 1}",
+                    CreationDate = DateTime.Now,
+                    UserID = DataContext.Instance.CurrentUser.ID
+                };
+
+                playlistController.CreateItem(playlist);
+                PlaylistMenuDataContext.Instance.OnPropertyChanged("");
+            }
+            else
+            {
+                PopUpNoRights NoPlaylist= new PopUpNoRights() { Owner = MainWindow.InstanceMainWindow };
+                NoPlaylist.ShowDialog();
+            }
+            
         }
 
         private void PlaylistsRow_Click(object sender, MouseButtonEventArgs e)

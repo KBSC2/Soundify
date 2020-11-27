@@ -1,0 +1,13 @@
+﻿<Window x:Class="View.PopUpNoRights"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="SongInfoScreen" Height="200" Width="500"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+    <Grid Background="#4F5A8A">
+        <TextBlock Text="You dont have this right&#x0a; More rights available in the shop" FontSize="30" Margin="0 0 0 50" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="White" />
+        <Button Click="Shop_Close_Window_Click" Content="Go to shop" FontSize="30" Background="#F78D0E" Height="50" FontWeight="Bold" VerticalAlignment="Bottom" Foreground="White" />
+    </Grid>
+</Window>
