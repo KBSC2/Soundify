@@ -10,13 +10,7 @@ namespace Model.DbModels
         public string Email { get; set; }
         public string Password { get; set; }
         public int RoleID { get; set; }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> PROJ-3-User-Roles
 
         public int Coins { get; set; } = 0;
-=======
->>>>>>> PROJ-3-User-Roles
     }
 }
