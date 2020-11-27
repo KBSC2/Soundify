@@ -9,11 +9,7 @@
         Title="Request to be an artist" Height="715" Width="617"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/Watermark.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <ResourceDictionary Source="Styles/Watermark.xaml"/>
     </Window.Resources>
     <Grid Background="{DynamicResource BackgroundColor}" KeyDown="Confirm_On_Enter_Key">
         <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,97,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" Height="79"/>
