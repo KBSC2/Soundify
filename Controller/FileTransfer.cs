@@ -44,7 +44,7 @@ namespace Controller
 
         public static string RemotePathToLocalPath(string remotePath)
         {
-            return Path.GetTempPath() + "Soundify/" + remotePath;
+            return Path.GetTempPath() + "Soundify/" +  remotePath;
         }
     }
 }
