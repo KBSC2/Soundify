@@ -1,0 +1,67 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:View"
+        xmlns:DataContexts="clr-namespace:View.DataContexts" x:Class="View.SongInfoScreen"
+        xmlns:components="clr-namespace:View.Components"
+        mc:Ignorable="d"
+        Title="SongInfoScreen" Height="450" Width="800"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        >
+    <Window.DataContext>
+        <DataContexts:SongInfoDataContext/>
+    </Window.DataContext>
+    <Grid Background="#FF303651" >
+        <Grid VerticalAlignment="Center">
+            <Image Source="{Binding PathToImage}" Margin="0 -200 0 0 " Height="950" Stretch="UniformToFill" VerticalAlignment="Top">
+                <Image.OpacityMask>
+                    <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+                        <GradientStop Color="White" Offset="1"/>
+                        <GradientStop Offset="0.5"/>
+                    </LinearGradientBrush>
+                </Image.OpacityMask>
+            </Image>
+        </Grid>
+        <Grid Margin="0,225,0,0" Height="150" VerticalAlignment="Top">
+            <Grid Margin="0,0,500,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="1" Content="Song name" FontSize="25" HorizontalAlignment="Right" Foreground="White"/>
+                <Label Grid.Row="2" Content="{Binding Song.Name}" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Right" Foreground="#ACAEB9"/>
+                <Label Grid.Row="3" Content="Artist name" FontSize="25" HorizontalAlignment="Right" Foreground="White"/>
+                <Label Grid.Row="4" Content="{Binding Song.Artist}" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Right" Foreground="#ACAEB9"/>
+            </Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="1" Content="Written by" FontSize="25" HorizontalAlignment="Center" Foreground="White"/>
+                <Label Grid.Row="2" Content="{Binding Song.WrittenBy}" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Center" Foreground="#ACAEB9"/>
+                <Label Grid.Row="3" Content="Produced by" FontSize="25" HorizontalAlignment="Center" Foreground="White"/>
+                <Label Grid.Row="4" Content="{Binding Song.ProducedBy}" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Center" Foreground="#ACAEB9"/>
+            </Grid>
+            <Grid Margin="500,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="1" Content="Description" FontSize="25" HorizontalAlignment="Left" Foreground="White"/>
+                <TextBox Grid.Row="2" Text="{Binding Song.Description}" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Left" Foreground="#FFACAEB9" SelectionTextBrush="White" TextWrapping="Wrap" IsReadOnly="true" BorderBrush="{x:Null}"  Background="{x:Null}"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
