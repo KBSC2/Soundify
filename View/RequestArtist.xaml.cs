@@ -31,7 +31,8 @@ namespace View
 
         private void Confirm_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            var ArtistName = this.ArtistName.Text;
+            var ArtistReason = this.ArtistReason.Text;
         }
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
