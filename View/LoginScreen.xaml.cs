@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.Enums;
@@ -32,8 +33,8 @@ namespace View
                     main.Show();
                     main.Focus();
                     this.Hide();
-                    this.UsernameLogin.Text = "Email";
-                    this.PasswordLogin.Password = "Password";
+                    this.UsernameLogin.Text = "";
+                    this.PasswordLogin.Password = "";
                     break;
                 }
                 case LoginResults.EmailNotFound:
@@ -49,10 +50,18 @@ namespace View
             }
         }
 
+        private void Login_On_Enter_Key(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                Login_Button_Click(sender, new RoutedEventArgs());
+            }
+        }
+
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
             var signupScreen = new RegisterScreen();
-            this.Close();
+            this.Hide();
             signupScreen.Show();
             signupScreen.Focus();
         }

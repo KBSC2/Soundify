@@ -29,27 +29,27 @@
                 </ListView.View>
 	            <ListView.Resources>
 		            <ContextMenu x:Key="ItemContextMenu">
-			            <MenuItem Header="Remove song" Click="ListViewItem_RightClick_DeleteSong" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
-		            </ContextMenu>
+			            <MenuItem Header="Song information" Click="ListViewItem_RightClick" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
+                        <MenuItem Header="Remove song" Click="ListViewItem_RightClick_DeleteSong" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
+                    </ContextMenu>
 	            </ListView.Resources>
                 <ListView.ItemContainerStyle>
-		            <Style TargetType="{x:Type ListViewItem}"  >
-                        <EventSetter Event="MouseDoubleClick" Handler="SongRow_Click"/>
-			            <Setter Property="Background" Value="#FF445399" />
-			            <Setter Property="Foreground" Value="White" />
+                    <Style TargetType="{x:Type ListViewItem}"  >
+                        <Setter Property="Background" Value="#FF445399" />
+                        <Setter Property="Foreground" Value="White" />
                         <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
                         <Style.Triggers>
-				            <Trigger Property="IsMouseOver" Value="True">
-					            <Setter Property="Background" Value="White" />
-					            <Setter Property="Foreground" Value="Black"/>
-				            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter Property="Background" Value="#FF8390E4" />
                                 <Setter Property="Foreground" Value="Black"/>
                             </Trigger>
-			            </Style.Triggers>
+                        </Style.Triggers>
                     </Style>
-	            </ListView.ItemContainerStyle>
+                </ListView.ItemContainerStyle>
             </ListView>
             <Grid Margin="0,131,0,0" Background="#FF303651" Height="47" VerticalAlignment="Top">
                 <Button  Click="RemovePlaylistButton_Click" Tag="{Binding Playlist.ID}"  Content=" Remove playlist " HorizontalAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Top" Background="{DynamicResource HighlighBlue}" Foreground="White" BorderBrush="{x:Null}" FontSize="16"/>
