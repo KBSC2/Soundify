@@ -39,7 +39,7 @@ namespace Controller
 
             return result;
         }
-        public void SendEmail(T mailTemplate)
+        public void SendEmail(T mailTemplate, string toMailAddress)
         {
             var mailMessage = new MailMessage()
             {
@@ -48,7 +48,7 @@ namespace Controller
                 Body = mailTemplate.Body,
                 IsBodyHtml = true
             };
-            mailMessage.To.Add("sander__pol@outlook.com");
+            mailMessage.To.Add(toMailAddress);
             smtpClient.Send(mailMessage);
         }
     }

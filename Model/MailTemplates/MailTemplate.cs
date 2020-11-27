@@ -18,7 +18,7 @@ namespace Model.MailTemplates
             MailAddress = mailAddress;
         }
 
-        public void buildBody()
+        public void BuildBody()
         {
             Body = $"<h1> {Title} </h1>" +
                    $"<p> {Text} </p>";
