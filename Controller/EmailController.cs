@@ -10,12 +10,12 @@ namespace Controller
 {
     public class EmailController<T> where T: MailTemplate
     {
-        public SmtpClient smtpClient { get;} 
+        public SmtpClient SmtpClient { get;} 
 
         public EmailController()
         {
             var conf = GetSMTPGMAILConfiguration();
-            smtpClient = new SmtpClient(conf.GetValueOrDefault("Host"))
+            SmtpClient = new SmtpClient(conf.GetValueOrDefault("Host"))
             {
                 Port = 587,
                 Credentials = new NetworkCredential(conf.GetValueOrDefault("Email"), conf.GetValueOrDefault("Password")),
@@ -49,7 +49,7 @@ namespace Controller
                 IsBodyHtml = true
             };
             mailMessage.To.Add(toMailAddress);
-            smtpClient.Send(mailMessage);
+            SmtpClient.Send(mailMessage);
         }
     }
 }
