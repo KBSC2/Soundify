@@ -8,7 +8,6 @@ namespace View.DataContexts
 {
     public class DataContext : INotifyPropertyChanged
     {
-
         private static DataContext _instance;
         public static DataContext Instance
         {
