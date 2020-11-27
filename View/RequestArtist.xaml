@@ -16,13 +16,13 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid Background="{DynamicResource BackgroundColor}" KeyDown="Confirm_On_Enter_Key">
-        <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" Height="79"/>
-        <Label Content="Want to be an artist?" HorizontalAlignment="Center" Margin="0,172,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
-        <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="TokenInput" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,298,0,0" Tag="Token" TextWrapping="NoWrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="{DynamicResource InputBackground}" Foreground="White"/>
+        <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,97,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" Height="79"/>
+        <Label Content="Fill in your information" HorizontalAlignment="Center" Margin="0,164,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
+        <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="ArtistName" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,264,0,0" Tag="Artist name" TextWrapping="NoWrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="{DynamicResource InputBackground}" Foreground="White"/>
         <Label x:Name="Error" Content="" HorizontalAlignment="Center" Margin="0,384,0,0" VerticalAlignment="Top" Width="355" Foreground="{DynamicResource Red}" FontSize="16" HorizontalContentAlignment="Center"/>
         <Button x:Name="Confirm" Content="Join" Click="Confirm_Button_Click"  HorizontalAlignment="Left" Margin="333,589,0,0" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Width="196" Height="60" Background="{DynamicResource Orange}" Foreground="White"/>
         <Button Content="Cancel" HorizontalAlignment="Left" Margin="87,589,0,0" VerticalAlignment="Top" Foreground="White" FontSize="40" FontWeight="Bold" Background="{DynamicResource Red}" Width="196" Height="60" BorderThickness="0,0,0,0" Click="Cancel_Button_Click"/>
-        <Button x:Name="RequestToken" Content="Request token" Click="Confirm_Button_Click"  HorizontalAlignment="Center" Margin="0,498,0,0" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Width="294" Height="60" Background="{DynamicResource SGreen}" Foreground="White"/>
-        <Image Margin="263,23,263,585" Stretch="Fill" Source="Assets/soundifySmall.png" Width="91" Height="91"/>
+        <Image Margin="263,15,263,593" Stretch="Fill" Source="Assets/soundifySmall.png" Width="91" Height="91"/>
+        <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="ArtistReason" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,350,0,0" Tag="What is your reason?" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="152" FontSize="20" Background="{DynamicResource InputBackground}" Foreground="White" VerticalContentAlignment="Top"/>
     </Grid>
 </Window>
