@@ -1,4 +1,5 @@
 ﻿using Controller;
+using Model.DbModels;
 using Soundify;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using View.DataContexts;
 
 namespace View.Screens
 {
@@ -20,11 +22,13 @@ namespace View.Screens
 
         private void SongRow_Click(object sender, MouseButtonEventArgs e)
         {
-
             var listViewItem = (ListViewItem)sender;
             var songInfo = (SongInfo)listViewItem.Content;
 
-            AudioPlayer.PlayPlaylist(MainWindow.CurrentPlayList, 1);
+            var index = AudioPlayer.SongQueue.IndexOf(songInfo.Song);
+
+            AudioPlayer.PlayPlaylist(MainWindow.CurrentPlayList, index-1);
+            QueueDataContext.Instance.OnPropertyChanged();
         }
     }
 }

@@ -132,21 +132,25 @@ namespace Soundify
         private void Prev_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Prev();
+            QueueDataContext.Instance.OnPropertyChanged();
         }
 
         private void Next_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Next();
+            QueueDataContext.Instance.OnPropertyChanged();
         }
 
         private void Loop_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Loop();
+            QueueDataContext.Instance.OnPropertyChanged();
         }
 
         private void Shuffle_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Shuffle();
+            QueueDataContext.Instance.OnPropertyChanged();
         }
 
         public void SetSearchTerms(object sender, KeyEventArgs e)

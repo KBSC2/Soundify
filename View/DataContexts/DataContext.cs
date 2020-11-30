@@ -45,7 +45,6 @@ namespace View.DataContexts
         public void OnTimedEvent(object sender, EventArgs e)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(""));
-            QueueDataContext.Instance.OnPropertyChanged();
         }
     }
 }

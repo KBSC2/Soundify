@@ -23,19 +23,7 @@ namespace View.Screens
 
         private void OnNextSong(object sender, EventArgs e)
         {
-            DataTemplate SongList = (DataTemplate)this["PlaylistScreen"];
-            //var test = SongList.FindName("SongList", (ContentPresenter)((MainWindow) Application.Current.MainWindow).FindName("MainContent"));
-
-
-            /*for (int i = 0; i < SongList.Items.Count; i++)
-            {
-                var item = (SongInfo)SongList.Items[i];
-                var itemStyle = (ListViewItem)SongList.Items[i];
-                if (item.Song == AudioPlayer.SongQueue[AudioPlayer.CurrentSongIndex])
-                {
-                    itemStyle.Foreground = new SolidColorBrush(Colors.Red);
-                }
-            }*/
+            PlaylistDataContext.Instance.OnPropertyChanged("");
         }
 
         public void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)

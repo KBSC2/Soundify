@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
@@ -13,6 +14,7 @@ namespace View
         public string Duration { get; set; }
         public DateTime Added { get; set; }
         public int Index { get; set; }
+        public string Playing => AudioPlayer.CurrentSong == null ? "White" : Song.ID == AudioPlayer.CurrentSong.ID ? "#FFF78D0E" : "White";
 
         public SongInfo(Song song, PlaylistSong playlistSong) : this(song)
         {

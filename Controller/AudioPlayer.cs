@@ -60,10 +60,10 @@ namespace Controller
 
         public static void PlaySong(Song song)
         {
-            NextSong?.Invoke(null, new EventArgs());
             CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
             CurrentSong = song;
             WaveOutDevice.Init(CurrentSongFile.AudioFile);
+            NextSong?.Invoke(null, new EventArgs());
             Task.Delay(500).ContinueWith(x => WaveOutDevice.Play());
         }
 
