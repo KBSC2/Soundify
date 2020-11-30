@@ -47,8 +47,8 @@ namespace Soundify
             }
         }
 
-        public static MainWindow _instanceMainWindow;
-        public static LoginScreen _instanceLoginScreen;
+        private static MainWindow _instanceMainWindow;
+        private static LoginScreen _instanceLoginScreen;
 
         public MainWindow()
         {

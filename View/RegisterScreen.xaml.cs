@@ -8,6 +8,7 @@ using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
 using Model.MailTemplates;
+using Soundify;
 
 namespace View
 {
@@ -77,10 +78,8 @@ namespace View
         }
         private void BackToLogin_Button_Click(object sender, RoutedEventArgs e)
         {
-            var cancelScreen = new LoginScreen();
+            MainWindow.InstanceLoginScreen.Show();
             this.Close();
-            cancelScreen.Show();
-            cancelScreen.Focus();
         }
     }
 }

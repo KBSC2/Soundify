@@ -14,6 +14,7 @@ using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.MailTemplates;
+using Soundify;
 
 namespace View
 {
@@ -29,10 +30,8 @@ namespace View
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
-            var cancelScreen = new LoginScreen();
+            MainWindow.InstanceLoginScreen.Show();
             this.Close();
-            cancelScreen.Show();
-            cancelScreen.Focus();
         }
 
         private void Confirm_Button_Click(object sender, RoutedEventArgs e)
@@ -52,7 +51,7 @@ namespace View
             controller.UpdateItem(user);
 
             var forgotPasswordScreen = new ForgotPasswordScreen(email);
-            this.Hide();
+            this.Close();
             forgotPasswordScreen.Show();
             forgotPasswordScreen.Focus();
         }
