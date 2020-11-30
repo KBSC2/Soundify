@@ -20,11 +20,17 @@ namespace Controller.Proxy
 
             var controller = UserController.Create(new DatabaseContext());
 
-            bool allowed = x.HasMaxValue
-                ? controller.HasPermission(UserController.CurrentUser, x.Permission)
-                : controller.HasPermission(UserController.CurrentUser, x.Permission, x.MaxValue);
+            if (x == null || UserController.CurrentUser == null)
+            {
+                invocation.Proceed();
+                return;
+            }
 
-            if (x == null || UserController.CurrentUser == null || allowed)
+            bool allowed = x.HasMaxValue
+                ? controller.HasPermission(UserController.CurrentUser, x.Permission, x.MaxValue)
+                : controller.HasPermission(UserController.CurrentUser, x.Permission);
+
+            if (allowed)
             {
                 invocation.Proceed();
             }

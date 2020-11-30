@@ -6,22 +6,15 @@ using Model.DbModels;
 using Model.EventArgs;
 using NAudio.Wave;
 using System;
-<<<<<<< HEAD
 using System.IO;
-=======
-using System.Diagnostics;
->>>>>>> First permissions structure
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-<<<<<<< HEAD
 using Model.Enums;
-=======
 using System.Windows.Threading;
 using Castle.DynamicProxy;
 using Controller.Proxy;
->>>>>>> First permissions structure
 using View;
 using View.DataContexts;
 
@@ -83,13 +76,8 @@ namespace Soundify
             SetScreen(ScreenNames.HomeScreen);
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
 
-<<<<<<< HEAD
             FileCache.Instance.GetFile("images/gangnamstyle.png");
-
-            if (View.DataContexts.DataContext.Instance.CurrentUser == null)
-=======
             if (UserController.CurrentUser == null)
->>>>>>> First permissions structure
             {
                 InstanceLoginScreen.Show();
                 InstanceMainWindow.Hide();

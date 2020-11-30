@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Controller.Proxy;
 using Model.Annotations;
@@ -85,7 +86,6 @@ namespace Controller.DbControllers
             return RegistrationResults.Succeeded;
         }
 
-<<<<<<< HEAD
         public void MakeArtist(User user)
         {
             user.RoleID = 3;
@@ -96,7 +96,8 @@ namespace Controller.DbControllers
         {
             user.RoleID = 2;
             UpdateItem(user);
-=======
+        }
+
         /**
          * Check if the user has a permission
          *
@@ -107,32 +108,25 @@ namespace Controller.DbControllers
          */
         public bool HasPermission(User user, Permissions permission, Permissions maxValue)
         {
-            var controller = PermissionController.Create(new DatabaseContext());
-
             if (!HasPermission(user, permission))
                 return false;
 
+            var rpController = RolePermissionsController.Create(Context);
+            var max = rpController.GetPermissionValueCount(user, maxValue);
 
-            var max = controller.GetItem((int) maxValue);
-
-            if (permission == Permissions.PlaylistCreate 
-                && max.Value < 10 /* max amount for user */ )
+            Dictionary<Permissions, int> maxValues = new Dictionary<Permissions, int>()
             {
+                { Permissions.PlaylistLimit, PlaylistController.Create(Context).GetActivePlaylists(user.ID).Count },
+                { Permissions.PlaylistSongsLimit, 3} //implement current playlist max songs
+            };
 
-            }
-
-            return true;
+            return max > maxValues[maxValue];
         }
 
         public bool HasPermission(User user, Permissions permission)
         {
-            var controller = PermissionController.Create(new DatabaseContext());
-            var perm = controller.GetItem((int)permission);
-
-            // TODO: implement check permission
-
-            return true;
->>>>>>> First permissions structure
+            var controller = RolePermissionsController.Create(Context);
+            return controller.GetPermission(user, permission) != null;
         }
     }
 }

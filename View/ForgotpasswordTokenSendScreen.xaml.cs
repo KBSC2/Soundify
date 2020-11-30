@@ -45,7 +45,7 @@ namespace View
             if (email.Contains(".") && email.Contains("@"))
                 emailController.SendEmail(mail, email);
 
-            var controller = new UserController(new DatabaseContext());
+            var controller = UserController.Create(new DatabaseContext());
             var user = controller.GetUserFromEmailOrUsername(email);
             user.Token = token;
             controller.UpdateItem(user);

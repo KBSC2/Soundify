@@ -13,6 +13,6 @@ namespace View.DataContexts
 {
     public class SettingsDataContext
     {
-        public Role Role { get; set; } = new RoleController(new DatabaseContext()).GetItem(DataContext.Instance.CurrentUser.RoleID);
+        public Role Role { get; set; } = RoleController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.RoleID);
     }
 }

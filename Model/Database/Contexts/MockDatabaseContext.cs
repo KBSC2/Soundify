@@ -17,6 +17,7 @@ namespace Model.Database.Contexts
         public override DbSet<User> Users{ get; set; }
         public override DbSet<Role> Roles { get; set; }
         public override DbSet<Permission> Permissions { get; set; }
+        public override DbSet<RolePermissions> RolePermissions { get; set; }
 
         /**
          * Create a database mock, to use for all unit tests
