@@ -92,7 +92,10 @@ namespace View
 
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)
         {
-
+            var forgotPasswordTokenSendScreen = new ForgotpasswordTokenSendScreen();
+            this.Hide();
+            forgotPasswordTokenSendScreen.Show();
+            forgotPasswordTokenSendScreen.Focus();
         }
     }
 }
