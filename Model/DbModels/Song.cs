@@ -25,6 +25,8 @@ namespace Model.DbModels
 
         public string PathToImage { get; set; }
 
+        public string status { get; set; }
+
         public IList<PlaylistSong> PlaylistSongs { get; set; }
     }
 }
