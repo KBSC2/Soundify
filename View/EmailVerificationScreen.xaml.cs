@@ -5,6 +5,7 @@ using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.MailTemplates;
+using Soundify;
 
 namespace View
 {
@@ -46,9 +47,8 @@ namespace View
             {
                 user.IsActive = true;
                 controller.UpdateItem(user);
-                var loginScreen = new LoginScreen();
-                loginScreen.Show();
-                this.Hide();
+                MainWindow._instanceLoginScreen.Show();
+                this.Close();
             }
             else
             {
@@ -58,11 +58,8 @@ namespace View
 
         public void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
-            var cancelScreen = new LoginScreen();
+            MainWindow._instanceLoginScreen.Show();
             this.Close();
-            cancelScreen.Show();
-            cancelScreen.Focus();
-
         }
 
 

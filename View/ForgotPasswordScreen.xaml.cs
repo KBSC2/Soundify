@@ -7,6 +7,7 @@ using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.MailTemplates;
+using Soundify;
 
 namespace View
 {
@@ -57,9 +58,7 @@ namespace View
                 user.Password = PasswordController.EncryptPassword(newPassword);
                 controller.UpdateItem(user);
                 this.Close();
-                var cancelScreen = new LoginScreen();
-                cancelScreen.Show();
-                cancelScreen.Focus();
+                MainWindow._instanceLoginScreen.Show();
             }
         }
 

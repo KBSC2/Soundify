@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:View"
         xmlns:DataContexts="clr-namespace:View.DataContexts" x:Class="View.LoginScreen"
         mc:Ignorable="d"
-        Title="LoginScreen" Height="715" Width="617"
+        Title="Login" Height="715" Width="617"
         WindowStartupLocation="CenterScreen">
     <Grid Background="{DynamicResource BackgroundColor}" KeyDown="Login_On_Enter_Key">
         <Image Margin="263,32,263,576" Stretch="Fill" Source="Assets/soundify.png" Width="66" Height="66"/>
