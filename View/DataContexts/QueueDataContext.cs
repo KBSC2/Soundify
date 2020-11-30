@@ -41,7 +41,7 @@ namespace View.DataContexts
                 if (queue.Count > 12) break;
             }
 
-            if (AudioPlayer._looping)
+            if (AudioPlayer.Looping)
             {
                 for (int i = 0; i < index; i++)
                 {
@@ -63,7 +63,6 @@ namespace View.DataContexts
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(""));
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("QueueItems"));
         }
     }
 }

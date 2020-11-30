@@ -19,7 +19,7 @@ namespace Controller
         public static int CurrentSongIndex  { get; set; }
 
         public static List<Song> SongQueue { get; set; } = new List<Song>();
-        public static bool _looping = false;
+        public static bool Looping { get; set; } = false;
 
         public static void Initialize()
         {
@@ -33,7 +33,7 @@ namespace Controller
             if (SongQueue.Count == 0) return;
             CurrentSongIndex++;
             if (CurrentSongIndex >= SongQueue.Count)
-                CurrentSongIndex = _looping ? 0 : CurrentSongIndex - 1;
+                CurrentSongIndex = Looping ? 0 : CurrentSongIndex - 1;
 
             PlaySong(SongQueue[CurrentSongIndex]);
         }
@@ -43,19 +43,9 @@ namespace Controller
             if (SongQueue.Count == 0) return;
             CurrentSongIndex--;
             if (CurrentSongIndex < 0)
-                CurrentSongIndex = _looping ? SongQueue.Count - 1 : 0;
+                CurrentSongIndex = Looping ? SongQueue.Count - 1 : 0;
 
             PlaySong(SongQueue[CurrentSongIndex]);
-        }
-
-        public static void Loop()
-        {
-            _looping = !_looping;
-        }
-
-        public static void Shuffle()
-        {
-
         }
 
         public static void PlaySong(Song song)
@@ -88,10 +78,7 @@ namespace Controller
             ClearSongQueue();
             CurrentSongIndex = startIndex;
 
-            foreach(PlaylistSong playlistSong in songs)
-            {
-                AddSong(playlistSong.Song);
-            }
+            songs.ForEach(i => AddSong(i.Song));
 
             Next();
         }

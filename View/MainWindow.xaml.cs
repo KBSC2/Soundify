@@ -154,13 +154,12 @@ namespace Soundify
 
         private void Loop_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer.Loop();
+            AudioPlayer.Looping = !AudioPlayer.Looping;
             QueueDataContext.Instance.OnPropertyChanged();
         }
 
         private void Shuffle_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer.Shuffle();
             QueueDataContext.Instance.OnPropertyChanged();
         }
 
