@@ -20,7 +20,7 @@ namespace View.Screens
 
         private void ChangePassword_Button_Click(object sender, RoutedEventArgs e)
         {
-            var change = new ChangePassword();
+            var change = new ChangePasswordScreen();
                 change.Show();
                 change.Focus();
         }
