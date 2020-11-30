@@ -58,7 +58,7 @@ namespace View
                 user.Password = PasswordController.EncryptPassword(newPassword);
                 controller.UpdateItem(user);
                 this.Close();
-                MainWindow._instanceLoginScreen.Show();
+                MainWindow.InstanceLoginScreen.Show();
             }
         }
 

@@ -30,7 +30,7 @@ namespace View
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow._instanceLoginScreen.Show();
+            MainWindow.InstanceLoginScreen.Show();
             this.Close();
         }
 

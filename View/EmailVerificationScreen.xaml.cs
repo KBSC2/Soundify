@@ -47,7 +47,7 @@ namespace View
             {
                 user.IsActive = true;
                 controller.UpdateItem(user);
-                MainWindow._instanceLoginScreen.Show();
+                MainWindow.InstanceLoginScreen.Show();
                 this.Close();
             }
             else
@@ -58,7 +58,7 @@ namespace View
 
         public void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow._instanceLoginScreen.Show();
+            MainWindow.InstanceLoginScreen.Show();
             this.Close();
         }
 

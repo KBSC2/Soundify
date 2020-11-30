@@ -78,7 +78,7 @@ namespace View
         }
         private void BackToLogin_Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow._instanceLoginScreen.Show();
+            MainWindow.InstanceLoginScreen.Show();
             this.Close();
         }
     }
