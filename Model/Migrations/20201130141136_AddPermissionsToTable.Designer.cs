@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Model.Database.Contexts;
 
 namespace Model.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20201130141136_AddPermissionsToTable")]
+    partial class AddPermissionsToTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,23 +22,23 @@ namespace Model.Migrations
                 .HasAnnotation("ProductVersion", "5.0.0");
 
             modelBuilder.Entity("Model.DbModels.Permission", b =>
-            {
-                b.Property<int>("ID")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int")
-                    .UseIdentityColumn();
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
-                b.Property<bool>("HasValue")
-                    .HasColumnType("bit");
+                    b.Property<bool>("HasValue")
+                        .HasColumnType("bit");
 
-                b.Property<string>("Name")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                b.HasKey("ID");
+                    b.HasKey("ID");
 
-                b.ToTable("Permissions");
-            });
+                    b.ToTable("Permissions");
+                });
 
             modelBuilder.Entity("Model.DbModels.Playlist", b =>
                 {
@@ -95,26 +97,6 @@ namespace Model.Migrations
                     b.ToTable("PlaylistSongs");
                 });
 
-            modelBuilder.Entity("Model.DbModels.Role", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("ColorCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Designation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Roles");
-                });
-
             modelBuilder.Entity("Model.DbModels.Song", b =>
                 {
                     b.Property<int>("ID")
@@ -126,9 +108,6 @@ namespace Model.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("Duration")
                         .HasColumnType("float");
 
@@ -138,15 +117,6 @@ namespace Model.Migrations
 
                     b.Property<string>("Path")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PathToImage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProducedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WrittenBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -161,30 +131,11 @@ namespace Model.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("Coins")
-                        .HasColumnType("int");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
                     b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("RequestedArtist")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<int>("RoleID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Token")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
