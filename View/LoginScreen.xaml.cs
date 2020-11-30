@@ -76,11 +76,14 @@ namespace View
                 {
                     var token = Guid.NewGuid().ToString();
                     var userEmail = controller.GetUserFromEmailOrUsername(emailOrUsername).Email;
-                    var emailVerificationScreen = new EmailVerificationScreen(token, userEmail);
-                    emailVerificationScreen.Error.Content = "User not active";
-                    emailVerificationScreen.Show();
-                    this.Hide();
-                        break;
+                    if (userEmail != null)
+                    {
+                        var emailVerificationScreen = new EmailVerificationScreen(token, userEmail);
+                        emailVerificationScreen.Error.Content = "User not active";
+                        emailVerificationScreen.Show();
+                        this.Hide();
+                    } 
+                    break;
                 }
             }
         }
