@@ -46,11 +46,15 @@ namespace View
             if (email.Contains(".") && email.Contains("@"))
                 emailController.SendEmail(mail, email);
 
-            var forgotPasswordScreen = new ForgotPasswordScreen();
+            var controller = new UserController(new DatabaseContext());
+            var user = controller.GetUserFromEmailOrUsername(email);
+            user.Token = token;
+            controller.UpdateItem(user);
+
+            var forgotPasswordScreen = new ForgotPasswordScreen(email);
             this.Hide();
             forgotPasswordScreen.Show();
             forgotPasswordScreen.Focus();
         }
-
     }
 }
