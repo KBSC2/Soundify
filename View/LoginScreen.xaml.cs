@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using Controller.DbControllers;
@@ -69,6 +70,20 @@ namespace View
                 case LoginResults.PasswordIncorrect:
                 {
                     this.Error.Content = "Password incorrect";
+                    break;
+                }
+                case LoginResults.UserNotActive:
+                {
+                    var token = Guid.NewGuid().ToString();
+                    var user = controller.GetUserFromEmailOrUsername(emailOrUsername);
+                    if (user != null)
+                    {
+                        var userEmail = user.Email;
+                        var emailVerificationScreen = new EmailVerificationScreen(token, userEmail);
+                        emailVerificationScreen.Error.Content = "User not active";
+                        emailVerificationScreen.Show();
+                        this.Hide();
+                    } 
                     break;
                 }
             }
