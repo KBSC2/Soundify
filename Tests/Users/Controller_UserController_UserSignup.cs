@@ -13,7 +13,7 @@ namespace Tests.Users
     public class Controller_UserController_UserSignup
     {
         private List<string> AccountsToRemove { get; }= new List<string>() { "test@gmail.com", "duplicate@gmail.com", "testindb@gmail.com" };
-        private UserController Controller { get; } = new UserController(new MockDatabaseContext());
+        private UserController Controller { get; } = UserController.Create(new MockDatabaseContext());
 
         [SetUp]
         public void SetUp()

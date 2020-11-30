@@ -31,7 +31,7 @@ namespace View
             var token = Guid.NewGuid().ToString();
 
             var result =
-                new UserController(new DatabaseContext()).CreateAccount(new User() {Email = email, Username = username, Token = token},
+                UserController.Create(new DatabaseContext()).CreateAccount(new User() {Email = email, Username = username, Token = token },
                     password, passwordRepeat);
 
             switch(result)

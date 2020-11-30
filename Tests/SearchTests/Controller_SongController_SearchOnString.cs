@@ -19,7 +19,7 @@ namespace Tests.SearchTests
         public void SetUp()
         {
             context = new MockDatabaseContext();
-            songController = new SongController(context);
+            songController = SongController.Create(context);
             songNameTest = new Song(){Name = "SongNameTest", Artist = "Coder", Duration = 10, Path = "../path"};
             songArtistTest = new Song() { Name = "Ik WIl Testen, liefst ieder kwartier", Artist = "Tester", Duration = 10, Path = "../path" };
             songController.CreateItem(songNameTest);

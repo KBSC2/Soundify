@@ -26,9 +26,9 @@ namespace Tests.Local
 
             AudioPlayer.Initialize();
             Context = new MockDatabaseContext();
-            SongController = new SongController(Context);
-            PlaylistSongController = new PlaylistSongController(Context);
-            PlaylistController = new PlaylistController(Context);
+            SongController = SongController.Create(Context);
+            PlaylistSongController = PlaylistSongController.Create(Context);
+            PlaylistController = PlaylistController.Create(Context);
 
             Playlist = new Playlist() { Name = "Test", ActivePlaylist = true, CreationDate = DateTime.Now };
             PlaylistController.CreateItem(Playlist);
@@ -55,7 +55,7 @@ namespace Tests.Local
             PlaylistSongController.AddSongToPlaylist(Song.ID, Playlist.ID);
             PlaylistSongController.AddSongToPlaylist(Song2.ID, Playlist.ID);
 
-            var playlistsongs = new PlaylistSongController(Context).GetSongsFromPlaylist(Playlist.ID);
+            var playlistsongs = PlaylistSongController.Create(Context).GetSongsFromPlaylist(Playlist.ID);
             AudioPlayer.PlayPlaylist(playlistsongs);
 
             bool areEqual = true;

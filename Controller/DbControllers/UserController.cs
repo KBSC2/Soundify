@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
+using Controller.Proxy;
+using Model.Annotations;
 using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
@@ -7,7 +10,14 @@ namespace Controller.DbControllers
 {
     public class UserController : DbController<User>
     {
-        public UserController(IDatabaseContext context) : base(context, context.Users)
+        public static User CurrentUser;
+
+        public static UserController Create(IDatabaseContext context)
+        {
+            return ProxyController.AddToProxy<UserController>(new object[] {context});
+        }
+
+        protected UserController(IDatabaseContext context) : base(context, context.Users)
         {
         }
 
@@ -18,9 +28,9 @@ namespace Controller.DbControllers
          *
          * @return User object if found, otherwise null
          */
-        public User GetUserFromEmailOrUsername(string emailOrUsername)
+        public virtual User GetUserFromEmailOrUsername(string emailOrUsername)
         {
-            return GetList().FirstOrDefault(x => x.Email == emailOrUsername || x.Username == emailOrUsername);
+            return this.GetList().FirstOrDefault(x => x.Email == emailOrUsername || x.Username == emailOrUsername);
         }
 
         /**
@@ -31,7 +41,7 @@ namespace Controller.DbControllers
          *
          * @return LoginResult : Result of the user login
          */
-        public LoginResults UserLogin(string emailOrUsername, string password)
+        public virtual LoginResults UserLogin(string emailOrUsername, string password)
         {
             var user = GetUserFromEmailOrUsername(emailOrUsername);
             if (user == null)
@@ -57,7 +67,7 @@ namespace Controller.DbControllers
          *
          * @return RegistrationResult : Result of the user account creation
          */
-        public RegistrationResults CreateAccount(User user, string password, string passwordRepeat)
+        public virtual RegistrationResults CreateAccount(User user, string password, string passwordRepeat)
         {
             if (GetUserFromEmailOrUsername(user.Email) != null)
                 return RegistrationResults.EmailTaken;
@@ -75,6 +85,7 @@ namespace Controller.DbControllers
             return RegistrationResults.Succeeded;
         }
 
+<<<<<<< HEAD
         public void MakeArtist(User user)
         {
             user.RoleID = 3;
@@ -85,6 +96,43 @@ namespace Controller.DbControllers
         {
             user.RoleID = 2;
             UpdateItem(user);
+=======
+        /**
+         * Check if the user has a permission
+         *
+         * @param user The user database object to insert
+         * @param permission The permission to check
+         *
+         * @return user has permission
+         */
+        public bool HasPermission(User user, Permissions permission, Permissions maxValue)
+        {
+            var controller = PermissionController.Create(new DatabaseContext());
+
+            if (!HasPermission(user, permission))
+                return false;
+
+
+            var max = controller.GetItem((int) maxValue);
+
+            if (permission == Permissions.PlaylistCreate 
+                && max.Value < 10 /* max amount for user */ )
+            {
+
+            }
+
+            return true;
+        }
+
+        public bool HasPermission(User user, Permissions permission)
+        {
+            var controller = PermissionController.Create(new DatabaseContext());
+            var perm = controller.GetItem((int)permission);
+
+            // TODO: implement check permission
+
+            return true;
+>>>>>>> First permissions structure
         }
     }
 }

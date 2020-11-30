@@ -1,19 +1,34 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Controller.Proxy;
+using Microsoft.EntityFrameworkCore.Storage;
+using Model.Annotations;
 using Model.Database.Contexts;
 using Model.DbModels;
+using Model.Enums;
 
 namespace Controller.DbControllers
 {
     public class PlaylistController : DbController<Playlist>
     {
 
-        public PlaylistController(IDatabaseContext context) : base(context, context.Playlists)
+        public static PlaylistController Create(IDatabaseContext context)
+        {
+            return ProxyController.AddToProxy<PlaylistController>(new object[] { context });
+        }
+
+        protected PlaylistController(IDatabaseContext context) : base(context, context.Playlists)
         {
         }
 
-        public void DeactivatePlaylist(int playlistID)
+        [HasPermission(Permission = Permissions.PlaylistCreate, MaxValue = Permissions.PlaylistLimit)]
+        public override void CreateItem(Playlist item)
+        {
+            base.CreateItem(item);
+        }
+
+        public virtual void DeactivatePlaylist(int playlistID)
         {
             DateTime dateTime = DateTime.Now;
             var playlist = GetItem(playlistID);
@@ -22,7 +37,7 @@ namespace Controller.DbControllers
             UpdateItem(playlist);
         }
 
-        public void DeletePlaylistOnDateStamp()
+        public virtual void DeletePlaylistOnDateStamp()
         {
             var currentTime = DateTime.Now;
             var playlists = GetList().Where(p => p.ActivePlaylist == false).ToList();
@@ -32,7 +47,7 @@ namespace Controller.DbControllers
             }
         }
 
-        public List<Playlist> SearchPlayListOnString(List<string> searchTerms, int userID)
+        public virtual List<Playlist> SearchPlayListOnString(List<string> searchTerms, int userID)
         {
             /*var playlists = Context.Playlists.AsEnumerable();*/
             List<Playlist> searchPlaylists = GetActivePlaylists(userID)
@@ -45,12 +60,12 @@ namespace Controller.DbControllers
             return searchPlaylists;
         }
 
-        public List<Playlist> GetList(int userID)
+        public virtual List<Playlist> GetList(int userID)
         {
             return base.GetFilteredList(x => x.UserID == userID);
         }
 
-        public List<Playlist> GetActivePlaylists(int userID)
+        public virtual List<Playlist> GetActivePlaylists(int userID)
         {
             return GetList(userID).Where(x => x.ActivePlaylist).ToList();
         }

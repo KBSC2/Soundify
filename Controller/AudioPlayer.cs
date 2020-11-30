@@ -70,7 +70,7 @@ namespace Controller
 
         public static void PlayPlaylist(Playlist playlist, int startIndex = -1)
         {
-            PlayPlaylist(new PlaylistSongController(new Model.Database.Contexts.DatabaseContext()).GetSongsFromPlaylist(playlist.ID), startIndex);
+            PlayPlaylist(PlaylistSongController.Create(new Model.Database.Contexts.DatabaseContext()).GetSongsFromPlaylist(playlist.ID), startIndex);
         }
 
         public static void PlayPlaylist(List<PlaylistSong> songs, int startIndex = -1)

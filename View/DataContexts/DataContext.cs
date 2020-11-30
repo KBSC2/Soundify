@@ -31,9 +31,12 @@ namespace View.DataContexts
         public string TotalTimeLabel => AudioPlayer.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.CurrentSongFile.TotalTimeSong).ToString("m':'ss");
         public string CurrentTimeLabel => AudioPlayer.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.CurrentSongFile.CurrentTimeSong).ToString("m':'ss");
 
+<<<<<<< HEAD
         public User CurrentUser { get; set; }
         public Role CurrentUserRole => CurrentUser == null ? new Role() : new RoleController(new DatabaseContext()).GetItem(CurrentUser.RoleID);
 
+=======
+>>>>>>> First permissions structure
         private Timer _timer;
 
         private DataContext()

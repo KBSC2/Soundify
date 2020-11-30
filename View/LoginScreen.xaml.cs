@@ -41,13 +41,13 @@ namespace View
             var emailOrUsername = this.UsernameLogin.Text;
             var password = this.PasswordLogin.Password;
 
-            var controller = new UserController(new DatabaseContext());
+            var controller = UserController.Create(new DatabaseContext());
             var result = controller.UserLogin(emailOrUsername, password);
             switch (result)
             {
                 case LoginResults.Success:
                 {
-                    DataContexts.DataContext.Instance.CurrentUser = controller.GetUserFromEmailOrUsername(emailOrUsername);
+                    UserController.CurrentUser = controller.GetUserFromEmailOrUsername(emailOrUsername);
                     var main = new MainWindow();
                     main.Show();
                     main.Focus();

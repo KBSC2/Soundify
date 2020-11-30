@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Controller.Proxy;
 using Model.Database.Contexts;
 using Model.DbModels;
 
@@ -8,7 +9,13 @@ namespace Controller.DbControllers
 {
     public class SongController : DbController<Song>
     {
-        public SongController(IDatabaseContext context) : base(context, context.Songs)
+
+        public static SongController Create(IDatabaseContext context)
+        {
+            return ProxyController.AddToProxy<SongController>(new object[] { context });
+        }
+
+        protected SongController(IDatabaseContext context) : base(context, context.Songs)
         {
         }
 
