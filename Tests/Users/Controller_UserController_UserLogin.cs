@@ -15,7 +15,7 @@ namespace Tests.Users
         [SetUp]
         public void SetUp()
         {
-            User = new User() { Email = "test@gmail.com", Username = "test" };
+            User = new User() { Email = "test@gmail.com", Username = "test", IsActive = true};
             Controller.CreateAccount(User, "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2");
         }
 
