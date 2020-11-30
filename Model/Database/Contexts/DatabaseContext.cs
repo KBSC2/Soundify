@@ -1,7 +1,6 @@
 ﻿using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Model.DbModels;
-using Model.Migrations;
 
 namespace Model.Database.Contexts
 {
