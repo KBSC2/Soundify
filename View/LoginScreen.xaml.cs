@@ -75,9 +75,10 @@ namespace View
                 case LoginResults.UserNotActive:
                 {
                     var token = Guid.NewGuid().ToString();
-                    var userEmail = controller.GetUserFromEmailOrUsername(emailOrUsername).Email;
-                    if (userEmail != null)
+                    var user = controller.GetUserFromEmailOrUsername(emailOrUsername);
+                    if (user != null)
                     {
+                        var userEmail = user.Email;
                         var emailVerificationScreen = new EmailVerificationScreen(token, userEmail);
                         emailVerificationScreen.Error.Content = "User not active";
                         emailVerificationScreen.Show();
