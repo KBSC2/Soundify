@@ -1,0 +1,23 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:View"
+        xmlns:DataContexts="clr-namespace:View.DataContexts" x:Class="View.RequestArtist"
+        mc:Ignorable="d"
+        Title="Request to be an artist" Height="715" Width="617"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary Source="Styles/Watermark.xaml"/>
+    </Window.Resources>
+    <Grid Background="{DynamicResource BackgroundColor}" KeyDown="Confirm_On_Enter_Key">
+        <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,97,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" Height="79"/>
+        <Label Content="Fill in your information" HorizontalAlignment="Center" Margin="0,164,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
+        <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="ArtistName" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,264,0,0" Tag="Artist name" TextWrapping="NoWrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="{DynamicResource InputBackground}" Foreground="White"/>
+        <Button x:Name="Confirm" Content="Request" Click="Confirm_Button_Click"  HorizontalAlignment="Left" Margin="333,589,0,0" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Width="196" Height="60" Background="{DynamicResource Orange}" Foreground="White"/>
+        <Button Content="Cancel" HorizontalAlignment="Left" Margin="87,589,0,0" VerticalAlignment="Top" Foreground="White" FontSize="40" FontWeight="Bold" Background="{DynamicResource Red}" Width="196" Height="60" BorderThickness="0,0,0,0" Click="Cancel_Button_Click"/>
+        <Image Margin="263,15,263,593" Stretch="Fill" Source="Assets/soundifySmall.png" Width="91" Height="91"/>
+        <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="ArtistReason" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,350,0,0" Tag="What is your reason?" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="152" FontSize="20" Background="{DynamicResource InputBackground}" Foreground="White" VerticalContentAlignment="Top"/>
+    </Grid>
+</Window>

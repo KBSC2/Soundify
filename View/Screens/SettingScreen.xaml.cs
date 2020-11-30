@@ -24,5 +24,12 @@ namespace View.Screens
                 change.Show();
                 change.Focus();
         }
+
+        private void Request_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var request = new RequestArtist();
+                request.Show();
+                request.Focus();
+        }
     }
 }

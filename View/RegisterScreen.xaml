@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:View"
         xmlns:DataContexts="clr-namespace:View.DataContexts" x:Class="View.RegisterScreen"
         mc:Ignorable="d"
-        Title="LoginScreen" Height="715" Width="617"
+        Title="Register Screen" Height="715" Width="617"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary>

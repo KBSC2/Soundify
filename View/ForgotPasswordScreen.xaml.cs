@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Net.Mail;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
+using Model.MailTemplates;
 
 namespace View
 {
@@ -12,9 +15,12 @@ namespace View
     /// </summary>
     public partial class ForgotPasswordScreen : Window
     {
-        public ForgotPasswordScreen()
+        private string _email;
+        private string _token;
+        public ForgotPasswordScreen(string text)
         {
             InitializeComponent();
+            _email = text;
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
@@ -27,14 +33,14 @@ namespace View
 
         private void Confirm_Button_Click(object sender, RoutedEventArgs e)
         {
-            var token = this.Token;
+            var token = this.Token.Text;
             var newPassword = this.NewPassword.Password;
             var repeatPassword = this.RepeatPassword.Password;
 
             var controller = new UserController(new DatabaseContext());
-            var user = controller.GetUserFromEmailOrUsername(DataContexts.DataContext.Instance.CurrentUser.Email);
+            var user = controller.GetUserFromEmailOrUsername(_email);
 
-            if (token.Text.Equals("something"))
+            if (token.Equals(user.Token))
             {
                 if (!newPassword.Equals(repeatPassword))
                 {
@@ -51,6 +57,9 @@ namespace View
                 user.Password = PasswordController.EncryptPassword(newPassword);
                 controller.UpdateItem(user);
                 this.Close();
+                var cancelScreen = new LoginScreen();
+                cancelScreen.Show();
+                cancelScreen.Focus();
             }
         }
 
@@ -64,7 +73,11 @@ namespace View
 
         private void Resend_Token_Button_Click(object sender, RoutedEventArgs e)
         {
+            var emailController = new EmailController<ForgotPasswordTemplate>();
+            var mail = new ForgotPasswordTemplate(new MailAddress("info.soundify@gmail.com"), _token);
 
+            if (_email.Contains(".") && _email.Contains("@"))
+                emailController.SendEmail(mail, _email);
         }
     }
 }
