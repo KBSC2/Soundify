@@ -1,7 +1,8 @@
 ﻿<Application x:Class="Soundify.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Soundify" xmlns:View="clr-namespace:View"
+             xmlns:local="clr-namespace:Soundify" 
+             xmlns:View="clr-namespace:View"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -25,7 +26,7 @@
                     <Brush x:Key="Red">#FFFF0000</Brush>
                     <Brush x:Key="InputBackground">#FF707070</Brush>
                     <Brush x:Key="SGreen">#FF3EBF65</Brush>
-	                <View:ColorConverter x:Key="colorConverter"/>
+                    <View:ColorConverter x:Key="colorConverter"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

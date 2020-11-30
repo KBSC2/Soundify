@@ -3,73 +3,91 @@
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:local="clr-namespace:View.Screens" 
                     xmlns:dataContexts="clr-namespace:View.DataContexts"
-    x:Class="View.Screens.ArtistScreen">
+                    
+					xmlns:Components="clr-namespace:View.Components"
+					x:Class="View.Screens.ArtistScreen">
     <DataTemplate x:Key="ArtistScreen">
         <!-- Start playlist screen -->
         <Grid x:Name="MainGrid"  Background="#FF303651" DataContext="{x:Static dataContexts:ArtistDataContext.Instance}">
-            <Grid Margin="0,0,0,217">
-                <Grid HorizontalAlignment="Center" Width="224">
+            <Grid.Resources>
+                <Components:ID3ArtistsTagConverter x:Key="ArtistsTagConverter"/>
+                <Components:ID3DurationPropertyConverter x:Key="DurationConverter"/>
+            </Grid.Resources>
+
+            <Grid Margin="0,0,0,164">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid MinWidth="224" Margin="0,0,0,0">
                     <Grid.Style>
                         <Style TargetType="{x:Type Grid}">
-                            <Setter Property="Margin" Value="0,0,577,0"/>
+                            <Setter Property="Grid.ColumnSpan" Value="3"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsArtist}" Value="True">
-                                    <Setter Property="Margin" Value="0,0,577,0"/>
+                                <DataTrigger Binding="{Binding IsSongSelected}" Value="True">
+                                    <Setter Property="Grid.ColumnSpan" Value="1"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Grid.Style>
-                    <Button Click="UploadSongButton_Click" Background="#FF3EBF65" Foreground="White" FontSize="22" Margin="10,65,10,0" Height="44" VerticalAlignment="Top">
+                    <Button HorizontalContentAlignment="Center" Click="UploadSongButton_Click" Background="#FF3EBF65" Foreground="White" FontSize="22" Height="44" VerticalAlignment="Top" MaxWidth="250" Margin="0,65,0,0">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Screens/whiteUpload.png" Width="31" Height="32" Margin="10 0 10 0"/>
                             <TextBlock Text="Upload song" VerticalAlignment="Center" Margin="0 0 10 0"/>
                         </StackPanel>
                     </Button>
-                    <Label Content="Awaiting approval" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="10,114,10,0" VerticalAlignment="Top" Width="196" FontSize="22" Background="{x:Null}" Foreground="White"/>
+                    <Label Content="{Binding StatusMessage}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="10,114,10,0" VerticalAlignment="Top" MinWidth="196" FontSize="22" Background="{x:Null}" Foreground="White"/>
                 </Grid>
-                <Grid Margin="223,0,8,0">
+                <Grid x:Name="Datagrid" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,0" MinWidth="577">
                     <Grid.Style>
                         <Style TargetType="{x:Type Grid}">
-                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Visibility" Value="Hidden"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsArtist}" Value="True">
+                                <DataTrigger Binding="{Binding IsSongSelected}" Value="True">
                                     <Setter Property="Visibility" Value="Visible"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Grid.Style>
-                    <Label Content="Title" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="98" FontSize="18" Foreground="White"/>
+
+                    <Label Content="Title*" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="98" FontSize="18" Foreground="White"/>
                     <Label Content="Artist" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Width="98" FontSize="18" Foreground="White"/>
                     <Label Content="Written by" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" Width="98" FontSize="18" Foreground="White"/>
                     <Label Content="Produced by" HorizontalAlignment="Left" Margin="10,124,0,0" VerticalAlignment="Top" Width="111" FontSize="18" Foreground="White"/>
                     <Label Content="Duration" HorizontalAlignment="Left" Margin="10,163,0,0" VerticalAlignment="Top" Width="98" FontSize="18" Foreground="White"/>
-                    <TextBox HorizontalAlignment="Left" Margin="125,18,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}"/>
-                    <TextBox HorizontalAlignment="Left" Margin="125,54,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}"/>
-                    <TextBox HorizontalAlignment="Left" Margin="125,93,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}"/>
-                    <TextBox HorizontalAlignment="Left" Margin="125,128,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}"/>
-                    <Label Content="5:01" HorizontalAlignment="Left" Margin="125,163,0,0" VerticalAlignment="Top" Width="98" FontSize="18" Foreground="White"/>
-                    <Label Content="Description" HorizontalAlignment="Left" Margin="267,10,0,0" VerticalAlignment="Top" Width="113" FontSize="18" Foreground="White" RenderTransformOrigin="0.5,0.5">
-                        <Label.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="-0.391"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Label.RenderTransform>
-                    </Label>
-                    <TextBox HorizontalAlignment="Left" Margin="272,54,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}" Width="165" Height="143"/>
-                    <Image HorizontalAlignment="Left" Height="100" Margin="457,54,0,0" VerticalAlignment="Top" Width="100"/>
-                    <Button HorizontalAlignment="Left" Margin="440,18,0,0" VerticalAlignment="Top" Height="29" Width="119" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
+
+                    <TextBox x:Name="Title" Text="{Binding SelectedSong.Tag.Title, Mode=OneWay}" HorizontalAlignment="Left" Margin="125,18,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}"/>
+                    <Label x:Name="Artist" Content="{Binding ArtistName}" HorizontalAlignment="Left" Margin="125,54,0,0" VerticalAlignment="Top" Width="120" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}"/>
+                    <TextBox x:Name="Writer" HorizontalAlignment="Left" Margin="125,93,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}"/>
+                    <TextBox x:Name="Producer" HorizontalAlignment="Left" Margin="125,128,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}"/>
+                    <Label x:Name="Duration" Content="{Binding SelectedSong.Properties.Duration, Mode=OneWay, Converter={StaticResource DurationConverter}}" HorizontalAlignment="Left" Margin="125,163,0,0" VerticalAlignment="Top" Width="98" FontSize="18" Foreground="White"/>
+
+                    <Label Content="Description" HorizontalAlignment="Left" Margin="267,10,0,0" VerticalAlignment="Top" Width="113" FontSize="18" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
+                    <TextBox x:Name="Decription" Margin="267,54,145,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}" MinWidth="165" Height="143"/>
+                    <Button Click="UploadSongImageButton_Click"  HorizontalAlignment="Right" Margin="440,18,10,0" VerticalAlignment="Top" Height="29" Width="119" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="/Assets/whiteUpload.png" Width="25" Height="25" Margin="5 0 0 0"/>
+                            <Image Source="/Screens/whiteUpload.png" Width="25" Height="25" RenderTransformOrigin="1.12,0.508"/>
                             <TextBlock Text="Song image" VerticalAlignment="Center" Margin="5 0 10 0" FontSize="14"/>
                         </StackPanel>
                     </Button>
+                    <Image x:Name="Image" Source="{Binding SongImage}" HorizontalAlignment="Right" Height="100" Margin="0,67,22,0" VerticalAlignment="Top" Width="100"/>
                 </Grid>
+                <Button Content="Confirm upload" Grid.Column="1" HorizontalAlignment="Center" Margin="0,220,0,0" VerticalAlignment="Top" Height="34" Width="156" Background="#FFF78D0E" BorderBrush="{x:Null}" Foreground="White" FontSize="18" Click="ConfrimUpload_Click" Tag="{Binding ElementName=Title}" CommandParameter="{Binding ElementName=Datagrid}">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsSongSelected}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </Grid>
-            <Grid Margin="0,217,0,0">
-                <ListView x:Name="SongList" Margin="0,64,0,0" Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding PlaylistItems}" FontSize="16">
+            <Grid Margin="0,270,0,0">
+                <ListView x:Name="SongList" Margin="0,64,0,0" Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding UploadedSongs}" FontSize="16">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Titel" Width="200" DisplayMemberBinding="{Binding Song.Name}"/>

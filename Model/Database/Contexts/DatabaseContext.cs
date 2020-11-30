@@ -12,6 +12,7 @@ namespace Model.Database.Contexts
         public override DbSet<PlaylistSong> PlaylistSongs { get; set; }
         public override DbSet<User> Users { get; set;  }
         public override DbSet<Role> Roles { get; set; }
+        public override DbSet<Artist> Artists { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

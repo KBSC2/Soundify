@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
@@ -76,12 +77,17 @@ namespace Controller.DbControllers
         {
             user.RoleID = 3;
             UpdateItem(user);
+            new ArtistController(new DatabaseContext()).CreateItem(new Artist() {ArtistName = user.Username}); // change user.Username to artist name
         }
 
         public void RevokeArtist(User user)
         {
             user.RoleID = 2;
             UpdateItem(user);
+
+            var artistID = new ArtistController(new DatabaseContext()).GetList()
+                .FirstOrDefault(a => a.UserID == user.ID)?.ID;
+            if(artistID != null) new ArtistController(new DatabaseContext()).DeleteItem((int)artistID);
         }
     }
 }
