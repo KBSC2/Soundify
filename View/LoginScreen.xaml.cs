@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using Controller.DbControllers;
@@ -70,6 +71,16 @@ namespace View
                 {
                     this.Error.Content = "Password incorrect";
                     break;
+                }
+                case LoginResults.UserNotActive:
+                {
+                    var token = Guid.NewGuid().ToString();
+                    var userEmail = controller.GetUserFromEmailOrUsername(emailOrUsername).Email;
+                    var emailVerificationScreen = new EmailVerificationScreen(token, userEmail);
+                    emailVerificationScreen.Error.Content = "User not active";
+                    emailVerificationScreen.Show();
+                    this.Hide();
+                        break;
                 }
             }
         }

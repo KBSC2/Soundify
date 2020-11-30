@@ -5,6 +5,7 @@ namespace Model.Enums
     {
         Success,
         EmailNotFound,
-        PasswordIncorrect
+        PasswordIncorrect,
+        UserNotActive
     }
 }

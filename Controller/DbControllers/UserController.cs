@@ -41,6 +41,9 @@ namespace Controller.DbControllers
             if (user.Password != passwordHash)
                 return LoginResults.PasswordIncorrect;
 
+            if (user.IsActive == false)
+                return LoginResults.UserNotActive;
+
             return LoginResults.Success;
         }
 

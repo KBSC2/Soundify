@@ -1,0 +1,20 @@
+﻿<Window x:Class="View.EmailVerificationScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:View"
+        mc:Ignorable="d"
+        Title="ForgotPasswordScreen" Height="715" Width="617"
+        WindowStartupLocation="CenterScreen">
+    <Grid Background="{DynamicResource BackgroundColor}" KeyDown="Confirm_On_Enter_Key">
+        <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" Height="79"/>
+        <Label Content="Token has been sent" HorizontalAlignment="Center" Margin="0,172,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
+        <TextBox x:Name="Token" Style="{StaticResource WatermarkTextbox}" HorizontalAlignment="Center" Margin="0,259,0,0" Tag="Token" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White"/>
+        <Label x:Name="Error" Content="" HorizontalAlignment="Center" Margin="0,433,0,0" VerticalAlignment="Top" Width="355" Height="35" Foreground="{DynamicResource Red}" FontSize="22" HorizontalContentAlignment="Center"/>
+        <Button x:Name="ResendToken" Content="Resend Token" HorizontalAlignment="Center" Margin="0,515,0,0" VerticalAlignment="Top" FontSize="40" Width="307" Height="60" Background="ForestGreen" Click="Resend_Token_Button_Click" Foreground="White" BorderBrush="{x:Null}"/>
+        <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="97,593,0,0" VerticalAlignment="Top" FontSize="40" Width="196" Height="60" Background="{DynamicResource Red}" Click="Cancel_Button_Click" Foreground="White" BorderBrush="{x:Null}"/>
+        <Button x:Name="Confirm" Content="Confirm" HorizontalAlignment="Left" Margin="328,593,0,0" VerticalAlignment="Top" FontSize="40" Width="196" Height="60" Background="{DynamicResource Orange}" Click="Confirm_Button_Click" Foreground="White" BorderBrush="{x:Null}"/>
+        <Image Margin="263,11,263,598" Stretch="Fill" Source="Assets/soundify.png" Width="66" Height="66"/>
+    </Grid>
+</Window>
