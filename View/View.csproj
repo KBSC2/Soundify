@@ -14,6 +14,7 @@
     <None Remove="Assets\soundify.png" />
     <None Remove="dansenaandegracht.mp3" />
     <None Remove="dansenaandegracht2.mp3" />
+    <None Remove="Screens\whiteUpload.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +33,7 @@
     <Resource Include="Assets\soundify.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Screens\whiteUpload.png" />
   </ItemGroup>
 
   <ItemGroup>

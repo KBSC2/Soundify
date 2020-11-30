@@ -9,6 +9,7 @@ namespace Model
         PlaylistMenuScreen,
         Logout,
         SettingScreen,
-        SearchScreen
+        SearchScreen,
+        ArtistScreen
     }
 }
