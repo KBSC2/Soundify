@@ -22,7 +22,7 @@ namespace View.Screens
 
         private void ChangePassword_Button_Click(object sender, RoutedEventArgs e)
         {
-            var change = new ChangePassword();
+            var change = new ChangePasswordScreen();
                 change.Show();
                 change.Focus();
         }
@@ -44,6 +44,13 @@ namespace View.Screens
                     AudioPlayer.MaxVolume = 0.2;
                     break;
             }
+        }
+        
+        private void Request_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var request = new RequestArtist();
+                request.Show();
+                request.Focus();
         }
     }
 }

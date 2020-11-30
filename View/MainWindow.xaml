@@ -10,7 +10,11 @@
     x:Class="Soundify.MainWindow"
     mc:Ignorable="d"
     Title="MainWindow" Height="720" Width="1280" MinHeight="720" MinWidth="1280"
+    WindowState="Maximized"
+    WindowStyle="SingleBorderWindow"
+    WindowStartupLocation="CenterScreen"
     DataContext="{x:Static dataContexts:DataContext.Instance}">
+
     <Grid>
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="92,54,0,74" ContentTemplate="{StaticResource HomeScreen}"/>
         <Grid Margin="89,0,0,0" Background="{DynamicResource Background2Color}" Height="74" VerticalAlignment="Bottom" ShowGridLines="False">
@@ -27,12 +31,16 @@
         <Grid Margin="89,0,0,0" Background="{DynamicResource Background2Color}" Height="54" VerticalAlignment="Top" ShowGridLines="False">
             <TextBox Style="{StaticResource WatermarkTextbox }" HorizontalAlignment="Center" Tag="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="192" Height="25" KeyDown="SetSearchTerms" BorderBrush="{x:Null}" Background="White"/>
             <components:MenuButton MaxHeight="34" MaxWidth="70" ScreenName="SettingScreen"         Content="Settings"        Margin="0,0,10,0" VerticalAlignment="Center" Height="30" HorizontalAlignment="Right" Width="78"/>
+            <Label Content="{Binding CurrentUser.Username}" Foreground="{Binding CurrentUserRole.ColorCode, Converter={StaticResource colorConverter}}" Margin="715,14,301,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Width="175"/>
         </Grid>
         <Grid Background="{DynamicResource BackgroundColor}" HorizontalAlignment="Left" Width="92" ShowGridLines="False">
             <Image Margin="26,6,26,0" Stretch="Fill" Source="Assets/soundify.png" Width="40" Height="40" MaxHeight="40" VerticalAlignment="Top"/>
             <components:MenuButton ScreenName="HomeScreen"     Content="Home"           Margin="0,65,0,339" HorizontalAlignment="Center" Width="92" Height="30" MaxHeight="30" VerticalAlignment="Top"/>
             <components:MenuButton ScreenName="PlaylistMenuScreen" Content="Playlists"  Margin="0,110,0,294" Height="30" MaxHeight="30" VerticalAlignment="Top" />
-            <components:MenuButton ScreenName="QueueScreen"    Content="Queue"          Margin="0,155,0,0" Height="30" MaxHeight="30" VerticalAlignment="Top" />
+            <components:MenuButton ScreenName="QueueScreen"    Content="Shop"          Margin="0,0,0,81"  HorizontalAlignment="Center" Width="92" MaxHeight="30" Height="31" VerticalAlignment="Bottom" />
+            <Image Margin="6,0,66,10" Stretch="Fill" Source="Assets/soundify.png" Height="20" VerticalAlignment="Bottom"/>
+            <Label x:Name="MoneyAdded" Content="+1" HorizontalAlignment="Center" Margin="0,0,0,52" Foreground="White" FontSize="14" Opacity="0.5" Height="29" VerticalAlignment="Bottom"/>
+            <Label x:Name="Money" Content="{Binding CurrentUser.Coins}" HorizontalAlignment="Left" Margin="26,0,0,5" Width="67" Foreground="White" FontSize="16" Height="30" VerticalAlignment="Bottom"/>
         </Grid>
     </Grid>
 </Window>

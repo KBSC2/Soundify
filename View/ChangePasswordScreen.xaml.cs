@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
@@ -9,9 +10,9 @@ namespace View
     /// <summary>
     /// Interaction logic for ChangePassword.xaml
     /// </summary>
-    public partial class ChangePassword : Window
+    public partial class ChangePasswordScreen : Window
     {
-        public ChangePassword()
+        public ChangePasswordScreen()
         {
             InitializeComponent();
         }
@@ -57,6 +58,13 @@ namespace View
                     this.Error.Content = "Password incorrect";
                     break;
                 }
+            }
+        }
+        private void Confirm_On_Enter_Key(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                Confirm_Button_Click(sender, new RoutedEventArgs());
             }
         }
     }

@@ -6,10 +6,12 @@ using Model.DbModels;
 using Model.EventArgs;
 using NAudio.Wave;
 using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Model.Enums;
 using View;
 using View.DataContexts;
 
@@ -52,6 +54,15 @@ namespace Soundify
         {
             AudioPlayer.Initialize();
             _instanceMainWindow = this;
+
+            if (!Directory.Exists(Path.GetTempPath() + "Soundify"))
+                Directory.CreateDirectory(Path.GetTempPath() + "Soundify");
+
+            foreach (PathDirectories path in Enum.GetValues(typeof(PathDirectories)))
+            {
+                if (!Directory.Exists(Path.GetTempPath() + "Soundify/" + path.ToString().ToLower()))
+                    Directory.CreateDirectory(Path.GetTempPath() + "Soundify/" + path.ToString().ToLower());
+            }
 
             InitializeComponent();
             SSHController.Instance.OpenSSHTunnel();

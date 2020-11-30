@@ -1,6 +1,12 @@
-﻿using System.Windows;
+﻿using System;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Windows;
+using System.Windows.Input;
 using Controller.DbControllers;
 using Model.Database.Contexts;
+using Model.DbModels;
 using Model.Enums;
 using Soundify;
 
@@ -14,6 +20,17 @@ namespace View
         public LoginScreen()
         {
             InitializeComponent();
+            if(File.Exists(Path.GetTempPath() + "Soundify/settings/loginInfo"))
+            {
+                string text = File.ReadAllText(Path.GetTempPath() + "Soundify/settings/loginInfo");
+                if (text != String.Empty)
+                {
+                    string[] split = text.Split(",");
+
+                    UsernameLogin.Text = split[1];
+                    PasswordLogin.Password = split[0];
+                }
+            }
         }
 
         private void Login_Button_Click(object sender, RoutedEventArgs e)
@@ -32,8 +49,17 @@ namespace View
                     main.Show();
                     main.Focus();
                     this.Hide();
-                    this.UsernameLogin.Text = "Email";
-                    this.PasswordLogin.Password = "Password";
+                    File.Create(Path.GetTempPath() + "Soundify/settings/loginInfo").Close();
+
+                    if (RememberData.IsChecked ?? false)
+                    {
+                        string path = Path.GetTempPath() + "Soundify/settings/loginInfo";
+                        string text = password + "," + emailOrUsername;
+                        File.WriteAllText(path, text);
+                    }
+
+                    this.UsernameLogin.Text = "";
+                    this.PasswordLogin.Password = "";
                     break;
                 }
                 case LoginResults.EmailNotFound:
@@ -46,20 +72,45 @@ namespace View
                     this.Error.Content = "Password incorrect";
                     break;
                 }
+                case LoginResults.UserNotActive:
+                {
+                    var token = Guid.NewGuid().ToString();
+                    var user = controller.GetUserFromEmailOrUsername(emailOrUsername);
+                    if (user != null)
+                    {
+                        var userEmail = user.Email;
+                        var emailVerificationScreen = new EmailVerificationScreen(token, userEmail);
+                        emailVerificationScreen.Error.Content = "User not active";
+                        emailVerificationScreen.Show();
+                        this.Hide();
+                    } 
+                    break;
+                }
+            }
+        }
+
+        private void Login_On_Enter_Key(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                Login_Button_Click(sender, new RoutedEventArgs());
             }
         }
 
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
             var signupScreen = new RegisterScreen();
-            this.Close();
+            this.Hide();
             signupScreen.Show();
             signupScreen.Focus();
         }
 
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)
         {
-
+            var forgotPasswordTokenSendScreen = new ForgotpasswordTokenSendScreen();
+            this.Hide();
+            forgotPasswordTokenSendScreen.Show();
+            forgotPasswordTokenSendScreen.Focus();
         }
     }
 }

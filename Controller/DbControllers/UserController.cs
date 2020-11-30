@@ -41,6 +41,9 @@ namespace Controller.DbControllers
             if (user.Password != passwordHash)
                 return LoginResults.PasswordIncorrect;
 
+            if (user.IsActive == false)
+                return LoginResults.UserNotActive;
+
             return LoginResults.Success;
         }
 
@@ -66,9 +69,22 @@ namespace Controller.DbControllers
                 return RegistrationResults.PasswordNotStrongEnough;
 
             user.Password = PasswordController.EncryptPassword(password);
+            user.RoleID = 2;
             // Insert user object into database
             CreateItem(user);
             return RegistrationResults.Succeeded;
+        }
+
+        public void MakeArtist(User user)
+        {
+            user.RoleID = 3;
+            UpdateItem(user);
+        }
+
+        public void RevokeArtist(User user)
+        {
+            user.RoleID = 2;
+            UpdateItem(user);
         }
     }
 }
