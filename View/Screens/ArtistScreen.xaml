@@ -32,10 +32,26 @@
                         </Style>
                     </Grid.Style>
                     <Button HorizontalContentAlignment="Center" Click="UploadSongButton_Click" Background="#FF3EBF65" Foreground="White" FontSize="22" Height="44" VerticalAlignment="Top" MaxWidth="250" Margin="0,65,0,0">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="/Screens/whiteUpload.png" Width="31" Height="32" Margin="10 0 10 0"/>
-                            <TextBlock Text="Upload song" VerticalAlignment="Center" Margin="0 0 10 0"/>
-                        </StackPanel>
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="/Screens/whiteUpload.png" Width="31" Height="32" Margin="10 0 10 0"/>
+                                            <TextBlock Text="Upload song" VerticalAlignment="Center" Margin="0 0 10 0"/>
+                                        </StackPanel>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ArtistHasSongPending}" Value="False">
+                                        <Setter Property="IsEnabled"  Value="True"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ArtistHasSongPending}" Value="True">
+                                        <Setter Property="IsEnabled"  Value="False"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
                     </Button>
                     <Label Content="{Binding StatusMessage}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="10,114,10,0" VerticalAlignment="Top" MinWidth="196" FontSize="22" Background="{x:Null}" Foreground="White"/>
                 </Grid>
@@ -64,8 +80,8 @@
                     <Label x:Name="Duration" Content="{Binding SelectedSong.Properties.Duration, Mode=OneWay, Converter={StaticResource DurationConverter}}" HorizontalAlignment="Left" Margin="125,163,0,0" VerticalAlignment="Top" Width="98" FontSize="18" Foreground="White"/>
 
                     <Label Content="Description" HorizontalAlignment="Left" Margin="267,10,0,0" VerticalAlignment="Top" Width="113" FontSize="18" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
-                    <TextBox x:Name="Decription" Margin="267,54,145,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}" MinWidth="165" Height="143"/>
-                    <Button Click="UploadSongImageButton_Click"  HorizontalAlignment="Right" Margin="440,18,10,0" VerticalAlignment="Top" Height="29" Width="119" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
+                    <TextBox x:Name="Description" Margin="267,54,145,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}" MinWidth="165" Height="143"/>
+                    <Button Click="UploadSongImageButton_Click" HorizontalAlignment="Right" Margin="440,18,10,0" VerticalAlignment="Top" Height="29" Width="119" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Screens/whiteUpload.png" Width="25" Height="25" RenderTransformOrigin="1.12,0.508"/>
                             <TextBlock Text="Song image" VerticalAlignment="Center" Margin="5 0 10 0" FontSize="14"/>
@@ -73,7 +89,7 @@
                     </Button>
                     <Image x:Name="Image" Source="{Binding SongImage}" HorizontalAlignment="Right" Height="100" Margin="0,67,22,0" VerticalAlignment="Top" Width="100"/>
                 </Grid>
-                <Button Content="Confirm upload" Grid.Column="1" HorizontalAlignment="Center" Margin="0,220,0,0" VerticalAlignment="Top" Height="34" Width="156" Background="#FFF78D0E" BorderBrush="{x:Null}" Foreground="White" FontSize="18" Click="ConfrimUpload_Click" Tag="{Binding ElementName=Title}" CommandParameter="{Binding ElementName=Datagrid}">
+                <Button Content="Confirm upload" Grid.Column="1" HorizontalAlignment="Center" Margin="0,220,0,0" VerticalAlignment="Top" Height="34" Width="156" Background="#FFF78D0E" BorderBrush="{x:Null}" Foreground="White" FontSize="18" Click="ConfirmUpload_Click" Tag="{Binding ElementName=Title}" CommandParameter="{Binding ElementName=Datagrid}">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Visibility" Value="Hidden"/>
@@ -90,7 +106,7 @@
                 <ListView x:Name="SongList" Margin="0,64,0,0" Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding UploadedSongs}" FontSize="16">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Titel" Width="200" DisplayMemberBinding="{Binding Song.Name}"/>
+                            <GridViewColumn Header="Title" Width="200" DisplayMemberBinding="{Binding Song.Name}"/>
                             <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Song.Artist}"/>
                             <GridViewColumn Header="Duration" Width="75" DisplayMemberBinding="{Binding Duration}"/>
                         </GridView>

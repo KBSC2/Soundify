@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,6 +12,7 @@ using Controller.DbControllers;
 using Microsoft.Win32;
 using Model.Database.Contexts;
 using Model.DbModels;
+using Model.MailTemplates;
 using View.DataContexts;
 
 namespace View.Screens
@@ -43,14 +45,12 @@ namespace View.Screens
 
             if (fileDialog.ShowDialog() != true) return;
 
-            var file = TagLib.File.Create(fileDialog.FileName);
-
             ArtistDataContext.Instance.SongImage = new BitmapImage(new Uri(fileDialog.FileName));
 
             ArtistDataContext.Instance.OnPropertyChanged("");
         }
 
-        private void ConfrimUpload_Click(object sender, RoutedEventArgs e)
+        private void ConfirmUpload_Click(object sender, RoutedEventArgs e)
         {
             var dataGrid = (Grid) ((Button) sender).CommandParameter;
             var titleTextBox = (TextBox) ((Button) sender).Tag;
@@ -61,18 +61,21 @@ namespace View.Screens
                 return;
             }
 
-            var imageSouce = ((BitmapImage)((Image)dataGrid.FindName("Image"))?.Source)?.UriSource;
+            var imageSource = ((BitmapImage)((Image)dataGrid.FindName("Image"))?.Source)?.UriSource;
 
-            FileTransfer.UploadFile(imageSouce?.LocalPath, "images/" + 
-                imageSouce?.LocalPath.Split("\\").Last());
+            if (imageSource != null) FileTransfer.UploadFile(imageSource?.LocalPath, "images/" + 
+                imageSource?.LocalPath.Split("\\").Last());
+
+            var artistName = ((Label)dataGrid.FindName("Artist"))?.Content.ToString();
+            var songName = ((TextBox)dataGrid.FindName("Title"))?.Text;
 
             new SongController(new DatabaseContext()).UploadSong(new Song {
-                Name = ((TextBox)dataGrid.FindName("Title"))?.Text, 
-                Artist = ((Label)dataGrid.FindName("Artist"))?.Content.ToString(), 
+                Name = songName, 
+                Artist = artistName, 
                 Description = ((TextBox)dataGrid.FindName("Description"))?.Text, 
                 Duration = TimeSpan.Parse(((Label)dataGrid.FindName("Duration"))?.Content.ToString() ?? string.Empty).TotalSeconds, 
                 Path = ArtistDataContext.Instance.SelectedSong.Name, 
-                PathToImage = imageSouce != null ? "images/" + imageSouce.LocalPath.Split("\\").Last() : "", 
+                PathToImage = imageSource != null ? "images/" + imageSource.LocalPath.Split("\\").Last() : "", 
                 ProducedBy = ((TextBox)dataGrid.FindName("Producer"))?.Text, 
                 WrittenBy = ((TextBox)dataGrid.FindName("Writer"))?.Text,
                 Status = "Awaiting Approval"
@@ -81,8 +84,13 @@ namespace View.Screens
             ArtistDataContext.Instance.SelectedSong = null;
             ArtistDataContext.Instance.IsSongSelected = false;
             ArtistDataContext.Instance.StatusMessage = "Awaiting Approval";
+            ArtistDataContext.Instance.ArtistHasSongPending = true;
 
             ArtistDataContext.Instance.OnPropertyChanged("");
+
+            var emailController = new EmailController<MailSongApprovalTemplate>();
+            var email = new MailSongApprovalTemplate(new MailAddress("info.soundify@gmail.com"), artistName, songName);
+            emailController.SendEmail(email, "info.soundify@gmail.com");
         }
     }
 }

@@ -24,7 +24,7 @@ namespace View.DataContexts
         public TagLib.File SelectedSong { get; set; }
         public BitmapImage SongImage { get; set; }
 
-        public string StatusMessage { get; set; } = "Waiting for song";
+        public string StatusMessage { get; set; }
 
         public bool IsSongSelected { get; set; }
 
@@ -32,9 +32,22 @@ namespace View.DataContexts
             .GetList().FirstOrDefault(a => a.UserID == DataContext.Instance.CurrentUser.ID)
             ?.ArtistName;
 
-        public List<SongInfo> UploadedSongs =>  SongInfo.ConvertSongListToSongInfo(new SongController(new DatabaseContext()).GetList()
+        public List<SongInfo> UploadedSongs => SongInfo.ConvertSongListToSongInfo(new SongController(new DatabaseContext()).GetList()
             .Where(s => s.Artist == new ArtistController(new DatabaseContext()).GetList()
                 .FirstOrDefault(a => a.UserID == DataContext.Instance.CurrentUser.ID)?.ArtistName).ToList());
+
+
+        public bool ArtistHasSongPending { get; set; } 
+
+        public ArtistDataContext()
+        {
+            ArtistHasSongPending = new SongController(new DatabaseContext())
+                .GetList().Where(s => s.Artist == ArtistName && s.Status == "Awaiting Approval").ToList().Count > 0;
+
+            StatusMessage = ArtistHasSongPending ? "Awaiting Approval" : "Waiting for song";
+
+            OnPropertyChanged("");
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
