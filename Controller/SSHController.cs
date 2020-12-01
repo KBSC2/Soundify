@@ -10,9 +10,8 @@ namespace Controller
 public class SSHController
     {
         // Set this to false, if using local Docker MSSQL database
-        private bool CreateSSHTunnel = false;
+        private bool CreateSSHTunnel = true;
         
-
         private Thread thread;
 
         private static SSHController instance;
