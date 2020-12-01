@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Model.DbModels;
+using Model.Migrations;
 
 namespace Model.Database.Contexts
 {
@@ -11,15 +12,16 @@ namespace Model.Database.Contexts
         public override DbSet<PlaylistSong> PlaylistSongs { get; set; }
         public override DbSet<User> Users { get; set;  }
         public override DbSet<Role> Roles { get; set; }
+        public override DbSet<Request> Requests { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
                 // Fetch database settings from the App.Config
-                Configuration configuration = ConfigurationManager.OpenExeConfiguration(@"View.dll");
-                var connectionString = configuration.ConnectionStrings.ConnectionStrings["MSSQL"].ConnectionString;
-                optionsBuilder.UseSqlServer(connectionString);
+                //Configuration configuration = ConfigurationManager.OpenExeConfiguration(@"View.dll");
+                //var connectionString = configuration.ConnectionStrings.ConnectionStrings["MSSQL"].ConnectionString;
+                optionsBuilder.UseSqlServer("Data Source = 127.0.0.1; Initial Catalog = Soundify; User ID = SA; Password = Sterk_W@chtw00rd2;");
             }
         }
 

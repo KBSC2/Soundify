@@ -16,6 +16,7 @@ namespace Model.Database.Contexts
         public override DbSet<PlaylistSong> PlaylistSongs { get; set; }
         public override DbSet<User> Users{ get; set; }
         public override DbSet<Role> Roles { get; set; }
+        public override DbSet<Request> Requests { get; set; }
 
         /**
          * Create a database mock, to use for all unit tests
