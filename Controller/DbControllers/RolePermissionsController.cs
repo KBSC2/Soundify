@@ -45,6 +45,8 @@ namespace Controller.DbControllers
 
         public RolePermissions GetPermission(User user, Permissions permission)
         {
+            if (user == null)
+                return null;
             var perms = this.GetPermissionsFromRoles(new[] { 1, user.RoleID })
                 .Where(x => x.PermissionID == (int)permission);
             return perms.FirstOrDefault();

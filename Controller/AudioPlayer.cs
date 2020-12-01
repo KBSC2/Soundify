@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Controller.DbControllers;
 using Model;
+using Model.Annotations;
 using Model.DbModels;
+using Model.Enums;
 using NAudio.Wave;
 
 namespace Controller
@@ -28,6 +30,7 @@ namespace Controller
             MaxVolume = 0.2;
         }
 
+        [HasPermission(Permission = Permissions.SongNext)]
         public static void Next()
         {
             if (SongQueue.Count == 0) return;
