@@ -20,7 +20,7 @@ namespace Tests.Playlists
         public void SetUp()
         {
             _context = new MockDatabaseContext();
-            _playlistController = new PlaylistController(_context);
+            _playlistController = PlaylistController.Create(_context);
             _testPlaylist1 = new Playlist()
                 {Name = "TestPlaylist1", ActivePlaylist = true, CreationDate = DateTime.Now, UserID = 1};
             _testPlaylist2 = new Playlist()

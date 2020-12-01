@@ -9,7 +9,7 @@ namespace Tests.Users
     [TestFixture]
     public class Controller_UserController_UserLogin
     {
-        private UserController Controller { get; } = new UserController(new MockDatabaseContext());
+        private UserController Controller { get; } = UserController.Create(new MockDatabaseContext());
         private User User { get; set; }
         private User User2 { get; set; }
 

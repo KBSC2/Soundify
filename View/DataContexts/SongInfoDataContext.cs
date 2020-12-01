@@ -1,8 +1,5 @@
 ﻿using Model.DbModels;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using Controller;
 
 namespace View.DataContexts

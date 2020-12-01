@@ -1,11 +1,5 @@
 ﻿using Controller;
-using Model.DbModels;
 using Soundify;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -27,7 +21,7 @@ namespace View.Screens
 
             var index = AudioPlayer.SongQueue.IndexOf(songInfo.Song);
 
-            AudioPlayer.PlayPlaylist(MainWindow.CurrentPlayList, index-1);
+            AudioPlayer.Instance.PlayPlaylist(MainWindow.CurrentPlayList, index-1);
             QueueDataContext.Instance.OnPropertyChanged();
         }
     }

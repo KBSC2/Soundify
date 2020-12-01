@@ -11,6 +11,8 @@ namespace Model.Database.Contexts
         public override DbSet<PlaylistSong> PlaylistSongs { get; set; }
         public override DbSet<User> Users { get; set;  }
         public override DbSet<Role> Roles { get; set; }
+        public override DbSet<Permission> Permissions { get; set; }
+        public override DbSet<RolePermissions> RolePermissions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -26,6 +28,8 @@ namespace Model.Database.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PlaylistSong>().HasKey(ps => new {ps.PlaylistID, ps.SongID});
+
+            modelBuilder.Entity<RolePermissions>().HasKey(rp => new { rp.RoleID, rp.PermissionID});
 
             modelBuilder.Entity<Playlist>()
                 .Property(p => p.ActivePlaylist)
