@@ -13,7 +13,7 @@ namespace Controller.DbControllers
     {
         public static PermissionController Create(IDatabaseContext context)
         {
-            return ProxyController.AddToProxy<PermissionController>(new object[] { context });
+            return ProxyController.AddToProxy<PermissionController>(new object[] { context }, context);
         }
 
         protected PermissionController(IDatabaseContext context) : base(context, context.Permissions)

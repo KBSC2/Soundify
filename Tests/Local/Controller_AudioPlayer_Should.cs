@@ -24,8 +24,8 @@ namespace Tests.Local
         {
             SSHController.Instance.OpenSSHTunnel();
 
-            AudioPlayer.Initialize();
             Context = new MockDatabaseContext();
+            AudioPlayer.Create(Context);
             SongController = SongController.Create(Context);
             PlaylistSongController = PlaylistSongController.Create(Context);
             PlaylistController = PlaylistController.Create(Context);
@@ -43,7 +43,7 @@ namespace Tests.Local
         [Test, Category("Local")]
         public void AudioPlayer_AddSong_Queue_Contains()
         {
-            AudioPlayer.AddSong(Song);
+            AudioPlayer.Instance.AddSong(Song);
             Assert.IsTrue(AudioPlayer.SongQueue.Contains(Song));
         }
 
@@ -56,7 +56,7 @@ namespace Tests.Local
             PlaylistSongController.AddSongToPlaylist(Song2.ID, Playlist.ID);
 
             var playlistsongs = PlaylistSongController.Create(Context).GetSongsFromPlaylist(Playlist.ID);
-            AudioPlayer.PlayPlaylist(playlistsongs);
+            AudioPlayer.Instance.PlayPlaylist(playlistsongs);
 
             bool areEqual = true;
             for (int i = 0; i < playlistsongs.Count; i++)

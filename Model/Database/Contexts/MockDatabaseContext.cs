@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Model.DbModels;
 using Moq;
+using Model.Enums;
 
 namespace Model.Database.Contexts
 {
@@ -32,11 +33,23 @@ namespace Model.Database.Contexts
             PlaylistSongs = GetQueryableMockDbSet(new List<PlaylistSong>());
             Users = GetQueryableMockDbSet(new List<User>
             {
-                new User() {ID = 1, Email = "gebruiker1@gmail.com", Password = "$^*^$@", Username = "testaccount"}
+                new User() {ID = 1, Email = "gebruiker1@gmail.com", Password = "$^*^$@", Username = "testaccount", RoleID = 1, IsActive = true}
             });
-            Roles = GetQueryableMockDbSet(new List<Role>());
-            Permissions = GetQueryableMockDbSet(new List<Permission>());
-            RolePermissions = GetQueryableMockDbSet(new List<RolePermissions>());
+            Roles = GetQueryableMockDbSet(new List<Role>()
+            {
+                new Role() {ID = 1, Designation = "User"},
+                new Role() {ID = 3, Designation = "Admin"}
+            });
+            Permissions = GetQueryableMockDbSet(new List<Permission>()
+            {
+                new Permission() {ID = 11, Name = Enums.Permissions.PlaylistCreate.ToString()},
+                new Permission() {ID = 12, Name = Enums.Permissions.PlaylistLimit.ToString(), HasValue = true}
+            });
+            RolePermissions = GetQueryableMockDbSet(new List<RolePermissions>()
+            {
+                new RolePermissions() {RoleID = 1, PermissionID = 11},
+                new RolePermissions() {RoleID = 1, PermissionID = 12, Value = 100}
+            });
         }
 
         /**

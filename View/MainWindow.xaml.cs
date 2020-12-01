@@ -55,7 +55,7 @@ namespace Soundify
 
         public MainWindow()
         {
-            AudioPlayer.Initialize();
+            AudioPlayer.Create(new DatabaseContext());
             _instanceMainWindow = this;
 
             if (!Directory.Exists(Path.GetTempPath() + "Soundify"))
@@ -87,7 +87,7 @@ namespace Soundify
         private void Play_Button_Click(object sender, RoutedEventArgs e)
         {
             if (AudioPlayer.CurrentSongFile == null)
-                AudioPlayer.Next();
+                AudioPlayer.Instance.Next();
 
             if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
             {
@@ -144,13 +144,13 @@ namespace Soundify
 
         private void Prev_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer.Prev();
+            AudioPlayer.Instance.Prev();
             QueueDataContext.Instance.OnPropertyChanged();
         }
 
         private void Next_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer.Next();
+            AudioPlayer.Instance.Next();
             QueueDataContext.Instance.OnPropertyChanged();
         }
 

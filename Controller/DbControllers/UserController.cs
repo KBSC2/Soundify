@@ -15,7 +15,7 @@ namespace Controller.DbControllers
 
         public static UserController Create(IDatabaseContext context)
         {
-            return ProxyController.AddToProxy<UserController>(new object[] {context});
+            return ProxyController.AddToProxy<UserController>(new object[] {context}, context);
         }
 
         protected UserController(IDatabaseContext context) : base(context, context.Users)

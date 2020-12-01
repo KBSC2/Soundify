@@ -43,7 +43,7 @@ namespace View.Screens
 
         private void Play_Playlist_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer.PlayPlaylist(MainWindow.CurrentPlayList);
+            AudioPlayer.Instance.PlayPlaylist(MainWindow.CurrentPlayList);
         }
 
         private void SongRow_Click(object sender, MouseButtonEventArgs e)
@@ -52,7 +52,7 @@ namespace View.Screens
             var listViewItem = (ListViewItem)sender;
             var songInfo = (SongInfo)listViewItem.Content;
 
-            AudioPlayer.PlayPlaylist(MainWindow.CurrentPlayList, songInfo.Index-1);
+            AudioPlayer.Instance.PlayPlaylist(MainWindow.CurrentPlayList, songInfo.Index-1);
         }
 
         private void RemovePlaylistButton_Click(object sender, RoutedEventArgs e)

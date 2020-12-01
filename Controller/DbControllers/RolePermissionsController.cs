@@ -20,7 +20,7 @@ namespace Controller.DbControllers
 
         public static RolePermissionsController Create(IDatabaseContext context)
         {
-            return ProxyController.AddToProxy<RolePermissionsController>(new object[] { context });
+            return ProxyController.AddToProxy<RolePermissionsController>(new object[] { context }, context);
         }
 
         protected RolePermissionsController(IDatabaseContext context)

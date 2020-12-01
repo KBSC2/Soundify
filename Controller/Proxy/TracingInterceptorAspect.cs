@@ -13,12 +13,18 @@ namespace Controller.Proxy
     [Serializable]
     public class TracingInterceptorAspect : IInterceptor
     {
+        private IDatabaseContext context;
+        public TracingInterceptorAspect(IDatabaseContext context)
+        {
+            this.context = context;
+        }
+
         public void Intercept(IInvocation invocation)
         {
             var x = invocation.Method.GetCustomAttributes(typeof(HasPermission), true).OfType<HasPermission>()
                 .FirstOrDefault();
 
-            var controller = UserController.Create(new DatabaseContext());
+            var controller = UserController.Create(context);
 
             if (x == null || UserController.CurrentUser == null)
             {

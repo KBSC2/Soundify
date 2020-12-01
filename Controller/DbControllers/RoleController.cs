@@ -12,7 +12,7 @@ namespace Controller.DbControllers
     {
         public static RoleController Create(IDatabaseContext context)
         {
-            return ProxyController.AddToProxy<RoleController>(new object[] { context });
+            return ProxyController.AddToProxy<RoleController>(new object[] { context }, context);
         }
 
         protected RoleController(IDatabaseContext context) : base(context, context.Roles)

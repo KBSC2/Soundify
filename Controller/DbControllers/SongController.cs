@@ -12,7 +12,7 @@ namespace Controller.DbControllers
 
         public static SongController Create(IDatabaseContext context)
         {
-            return ProxyController.AddToProxy<SongController>(new object[] { context });
+            return ProxyController.AddToProxy<SongController>(new object[] { context }, context);
         }
 
         protected SongController(IDatabaseContext context) : base(context, context.Songs)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Castle.DynamicProxy;
 using Controller.DbControllers;
+using Model.Database.Contexts;
 
 namespace Controller.Proxy
 {
@@ -10,13 +11,13 @@ namespace Controller.Proxy
     {
         public static ProxyGenerator generator = new ProxyGenerator();
 
-        public static T AddToProxy<T>(object[] parameters) where T : class
+        public static T AddToProxy<T>(object[] parameters, IDatabaseContext context) where T : class
         {
-            return (T) generator.CreateClassProxy(typeof(T), parameters, new TracingInterceptorAspect());
+            return (T) generator.CreateClassProxy(typeof(T), parameters, new TracingInterceptorAspect(context));
         }
-        public static T AddToProxy<T>() where T : class
+        public static T AddToProxy<T>(IDatabaseContext context) where T : class
         {
-            return (T)generator.CreateClassProxy<T>(new TracingInterceptorAspect());
+            return (T)generator.CreateClassProxy<T>(new TracingInterceptorAspect(context));
         }
 
     }

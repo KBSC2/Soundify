@@ -18,7 +18,7 @@ namespace Controller.DbControllers
 
         public static PlaylistSongController Create(IDatabaseContext context)
         {
-            return ProxyController.AddToProxy<PlaylistSongController>(new object[] { context });
+            return ProxyController.AddToProxy<PlaylistSongController>(new object[] { context }, context);
         }
 
         protected PlaylistSongController(IDatabaseContext context)
