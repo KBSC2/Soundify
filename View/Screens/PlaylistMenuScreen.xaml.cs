@@ -21,13 +21,13 @@ namespace View.Screens
 
         private void CreatePlaylist_Click(object sender, RoutedEventArgs e)
         {
-            var playlistController = new PlaylistController(new DatabaseContext());
+            var playlistController = PlaylistController.Create(new DatabaseContext());
 
             var playlist = new Playlist
             {
-                Name = $"Playlist {playlistController.GetActivePlaylists(DataContext.Instance.CurrentUser.ID).Count + 1}",
+                Name = $"Playlist {playlistController.GetActivePlaylists(UserController.CurrentUser.ID).Count + 1}",
                 CreationDate = DateTime.Now,
-                UserID = DataContext.Instance.CurrentUser.ID
+                UserID = UserController.CurrentUser.ID
             };
 
             playlistController.CreateItem(playlist);

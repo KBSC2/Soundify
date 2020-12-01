@@ -3,7 +3,6 @@ using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using NUnit.Framework;
-using View.DataContexts;
 
 namespace Tests.SearchTests
 {
@@ -21,12 +20,12 @@ namespace Tests.SearchTests
         public void SetUp()
         {
             context = new MockDatabaseContext();
-            playlistController = new PlaylistController(context);
-            DataContext.Instance.CurrentUser = new UserController(context).GetItem(1);
-            playlistName = new Playlist() {Name = "PlaylistNameTest", UserID = DataContext.Instance.CurrentUser.ID, ActivePlaylist = true};
+            playlistController = PlaylistController.Create(context);
+            UserController.CurrentUser = UserController.Create(context).GetItem(1);
+            playlistName = new Playlist() {ID = 1, Name = "PlaylistNameTest", UserID = UserController.CurrentUser.ID, ActivePlaylist = true};
             playlistDescription = new Playlist()
-                {Name = "PlaylistDescriptionTest", Description = "I really wanna test this", UserID = DataContext.Instance.CurrentUser.ID, ActivePlaylist = true };
-            playlistGenre = new Playlist() {Name = "PlaylistGenreTest", Genre = "Metal", UserID = DataContext.Instance.CurrentUser.ID, ActivePlaylist = true };
+                {ID = 2, Name = "PlaylistDescriptionTest", Description = "I really wanna test this", UserID = UserController.CurrentUser.ID, ActivePlaylist = true };
+            playlistGenre = new Playlist() {ID = 3, Name = "PlaylistGenreTest", Genre = "Metal", UserID = UserController.CurrentUser.ID, ActivePlaylist = true };
             playlistController.CreateItem(playlistName);
             playlistController.CreateItem(playlistDescription);
             playlistController.CreateItem(playlistGenre);
@@ -37,7 +36,7 @@ namespace Tests.SearchTests
         public void PlaylistController_SearchOnFullName()
         {
             var confirm = false;
-            playlistsResults = playlistController.SearchPlayListOnString(new List<string>() {"PlaylistNameTest"}, DataContext.Instance.CurrentUser.ID);
+            playlistsResults = playlistController.SearchPlayListOnString(new List<string>() {"PlaylistNameTest"}, UserController.CurrentUser.ID);
             foreach (var p in playlistsResults) 
             {
                 if (p.ID == playlistName.ID)
@@ -51,7 +50,7 @@ namespace Tests.SearchTests
         public void PlaylistController_SearchOnPartialName()
         {
             var confirm = false;
-            playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "stNa" }, DataContext.Instance.CurrentUser.ID);
+            playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "stNa" }, UserController.CurrentUser.ID);
             foreach (var p in playlistsResults)
             {
                 if (p.ID == playlistName.ID)
@@ -65,7 +64,7 @@ namespace Tests.SearchTests
         public void PlaylistController_SearchOnFullDescription()
         {
             var confirm = false;
-            playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "I really wanna test this" }, DataContext.Instance.CurrentUser.ID);
+            playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "I really wanna test this" }, UserController.CurrentUser.ID);
             foreach (var p in playlistsResults)
             {
                 if (p.ID == playlistDescription.ID)
@@ -80,7 +79,7 @@ namespace Tests.SearchTests
         public void PlaylistController_SearchOnPartialDescription()
         {
             var confirm = false;
-            playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "wanna test" }, DataContext.Instance.CurrentUser.ID);
+            playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "wanna test" }, UserController.CurrentUser.ID);
             foreach (var p in playlistsResults)
             {
                 if (p.ID == playlistDescription.ID)
@@ -96,7 +95,7 @@ namespace Tests.SearchTests
         public void PlaylistController_SearchOnFullGenre()
         {
             var confirm = false;
-            playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "Metal" }, DataContext.Instance.CurrentUser.ID);
+            playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "Metal" }, UserController.CurrentUser.ID);
             foreach (var p in playlistsResults)
             {
                 if (p.ID == playlistGenre.ID)
@@ -111,7 +110,7 @@ namespace Tests.SearchTests
         public void PlaylistController_SearchOnPartialGenre()
         {
             var confirm = false;
-            playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "etal" }, DataContext.Instance.CurrentUser.ID);
+            playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "etal" }, UserController.CurrentUser.ID);
             foreach (var p in playlistsResults)
             {
                 if (p.ID == playlistGenre.ID)
@@ -128,7 +127,7 @@ namespace Tests.SearchTests
             var confirm1 = false;
             var confirm2 = false;
             var confirm3 = false;
-            playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "PlaylistNameTest", "I really wanna test this","Metal" }, DataContext.Instance.CurrentUser.ID);
+            playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "PlaylistNameTest", "I really wanna test this","Metal" }, UserController.CurrentUser.ID);
             foreach (var p in playlistsResults)
             {
                 if (p.ID == playlistName.ID)
@@ -155,7 +154,7 @@ namespace Tests.SearchTests
             var confirm1 = false;
             var confirm2 = false;
             var confirm3 = false;
-            playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "meTest", "test this", "eta" }, DataContext.Instance.CurrentUser.ID);
+            playlistsResults = playlistController.SearchPlayListOnString(new List<string>() { "meTest", "test this", "eta" }, UserController.CurrentUser.ID);
             foreach (var p in playlistsResults)
             {
                 if (p.ID == playlistName.ID)

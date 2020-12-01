@@ -1,14 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Net.Mail;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
-using Model.DbModels;
 using Model.Enums;
 using Model.MailTemplates;
 using Soundify;
@@ -41,13 +38,13 @@ namespace View
             var emailOrUsername = this.UsernameLogin.Text;
             var password = this.PasswordLogin.Password;
 
-            var controller = new UserController(new DatabaseContext());
+            var controller = UserController.Create(new DatabaseContext());
             var result = controller.UserLogin(emailOrUsername, password);
             switch (result)
             {
                 case LoginResults.Success:
                 {
-                    DataContexts.DataContext.Instance.CurrentUser = controller.GetUserFromEmailOrUsername(emailOrUsername);
+                    UserController.CurrentUser = controller.GetUserFromEmailOrUsername(emailOrUsername);
                     var main = new MainWindow();
                     main.Show();
                     main.Focus();

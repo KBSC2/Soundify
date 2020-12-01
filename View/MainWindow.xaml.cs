@@ -52,7 +52,7 @@ namespace Soundify
 
         public MainWindow()
         {
-            AudioPlayer.Initialize();
+            AudioPlayer.Create(new DatabaseContext());
             _instanceMainWindow = this;
 
             if (!Directory.Exists(Path.GetTempPath() + "Soundify"))
@@ -68,14 +68,13 @@ namespace Soundify
             SSHController.Instance.OpenSSHTunnel();
 
             Context = new DatabaseContext();
-            new PlaylistController(Context).DeletePlaylistOnDateStamp();
+            PlaylistController.Create(Context).DeletePlaylistOnDateStamp();
 
             SetScreen(ScreenNames.HomeScreen);
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
 
             FileCache.Instance.GetFile("images/gangnamstyle.png");
-
-            if (View.DataContexts.DataContext.Instance.CurrentUser == null)
+            if (UserController.CurrentUser == null)
             {
                 InstanceLoginScreen.Show();
                 InstanceMainWindow.Hide();
@@ -85,7 +84,7 @@ namespace Soundify
         private void Play_Button_Click(object sender, RoutedEventArgs e)
         {
             if (AudioPlayer.CurrentSongFile == null)
-                AudioPlayer.Next();
+                AudioPlayer.Instance.Next();
 
             if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
             {
@@ -112,7 +111,7 @@ namespace Soundify
         {
             if (screenName == ScreenNames.Logout)
             {
-                View.DataContexts.DataContext.Instance.CurrentUser = null;
+                UserController.CurrentUser = null;
                 var login = new LoginScreen();
                 login.Show();
                 login.Focus();
@@ -142,13 +141,13 @@ namespace Soundify
 
         private void Prev_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer.Prev();
+            AudioPlayer.Instance.Prev();
             QueueDataContext.Instance.OnPropertyChanged();
         }
 
         private void Next_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer.Next();
+            AudioPlayer.Instance.Next();
             QueueDataContext.Instance.OnPropertyChanged();
         }
 

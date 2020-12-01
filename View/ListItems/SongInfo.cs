@@ -30,7 +30,7 @@ namespace View
 
         public static List<SongInfo> ConvertSongListToSongInfo(Playlist playlist, List<PlaylistSong> songs)
         {
-            var playlistSongController = new PlaylistSongController(new DatabaseContext());
+            var playlistSongController = PlaylistSongController.Create(new DatabaseContext());
 
             return songs.Select(song => new SongInfo(song.Song, playlistSongController.GetPlaylistSong(playlist.ID, song.SongID)))
                 .ToList();

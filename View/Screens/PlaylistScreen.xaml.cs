@@ -9,7 +9,6 @@ using Model;
 using Model.EventArgs;
 using Soundify;
 using System;
-using System.Windows.Media;
 
 namespace View.Screens
 {
@@ -36,14 +35,14 @@ namespace View.Screens
         {
             var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
             var playlist = MainWindow.CurrentPlayList;
-            new PlaylistSongController(new DatabaseContext()).RemoveFromPlaylist(song.ID, playlist.ID);
+            PlaylistSongController.Create(new DatabaseContext()).RemoveFromPlaylist(song.ID, playlist.ID);
 
             PlaylistDataContext.Instance.OnPropertyChanged("");
         }
 
         private void Play_Playlist_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer.PlayPlaylist(MainWindow.CurrentPlayList);
+            AudioPlayer.Instance.PlayPlaylist(MainWindow.CurrentPlayList);
         }
 
         private void SongRow_Click(object sender, MouseButtonEventArgs e)
@@ -52,14 +51,14 @@ namespace View.Screens
             var listViewItem = (ListViewItem)sender;
             var songInfo = (SongInfo)listViewItem.Content;
 
-            AudioPlayer.PlayPlaylist(MainWindow.CurrentPlayList, songInfo.Index-1);
+            AudioPlayer.Instance.PlayPlaylist(MainWindow.CurrentPlayList, songInfo.Index-1);
         }
 
         private void RemovePlaylistButton_Click(object sender, RoutedEventArgs e)
         {
             var playlistID = (int)((Button)sender).Tag;
 
-            var playlistController = new PlaylistController(new DatabaseContext());
+            var playlistController = PlaylistController.Create(new DatabaseContext());
             var playlistName = playlistController.GetItem(playlistID).Name;
 
             var removeConfirm = MessageBox.Show($"Are you sure you want to delete {playlistName}?", $"Remove {playlistName.ToString()}", MessageBoxButton.YesNoCancel);
@@ -99,7 +98,7 @@ namespace View.Screens
 
         public void SwapSongs(int indexOne, int indexTwo)
         {
-            var playlistSongController = new PlaylistSongController(new DatabaseContext());
+            var playlistSongController = PlaylistSongController.Create(new DatabaseContext());
             int playlistID = MainWindow.CurrentPlayList.ID;
             var songOne = playlistSongController.GetPlaylistSongFromIndex(playlistID, indexOne);
             var songTwo = playlistSongController.GetPlaylistSongFromIndex(playlistID, indexTwo);
