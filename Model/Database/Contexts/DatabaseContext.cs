@@ -6,7 +6,6 @@ namespace Model.Database.Contexts
 {
     public class DatabaseContext : IDatabaseContext
     {
-        // @Deprecated, will be removed
         public override DbSet<Song> Songs { get; set; }
         public override DbSet<Playlist> Playlists { get; set; }
         public override DbSet<PlaylistSong> PlaylistSongs { get; set; }
@@ -34,7 +33,6 @@ namespace Model.Database.Contexts
                 .HasDefaultValue(1);
 
             base.OnModelCreating(modelBuilder);
-
         }
     }
 }

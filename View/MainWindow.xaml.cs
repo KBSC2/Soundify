@@ -47,8 +47,8 @@ namespace Soundify
             }
         }
 
-        public static MainWindow _instanceMainWindow;
-        public static LoginScreen _instanceLoginScreen;
+        private static MainWindow _instanceMainWindow;
+        private static LoginScreen _instanceLoginScreen;
 
         public MainWindow()
         {
@@ -73,6 +73,8 @@ namespace Soundify
             SetScreen(ScreenNames.HomeScreen);
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
 
+            FileCache.Instance.GetFile("images/gangnamstyle.png");
+
             if (View.DataContexts.DataContext.Instance.CurrentUser == null)
             {
                 InstanceLoginScreen.Show();
@@ -82,7 +84,7 @@ namespace Soundify
 
         private void Play_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (AudioPlayer.CurrentSong == null)
+            if (AudioPlayer.CurrentSongFile == null)
                 AudioPlayer.Next();
 
             if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
@@ -103,7 +105,7 @@ namespace Soundify
         private void Duration_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Slider slider = sender as Slider;
-            AudioPlayer.CurrentSong.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSong.CurrentTimeSong));
+            AudioPlayer.CurrentSongFile.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSongFile.CurrentTimeSong));
         }
 
         public void SetScreen(ScreenNames screenName)
@@ -141,21 +143,24 @@ namespace Soundify
         private void Prev_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Prev();
+            QueueDataContext.Instance.OnPropertyChanged();
         }
 
         private void Next_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Next();
+            QueueDataContext.Instance.OnPropertyChanged();
         }
 
         private void Loop_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer.Loop();
+            AudioPlayer.Looping = !AudioPlayer.Looping;
+            QueueDataContext.Instance.OnPropertyChanged();
         }
 
         private void Shuffle_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer.Shuffle();
+            QueueDataContext.Instance.OnPropertyChanged();
         }
 
         public void SetSearchTerms(object sender, KeyEventArgs e)

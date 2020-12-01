@@ -10,9 +10,9 @@ namespace View
     /// <summary>
     /// Interaction logic for ChangePassword.xaml
     /// </summary>
-    public partial class ChangePassword : Window
+    public partial class ChangePasswordScreen : Window
     {
-        public ChangePassword()
+        public ChangePasswordScreen()
         {
             InitializeComponent();
         }
