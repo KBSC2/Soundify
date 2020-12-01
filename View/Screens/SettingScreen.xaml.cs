@@ -3,7 +3,6 @@ using System.Windows.Controls;
 using Controller;
 using Controller.DbControllers;
 using Soundify;
-using View.DataContexts;
 
 namespace View.Screens
 {

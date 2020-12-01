@@ -12,9 +12,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Model.Enums;
-using System.Windows.Threading;
-using Castle.DynamicProxy;
-using Controller.Proxy;
 using View;
 using View.DataContexts;
 

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Controller.Proxy;
+﻿using Controller.Proxy;
 using Model.Database.Contexts;
 using Model.DbModels;
-using Model.Enums;
 
 namespace Controller.DbControllers
 {

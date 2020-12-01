@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Controller.Proxy;
 using Microsoft.EntityFrameworkCore;
 using Model.Database.Contexts;
@@ -32,6 +30,13 @@ namespace Controller.DbControllers
             PermissionController = PermissionController.Create(Context);
         }
 
+        /**
+         * Get all permissions assigned to the role id's
+         *
+         * @param roleIDs list of role id's
+         *
+         * Return a list of all permissions
+         */
         public List<RolePermissions> GetPermissionsFromRoles(int[] roleIDs)
         {
             var result = Set.Where(x => roleIDs.Contains(x.RoleID)).ToList();
@@ -43,6 +48,14 @@ namespace Controller.DbControllers
             return result;
         }
 
+        /**
+         * Get the role permissions for a user, by finding a permission from the enum
+         *
+         * @param user The user to get the permission for
+         * @param permission The permission to fetch
+         *
+         * @return RolePermissions Get a rolePermission object, for the user
+         */
         public RolePermissions GetPermission(User user, Permissions permission)
         {
             if (user == null)
@@ -52,6 +65,14 @@ namespace Controller.DbControllers
             return perms.FirstOrDefault();
         }
 
+        /**
+         * Get the role permission value for a permission, which has a limit value
+         *
+         * @param user The user to get the permission for
+         * @param permission The permission to fetch
+         *
+         * @return count of what the max value for the permission should be for the user
+         */
         public int GetPermissionValueCount(User user, Permissions permission)
         {
             return this.GetPermissionsFromRoles(new[] {1, user.RoleID})

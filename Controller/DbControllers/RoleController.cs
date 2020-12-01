@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Controller.Proxy;
-using Microsoft.EntityFrameworkCore;
+﻿using Controller.Proxy;
 using Model.Database.Contexts;
 using Model.DbModels;
 

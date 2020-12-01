@@ -2,7 +2,6 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using Castle.DynamicProxy;
 using Controller.DbControllers;
 using Model.Annotations;
@@ -19,6 +18,13 @@ namespace Controller.Proxy
             this.context = context;
         }
 
+        /**
+         * Every time a method within a routed class gets called, it goes through this fuction.
+         * invocation.Proceed() is what calles the actual method.
+         *
+         * If the function has an HasPermission annotation, check for permissions.
+         * If not allowed display the Not Allowed popup
+         */
         public void Intercept(IInvocation invocation)
         {
             var x = invocation.Method.GetCustomAttributes(typeof(HasPermission), true).OfType<HasPermission>()
@@ -32,7 +38,7 @@ namespace Controller.Proxy
                 return;
             }
 
-            bool allowed = x.HasMaxValue
+            var allowed = x.HasMaxValue
                 ? controller.HasPermission(UserController.CurrentUser, x.Permission, x.MaxValue)
                 : controller.HasPermission(UserController.CurrentUser, x.Permission);
 
@@ -42,7 +48,7 @@ namespace Controller.Proxy
             }
             else
             {
-                // Open not allowed thingy
+                // Open not allowed thingy : Ben
                 Debug.WriteLine("NEE, MAG NIET");
             }
         }

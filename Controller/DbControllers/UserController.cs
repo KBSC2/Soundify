@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Controller.Proxy;
-using Model.Annotations;
 using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
@@ -86,6 +84,7 @@ namespace Controller.DbControllers
             return RegistrationResults.Succeeded;
         }
 
+        // Can't this be a little bit more generic. Like update role or something??
         public void MakeArtist(User user)
         {
             user.RoleID = 3;
@@ -103,6 +102,7 @@ namespace Controller.DbControllers
          *
          * @param user The user database object to insert
          * @param permission The permission to check
+         * @param maxValue The permission to check for the maximum allowed value
          *
          * @return user has permission
          */
@@ -123,6 +123,14 @@ namespace Controller.DbControllers
             return max > maxValues[maxValue];
         }
 
+        /**
+         * Check if the user has a permission
+         *
+         * @param user The user database object to insert
+         * @param permission The permission to check
+         *
+         * @return user has permission
+         */
         public bool HasPermission(User user, Permissions permission)
         {
             var controller = RolePermissionsController.Create(Context);

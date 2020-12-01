@@ -3,7 +3,6 @@ using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using NUnit.Framework;
-using View.DataContexts;
 
 namespace Tests.SearchTests
 {

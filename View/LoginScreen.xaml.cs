@@ -1,14 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Net.Mail;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
-using Model.DbModels;
 using Model.Enums;
 using Model.MailTemplates;
 using Soundify;

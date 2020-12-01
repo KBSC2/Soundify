@@ -1,7 +1,5 @@
-﻿using System;
-using System.Net.Mail;
+﻿using System.Net.Mail;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using Controller;
 using Controller.DbControllers;

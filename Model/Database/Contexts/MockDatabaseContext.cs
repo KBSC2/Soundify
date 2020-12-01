@@ -3,7 +3,6 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Model.DbModels;
 using Moq;
-using Model.Enums;
 
 namespace Model.Database.Contexts
 {

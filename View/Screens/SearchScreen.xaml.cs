@@ -4,7 +4,6 @@ using System.Windows.Input;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
-using View.DataContexts;
 
 namespace View.Screens
 {

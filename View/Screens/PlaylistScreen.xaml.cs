@@ -9,7 +9,6 @@ using Model;
 using Model.EventArgs;
 using Soundify;
 using System;
-using System.Windows.Media;
 
 namespace View.Screens
 {
