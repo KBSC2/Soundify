@@ -23,10 +23,10 @@ namespace Tests.SearchTests
             context = new MockDatabaseContext();
             playlistController = PlaylistController.Create(context);
             UserController.CurrentUser = UserController.Create(context).GetItem(1);
-            playlistName = new Playlist() {Name = "PlaylistNameTest", UserID = UserController.CurrentUser.ID, ActivePlaylist = true};
+            playlistName = new Playlist() {ID = 1, Name = "PlaylistNameTest", UserID = UserController.CurrentUser.ID, ActivePlaylist = true};
             playlistDescription = new Playlist()
-                {Name = "PlaylistDescriptionTest", Description = "I really wanna test this", UserID = UserController.CurrentUser.ID, ActivePlaylist = true };
-            playlistGenre = new Playlist() {Name = "PlaylistGenreTest", Genre = "Metal", UserID = UserController.CurrentUser.ID, ActivePlaylist = true };
+                {ID = 2, Name = "PlaylistDescriptionTest", Description = "I really wanna test this", UserID = UserController.CurrentUser.ID, ActivePlaylist = true };
+            playlistGenre = new Playlist() {ID = 3, Name = "PlaylistGenreTest", Genre = "Metal", UserID = UserController.CurrentUser.ID, ActivePlaylist = true };
             playlistController.CreateItem(playlistName);
             playlistController.CreateItem(playlistDescription);
             playlistController.CreateItem(playlistGenre);

@@ -34,6 +34,9 @@ namespace Model.Database.Contexts
             {
                 new User() {ID = 1, Email = "gebruiker1@gmail.com", Password = "$^*^$@", Username = "testaccount"}
             });
+            Roles = GetQueryableMockDbSet(new List<Role>());
+            Permissions = GetQueryableMockDbSet(new List<Permission>());
+            RolePermissions = GetQueryableMockDbSet(new List<RolePermissions>());
         }
 
         /**
