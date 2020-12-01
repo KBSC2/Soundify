@@ -8,6 +8,8 @@ using System.Windows.Input;
 using Model;
 using Model.EventArgs;
 using Soundify;
+using System;
+using System.Windows.Media;
 
 namespace View.Screens
 {
@@ -16,6 +18,12 @@ namespace View.Screens
         public PlaylistScreen()
         {
             this.InitializeComponent();
+            AudioPlayer.NextSong += OnNextSong;
+        }
+
+        private void OnNextSong(object sender, EventArgs e)
+        {
+            PlaylistDataContext.Instance.OnPropertyChanged("");
         }
         private void ListViewItem_RightClick(object sender, RoutedEventArgs e)
         {
@@ -44,7 +52,7 @@ namespace View.Screens
             var listViewItem = (ListViewItem)sender;
             var songInfo = (SongInfo)listViewItem.Content;
 
-            AudioPlayer.PlayPlaylist(MainWindow.CurrentPlayList, songInfo.Index);
+            AudioPlayer.PlayPlaylist(MainWindow.CurrentPlayList, songInfo.Index-1);
         }
 
         private void RemovePlaylistButton_Click(object sender, RoutedEventArgs e)
