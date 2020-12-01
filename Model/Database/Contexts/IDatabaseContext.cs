@@ -19,5 +19,6 @@ namespace Model.Database.Contexts
         public abstract DbSet<Artist> Artists { get; set; }
         public abstract DbSet<Permission> Permissions { get; set; }
         public abstract DbSet<RolePermissions> RolePermissions { get; set; }
+        public abstract DbSet<Request> Requests { get; set; }
     }
 }

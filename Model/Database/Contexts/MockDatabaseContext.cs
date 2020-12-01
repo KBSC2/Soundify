@@ -20,6 +20,7 @@ namespace Model.Database.Contexts
         public override DbSet<Permission> Permissions { get; set; }
         public override DbSet<RolePermissions> RolePermissions { get; set; }
         public override DbSet<Artist> Artists { get; set; }
+        public override DbSet<Request> Requests { get; set; }
 
         /**
          * Create a database mock, to use for all unit tests
