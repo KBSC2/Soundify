@@ -44,13 +44,13 @@ namespace Tests.Local
         public void AudioPlayer_AddSong_Queue_Contains()
         {
             AudioPlayer.AddSong(Song);
-            Assert.IsTrue(AudioPlayer.SongQueue.Contains(Song));
+            Assert.IsTrue(AudioPlayer.NextInPlaylist.Contains(Song));
         }
 
         [Test, Category("Local")]
         public void AudioPlayer_PlayPlaylist_SongQueue_ContainsSongs()
         {
-            AudioPlayer.SongQueue.Clear();
+            AudioPlayer.NextInPlaylist.Clear();
 
             PlaylistSongController.AddSongToPlaylist(Song.ID, Playlist.ID);
             PlaylistSongController.AddSongToPlaylist(Song2.ID, Playlist.ID);
@@ -61,7 +61,7 @@ namespace Tests.Local
             bool areEqual = true;
             for (int i = 0; i < playlistsongs.Count; i++)
             {
-                if (playlistsongs[i].Song.ID != AudioPlayer.SongQueue[i].ID) areEqual = false;
+                if (playlistsongs[i].Song.ID != AudioPlayer.NextInPlaylist[i].ID) areEqual = false;
             }
             Assert.IsTrue(areEqual);
             PlaylistSongController.RemoveFromPlaylist(Song.ID, Playlist.ID);

@@ -17,8 +17,9 @@ namespace Controller
         public static event EventHandler NextSong;
 
         public static int CurrentSongIndex  { get; set; }
+        
 
-        public static List<Song> SongQueue { get; set; } = new List<Song>();
+        public static List<Song> NextInPlaylist { get; set; } = new List<Song>();
         public static bool Looping { get; set; } = false;
 
         public static void Initialize()
@@ -30,22 +31,22 @@ namespace Controller
 
         public static void Next()
         {
-            if (SongQueue.Count == 0) return;
+            if (NextInPlaylist.Count == 0) return;
             CurrentSongIndex++;
-            if (CurrentSongIndex >= SongQueue.Count)
+            if (CurrentSongIndex >= NextInPlaylist.Count)
                 CurrentSongIndex = Looping ? 0 : CurrentSongIndex - 1;
 
-            PlaySong(SongQueue[CurrentSongIndex]);
+            PlaySong(NextInPlaylist[CurrentSongIndex]);
         }
 
         public static void Prev()
         {
-            if (SongQueue.Count == 0) return;
+            if (NextInPlaylist.Count == 0) return;
             CurrentSongIndex--;
             if (CurrentSongIndex < 0)
-                CurrentSongIndex = Looping ? SongQueue.Count - 1 : 0;
+                CurrentSongIndex = Looping ? NextInPlaylist.Count - 1 : 0;
 
-            PlaySong(SongQueue[CurrentSongIndex]);
+            PlaySong(NextInPlaylist[CurrentSongIndex]);
         }
 
         public static void PlaySong(Song song)
@@ -59,13 +60,13 @@ namespace Controller
 
         public static void AddSong(Song song)
         {
-            SongQueue.Add(song);
+            NextInPlaylist.Add(song);
         }
 
 
         private static void ClearSongQueue()
         {
-            SongQueue.Clear();
+            NextInPlaylist.Clear();
         }
 
         public static void PlayPlaylist(Playlist playlist, int startIndex = -1)

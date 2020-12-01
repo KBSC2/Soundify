@@ -26,7 +26,7 @@ namespace View.DataContexts
             }
         }
 
-        public List<SongInfo> QueueItems => QueueGenerator(AudioPlayer.SongQueue, AudioPlayer.CurrentSongIndex);
+        public List<SongInfo> QueueItems => QueueGenerator(AudioPlayer.NextInPlaylist, AudioPlayer.CurrentSongIndex);
         public string CurrentSongName => AudioPlayer.CurrentSong == null ? "" : AudioPlayer.CurrentSong.Name;
         public string CurrentSongArtist => AudioPlayer.CurrentSong == null ? "" : AudioPlayer.CurrentSong.Artist;
         public string CurrentSongDuration => AudioPlayer.CurrentSong == null ? "" : TimeSpan.FromSeconds(AudioPlayer.CurrentSong.Duration).ToString("m':'ss");

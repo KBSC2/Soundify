@@ -89,7 +89,7 @@ namespace Soundify
 
             if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
             {
-                if (AudioPlayer.SongQueue.Count > 0)
+                if (AudioPlayer.NextInPlaylist.Count > 0)
                 {
                     AudioPlayer.WaveOutDevice.Play();
                     Play.Content = "=";
