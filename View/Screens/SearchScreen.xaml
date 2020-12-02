@@ -40,6 +40,7 @@
                                 </Style>
                             </MenuItem.ItemContainerStyle>
                         </MenuItem>
+                        <MenuItem Header="Add song to queue" Click="ListViewItem_RightClickAddQueue" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
                     </ContextMenu>
                 </ListView.Resources>
                 <ListView.ItemContainerStyle>

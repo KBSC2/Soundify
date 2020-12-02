@@ -35,13 +35,13 @@ namespace View.Screens
             switch (selectedItem) 
             {
                 case 0:
-                    AudioPlayer.MaxVolume = 0.1;
+                    AudioPlayer.Instance.MaxVolume = 0.1;
                     break;
                 case 2:
-                    AudioPlayer.MaxVolume = 0.4;
+                    AudioPlayer.Instance.MaxVolume = 0.4;
                     break;
                 default:
-                    AudioPlayer.MaxVolume = 0.2;
+                    AudioPlayer.Instance.MaxVolume = 0.2;
                     break;
             }
         }

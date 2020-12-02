@@ -24,12 +24,12 @@ namespace View.DataContexts
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public double Volume => AudioPlayer.WaveOutDevice.Volume;
-        public double MaxVolume => AudioPlayer.MaxVolume;
-        public double TotalTime => AudioPlayer.CurrentSongFile == null ? 0 : AudioPlayer.CurrentSongFile.TotalTimeSong;
-        public double CurrentTime => AudioPlayer.CurrentSongFile == null ? 0 : AudioPlayer.CurrentSongFile.CurrentTimeSong;
-        public string TotalTimeLabel => AudioPlayer.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.CurrentSongFile.TotalTimeSong).ToString("m':'ss");
-        public string CurrentTimeLabel => AudioPlayer.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.CurrentSongFile.CurrentTimeSong).ToString("m':'ss");
+        public double Volume => AudioPlayer.Instance.WaveOutDevice.Volume;
+        public double MaxVolume => AudioPlayer.Instance.MaxVolume;
+        public double TotalTime => AudioPlayer.Instance.CurrentSongFile == null ? 0 : AudioPlayer.Instance.CurrentSongFile.TotalTimeSong;
+        public double CurrentTime => AudioPlayer.Instance.CurrentSongFile == null ? 0 : AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong;
+        public string TotalTimeLabel => AudioPlayer.Instance.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSongFile.TotalTimeSong).ToString("m':'ss");
+        public string CurrentTimeLabel => AudioPlayer.Instance.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong).ToString("m':'ss");
         
         public Role CurrentUserRole => UserController.CurrentUser == null ? new Role() : RoleController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.RoleID);
 
