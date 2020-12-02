@@ -23,10 +23,14 @@ namespace View.DataContexts
             }
         }
 
-        public List<SongInfo> QueueItems => QueueGenerator(AudioPlayer.SongQueue, AudioPlayer.CurrentSongIndex);
-        public string CurrentSongName => AudioPlayer.CurrentSong == null ? "" : AudioPlayer.CurrentSong.Name;
-        public string CurrentSongArtist => AudioPlayer.CurrentSong == null ? "" : AudioPlayer.CurrentSong.Artist;
-        public string CurrentSongDuration => AudioPlayer.CurrentSong == null ? "" : TimeSpan.FromSeconds(AudioPlayer.CurrentSong.Duration).ToString("m':'ss");
+        public List<SongInfo> NextInQueueItems => SongInfo.ConvertSongListToSongInfo(AudioPlayer.Instance.NextInQueue);
+        public List<SongInfo> NextInPlaylistItems => QueueGenerator(AudioPlayer.Instance.NextInPlaylist, AudioPlayer.Instance.CurrentSongIndex);
+        public string CurrentSongName => AudioPlayer.Instance.CurrentSong == null ? "" : AudioPlayer.Instance.CurrentSong.Name;
+        public string CurrentSongArtist => AudioPlayer.Instance.CurrentSong == null ? "" : AudioPlayer.Instance.CurrentSong.Artist;
+        public string CurrentSongDuration => AudioPlayer.Instance.CurrentSong == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSong.Duration).ToString("m':'ss");
+        public string NextInQueueLabelContent => AudioPlayer.Instance.NextInQueue.Count == 0 ? "" : "Next in queue";
+        public string NextInPlaylistLabelMargin => "35," + (120 + (AudioPlayer.Instance.NextInQueue.Count * 30)).ToString() + ",0,0";
+        public string NextInPlaylistMargin => "300," + (130 + (AudioPlayer.Instance.NextInQueue.Count * 30)).ToString() + ",0,0";
 
         public List<SongInfo> QueueGenerator(List<Song> songs, int index)
         {
@@ -38,7 +42,7 @@ namespace View.DataContexts
                 if (queue.Count > 12) break;
             }
 
-            if (AudioPlayer.Looping)
+            if (AudioPlayer.Instance.Looping)
             {
                 for (int i = 0; i < index; i++)
                 {

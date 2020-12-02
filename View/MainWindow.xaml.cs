@@ -14,6 +14,7 @@ using System.Windows.Input;
 using Model.Enums;
 using View;
 using View.DataContexts;
+using View.Screens;
 
 namespace Soundify
 {
@@ -53,6 +54,7 @@ namespace Soundify
         public MainWindow()
         {
             AudioPlayer.Create(new DatabaseContext());
+            AudioPlayer.Instance.NextSong += PlaylistScreen.Instance.OnNextSong;
             _instanceMainWindow = this;
 
             if (!Directory.Exists(Path.GetTempPath() + "Soundify"))
@@ -85,20 +87,21 @@ namespace Soundify
 
         private void Play_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (AudioPlayer.CurrentSongFile == null)
+            if (AudioPlayer.Instance.CurrentSongFile == null)
                 AudioPlayer.Instance.Next();
+                QueueDataContext.Instance.OnPropertyChanged();
 
-            if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
+            if (AudioPlayer.Instance.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.Instance.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
             {
-                if (AudioPlayer.SongQueue.Count > 0)
+                if (AudioPlayer.Instance.NextInPlaylist.Count > 0)
                 {
-                    AudioPlayer.WaveOutDevice.Play();
+                    AudioPlayer.Instance.WaveOutDevice.Play();
                     Play.Content = "=";
                 }
             }
             else
             {
-                AudioPlayer.WaveOutDevice.Pause();
+                AudioPlayer.Instance.WaveOutDevice.Pause();
                 Play.Content = ">";
             }
         }
@@ -106,7 +109,7 @@ namespace Soundify
         private void Duration_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Slider slider = sender as Slider;
-            AudioPlayer.CurrentSongFile.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSongFile.CurrentTimeSong));
+            AudioPlayer.Instance.CurrentSongFile.AudioFile.Skip((int)(slider.Value - AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong));
         }
 
         public void SetScreen(ScreenNames screenName)
@@ -137,7 +140,7 @@ namespace Soundify
         private void Volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Slider slider = sender as Slider;
-            AudioPlayer.WaveOutDevice.Volume = (float)slider.Value;
+            AudioPlayer.Instance.WaveOutDevice.Volume = (float)slider.Value;
 
         }
 
@@ -155,7 +158,7 @@ namespace Soundify
 
         private void Loop_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer.Looping = !AudioPlayer.Looping;
+            AudioPlayer.Instance.Looping = !AudioPlayer.Instance.Looping;
             QueueDataContext.Instance.OnPropertyChanged();
         }
 
