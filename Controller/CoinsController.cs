@@ -11,25 +11,24 @@ namespace Controller
 {
    public class CoinsController
     {
-        private static CoinsController instance;
+        private static CoinsController _instance;
         public static CoinsController Instance
         {
             get
             {
-                if (instance == null)
-                    new CoinsController();
-                return instance;
+                if (_instance == null)
+                    _instance = new CoinsController();
+                return _instance;
             }
-            set => instance = value;
         }
-        private static int Counter { get; set; }
+        private int Counter { get; set; }
         private UserController UserController { get; set; }
         
 
         private CoinsController()
         {
             Counter = 0;
-            UserController = new UserController(new DatabaseContext());
+            UserController = UserController.Create(new DatabaseContext());
         }
 
         public void EarnCoins(object sender, EventArgs e)
@@ -40,7 +39,7 @@ namespace Controller
             if(Counter == 1000)
             {
                 Counter = 0;
-                AddCoin(CurrentUser);
+                AddCoin(UserController.CurrentUser);
             } 
         }
         public void AddCoin(User user)
