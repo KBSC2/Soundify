@@ -2,14 +2,18 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Model.Database.Contexts;
 
 namespace Model.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20201130101514_AddedArtistTable")]
+    partial class AddedArtistTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,25 +37,6 @@ namespace Model.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Artists");
-                });
-
-            modelBuilder.Entity("Model.DbModels.Permission", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<bool>("HasValue")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Permissions");
                 });
 
             modelBuilder.Entity("Model.DbModels.Playlist", b =>
@@ -131,24 +116,6 @@ namespace Model.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("Model.DbModels.RolePermissions", b =>
-                {
-                    b.Property<int>("RoleID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PermissionID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
-
-                    b.HasKey("RoleID", "PermissionID");
-
-                    b.HasIndex("PermissionID");
-
-                    b.ToTable("RolePermissions");
-                });
-
             modelBuilder.Entity("Model.DbModels.Song", b =>
                 {
                     b.Property<int>("ID")
@@ -180,8 +147,11 @@ namespace Model.Migrations
                     b.Property<string>("ProducedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UploadedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WrittenBy")
                         .HasColumnType("nvarchar(max)");
@@ -205,20 +175,11 @@ namespace Model.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("RequestedArtist")
-                        .HasColumnType("bit");
-
                     b.Property<int>("RoleID")
                         .HasColumnType("int");
-
-                    b.Property<string>("Token")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -246,25 +207,6 @@ namespace Model.Migrations
                     b.Navigation("Playlist");
 
                     b.Navigation("Song");
-                });
-
-            modelBuilder.Entity("Model.DbModels.RolePermissions", b =>
-                {
-                    b.HasOne("Model.DbModels.Permission", "Permission")
-                        .WithMany()
-                        .HasForeignKey("PermissionID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Model.DbModels.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Permission");
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Model.DbModels.Playlist", b =>

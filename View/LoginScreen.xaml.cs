@@ -82,11 +82,7 @@ namespace View
                         var emailVerificationScreen = new EmailVerificationScreen(token, userEmail);
                         emailVerificationScreen.Error.Content = "User not active";
                         emailVerificationScreen.Show();
-
-                        var mailVerification = new MailVerificationTemplate(new MailAddress("info.soundify@gmail.com"), token);
-                        new EmailController<MailVerificationTemplate>().SendEmail(mailVerification, userEmail);
-
-                            this.Hide();
+                        this.Hide();
                     } 
                     break;
                 }

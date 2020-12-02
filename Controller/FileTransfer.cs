@@ -8,6 +8,7 @@ namespace Controller
     {
         public static void DownloadFile(string inputPath)
         {
+            if(inputPath == "") return;
 
             var conf = SSHController.GetSSHConfiguration();
 
