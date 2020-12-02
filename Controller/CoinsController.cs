@@ -33,7 +33,7 @@ namespace Controller
 
         public void EarnCoins(object sender, EventArgs e)
         {
-            if(AudioPlayer.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing)
+            if(AudioPlayer.Instance.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing)
                 Counter += 1;
 
             if(Counter == 1000)
