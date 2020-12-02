@@ -181,7 +181,7 @@ namespace Soundify
 
         public void ShowNoRights(object sender, NoRightsEventArgs e)
         {
-            PopUpNoRights popUpNoRights = new PopUpNoRights(e.PopUpText);
+            PopUpNoRights popUpNoRights = new PopUpNoRights(e.Permission);
             popUpNoRights.ShowDialog();
         }
     }

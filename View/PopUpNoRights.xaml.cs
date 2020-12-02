@@ -1,4 +1,9 @@
-﻿using Model;
+﻿using Controller;
+using Controller.DbControllers;
+using Model;
+using Model.Database.Contexts;
+using Model.DbModels;
+using Model.Enums;
 using Model.EventArgs;
 using Soundify;
 using System;
@@ -23,11 +28,58 @@ namespace View
     /// </summary>
     public partial class PopUpNoRights : Window
     {
-        public PopUpNoRights(string x)
+        //change to max songs in playlist
+        private int maxSongsInPlaylist = 1;
+        public PopUpNoRights(Permissions permission)
         {
             InitializeComponent();
             StartTimer();
-            TypeOfRight.Text = x;
+            switch (permission)
+            {
+                case Permissions.SongShuffle:
+                    {
+                        TypeOfRight.Text = "You don't have the shuffle feature\nMore features available in the shop";
+                        break;
+                    }
+                case Permissions.SongNext:
+                    {
+                        TypeOfRight.Text = "You don't have the feature\nto skip to the next song\nMore features available in the shop";
+                        break;
+                    }
+                case Permissions.SongPrev:
+                    {
+                        TypeOfRight.Text = "You don't have the feature\nto go to the previous song\nMore features available in the shop";
+                        break;
+                    }
+                case Permissions.SongLoop:
+                    {
+                        TypeOfRight.Text = "You don't have the feature\nto loop songs\nMore features available in the shop";
+                        break;
+                    }
+                case Permissions.PlaylistLimit:
+                    {
+                        var rpController = RolePermissionsController.Create(new DatabaseContext());
+                        var max = rpController.GetPermissionValueCount(UserController.CurrentUser, permission);
+                        TypeOfRight.Text = $"You have reached the\n{max} playlists that you can make\nMore features available in the shop";
+                        break;
+                    }
+                case Permissions.PlaylistRename:
+                    {
+                        TypeOfRight.Text = "You don't have the feature\nto rename a playlists\nMore features available in the shop";
+                        break;
+                    }
+                case Permissions.PlaylistSongsLimit:
+                    {
+                        //change to max songs in playlist
+                        TypeOfRight.Text = $"You don't have reached the\n{maxSongsInPlaylist} songs that you can add to the playlist\nMore features available in the shop";
+                        break;
+                    }
+                case Permissions.AccountUsernameChange:
+                    {
+                        TypeOfRight.Text = "You don't have the feature\nto change your username\nMore features available in the shop";
+                        break;
+                    }
+            }
         }
         public void StartTimer()
         {

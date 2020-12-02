@@ -3,10 +3,10 @@
     // use number of enum to refer to db id
     public enum Permissions
     {
-        SongShuffle = 1,
-        SongNext,
-        SongPrev,
-        SongLoop,
+        SongShuffle = 1,            //unlockable in shop
+        SongNext,                   //unlockable in shop
+        SongPrev,                   //unlockable in shop
+        SongLoop,                   //unlockable in shop
         SongUpload,
         SongEditOwn,
         SongEditAll,
@@ -14,10 +14,10 @@
         SongDeleteAll,
         SongConfirm,
         PlaylistCreate,
-        PlaylistLimit,
-        PlaylistRename,
-        PlaylistSongsLimit,
-        AccountUsernameChange,
+        PlaylistLimit,              //unlockable in shop
+        PlaylistRename,             //unlockable in shop
+        PlaylistSongsLimit,         //unlockable in shop
+        AccountUsernameChange,      //unlockable in shop
         AccountChangeRole,
         AccountEditOwn,
         AccountEditAll,

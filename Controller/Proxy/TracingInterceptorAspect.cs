@@ -49,7 +49,7 @@ namespace Controller.Proxy
             }
             else
             {
-                PermissionController.NoRightsEvent?.Invoke(this, new NoRightsEventArgs() { PopUpText = "test" });
+                PermissionController.NoRightsEvent?.Invoke(this, new NoRightsEventArgs() { Permission = x.HasMaxValue ? x.MaxValue : x.Permission });
             }
         }
     }

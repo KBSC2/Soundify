@@ -14,7 +14,7 @@
                 <DataGrid.RowStyle>
                     <Style TargetType="{x:Type DataGridRow}">
                         <EventSetter Event="MouseDoubleClick" Handler="PlaylistsRow_Click"/>
-                        <Setter Property="Background" Value="#FF445399" />
+                        <Setter Property="Background" Value="{DynamicResource Background4Color}" />
                         <Setter Property="Foreground" Value="White" />
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
