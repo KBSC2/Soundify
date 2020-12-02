@@ -16,6 +16,7 @@ namespace Model.Database.Contexts
         public override DbSet<PlaylistSong> PlaylistSongs { get; set; }
         public override DbSet<User> Users{ get; set; }
         public override DbSet<Role> Roles { get; set; }
+        public override DbSet<Request> Requests { get; set; }
         public override DbSet<Permission> Permissions { get; set; }
         public override DbSet<RolePermissions> RolePermissions { get; set; }
         public override DbSet<Request> Requests { get; set; }
