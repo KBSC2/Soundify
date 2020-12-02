@@ -1,12 +1,13 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.CompilerServices;
+using System.Net.Mail;
 using System.Windows;
 using System.Windows.Input;
+using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
-using Model.DbModels;
 using Model.Enums;
+using Model.MailTemplates;
 using Soundify;
 
 namespace View
@@ -37,13 +38,13 @@ namespace View
             var emailOrUsername = this.UsernameLogin.Text;
             var password = this.PasswordLogin.Password;
 
-            var controller = new UserController(new DatabaseContext());
+            var controller = UserController.Create(new DatabaseContext());
             var result = controller.UserLogin(emailOrUsername, password);
             switch (result)
             {
                 case LoginResults.Success:
                 {
-                    DataContexts.DataContext.Instance.CurrentUser = controller.GetUserFromEmailOrUsername(emailOrUsername);
+                    UserController.CurrentUser = controller.GetUserFromEmailOrUsername(emailOrUsername);
                     var main = new MainWindow();
                     main.Show();
                     main.Focus();
@@ -71,6 +72,24 @@ namespace View
                     this.Error.Content = "Password incorrect";
                     break;
                 }
+                case LoginResults.UserNotActive:
+                {
+                    var token = Guid.NewGuid().ToString();
+                    var user = controller.GetUserFromEmailOrUsername(emailOrUsername);
+                    if (user != null)
+                    {
+                        var userEmail = user.Email;
+                        var emailVerificationScreen = new EmailVerificationScreen(token, userEmail);
+                        emailVerificationScreen.Error.Content = "User not active";
+                        emailVerificationScreen.Show();
+
+                        var mailVerification = new MailVerificationTemplate(new MailAddress("info.soundify@gmail.com"), token);
+                        new EmailController<MailVerificationTemplate>().SendEmail(mailVerification, userEmail);
+
+                            this.Hide();
+                    } 
+                    break;
+                }
             }
         }
 
@@ -89,10 +108,12 @@ namespace View
             signupScreen.Show();
             signupScreen.Focus();
         }
-
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)
         {
-
+            var forgotPasswordTokenSendScreen = new ForgotpasswordTokenSendScreen();
+            this.Hide();
+            forgotPasswordTokenSendScreen.Show();
+            forgotPasswordTokenSendScreen.Focus();
         }
     }
 }

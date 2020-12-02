@@ -1,10 +1,14 @@
-﻿using System.Windows;
+﻿using System;
+using System.Net.Mail;
+using System.Windows;
 using System.Windows.Input;
 using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
+using Model.MailTemplates;
+using Soundify;
 
 namespace View
 {
@@ -24,17 +28,18 @@ namespace View
             var email = this.EmailRegister.Text;
             var password = this.PasswordRegister.Password;
             var passwordRepeat = this.PasswordConfirmRegister.Password;
+            var token = Guid.NewGuid().ToString();
 
             var result =
-                new UserController(new DatabaseContext()).CreateAccount(new User() {Email = email, Username = username},
+                UserController.Create(new DatabaseContext()).CreateAccount(new User() {Email = email, Username = username, Token = token },
                     password, passwordRepeat);
 
             switch(result)
             {
                 case RegistrationResults.Succeeded:
                 {
-                    var loginScreen = new LoginScreen();
-                    loginScreen.Show();
+                    var emailVerificationScreen = new EmailVerificationScreen(token, email);
+                    emailVerificationScreen.Show();
                     this.Hide();
                     break;
                 }
@@ -60,6 +65,9 @@ namespace View
                 }
 
             }
+
+            var mailVerification = new MailVerificationTemplate(new MailAddress("info.soundify@gmail.com"), token);
+            new EmailController<MailVerificationTemplate>().SendEmail(mailVerification, email);
         }
         private void Register_On_Enter_Key(object sender, KeyEventArgs e)
         {
@@ -70,10 +78,8 @@ namespace View
         }
         private void BackToLogin_Button_Click(object sender, RoutedEventArgs e)
         {
-            var cancelScreen = new LoginScreen();
+            MainWindow.InstanceLoginScreen.Show();
             this.Close();
-            cancelScreen.Show();
-            cancelScreen.Focus();
         }
     }
 }

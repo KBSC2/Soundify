@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Controller.Proxy;
 using Microsoft.EntityFrameworkCore;
 using Model.Database.Contexts;
 using Model.DbModels;
@@ -15,12 +16,17 @@ namespace Controller.DbControllers
 
         private DbSet<PlaylistSong> _set;
 
-        public PlaylistSongController(IDatabaseContext context)
+        public static PlaylistSongController Create(IDatabaseContext context)
+        {
+            return ProxyController.AddToProxy<PlaylistSongController>(new object[] { context }, context);
+        }
+
+        protected PlaylistSongController(IDatabaseContext context)
         {
             this._context = context;
             _set = _context.PlaylistSongs;
-            _songController = new SongController(context);
-            _playlistController = new PlaylistController(context);
+            _songController = SongController.Create(context);
+            _playlistController = PlaylistController.Create(context);
         }
 
         public void AddSongToPlaylist(int songID, int playlistID)

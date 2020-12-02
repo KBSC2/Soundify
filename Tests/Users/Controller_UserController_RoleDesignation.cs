@@ -1,7 +1,6 @@
 ﻿using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
-using Model.Enums;
 using NUnit.Framework;
 
 namespace Tests.Users
@@ -9,7 +8,7 @@ namespace Tests.Users
     [TestFixture]
     public class Controller_UserController_RoleDesignation
     {
-        private UserController Controller { get; } = new UserController(new MockDatabaseContext());
+        private UserController Controller { get; } = UserController.Create(new MockDatabaseContext());
         private User User { get; set; }
 
         [SetUp]

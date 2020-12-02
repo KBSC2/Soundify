@@ -21,7 +21,7 @@ namespace Tests.Playlists
         public void SetUp()
         {
             context = new MockDatabaseContext();
-            playlistController = new PlaylistController(context);
+            playlistController = PlaylistController.Create(context);
             playlist = new Playlist()
                 {Name = "TestDeactivateDelete", ActivePlaylist = true, CreationDate = DateTime.Now};
             playlistDelete = new Playlist() {Name = "TestDelete", ActivePlaylist = true, CreationDate = DateTime.Now};

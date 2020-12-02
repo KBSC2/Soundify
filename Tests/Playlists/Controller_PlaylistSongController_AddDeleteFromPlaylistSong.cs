@@ -28,9 +28,9 @@ namespace Tests.Playlists
             playlist = new Playlist() {Name = "TESTPLAYLIST", CreationDate = DateTime.Now};
             context = new MockDatabaseContext();
             
-            songController = new SongController(context);
-            playlistController = new PlaylistController(context);
-            playlistSongController = new PlaylistSongController(context);
+            songController = SongController.Create(context);
+            playlistController = PlaylistController.Create(context);
+            playlistSongController = PlaylistSongController.Create(context);
 
             songController.CreateItem(song);
             songController.CreateItem(song2);

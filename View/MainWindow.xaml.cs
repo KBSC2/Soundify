@@ -48,12 +48,12 @@ namespace Soundify
             }
         }
 
-        public static MainWindow _instanceMainWindow;
-        public static LoginScreen _instanceLoginScreen;
+        private static MainWindow _instanceMainWindow;
+        private static LoginScreen _instanceLoginScreen;
 
         public MainWindow()
         {
-            AudioPlayer.Initialize();
+            AudioPlayer.Create(new DatabaseContext());
             _instanceMainWindow = this;
 
             if (!Directory.Exists(Path.GetTempPath() + "Soundify"))
@@ -70,12 +70,13 @@ namespace Soundify
             SSHController.Instance.OpenSSHTunnel();
 
             Context = new DatabaseContext();
-            new PlaylistController(Context).DeletePlaylistOnDateStamp();
+            PlaylistController.Create(Context).DeletePlaylistOnDateStamp();
 
             SetScreen(ScreenNames.HomeScreen);
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
 
-            if (View.DataContexts.DataContext.Instance.CurrentUser == null)
+            FileCache.Instance.GetFile("images/gangnamstyle.png");
+            if (UserController.CurrentUser == null)
             {
                 InstanceLoginScreen.Show();
                 InstanceMainWindow.Hide();
@@ -83,8 +84,8 @@ namespace Soundify
         }
         private void Play_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (AudioPlayer.CurrentSong == null)
-                AudioPlayer.Next();
+            if (AudioPlayer.CurrentSongFile == null)
+                AudioPlayer.Instance.Next();
 
             if (AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
             {
@@ -104,14 +105,14 @@ namespace Soundify
         private void Duration_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Slider slider = sender as Slider;
-            AudioPlayer.CurrentSong.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSong.CurrentTimeSong));
+            AudioPlayer.CurrentSongFile.AudioFile.Skip((int)(slider.Value - AudioPlayer.CurrentSongFile.CurrentTimeSong));
         }
 
         public void SetScreen(ScreenNames screenName)
         {
             if (screenName == ScreenNames.Logout)
             {
-                View.DataContexts.DataContext.Instance.CurrentUser = null;
+                UserController.CurrentUser = null;
                 var login = new LoginScreen();
                 login.Show();
                 login.Focus();
@@ -141,22 +142,25 @@ namespace Soundify
 
         private void Prev_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer.Prev();
+            AudioPlayer.Instance.Prev();
+            QueueDataContext.Instance.OnPropertyChanged();
         }
 
         private void Next_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer.Next();
+            AudioPlayer.Instance.Next();
+            QueueDataContext.Instance.OnPropertyChanged();
         }
 
         private void Loop_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer.Loop();
+            AudioPlayer.Looping = !AudioPlayer.Looping;
+            QueueDataContext.Instance.OnPropertyChanged();
         }
 
         private void Shuffle_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer.Shuffle();
+            QueueDataContext.Instance.OnPropertyChanged();
         }
 
         public void SetSearchTerms(object sender, KeyEventArgs e)

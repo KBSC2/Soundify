@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:View"
         xmlns:DataContexts="clr-namespace:View.DataContexts" x:Class="View.LoginScreen"
         mc:Ignorable="d"
-        Title="LoginScreen" Height="715" Width="617"
+        Title="Login" Height="715" Width="617"
         WindowStartupLocation="CenterScreen">
     <Grid Background="{DynamicResource BackgroundColor}" KeyDown="Login_On_Enter_Key">
         <Image Margin="263,32,263,576" Stretch="Fill" Source="Assets/soundify.png" Width="66" Height="66"/>
@@ -17,7 +17,7 @@
         <CheckBox x:Name="RememberData" Content="Remember password" HorizontalAlignment="Center" Margin="0,441,0,0" VerticalAlignment="Top" Foreground="White" Height="31" Width="356" FontSize="20" VerticalContentAlignment="Center"/>
         <Button x:Name="Login" Content="Login" HorizontalAlignment="Center" Margin="0,477,0,0" VerticalAlignment="Top" FontSize="40" Width="198" Height="60" Background="{DynamicResource Orange}" Click="Login_Button_Click"/>
         <Label x:Name="Error" Content="" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,542,0,0" VerticalAlignment="Top" Foreground="{DynamicResource Red}" FontSize="15" Height="26" Width="252"/>
-        <!-- <Button x:Name="ForgotPassword" Content="Forgot your password?" HorizontalAlignment="Center" Margin="0,572,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20" Width="214" Background="Transparent" BorderThickness="0,0,0,0" Click="ForgotPassword_Click"/> -->
+        <Button x:Name="ForgotPassword" Content="Forgot your password?" HorizontalAlignment="Center" Margin="0,572,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20" Width="214" Background="Transparent" BorderThickness="0,0,0,0" Click="ForgotPassword_Click"/>
 
         <Label Content="New here?" HorizontalAlignment="Left" Margin="208,607,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20"/>
         <Button x:Name="SignUp" Content="Sign up" HorizontalAlignment="Left" Margin="308,607,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20" FontStyle="Italic" Background="Transparent" Width="78" Height="37" BorderThickness="0,0,0,0" Click="SignUp_Click"/>

@@ -8,12 +8,12 @@
 		        <DataContexts:SettingsDataContext/>
 	        </Grid.DataContext>
             <Button Content="Change Password" HorizontalAlignment="Left" Margin="138,99,0,0" VerticalAlignment="Top" Width="300" Height="43" FontSize="26.5"  Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="ChangePassword_Button_Click"/>
-            <ComboBox HorizontalAlignment="Left" Margin="206,178,0,0" VerticalAlignment="Top" Width="164" Height="43" Background="#FF707070" FontSize="26.5" FontWeight="Bold">
+            <ComboBox HorizontalAlignment="Left" Margin="206,178,0,0" VerticalAlignment="Top" Width="164" Height="43" Background="#FF707070" FontSize="26.5" FontWeight="Bold" SelectionChanged="VolumeComboBox_SelectedChanged">
                 <ComboBoxItem>Quiet</ComboBoxItem >
                 <ComboBoxItem IsSelected="True">Normal</ComboBoxItem>
                 <ComboBoxItem>Loud</ComboBoxItem>
             </ComboBox>
-            <Image Margin="152,187,1006,364" Stretch="Fill" Source=".../Assets/Sound.png" Width="30" Height="25"/>
+            <Image Margin="152,187,1006,364" Stretch="Fill" Source="../Assets/Sound.png" Width="30" Height="25"/>
             <Button Content="Logout" HorizontalAlignment="Left" Margin="223,483,0,0" VerticalAlignment="Top" Width="130" Height="40" Background="#FFF70E0E" Foreground="White" BorderThickness="0" FontSize="26.6" FontWeight="Bold" Click="Logout_Button_Click"/>
             <Label Content="You are " HorizontalAlignment="Left" Margin="176,25,0,0" VerticalAlignment="Top" FontSize="26.5" Foreground="White" FontWeight="Bold"/>
             <!-- Data binding for the role goes here -->

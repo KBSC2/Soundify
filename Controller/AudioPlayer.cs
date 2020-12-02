@@ -1,102 +1,100 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Controller.DbControllers;
+using Controller.Proxy;
 using Model;
+using Model.Annotations;
+using Model.Database.Contexts;
 using Model.DbModels;
+using Model.Enums;
 using NAudio.Wave;
 
 namespace Controller
 {
-    public static class AudioPlayer
+    public class AudioPlayer
     {
         public static IWavePlayer WaveOutDevice { get; set; }
-        public static SongAudioFile CurrentSong { get; set; }
+        public static SongAudioFile CurrentSongFile { get; set; }
+        public static Song CurrentSong { get; set; }
+        public static double MaxVolume { get; set; }
+        public static event EventHandler NextSong;
 
-        /*private static int _currentSongIndex = -1;*/
-        public static int CurrentSongIndex
-        {
-            get; set;
-        }
+        public static int CurrentSongIndex  { get; set; }
 
         public static List<Song> SongQueue { get; set; } = new List<Song>();
-        public static bool _looping = false;
+        public static bool Looping { get; set; } = false;
 
-        public static void Initialize()
+        public static AudioPlayer Instance { get; set; }
+
+
+        public static AudioPlayer Create(IDatabaseContext context)
+        {
+            var x = ProxyController.AddToProxy<AudioPlayer>(context);
+            x.Initialize();
+            Instance = x;
+            return x;
+        }
+
+        public void Initialize()
         {
             WaveOutDevice = new WaveOut();
             WaveOutDevice.Volume = 0.05f;
+            MaxVolume = 0.2;
         }
 
-        public static void Next()
+        [HasPermission(Permission = Permissions.SongNext)]
+        public void Next()
         {
             if (SongQueue.Count == 0) return;
             CurrentSongIndex++;
             if (CurrentSongIndex >= SongQueue.Count)
-                CurrentSongIndex = _looping ? 0 : CurrentSongIndex - 1;
+                CurrentSongIndex = Looping ? 0 : CurrentSongIndex - 1;
 
             PlaySong(SongQueue[CurrentSongIndex]);
         }
 
-        public static void Prev()
+        public void Prev()
         {
             if (SongQueue.Count == 0) return;
             CurrentSongIndex--;
             if (CurrentSongIndex < 0)
-                CurrentSongIndex = _looping ? SongQueue.Count - 1 : 0;
+                CurrentSongIndex = Looping ? SongQueue.Count - 1 : 0;
 
             PlaySong(SongQueue[CurrentSongIndex]);
         }
 
-        public static void Loop()
+        public void PlaySong(Song song)
         {
-            _looping = !_looping;
-        }
-
-        public static void Shuffle()
-        {
-
-        }
-
-        public static void PlaySong(Song song)
-        {
-            CurrentSong = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
-            WaveOutDevice.Init(CurrentSong.AudioFile);
+            CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
+            CurrentSong = song;
+            WaveOutDevice.Init(CurrentSongFile.AudioFile);
+            NextSong?.Invoke(null, new EventArgs());
             Task.Delay(500).ContinueWith(x => WaveOutDevice.Play());
         }
 
-        public static void AddSong(Song song)
+        public void AddSong(Song song)
         {
             SongQueue.Add(song);
         }
 
 
-        private static void ClearSongQueue()
+        private void ClearSongQueue()
         {
             SongQueue.Clear();
         }
 
-        public static void PlayPlaylist(Playlist playlist, int startIndex = 0)
+        public void PlayPlaylist(Playlist playlist, int startIndex = -1)
         {
-            PlayPlaylist(new PlaylistSongController(new Model.Database.Contexts.DatabaseContext()).GetSongsFromPlaylist(playlist.ID), startIndex);
+            PlayPlaylist(PlaylistSongController.Create(new Model.Database.Contexts.DatabaseContext()).GetSongsFromPlaylist(playlist.ID), startIndex);
         }
 
-        public static void PlayPlaylist(List<PlaylistSong> songs, int startIndex = 0)
+        public void PlayPlaylist(List<PlaylistSong> songs, int startIndex = -1)
         {
             ClearSongQueue();
-            CurrentSongIndex = -1;
+            CurrentSongIndex = startIndex;
 
-            for (int i = startIndex; i < songs.Count; i++)
-            {
-                AddSong(songs[i].Song);
-            }
-
-            if (_looping)
-            {
-                for (int i = 0; i < startIndex; i++)
-                {
-                    AddSong(songs[i].Song);
-                }
-            }
+            songs.ForEach(i => AddSong(i.Song));
 
             Next();
         }
