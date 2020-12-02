@@ -12,6 +12,7 @@ using Microsoft.Win32;
 using Model.Annotations;
 using Model.Database.Contexts;
 using Model.DbModels;
+using Model.Enums;
 using Soundify;
 
 namespace View.DataContexts
@@ -42,7 +43,7 @@ namespace View.DataContexts
         public ArtistDataContext()
         {
             ArtistHasSongPending = new SongController(new DatabaseContext())
-                .GetList().Where(s => s.Artist == ArtistName && s.Status == "Awaiting Approval").ToList().Count > 0;
+                .GetList().Where(s => s.Artist == ArtistName && s.Status == SongStatus.AwaitingApproval).ToList().Count > 0;
 
             StatusMessage = ArtistHasSongPending ? "Awaiting Approval" : "Waiting for song";
 

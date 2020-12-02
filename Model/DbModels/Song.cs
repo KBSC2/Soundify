@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Model.Enums;
 
 namespace Model.DbModels
 {
@@ -25,7 +26,7 @@ namespace Model.DbModels
 
         public string PathToImage { get; set; }
 
-        public string Status { get; set; }
+        public SongStatus Status { get; set; }
 
         public IList<PlaylistSong> PlaylistSongs { get; set; }
     }

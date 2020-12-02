@@ -70,7 +70,7 @@ namespace Controller.DbControllers
                 return RegistrationResults.PasswordNotStrongEnough;
 
             user.Password = PasswordController.EncryptPassword(password);
-            user.RoleID = 2;
+            user.RoleID = 1;
             // Insert user object into database
             CreateItem(user);
             return RegistrationResults.Succeeded;
@@ -78,18 +78,17 @@ namespace Controller.DbControllers
 
         public void MakeArtist(User user)
         {
-            user.RoleID = 3;
+            user.RoleID = 2;
             UpdateItem(user);
             new ArtistController(new DatabaseContext()).CreateItem(new Artist() {ArtistName = user.Username}); // change user.Username to artist name
         }
 
         public void RevokeArtist(User user)
         {
-            user.RoleID = 2;
+            user.RoleID = 1;
             UpdateItem(user);
 
-            var artistID = new ArtistController(new DatabaseContext()).GetList()
-                .FirstOrDefault(a => a.UserID == user.ID)?.ID;
+            var artistID = new ArtistController(new DatabaseContext()).GetArtistIDFromUserID(user.ID);
             if(artistID != null) new ArtistController(new DatabaseContext()).DeleteItem((int)artistID);
         }
     }

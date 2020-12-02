@@ -12,6 +12,7 @@ using Controller.DbControllers;
 using Microsoft.Win32;
 using Model.Database.Contexts;
 using Model.DbModels;
+using Model.Enums;
 using Model.MailTemplates;
 using View.DataContexts;
 
@@ -78,7 +79,7 @@ namespace View.Screens
                 PathToImage = imageSource != null ? "images/" + imageSource.LocalPath.Split("\\").Last() : "", 
                 ProducedBy = ((TextBox)dataGrid.FindName("Producer"))?.Text, 
                 WrittenBy = ((TextBox)dataGrid.FindName("Writer"))?.Text,
-                Status = "Awaiting Approval"
+                Status = SongStatus.AwaitingApproval
             }, ArtistDataContext.Instance.SelectedSong.Name);
 
             ArtistDataContext.Instance.SelectedSong = null;

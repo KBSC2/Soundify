@@ -15,7 +15,7 @@ namespace Tests.Users
         [SetUp]
         public void SetUp()
         {
-            User = new User() { Email = "test@gmail.com", Username = "test" };
+            User = new User() { ID = 1, Email = "test@gmail.com", Username = "test" };
             Controller.CreateAccount(User, "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2");
         }
 
@@ -23,7 +23,7 @@ namespace Tests.Users
         public void UserController_CreateAccount_UserRoleIDShouldBeUser()
         {
             var result = Controller.GetItem(User.ID);
-            Assert.AreEqual(result.RoleID, 2);
+            Assert.AreEqual(result.RoleID, 1);
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace Tests.Users
         {
             Controller.MakeArtist(User);
             var result = User.RoleID;
-            Assert.AreEqual(result, 3);
+            Assert.AreEqual(result, 2);
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace Tests.Users
         {
             Controller.RevokeArtist(User);
             var result = User.RoleID;
-            Assert.AreEqual(result, 2);
+            Assert.AreEqual(result, 1);
         }
 
         [TearDown]

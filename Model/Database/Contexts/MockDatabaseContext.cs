@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Model.DbModels;
 using Moq;
 
@@ -33,6 +34,8 @@ namespace Model.Database.Contexts
             {
                 new User() {ID = 1, Email = "gebruiker1@gmail.com", Password = "$^*^$@", Username = "testaccount"}
             });
+            Roles = GetQueryableMockDbSet(new List<Role>());
+            Artists = GetQueryableMockDbSet(new List<Artist>());
         }
 
         /**

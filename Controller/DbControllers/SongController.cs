@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Model.Database.Contexts;
 using Model.DbModels;
+using Model.Enums;
 
 namespace Controller.DbControllers
 {
@@ -26,7 +27,7 @@ namespace Controller.DbControllers
             List<Song> searchSongs = songs
                 .Where(song => (searchterms.Any(s => song.Name != null && song.Name.ToLower().Contains(s.ToLower())) ||
                                searchterms.Any(s => song.Artist != null && song.Artist.ToLower().Contains(s.ToLower()))) &&
-                               song.Status != "Awaiting Approval")
+                               song.Status != SongStatus.AwaitingApproval)
                 .Take(8)
                 .ToList();
             return searchSongs;

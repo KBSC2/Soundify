@@ -33,7 +33,7 @@ namespace View.DataContexts
 
         public User CurrentUser { get; set; }
         public Role CurrentUserRole => CurrentUser == null ? new Role() : new RoleController(new DatabaseContext()).GetItem(CurrentUser.RoleID);
-        public bool IsArtist => CurrentUser != null && CurrentUser.RoleID == 3;
+        public bool IsArtist => CurrentUser != null && CurrentUser.RoleID == 2;
 
         private Timer _timer;
 
