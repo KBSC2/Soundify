@@ -23,18 +23,17 @@ namespace View
     /// </summary>
     public partial class PopUpNoRights : Window
     {
-        public ScreenNames QueueScreen { get; private set; }
-
-        public PopUpNoRights()
+        public PopUpNoRights(string x)
         {
             InitializeComponent();
             StartTimer();
+            TypeOfRight.Text = x;
         }
         public void StartTimer()
         {
             DispatcherTimer timer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromSeconds(10)
+                Interval = TimeSpan.FromSeconds(5)
             };
             timer.Tick += Window_Close ;
             timer.Start();
@@ -48,7 +47,7 @@ namespace View
         }
         public void Shop_Close_Window_Click(object sender, EventArgs e)
         {
-            MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs() { ScreenName = QueueScreen });
+            MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs() { ScreenName = ScreenNames.QueueScreen });
             Close();
         }
     }

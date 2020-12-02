@@ -7,7 +7,7 @@
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize">
     <Grid Background="#4F5A8A">
-        <TextBlock Text="You dont have this right&#x0a; More rights available in the shop" FontSize="30" Margin="0 0 0 50" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="White" />
+        <TextBlock x:Name="TypeOfRight" Text="You dont have this right&#x0a; More rights available in the shop" FontSize="30" Margin="0 0 0 50" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="White" />
         <Button Click="Shop_Close_Window_Click" Content="Go to shop" FontSize="30" Background="#F78D0E" Height="50" FontWeight="Bold" VerticalAlignment="Bottom" Foreground="White" />
     </Grid>
 </Window>

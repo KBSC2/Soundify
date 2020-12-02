@@ -6,6 +6,7 @@ using Castle.DynamicProxy;
 using Controller.DbControllers;
 using Model.Annotations;
 using Model.Database.Contexts;
+using Model.EventArgs;
 
 namespace Controller.Proxy
 {
@@ -48,8 +49,7 @@ namespace Controller.Proxy
             }
             else
             {
-                // Open not allowed thingy : Ben
-                Debug.WriteLine("NEE, MAG NIET");
+                PermissionController.NoRightsEvent?.Invoke(this, new NoRightsEventArgs() { PopUpText = "test" });
             }
         }
     }
