@@ -50,6 +50,7 @@ namespace Model.Database.Contexts
                 new RolePermissions() {RoleID = 1, PermissionID = 11},
                 new RolePermissions() {RoleID = 1, PermissionID = 12, Value = 100}
             });
+            Requests = GetQueryableMockDbSet(new List<Request>());
         }
 
         /**

@@ -20,8 +20,26 @@ namespace Tests.Requests
             _context = new MockDatabaseContext();
             _requestController = new RequestController(_context);
             _testRequest = new Request()
-                {UserID = 1, ArtistName = "TestArtist", ArtistReason = "Just because I'm testing"};
+                {ID = 1, UserID = 1, ArtistName = "TestArtist", ArtistReason = "Just because I'm testing"};
 
+        }
+
+        [Test]
+        public void AddRequest()
+        {
+            _requestController.CreateItem(_testRequest);
+
+            var requestItem = _requestController.GetItem(_testRequest.ID);
+
+            Assert.AreEqual(requestItem.ArtistName, "TestArtist");
+            Assert.AreEqual(requestItem.UserID, 1);
+            Assert.AreEqual(requestItem.ArtistReason, "Just because I'm testing");
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _requestController.DeleteItem(_testRequest.ID);
         }
     }
 }
