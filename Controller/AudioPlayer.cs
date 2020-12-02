@@ -14,17 +14,17 @@ namespace Controller
 {
     public class AudioPlayer
     {
-        public static IWavePlayer WaveOutDevice { get; set; }
-        public static SongAudioFile CurrentSongFile { get; set; }
-        public static Song CurrentSong { get; set; }
-        public static double MaxVolume { get; set; }
-        public static event EventHandler NextSong;
+        public IWavePlayer WaveOutDevice { get; set; }
+        public SongAudioFile CurrentSongFile { get; set; }
+        public Song CurrentSong { get; set; }
+        public double MaxVolume { get; set; }
+        public event EventHandler NextSong;
 
-        public static int CurrentSongIndex  { get; set; }
-        
+        public int CurrentSongIndex  { get; set; }
 
-        public static List<Song> NextInPlaylist { get; set; } = new List<Song>();
-        public static bool Looping { get; set; } = false;
+        public List<Song> NextInQueue { get; set; } = new List<Song>();
+        public List<Song> NextInPlaylist { get; set; } = new List<Song>();
+        public bool Looping { get; set; } = false;
 
         public static AudioPlayer Instance { get; set; }
 
@@ -47,12 +47,21 @@ namespace Controller
         [HasPermission(Permission = Permissions.SongNext)]
         public void Next()
         {
-            if (NextInPlaylist.Count == 0) return;
-            CurrentSongIndex++;
-            if (CurrentSongIndex >= NextInPlaylist.Count)
-                CurrentSongIndex = Looping ? 0 : CurrentSongIndex - 1;
+            if(NextInQueue.Count > 0)
+            {
+                PlaySong(NextInQueue[0]);
+                NextInQueue.RemoveAt(0);
+            } 
+            else
+            {
+                if (NextInPlaylist.Count == 0) return;
+                CurrentSongIndex++;
+                if (CurrentSongIndex >= NextInPlaylist.Count)
+                    CurrentSongIndex = Looping ? 0 : CurrentSongIndex - 1;
 
-            PlaySong(NextInPlaylist[CurrentSongIndex]);
+                PlaySong(NextInPlaylist[CurrentSongIndex]);
+            }
+            
         }
 
         public void Prev()
@@ -74,11 +83,15 @@ namespace Controller
             Task.Delay(500).ContinueWith(x => WaveOutDevice.Play());
         }
 
-        public void AddSong(Song song)
+        public void AddSongToPlaylistQueue(Song song)
         {
             NextInPlaylist.Add(song);
         }
 
+        public void AddSongToSongQueue(Song song)
+        {
+            NextInQueue.Add(song);
+        }
 
         private void ClearSongQueue()
         {
@@ -87,7 +100,7 @@ namespace Controller
 
         public void PlayPlaylist(Playlist playlist, int startIndex = -1)
         {
-            PlayPlaylist(PlaylistSongController.Create(new Model.Database.Contexts.DatabaseContext()).GetSongsFromPlaylist(playlist.ID), startIndex);
+            PlayPlaylist(PlaylistSongController.Create(new DatabaseContext()).GetSongsFromPlaylist(playlist.ID), startIndex);
         }
 
         public void PlayPlaylist(List<PlaylistSong> songs, int startIndex = -1)
@@ -95,7 +108,7 @@ namespace Controller
             ClearSongQueue();
             CurrentSongIndex = startIndex;
 
-            songs.ForEach(i => AddSong(i.Song));
+            songs.ForEach(i => AddSongToPlaylistQueue(i.Song));
 
             Next();
         }

@@ -29,7 +29,8 @@
                 </ListView.View>
 	            <ListView.Resources>
 		            <ContextMenu x:Key="ItemContextMenu">
-			            <MenuItem Header="Song information" Click="ListViewItem_RightClick" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
+                        <MenuItem Header="Add song to queue" Click="ListViewItem_RightClickAddQueue" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
+                        <MenuItem Header="Song information" Click="ListViewItem_RightClickSongInfo" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
                         <MenuItem Header="Remove song" Click="ListViewItem_RightClick_DeleteSong" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
                     </ContextMenu>
 	            </ListView.Resources>
