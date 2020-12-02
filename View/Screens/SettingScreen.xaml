@@ -13,7 +13,7 @@
                 <ComboBoxItem IsSelected="True">Normal</ComboBoxItem>
                 <ComboBoxItem>Loud</ComboBoxItem>
             </ComboBox>
-            <Image Margin="152,187,1006,364" Stretch="Fill" Source=".../Assets/Sound.png" Width="30" Height="25"/>
+            <Image Margin="152,187,1006,364" Stretch="Fill" Source="../Assets/Sound.png" Width="30" Height="25"/>
             <Button Content="Logout" HorizontalAlignment="Left" Margin="223,483,0,0" VerticalAlignment="Top" Width="130" Height="40" Background="#FFF70E0E" Foreground="White" BorderThickness="0" FontSize="26.6" FontWeight="Bold" Click="Logout_Button_Click"/>
             <Label Content="You are " HorizontalAlignment="Left" Margin="176,25,0,0" VerticalAlignment="Top" FontSize="26.5" Foreground="White" FontWeight="Bold"/>
             <!-- Data binding for the role goes here -->

@@ -25,7 +25,6 @@ namespace Controller
                 }
             }
         }
-
         public static string UploadFile(string inputPath, string outputPath)
         {
             var conf = SSHController.GetSSHConfiguration();

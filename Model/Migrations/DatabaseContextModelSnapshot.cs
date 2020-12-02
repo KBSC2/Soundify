@@ -2,8 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Model.Database.Contexts;
 
 namespace Model.Migrations
@@ -35,6 +33,25 @@ namespace Model.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Artists");
+                });
+
+            modelBuilder.Entity("Model.DbModels.Permission", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<bool>("HasValue")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Permissions");
                 });
 
             modelBuilder.Entity("Model.DbModels.Playlist", b =>
@@ -112,6 +129,24 @@ namespace Model.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("Model.DbModels.RolePermissions", b =>
+                {
+                    b.Property<int>("RoleID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PermissionID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("int");
+
+                    b.HasKey("RoleID", "PermissionID");
+
+                    b.HasIndex("PermissionID");
+
+                    b.ToTable("RolePermissions");
                 });
 
             modelBuilder.Entity("Model.DbModels.Song", b =>
@@ -211,6 +246,25 @@ namespace Model.Migrations
                     b.Navigation("Playlist");
 
                     b.Navigation("Song");
+                });
+
+            modelBuilder.Entity("Model.DbModels.RolePermissions", b =>
+                {
+                    b.HasOne("Model.DbModels.Permission", "Permission")
+                        .WithMany()
+                        .HasForeignKey("PermissionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Model.DbModels.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Permission");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Model.DbModels.Playlist", b =>

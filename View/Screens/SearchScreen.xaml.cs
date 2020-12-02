@@ -4,7 +4,6 @@ using System.Windows.Input;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
-using View.DataContexts;
 
 namespace View.Screens
 {
@@ -25,7 +24,7 @@ namespace View.Screens
             var playlist = ((Playlist)((MenuItem)sender).DataContext);
             var song = ((SongInfo)((MenuItem)((MenuItem)sender).Tag).DataContext).Song;
 
-            var playlistSongController = new PlaylistSongController(new DatabaseContext());
+            var playlistSongController = PlaylistSongController.Create(new DatabaseContext());
             playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
         }
     }
