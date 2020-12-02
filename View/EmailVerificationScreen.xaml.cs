@@ -22,6 +22,8 @@ namespace View
             InitializeComponent();
             _previousToken = token;
             _email = email;
+            var mailVerification = new MailVerificationTemplate(new MailAddress("info.soundify@gmail.com"), token);
+            new EmailController<MailVerificationTemplate>().SendEmail(mailVerification, email);
         }
 
         public void Confirm_On_Enter_Key(object sender, KeyEventArgs e)

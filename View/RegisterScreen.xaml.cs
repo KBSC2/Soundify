@@ -66,8 +66,6 @@ namespace View
 
             }
 
-            var mailVerification = new MailVerificationTemplate(new MailAddress("info.soundify@gmail.com"), token);
-            new EmailController<MailVerificationTemplate>().SendEmail(mailVerification, email);
         }
         private void Register_On_Enter_Key(object sender, KeyEventArgs e)
         {
