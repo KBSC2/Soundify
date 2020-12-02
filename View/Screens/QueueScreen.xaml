@@ -16,12 +16,22 @@
                 <Label Content="Artist" HorizontalAlignment="Left" Margin="550,20,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" FontWeight="Bold"/>
                 <Label Content="Duration" HorizontalAlignment="Left" Margin="800,20,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" FontWeight="Bold"/>
                 <Label Content="Now playing" HorizontalAlignment="Left" Margin="35,50,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
-                <Label Content="In queue" HorizontalAlignment="Left" Margin="35,120,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
-                <Label Content="{Binding CurrentSongName}" HorizontalAlignment="Left" Margin="300,60,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" />
+                <Label Content="{Binding NextInQueueLabelContent}" HorizontalAlignment="Left" Margin="35,110,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
+                <Label Content="Next in playlist" HorizontalAlignment="Left" Margin="{Binding NextInPlaylistLabelMargin}" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
+                <Label Content="{Binding CurrentSongName}" HorizontalAlignment="Left" Margin="303,60,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" />
                 <Label Content="{Binding CurrentSongArtist}" HorizontalAlignment="Left" Margin="550,60,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" />
                 <Label Content="{Binding CurrentSongDuration}" HorizontalAlignment="Left" Margin="800,60,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" />
             </Grid>
-            <ListView x:Name="QueueList" Margin="300,130,0,0" DataContext="{Binding}" Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding QueueItems}" FontSize="20">
+            <ListView Margin="300,120,0,0" x:Name="NextInQueue" DataContext="{Binding}" Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding NextInQueueItems}" FontSize="20">
+                <ListView.View>
+                    <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
+                        <GridViewColumn Header="Title" Width="250" DisplayMemberBinding="{Binding Song.Name}"/>
+                        <GridViewColumn Header="Artist" Width="250" DisplayMemberBinding="{Binding Song.Artist}"/>
+                        <GridViewColumn Header="Duration" Width="150" DisplayMemberBinding="{Binding Duration}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ListView Margin="{Binding NextInPlaylistMargin}" x:Name="NextInPlaylist" DataContext="{Binding}" Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding NextInPlaylistItems}" FontSize="20">
                 <ListView.View>
                     <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
                         <GridViewColumn Header="Title" Width="250" DisplayMemberBinding="{Binding Song.Name}"/>

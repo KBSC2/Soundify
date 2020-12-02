@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Controller.Proxy;
+using System.Security.Cryptography.X509Certificates;
 using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
@@ -78,7 +79,7 @@ namespace Controller.DbControllers
                 return RegistrationResults.PasswordNotStrongEnough;
 
             user.Password = PasswordController.EncryptPassword(password);
-            user.RoleID = 2;
+            user.RoleID = 1;
             // Insert user object into database
             CreateItem(user);
             return RegistrationResults.Succeeded;
@@ -87,14 +88,18 @@ namespace Controller.DbControllers
         // Can't this be a little bit more generic. Like update role or something??
         public void MakeArtist(User user)
         {
-            user.RoleID = 3;
+            user.RoleID = 2;
             UpdateItem(user);
+            ArtistController.Create(Context).CreateItem(new Artist() {ArtistName = user.Username}); // change user.Username to artist name
         }
 
         public void RevokeArtist(User user)
         {
-            user.RoleID = 2;
+            user.RoleID = 1;
             UpdateItem(user);
+
+            var artistID = ArtistController.Create(Context).GetArtistIDFromUserID(user.ID);
+            if(artistID != null) ArtistController.Create(Context).DeleteItem((int)artistID);
         }
 
         /**

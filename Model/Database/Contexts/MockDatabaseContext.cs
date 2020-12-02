@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Model.DbModels;
 using Moq;
 
@@ -18,6 +19,7 @@ namespace Model.Database.Contexts
         public override DbSet<Role> Roles { get; set; }
         public override DbSet<Permission> Permissions { get; set; }
         public override DbSet<RolePermissions> RolePermissions { get; set; }
+        public override DbSet<Artist> Artists { get; set; }
 
         /**
          * Create a database mock, to use for all unit tests
@@ -49,6 +51,7 @@ namespace Model.Database.Contexts
                 new RolePermissions() {RoleID = 1, PermissionID = 11},
                 new RolePermissions() {RoleID = 1, PermissionID = 12, Value = 100}
             });
+            Artists = GetQueryableMockDbSet(new List<Artist>());
         }
 
         /**

@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Model.DbModels;
 
@@ -6,11 +6,13 @@ namespace Model.Database.Contexts
 {
     public class DatabaseContext : IDatabaseContext
     {
+        // @Deprecated, will be removed
         public override DbSet<Song> Songs { get; set; }
         public override DbSet<Playlist> Playlists { get; set; }
         public override DbSet<PlaylistSong> PlaylistSongs { get; set; }
         public override DbSet<User> Users { get; set;  }
         public override DbSet<Role> Roles { get; set; }
+        public override DbSet<Artist> Artists { get; set; }
         public override DbSet<Permission> Permissions { get; set; }
         public override DbSet<RolePermissions> RolePermissions { get; set; }
 

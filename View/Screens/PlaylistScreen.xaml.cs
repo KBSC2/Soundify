@@ -14,23 +14,27 @@ namespace View.Screens
 {
     partial class PlaylistScreen : ResourceDictionary
     {
+        public static PlaylistScreen Instance { get; set; }
+
         public PlaylistScreen()
         {
             this.InitializeComponent();
-            AudioPlayer.NextSong += OnNextSong;
+            Instance = this;
         }
 
-        private void OnNextSong(object sender, EventArgs e)
+        public void OnNextSong(object sender, EventArgs e)
         {
             PlaylistDataContext.Instance.OnPropertyChanged("");
         }
-        private void ListViewItem_RightClick(object sender, RoutedEventArgs e)
+
+        private void ListViewItem_RightClickSongInfo(object sender, RoutedEventArgs e)
         {
             var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
 
             SongInfoScreen songInfoScreen = new SongInfoScreen(song);
             songInfoScreen.Show();
         }
+
         public void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
         {
             var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
@@ -38,6 +42,13 @@ namespace View.Screens
             PlaylistSongController.Create(new DatabaseContext()).RemoveFromPlaylist(song.ID, playlist.ID);
 
             PlaylistDataContext.Instance.OnPropertyChanged("");
+        }
+
+        public void ListViewItem_RightClickAddQueue(object sender, RoutedEventArgs e)
+        {
+            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
+
+            AudioPlayer.Instance.AddSongToSongQueue(song);
         }
 
         private void Play_Playlist_Button_Click(object sender, RoutedEventArgs e)
