@@ -30,9 +30,8 @@ namespace View.DataContexts
         public double CurrentTime => AudioPlayer.CurrentSongFile == null ? 0 : AudioPlayer.CurrentSongFile.CurrentTimeSong;
         public string TotalTimeLabel => AudioPlayer.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.CurrentSongFile.TotalTimeSong).ToString("m':'ss");
         public string CurrentTimeLabel => AudioPlayer.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.CurrentSongFile.CurrentTimeSong).ToString("m':'ss");
-
-        public User CurrentUser { get; set; }
-        public Role CurrentUserRole => CurrentUser == null ? new Role() : new RoleController(new DatabaseContext()).GetItem(CurrentUser.RoleID);
+        
+        public Role CurrentUserRole => UserController.CurrentUser == null ? new Role() : RoleController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.RoleID);
 
         private Timer _timer;
 

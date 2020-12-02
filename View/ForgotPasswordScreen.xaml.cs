@@ -1,7 +1,5 @@
-﻿using System;
-using System.Net.Mail;
+﻿using System.Net.Mail;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using Controller;
 using Controller.DbControllers;
@@ -38,7 +36,7 @@ namespace View
             var newPassword = this.NewPassword.Password;
             var repeatPassword = this.RepeatPassword.Password;
 
-            var controller = new UserController(new DatabaseContext());
+            var controller = UserController.Create(new DatabaseContext());
             var user = controller.GetUserFromEmailOrUsername(_email);
 
             if (token.Equals(user.Token))

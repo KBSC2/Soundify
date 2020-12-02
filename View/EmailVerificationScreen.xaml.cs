@@ -41,7 +41,7 @@ namespace View
         public void Confirm_Button_Click(object sender, RoutedEventArgs e)
         {
             var token = this.Token;
-            var controller = new UserController(new DatabaseContext());
+            var controller = UserController.Create(new DatabaseContext());
             var user = controller.GetUserFromEmailOrUsername(_email);
             if (token.Text.Equals(_previousToken))
             {

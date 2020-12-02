@@ -62,14 +62,20 @@ namespace Controller
         // DELETE
         public virtual void DeleteItem(int id)
         {
-            var item = GetItem(id);
-            Set.Remove(item);
+            try
+            {
+                var item = GetItem(id);
+                Set.Remove(item);
 
-            // If the database is a mock one, do not use the context (not required)
-            if (!RealDatabase()) return;
+                // If the database is a mock one, do not use the context (not required)
+                if (!RealDatabase()) return;
 
-            Context.Entry(item).State = EntityState.Deleted;
-            Context.SaveChanges();
+                Context.Entry(item).State = EntityState.Deleted;
+                Context.SaveChanges();
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+            }
         }
 
         // GET LIST

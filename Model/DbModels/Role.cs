@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System.Text;
-using System.Windows.Data;
-using System.Windows.Media;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Model.DbModels
 {
