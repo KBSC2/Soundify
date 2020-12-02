@@ -90,7 +90,7 @@ namespace Controller.DbControllers
         {
             user.RoleID = 2;
             UpdateItem(user);
-            new ArtistController(new DatabaseContext()).CreateItem(new Artist() {ArtistName = user.Username}); // change user.Username to artist name
+            ArtistController.Create(new DatabaseContext()).CreateItem(new Artist() {ArtistName = user.Username}); // change user.Username to artist name
         }
 
         public void RevokeArtist(User user)
@@ -98,8 +98,8 @@ namespace Controller.DbControllers
             user.RoleID = 1;
             UpdateItem(user);
 
-            var artistID = new ArtistController(new DatabaseContext()).GetArtistIDFromUserID(user.ID);
-            if(artistID != null) new ArtistController(new DatabaseContext()).DeleteItem((int)artistID);
+            var artistID = ArtistController.Create(new DatabaseContext()).GetArtistIDFromUserID(user.ID);
+            if(artistID != null) ArtistController.Create(new DatabaseContext()).DeleteItem((int)artistID);
         }
 
         /**

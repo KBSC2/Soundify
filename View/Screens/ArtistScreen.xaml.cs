@@ -70,7 +70,7 @@ namespace View.Screens
             var artistName = ((Label)dataGrid.FindName("Artist"))?.Content.ToString();
             var songName = ((TextBox)dataGrid.FindName("Title"))?.Text;
 
-            new SongController(new DatabaseContext()).UploadSong(new Song {
+            SongController.Create(new DatabaseContext()).UploadSong(new Song {
                 Name = songName, 
                 Artist = artistName, 
                 Description = ((TextBox)dataGrid.FindName("Description"))?.Text, 
