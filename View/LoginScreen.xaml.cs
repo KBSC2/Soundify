@@ -45,7 +45,7 @@ namespace View
                 case LoginResults.Success:
                 {
                     UserController.CurrentUser = controller.GetUserFromEmailOrUsername(emailOrUsername);
-                    var main = new MainWindow();
+                    var main = MainWindow.InstanceMainWindow;
                     main.Show();
                     main.Focus();
                     this.Hide();
