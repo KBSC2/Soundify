@@ -10,7 +10,6 @@
         <!-- Start playlist screen -->
         <Grid x:Name="MainGrid"  Background="#FF303651" DataContext="{x:Static dataContexts:ArtistDataContext.Instance}">
             <Grid.Resources>
-                <Components:ID3ArtistsTagConverter x:Key="ArtistsTagConverter"/>
                 <Components:ID3DurationPropertyConverter x:Key="DurationConverter"/>
             </Grid.Resources>
 
