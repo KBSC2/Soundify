@@ -19,7 +19,7 @@ namespace View.Screens
             var listViewItem = (ListViewItem)sender;
             var songInfo = (SongInfo)listViewItem.Content;
 
-            var index = AudioPlayer.SongQueue.IndexOf(songInfo.Song);
+            var index = AudioPlayer.Instance.NextInPlaylist.IndexOf(songInfo.Song);
 
             AudioPlayer.Instance.PlayPlaylist(MainWindow.CurrentPlayList, index-1);
             QueueDataContext.Instance.OnPropertyChanged();

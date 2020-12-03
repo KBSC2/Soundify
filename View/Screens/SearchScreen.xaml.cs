@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
@@ -26,6 +27,13 @@ namespace View.Screens
 
             var playlistSongController = PlaylistSongController.Create(new DatabaseContext());
             playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
+        }
+
+        public void ListViewItem_RightClickAddQueue(object sender, RoutedEventArgs e)
+        {
+            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
+
+            AudioPlayer.Instance.AddSongToSongQueue(song);
         }
     }
 }

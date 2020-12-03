@@ -14,7 +14,7 @@ namespace View
         public string Duration { get; set; }
         public DateTime Added { get; set; }
         public int Index { get; set; }
-        public string Playing => AudioPlayer.CurrentSong == null ? "White" : Song.ID == AudioPlayer.CurrentSong.ID ? "#FFF78D0E" : "White";
+        public string Playing => AudioPlayer.Instance.CurrentSong == null ? "White" : Song.ID == AudioPlayer.Instance.CurrentSong.ID ? "#FFF78D0E" : "White";
 
         public SongInfo(Song song, PlaylistSong playlistSong) : this(song)
         {
