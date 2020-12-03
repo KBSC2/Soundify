@@ -34,7 +34,12 @@ namespace View.DataContexts
         public Role CurrentUserRole => UserController.CurrentUser == null ? new Role() : RoleController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.RoleID);
 
         public User CurrentUser { get; set; }
-        public bool IsArtist => /*CurrentUser != null && CurrentUser.RoleID == 2*/ true;
+
+        public bool? IsAdmin => UserController.CurrentUser != null
+            ? UserController.Create(new DatabaseContext())
+                .GetItem(UserController.CurrentUser.ID)?.RoleID.Equals(3)
+            : false;
+        public bool IsArtist => CurrentUser != null && CurrentUser.RoleID == 2;
 
         private Timer _timer;
 
