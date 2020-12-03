@@ -1,0 +1,13 @@
+﻿<Window x:Class="View.PopUpNoRights"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="SongInfoScreen" Height="200" Width="500"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+    <Grid Background="{DynamicResource Background4Color }">
+        <TextBlock x:Name="TypeOfRight" Text="You dont have this feature&#x0a;More features available in the shop" FontSize="20" Margin="0 0 0 50" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="White" />
+        <Button x:Name="ShopButton" Click="Shop_Close_Window_Click" Content="Go to shop" FontSize="30" Background="{DynamicResource Orange}" Height="50" FontWeight="Bold" VerticalContentAlignment="Top" VerticalAlignment="Bottom" Foreground="White" />
+    </Grid>
+</Window>

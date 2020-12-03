@@ -81,12 +81,13 @@ namespace Soundify
             SetScreen(ScreenNames.HomeScreen);
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
 
-            FileCache.Instance.GetFile("images/gangnamstyle.png");
             if (UserController.CurrentUser == null)
             {
                 InstanceLoginScreen.Show();
                 InstanceMainWindow.Hide();
             }
+            
+            PermissionController.NoRightsEvent += ShowNoRights;
         }
         private void Play_Button_Click(object sender, RoutedEventArgs e)
         {
@@ -180,6 +181,12 @@ namespace Soundify
                 SearchDataContext.Instance.SearchTerms = text.Split(" ").ToList();
                 SearchDataContext.Instance.OnPropertyChanged("");
             }   
+        }
+
+        public void ShowNoRights(object sender, NoRightsEventArgs e)
+        {
+            PopUpNoRights popUpNoRights = new PopUpNoRights(e.Permission);
+            popUpNoRights.ShowDialog();
         }
     }
 }
