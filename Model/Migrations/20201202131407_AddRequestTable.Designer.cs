@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Model.Database.Contexts;
 
 namespace Model.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20201202131407_AddRequestTable")]
+    partial class AddRequestTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,10 +128,11 @@ namespace Model.Migrations
                     b.Property<string>("ArtistReason")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RequestType")
-                        .HasColumnType("int");
+                    b.Property<string>("RequestType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SongID")
+                    b.Property<int>("SongID")
                         .HasColumnType("int");
 
                     b.Property<int>("UserID")
@@ -285,10 +288,12 @@ namespace Model.Migrations
                 {
                     b.HasOne("Model.DbModels.Song", "Song")
                         .WithMany()
-                        .HasForeignKey("SongID");
+                        .HasForeignKey("SongID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Model.DbModels.User", "User")
-                        .WithMany("RequestsList")
+                        .WithMany()
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -325,11 +330,6 @@ namespace Model.Migrations
             modelBuilder.Entity("Model.DbModels.Song", b =>
                 {
                     b.Navigation("PlaylistSongs");
-                });
-
-            modelBuilder.Entity("Model.DbModels.User", b =>
-                {
-                    b.Navigation("RequestsList");
                 });
 #pragma warning restore 612, 618
         }

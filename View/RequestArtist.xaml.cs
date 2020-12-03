@@ -2,6 +2,10 @@
 using System.Windows;
 using System.Windows.Input;
 using Controller;
+using Controller.DbControllers;
+using Model.Database.Contexts;
+using Model.DbModels;
+using Model.Enums;
 using Model.MailTemplates;
 
 namespace View
@@ -25,12 +29,30 @@ namespace View
 
         private void Confirm_Button_Click(object sender, RoutedEventArgs e)
         {
-            var ArtistName = this.ArtistName.Text;
-            var ArtistReason = this.ArtistReason.Text;
+            var artistName = this.ArtistName.Text;
+            var artistReason = this.ArtistReason.Text;
 
             var emailController = new EmailController<MailArtistVerification>();
-            var email =  new MailArtistVerification(new MailAddress("info.soundify@gmail.com"), ArtistName, ArtistReason);
+            var email =  new MailArtistVerification(new MailAddress("info.soundify@gmail.com"), artistName, artistReason);
             emailController.SendEmail(email, "info.soundify@gmail.com");
+
+            var request = new Request()
+            {
+                ArtistName = artistName, 
+                ArtistReason = artistReason, 
+                UserID = UserController.CurrentUser.ID,
+                RequestType = RequestType.Artist,
+                SongID = null
+            };
+
+            var userController = UserController.Create(new DatabaseContext());
+            var user = userController.GetItem(UserController.CurrentUser.ID);
+            user.RequestedArtist = true;
+            userController.UpdateItem(user);
+
+            var createRequest = RequestController.Create(new DatabaseContext());
+            createRequest.CreateItem(request);
+
             this.Close();
         }
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Controller.DbControllers;
+﻿using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using NUnit.Framework;
@@ -18,7 +15,7 @@ namespace Tests.Requests
         public void SetUp()
         {
             _context = new MockDatabaseContext();
-            _requestController = new RequestController(_context);
+            _requestController = RequestController.Create(_context);
             _testRequest = new Request()
                 {ID = 1, UserID = 1, ArtistName = "TestArtist", ArtistReason = "Just because I'm testing"};
 
