@@ -181,12 +181,15 @@ namespace Soundify
             }   
         }
 
+<<<<<<< HEAD
         public void ShowNoRights(object sender, NoRightsEventArgs e)
         {
             PopUpNoRights popUpNoRights = new PopUpNoRights(e.Permission);
             popUpNoRights.ShowDialog();
         }
 
+=======
+>>>>>>> 3b7c06c915062ecc73a54a7a37c33a33dfdc311b
         private void WindowClosing(object sender, EventArgs e)
         {
             SSHController.Instance.CloseSSHTunnel();
