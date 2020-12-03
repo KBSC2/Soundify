@@ -21,24 +21,24 @@ namespace Controller
                 return _instance;
             }
         }
-        private int Counter { get; set; }
+        private int counter { get; set; }
         private UserController UserController { get; set; }
         
 
         private CoinsController()
         {
-            Counter = 0;
+            counter = 0;
             UserController = UserController.Create(new DatabaseContext());
         }
 
         public void EarnCoins(object sender, EventArgs e)
         {
             if(AudioPlayer.Instance.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing)
-                Counter += 1;
+                counter += 1;
 
-            if(Counter == 1000)
+            if(counter == 1000)
             {
-                Counter = 0;
+                counter = 0;
                 AddCoin(UserController.CurrentUser);
             } 
         }
