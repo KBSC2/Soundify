@@ -45,12 +45,11 @@ namespace Controller
         }
 
         [HasPermission(Permission = Permissions.SongNext)]
-        public void Next()
+        public void Next(bool playQueue = true)
         {
-            if(NextInQueue.Count > 0)
+            if(NextInQueue.Count > 0 && playQueue)
             {
-                PlaySong(NextInQueue[0]);
-                NextInQueue.RemoveAt(0);
+                PlayQueue();
             } 
             else
             {
@@ -61,7 +60,6 @@ namespace Controller
 
                 PlaySong(NextInPlaylist[CurrentSongIndex]);
             }
-            
         }
 
         public void Prev()
@@ -98,19 +96,25 @@ namespace Controller
             NextInPlaylist.Clear();
         }
 
-        public void PlayPlaylist(Playlist playlist, int startIndex = -1)
+        public void PlayPlaylist(Playlist playlist, int startIndex = -1, bool playQueue = true)
         {
-            PlayPlaylist(PlaylistSongController.Create(new DatabaseContext()).GetSongsFromPlaylist(playlist.ID), startIndex);
+            PlayPlaylist(PlaylistSongController.Create(new DatabaseContext()).GetSongsFromPlaylist(playlist.ID), startIndex, playQueue);
         }
 
-        public void PlayPlaylist(List<PlaylistSong> songs, int startIndex = -1)
+        public void PlayPlaylist(List<PlaylistSong> songs, int startIndex = -1, bool playQueue = true)
         {
             ClearSongQueue();
             CurrentSongIndex = startIndex;
 
             songs.ForEach(i => AddSongToPlaylistQueue(i.Song));
 
-            Next();
+            Next(playQueue);
+        }
+
+        public void PlayQueue(int startIndex = 0)
+        {
+            PlaySong(NextInQueue[startIndex]);
+            NextInQueue.RemoveAt(startIndex);
         }
     }
 }

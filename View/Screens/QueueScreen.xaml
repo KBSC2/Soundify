@@ -30,20 +30,10 @@
                         <GridViewColumn Header="Duration" Width="150" DisplayMemberBinding="{Binding Duration}"/>
                     </GridView>
                 </ListView.View>
-            </ListView>
-            <ListView Margin="{Binding NextInPlaylistMargin}" x:Name="NextInPlaylist" DataContext="{Binding}" Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding NextInPlaylistItems}" FontSize="20">
-                <ListView.View>
-                    <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
-                        <GridViewColumn Header="Title" Width="250" DisplayMemberBinding="{Binding Song.Name}"/>
-                        <GridViewColumn Header="Artist" Width="250" DisplayMemberBinding="{Binding Song.Artist}"/>
-                        <GridViewColumn Header="Duration" Width="150" DisplayMemberBinding="{Binding Duration}"/>
-                    </GridView>
-                </ListView.View>
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
-                        <EventSetter Event="MouseDoubleClick" Handler="SongRow_Click" />
+                        <EventSetter Event="MouseDoubleClick" Handler="NextInQueue_SongRow_Click" />
                         <Setter Property="Foreground" Value="White" />
-                        <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="White" />
@@ -57,6 +47,39 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
+            <ListView Margin="{Binding NextInPlaylistMargin}" x:Name="NextInPlaylist" DataContext="{Binding}" Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding NextInPlaylistItems}" FontSize="20">
+                <ListView.View>
+                    <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
+                        <GridViewColumn Header="Title" Width="250" DisplayMemberBinding="{Binding Song.Name}"/>
+                        <GridViewColumn Header="Artist" Width="250" DisplayMemberBinding="{Binding Song.Artist}"/>
+                        <GridViewColumn Header="Duration" Width="150" DisplayMemberBinding="{Binding Duration}"/>
+                    </GridView>
+                </ListView.View>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <EventSetter Event="MouseDoubleClick" Handler="NextInPlaylist_SongRow_Click" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#FF8390E4" />
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <Grid Margin="0,400,0,0" Background="#FF303651" Height="47" VerticalAlignment="Top">
+                <Button Content=" /\ " Tag="{Binding ElementName=MainGrid}"  HorizontalAlignment="Left" Margin="152,0,0,0" VerticalAlignment="Center" Background="{DynamicResource HighlighBlue}" Foreground="White" Click="NextInPlaylist_MoveUp_Click" Height="25" Width="25" BorderBrush="{x:Null}"/>
+                <Button Content=" \/ " Tag="{Binding ElementName=MainGrid}" HorizontalAlignment="Left" Margin="185,0,0,0" VerticalAlignment="Center" Background="{DynamicResource HighlighBlue}" Foreground="White" Click="NextInPlaylist_MoveDown_Click" Height="25" Width="25" BorderBrush="{x:Null}"/>
+            </Grid>
+            <Grid Margin="0,500,0,0" Background="#FF303651" Height="47" VerticalAlignment="Top">
+                <Button Content=" /\ " Tag="{Binding ElementName=MainGrid}"  HorizontalAlignment="Left" Margin="152,0,0,0" VerticalAlignment="Center" Background="{DynamicResource HighlighBlue}" Foreground="White" Click="NextInQueue_MoveUp_Click" Height="25" Width="25" BorderBrush="{x:Null}"/>
+                <Button Content=" \/ " Tag="{Binding ElementName=MainGrid}" HorizontalAlignment="Left" Margin="185,0,0,0" VerticalAlignment="Center" Background="{DynamicResource HighlighBlue}" Foreground="White" Click="NextInQueue_MoveDown_Click" Height="25" Width="25" BorderBrush="{x:Null}"/>
+            </Grid>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
