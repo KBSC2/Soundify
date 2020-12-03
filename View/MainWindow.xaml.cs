@@ -88,8 +88,10 @@ namespace Soundify
         private void Play_Button_Click(object sender, RoutedEventArgs e)
         {
             if (AudioPlayer.Instance.CurrentSongFile == null)
+            {
                 AudioPlayer.Instance.Next();
                 QueueDataContext.Instance.OnPropertyChanged();
+            }
 
             if (AudioPlayer.Instance.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.Instance.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
             {
