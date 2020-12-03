@@ -21,7 +21,7 @@ namespace Controller.Proxy
 
         /**
          * Every time a method within a routed class gets called, it goes through this fuction.
-         * invocation.Proceed() is what calles the actual method.
+         * invocation.Proceed() is what calls the actual method.
          *
          * If the function has an HasPermission annotation, check for permissions.
          * If not allowed display the Not Allowed popup

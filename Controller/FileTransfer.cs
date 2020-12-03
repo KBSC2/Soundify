@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Model.Annotations;
+using Model.Enums;
 using Renci.SshNet;
 
 namespace Controller
@@ -25,6 +27,8 @@ namespace Controller
                 }
             }
         }
+
+        [HasPermission(Permission = Permissions.SongUpload)]
         public static string UploadFile(string inputPath, string outputPath)
         {
             var conf = SSHController.GetSSHConfiguration();

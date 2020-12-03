@@ -38,8 +38,8 @@ namespace Soundify
         {
             get
             {
-                if (_instanceMainWindow == null) _instanceMainWindow = new MainWindow();
-                return _instanceMainWindow;
+                if (instanceMainWindow == null) instanceMainWindow = new MainWindow();
+                return instanceMainWindow;
             }
         }
 
@@ -47,19 +47,20 @@ namespace Soundify
         {
             get
             {
-                if (_instanceLoginScreen == null) _instanceLoginScreen = new LoginScreen();
-                return _instanceLoginScreen;
+                if (instanceLoginScreen == null) instanceLoginScreen = new LoginScreen();
+                return instanceLoginScreen;
             }
         }
 
-        private static MainWindow _instanceMainWindow;
-        private static LoginScreen _instanceLoginScreen;
+        private static MainWindow instanceMainWindow;
+        private static LoginScreen instanceLoginScreen;
 
         public MainWindow()
         {
             AudioPlayer.Create(new DatabaseContext());
+
             AudioPlayer.Instance.NextSong += PlaylistScreen.Instance.OnNextSong;
-            _instanceMainWindow = this;
+            instanceMainWindow = this;
 
             if (!Directory.Exists(Path.GetTempPath() + "Soundify"))
                 Directory.CreateDirectory(Path.GetTempPath() + "Soundify");
@@ -80,13 +81,12 @@ namespace Soundify
             SetScreen(ScreenNames.HomeScreen);
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
 
-            FileCache.Instance.GetFile("images/gangnamstyle.png");
             if (UserController.CurrentUser == null)
             {
                 InstanceLoginScreen.Show();
                 InstanceMainWindow.Hide();
             }
-
+            
             PermissionController.NoRightsEvent += ShowNoRights;
         }
         private void Play_Button_Click(object sender, RoutedEventArgs e)

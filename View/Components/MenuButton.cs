@@ -7,7 +7,7 @@ using Soundify;
 
 namespace View.Components
 {
-    public class MenuButton : Button
+    public class MenuButton : PermissionButton
     {
 
         public ScreenNames ScreenName { get; set; }

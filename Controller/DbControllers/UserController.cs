@@ -34,7 +34,7 @@ namespace Controller.DbControllers
         }
 
         /**
-         * Attept to login the user
+         * Attempt to login the user
          *
          * @param emailOrUsername User's email or username to log in
          * @param password Password to check against database's password hash
