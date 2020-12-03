@@ -22,13 +22,13 @@ namespace Controller
             }
         }
         private int counter { get; set; }
-        private UserController UserController { get; set; }
+        private UserController userController { get; set; }
         
 
         private CoinsController()
         {
             counter = 0;
-            UserController = UserController.Create(new DatabaseContext());
+            userController = UserController.Create(new DatabaseContext());
         }
 
         public void EarnCoins(object sender, EventArgs e)
@@ -45,13 +45,13 @@ namespace Controller
         public void AddCoin(User user)
         {
             user.Coins += 1;
-            UserController.UpdateItem(user);
+            userController.UpdateItem(user);
         }
 
         public void RemoveCoin(User user)
         {
             user.Coins -= 1;
-            UserController.UpdateItem(user);
+            userController.UpdateItem(user);
         }
     }
 }
