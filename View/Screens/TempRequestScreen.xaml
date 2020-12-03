@@ -13,7 +13,7 @@
             <Label Content="Artist request queue" HorizontalAlignment="Left" Margin="150,62,0,0" VerticalAlignment="Top" Foreground="White" FontSize="33.3" FontWeight="Bold" />
             <ScrollViewer Margin="52,157,52,49" VerticalScrollBarVisibility="Auto">
                 <Grid x:Name="RequestArtistGrid" Height="498" Width="536">
-                    <Expander Header="Artistname would like to become an artist" FontSize="20" HorizontalAlignment="Center" Height="156" Margin="0,10,0,0" VerticalAlignment="Top" Width="516" RenderTransformOrigin="0.5,0.5">
+                    <Expander Header="Artistname would like to become an artist" FontSize="20" Height="156" Margin="0,10,10,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Stretch" Width="516">
                         <TextBlock TextWrapping="Wrap" FontSize="13.3">
                             Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,
                         </TextBlock>

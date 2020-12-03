@@ -1,4 +1,5 @@
 ﻿using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Controller;
@@ -7,6 +8,7 @@ using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
 using Model.MailTemplates;
+using View.DataContexts;
 
 namespace View
 {

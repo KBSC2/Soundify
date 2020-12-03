@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
+using View.DataContexts;
 
 namespace View.Screens
 {
@@ -20,39 +21,45 @@ namespace View.Screens
     /// </summary>
     public partial class RequestScreen : ResourceDictionary
     {
-        public static RequestScreen RequestScreenInstance { get; set; }
-        private List<Request> artistRequestsList = RequestController.Create(new DatabaseContext()).GetArtistRequests();
         public RequestScreen()
         {
-            RequestScreenInstance = this;
             InitializeComponent();
         }
-        public void AddArtistRequests()
+
+        private void Approve_Button_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var request in artistRequestsList)
-            {
-                Expander expander = new Expander();
-                expander.Header = $"{request.ArtistName} would like to become an artist";
-                Grid grid = new Grid();
+            var requestID = (int)((Button) sender).Tag;
+            var request = RequestController.Create(new DatabaseContext()).GetItem(requestID);
+            var userID = request.UserID;
 
-                var textblock = new TextBlock() { Text = request.ArtistReason };
-                textblock.SetValue(Grid.RowProperty, 0);
-                textblock.SetValue(Grid.ColumnSpanProperty, 2);
-                grid.Children.Add(textblock);
+            var userController = UserController.Create(new DatabaseContext());
+            var user = userController.GetItem(userID);
+            user.RoleID = 2;
+            userController.UpdateItem(user);
 
-                var approveButton = new Button() { Content = "Approve" };
-                approveButton.SetValue(Grid.RowProperty, 1);
-                approveButton.SetValue(Grid.ColumnProperty, 0);
-                grid.Children.Add(approveButton);
+            ArtistController.Create(new DatabaseContext()).CreateItem(new Artist(){ArtistName = request.ArtistName, UserID = userID});
 
+            RequestController.Create(new DatabaseContext()).DeleteItem(requestID);
 
-                var declineButton = new Button() { Content = "Decline" };
-                declineButton.SetValue(Grid.RowProperty, 1);
-                declineButton.SetValue(Grid.ColumnProperty, 1);
-                grid.Children.Add(declineButton);
+            //Doesn't work, fix
+            //RequestDatacontext.Instance.OnPropertyChanged("");
+        }
 
-                ((Grid)FindName("RequestScreen"))?.Children.Add(grid);
-            }
+        private void Decline_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var requestID = (int)((Button)sender).Tag;
+            var request = RequestController.Create(new DatabaseContext()).GetItem(requestID);
+            var userID = request.UserID;
+
+            var userController = UserController.Create(new DatabaseContext());
+            var user = userController.GetItem(userID);
+            user.RequestedArtist = false;
+            userController.UpdateItem(user);
+
+            RequestController.Create(new DatabaseContext()).DeleteItem(requestID);
+
+            //Doesn't work, fix
+            //RequestDatacontext.Instance.OnPropertyChanged("");
         }
     }
 }
