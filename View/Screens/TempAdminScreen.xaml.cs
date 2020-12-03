@@ -27,7 +27,6 @@ namespace View.Screens
         private void Review_Button_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.InstanceMainWindow.SetScreen(ScreenNames.RequestScreen);
-            RequestScreen.RequestScreenInstance.AddArtistRequests();
         }
     }
 }
