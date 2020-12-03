@@ -14,7 +14,11 @@ using System.Windows.Input;
 using Model.Enums;
 using View;
 using View.DataContexts;
+
+using System.Timers;
+
 using View.Screens;
+
 
 namespace Soundify
 {
@@ -66,6 +70,7 @@ namespace Soundify
                     Directory.CreateDirectory(Path.GetTempPath() + "Soundify/" + path.ToString().ToLower());
             }
 
+
             InitializeComponent();
             SSHController.Instance.OpenSSHTunnel();
 
@@ -82,7 +87,6 @@ namespace Soundify
                 InstanceMainWindow.Hide();
             }
         }
-
         private void Play_Button_Click(object sender, RoutedEventArgs e)
         {
             if (AudioPlayer.Instance.CurrentSongFile == null)
