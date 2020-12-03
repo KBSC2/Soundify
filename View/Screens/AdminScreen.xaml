@@ -4,7 +4,8 @@
     <DataTemplate x:Key="AdminScreen">
         <!-- Start homescreen screen -->
         <Grid Margin="0,0,0,0" Background="#FF303651" >
-            <TextBlock Text="{Binding NumberOfArtistRequests, StringFormat='You have \{0\} artist requests'}"  HorizontalAlignment="Left" Margin="90,82,0,0" VerticalAlignment="Top" FontSize="26.5" Foreground="White" FontWeight="Bold"/>
+            <Button Content="Review requests" HorizontalAlignment="Left" Margin="174,111,0,0" VerticalAlignment="Top" Width="226" Height="43" FontSize="26.5"  Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="Review_Button_Click" />
+            <Label Content="You have 100 requests" HorizontalAlignment="Left" Margin="138,42,0,0" VerticalAlignment="Top" FontSize="26.5" Foreground="White" FontWeight="Bold" Width="298"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

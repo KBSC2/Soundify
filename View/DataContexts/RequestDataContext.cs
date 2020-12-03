@@ -9,12 +9,11 @@ using Model.DbModels;
 
 namespace View.DataContexts
 {
-    public class AdminDataContext : INotifyPropertyChanged
+    public class RequestDatacontext : INotifyPropertyChanged
     {
-        private static AdminDataContext _instance;
-        public static AdminDataContext Instance => _instance ??= new AdminDataContext();
-        public int NumberOfArtistRequest => RequestController.Create(new DatabaseContext()).GetArtistRequests().Count;
+        public List<Request> ArtistRequests => RequestController.Create(new DatabaseContext()).GetArtistRequests();
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(""));

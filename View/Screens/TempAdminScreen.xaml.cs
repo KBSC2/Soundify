@@ -9,6 +9,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Model;
+using Soundify;
 
 namespace View.Screens
 {
@@ -20,6 +22,12 @@ namespace View.Screens
         public TempAdminScreen()
         {
             InitializeComponent();
+        }
+
+        private void Review_Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.InstanceMainWindow.SetScreen(ScreenNames.RequestScreen);
+            RequestScreen.RequestScreenInstance.AddArtistRequests();
         }
     }
 }
