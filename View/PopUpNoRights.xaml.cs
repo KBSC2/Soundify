@@ -28,12 +28,12 @@ namespace View
     /// </summary>
     public partial class PopUpNoRights : Window
     {
-        //change to max songs in playlist
-        private int maxSongsInPlaylist = 1;
         public PopUpNoRights(Permissions permission)
         {
             InitializeComponent();
             StartTimer();
+            
+            //Decides what text should show up in the popup message
             switch (permission)
             {
                 case Permissions.SongShuffle:
@@ -70,8 +70,9 @@ namespace View
                     }
                 case Permissions.PlaylistSongsLimit:
                     {
-                        //change to max songs in playlist
-                        TypeOfRight.Text = $"You don't have reached the\n{maxSongsInPlaylist} songs that you can add to the playlist\nMore features available in the shop";
+                        var rpController = RolePermissionsController.Create(new DatabaseContext());
+                        var max = rpController.GetPermissionValueCount(UserController.CurrentUser, permission);
+                        TypeOfRight.Text = $"You have reached the maximum of\n{max} songs that you can add to the playlist\nMore features available in the shop";
                         break;
                     }
                 case Permissions.AccountUsernameChange:
