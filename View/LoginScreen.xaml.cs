@@ -1,13 +1,11 @@
 ﻿using System;
 using System.IO;
-using System.Net.Mail;
 using System.Windows;
 using System.Windows.Input;
 using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.Enums;
-using Model.MailTemplates;
 using Soundify;
 
 namespace View
@@ -104,12 +102,19 @@ namespace View
             signupScreen.Show();
             signupScreen.Focus();
         }
+
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)
         {
             var forgotPasswordTokenSendScreen = new ForgotpasswordTokenSendScreen();
             this.Hide();
             forgotPasswordTokenSendScreen.Show();
             forgotPasswordTokenSendScreen.Focus();
+        }
+        private void WindowClosing(object sender, EventArgs e)
+        {
+            SSHController.Instance.CloseSSHTunnel();
+            Application.Current.Shutdown();
+            MainWindow.InstanceMainWindow?.Close();
         }
     }
 }

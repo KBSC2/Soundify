@@ -15,6 +15,7 @@ namespace View
         {
             InitializeComponent();
         }
+
         private void Confirm_On_Enter_Key(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
@@ -25,18 +26,15 @@ namespace View
 
         private void Confirm_Button_Click(object sender, RoutedEventArgs e)
         {
-            var ArtistName = this.ArtistName.Text;
-            var ArtistReason = this.ArtistReason.Text;
-
-            var emailController = new EmailController<MailArtistVerification>();
-            var email =  new MailArtistVerification(new MailAddress("info.soundify@gmail.com"), ArtistName, ArtistReason);
+            var emailController = new EmailController();
+            var email =  new MailArtistVerification(new MailAddress("info.soundify@gmail.com"), this.ArtistName.Text, this.ArtistReason.Text);
             emailController.SendEmail(email, "info.soundify@gmail.com");
             this.Close();
         }
+
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
     }
-
 }

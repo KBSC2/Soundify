@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using Model.Enums;
 
 namespace Controller
 {
@@ -28,7 +29,7 @@ namespace Controller
 
         /**
          * Get the password strength of a string
-         * Check multiple test cases, and increment score if check is succesfull 
+         * Check multiple test cases, and increment score if check is successful
          *
          * @param password Password to check strength
          *
@@ -55,19 +56,6 @@ namespace Controller
                 score++;
 
             return (PasswordScore)score;
-        }
-
-        /**
-         * Enum to define password strenghts
-         */
-        public enum PasswordScore
-        {
-            Blank = 0,
-            VeryWeak = 1,
-            Weak = 2,
-            Medium = 3,
-            Strong = 4,
-            VeryStrong = 5
         }
     }
 }

@@ -10,11 +10,11 @@ namespace Controller.DbControllers
 {
     public class PlaylistSongController
     {
-        private IDatabaseContext _context;
-        private SongController _songController;
-        private PlaylistController _playlistController;
+        private IDatabaseContext context;
+        private SongController songController;
+        private PlaylistController playlistController;
 
-        private DbSet<PlaylistSong> _set;
+        private DbSet<PlaylistSong> set;
 
         public static PlaylistSongController Create(IDatabaseContext context)
         {
@@ -23,10 +23,10 @@ namespace Controller.DbControllers
 
         protected PlaylistSongController(IDatabaseContext context)
         {
-            this._context = context;
-            _set = _context.PlaylistSongs;
-            _songController = SongController.Create(context);
-            _playlistController = PlaylistController.Create(context);
+            this.context = context;
+            set = context.PlaylistSongs;
+            songController = SongController.Create(context); 
+            playlistController = PlaylistController.Create(context);
         }
 
         public void AddSongToPlaylist(int songID, int playlistID)
@@ -40,98 +40,96 @@ namespace Controller.DbControllers
             {
                 PlaylistID = playlistID, 
                 SongID = songID, 
-                Index = _set.Count(), 
-                Song = _songController.GetItem(songID), 
-                Playlist = _playlistController.GetItem(playlistID), 
+                Index = set.Count(), 
+                Song = songController.GetItem(songID), 
+                Playlist = playlistController.GetItem(playlistID), 
                 Added = DateTime.Now
             };
 
-            _set.Add(playlistSong);
+            set.Add(playlistSong);
 
             if (!RealDatabase()) return;
 
-            _context.Entry(playlistSong).State = EntityState.Added;
-            _context.SaveChanges();
+            context.Entry(playlistSong).State = EntityState.Added;
+            context.SaveChanges();
         }
 
-        public void ReorderSongIndexes(int playlistID)
+        public void ReorderSongIndexes(int playlistId)
         {
-            var playlistSongs = _set.Where(x => x.PlaylistID == playlistID).OrderBy(x => x.Index)
-                .ToList();
-            for (var index = 0; index < playlistSongs.Count; index++)
-            {
-                if (playlistSongs[index].Index != index)
+            set.Where(x => x.PlaylistID == playlistId)
+                .OrderBy(x => x.Index)
+                .Select((p,i) => new {song = p, index = i})
+                .Where(p => p.song.Index != p.index).ToList()
+                .ForEach(p =>
                 {
-                    var playlistSong = playlistSongs[index];
-                    playlistSong.Index = index;
-                    this.UpdatePlaylistSong(playlistSong);
-                }
-            }
+                    p.song.Index = p.index;
+                    this.UpdatePlaylistSong(p.song);
+                });
         }
 
-        public void RemoveFromPlaylist(int songID, int playlistID)
+        public void RemoveFromPlaylist(int songId, int playlistId)
         {
-            if (!RowExists(songID, playlistID))
+            if (!RowExists(songId, playlistId))
                 throw new ArgumentOutOfRangeException();
 
-            var playlistSong = GetPlaylistSong(playlistID, songID);
+            var playlistSong = GetPlaylistSong(playlistId, songId);
 
-            _set.Remove(playlistSong);
+            set.Remove(playlistSong);
 
             if (RealDatabase())
             {
-                _context.Entry(playlistSong).State = EntityState.Deleted;
-                _context.SaveChanges();
+                context.Entry(playlistSong).State = EntityState.Deleted;
+                context.SaveChanges();
             }
 
-            ReorderSongIndexes(playlistID);
+            ReorderSongIndexes(playlistId);
         }
 
-        public bool RowExists(int songID, int playlistID)
+        public bool RowExists(int songId, int playlistId)
         {
-            return _set
-                .Where(p => p.PlaylistID == playlistID)
-                .Any(s => s.SongID == songID);
+            return set
+                .Where(p => p.PlaylistID == playlistId)
+                .Any(s => s.SongID == songId);
         }
 
-        public List<PlaylistSong> GetSongsFromPlaylist(int playlistID)
+        public List<PlaylistSong> GetSongsFromPlaylist(int playlistId)
         {
-            ReorderSongIndexes(playlistID);
-            var songs = _set.Where(ps => ps.PlaylistID == playlistID).OrderBy(ps => ps.Index).ToList();
+            ReorderSongIndexes(playlistId);
+            var songs = set.Where(ps => ps.PlaylistID == playlistId).OrderBy(ps => ps.Index).ToList();
             songs.ForEach(s =>
             {
-                s.Song = _songController.GetItem(s.SongID);
-                s.Playlist = _playlistController.GetItem(s.PlaylistID);
+                s.Song = songController.GetItem(s.SongID);
+                s.Playlist = playlistController.GetItem(s.PlaylistID);
             });
 
             return songs;
         }
 
-        public PlaylistSong GetPlaylistSong(int playlistID, int songID)
+        public PlaylistSong GetPlaylistSong(int playlistId, int songId)
         {
-            return GetSongsFromPlaylist(playlistID)
-                .First(s => s.SongID == songID);
+            return GetSongsFromPlaylist(playlistId)
+                .First(s => s.SongID == songId);
         }
 
-        public PlaylistSong GetPlaylistSongFromIndex(int playlistID, int index)
+        public PlaylistSong GetPlaylistSongFromIndex(int playlistId, int index)
         {
-            return GetSongsFromPlaylist(playlistID)
+            return GetSongsFromPlaylist(playlistId)
                 .First(s => s.Index == index);
         }
 
         public void UpdatePlaylistSong(PlaylistSong playlistSong)
         {
-            _set.Update(playlistSong);
+            set.Update(playlistSong);
 
             if (!RealDatabase()) return;
 
-            _context.Entry(playlistSong).State = EntityState.Modified;
-            _context.SaveChanges();
+            context.Entry(playlistSong).State = EntityState.Modified;
+            context.SaveChanges();
         }
 
         public bool RealDatabase()
         {
-            return _context is DatabaseContext;
+            return context is DatabaseContext;
         }
     }
 }

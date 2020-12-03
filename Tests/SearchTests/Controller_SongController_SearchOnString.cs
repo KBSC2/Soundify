@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
@@ -9,134 +10,40 @@ namespace Tests.SearchTests
     [TestFixture]
     public class Controller_Song_SearchOnString
     {
-        private MockDatabaseContext context;
         private SongController songController;
-        private Song songNameTest;
-        private Song songArtistTest;
-        private List<Song> songSearchResults;
 
         [SetUp]
         public void SetUp()
         {
-            context = new MockDatabaseContext();
-            songController = SongController.Create(context);
-            songNameTest = new Song(){Name = "SongNameTest", Artist = "Coder", Duration = 10, Path = "../path"};
-            songArtistTest = new Song() { Name = "Ik WIl Testen, liefst ieder kwartier", Artist = "Tester", Duration = 10, Path = "../path" };
-            songController.CreateItem(songNameTest);
-            songController.CreateItem(songArtistTest);
-            songSearchResults = new List<Song>();
+            songController = SongController.Create(new MockDatabaseContext());
+            songController.CreateItem(new Song() { ID = 1, Name = "SongNameTest", Artist = "Coder", Duration = 10, Path = "../path" });
+            songController.CreateItem(new Song() { ID = 2, Name = "Ik WIl Testen, liefst ieder kwartier", Artist = "Tester", Duration = 10, Path = "../path" });
         }
 
-        [Test]
-        public void SongController_SearchOnFullName()
+        [TestCase("SongNameTest", 1)]
+        [TestCase("meTest", 1)]
+        [TestCase("Tester", 2)]
+        [TestCase("ste", 2)]
+        public void SongController_Search(string search, int expectedId)
         {
-            var confirm = false;
-            songSearchResults = songController.SearchSongsOnString(new List<string>() { "SongNameTest" });
-            foreach (var p in songSearchResults)
-            {
-                if (p.ID == songNameTest.ID)
-                {
-                    confirm = true;
-                }
-            }
-            Assert.IsTrue(confirm);
+            Assert.IsTrue(songController.SearchSongsOnString(new List<string>() { search })
+                .Any(x => x.ID == expectedId));
         }
 
-        [Test]
-        public void SongController_SearchOnPartialName()
+        [TestCase(new[] { "SongNameTest", "Tester" }, new[] { 1, 2 })]
+        [TestCase(new[] { "ameTes", "este" }, new[] { 1, 2 })]
+        public void PlaylistController_Multiple(string[] searches, int[] expected)
         {
-            var confirm = false;
-            songSearchResults = songController.SearchSongsOnString(new List<string>() { "meTest" });
-            foreach (var p in songSearchResults)
-            {
-                if (p.ID == songNameTest.ID)
-                {
-                    confirm = true;
-                }
-            }
-            Assert.IsTrue(confirm);
-        }
-        [Test]
-        public void SongController_SearchOnFullArtist()
-        {
-            var confirm = false;
-            songSearchResults = songController.SearchSongsOnString(new List<string>() { "Tester" });
-            foreach (var p in songSearchResults)
-            {
-                if (p.ID == songArtistTest.ID)
-                {
-                    confirm = true;
-                }
-            }
-            Assert.IsTrue(confirm);
+            Assert.IsFalse(songController.SearchSongsOnString(searches.ToList())
+                .Any(x => !expected.Contains(x.ID)));
         }
 
-        [Test]
-        public void SongController_SearchOnPartialArtist()
-        {
-            var confirm = false;
-            songSearchResults = songController.SearchSongsOnString(new List<string>() { "ste" });
-            foreach (var p in songSearchResults)
-            {
-                if (p.ID == songArtistTest.ID)
-                {
-                    confirm = true;
-                }
-            }
-            Assert.IsTrue(confirm);
-        }
-
-        [Test]
-        public void SongController_SearchOnSearchOnMultipleFullSearchTerms()
-        {
-            var confirm1 = false;
-            var confirm2 = false;
-
-            songSearchResults = songController.SearchSongsOnString(new List<string>() { "SongNameTest", "Tester" });
-            foreach (var p in songSearchResults)
-            {
-                if (p.ID == songArtistTest.ID)
-                {
-                    confirm1 = true;
-                }
-
-                if (p.ID == songArtistTest.ID)
-                {
-                    confirm2 = true;
-                }
-            }
-            Assert.IsTrue(confirm1 && confirm2);
-        }
-
-        [Test]
-        public void SongController_SearchOnSearchOnMultiplePartialSearchTerms()
-        {
-            var confirm1 = false;
-            var confirm2 = false;
-
-            songSearchResults = songController.SearchSongsOnString(new List<string>() { "ameTes", "este" });
-            foreach (var p in songSearchResults)
-            {
-                if (p.ID == songArtistTest.ID)
-                {
-                    confirm1 = true;
-                }
-
-                if (p.ID == songArtistTest.ID)
-                {
-                    confirm2 = true;
-                }
-            }
-            Assert.IsTrue(confirm1 && confirm2);
-        }
 
         [TearDown]
         public void TearDown()
         {
-            songController.DeleteItem(songNameTest.ID);
-            songController.DeleteItem(songArtistTest.ID);
+            foreach (var i in new[] {1, 2})
+                songController.DeleteItem(i);
         }
-
-
     }
 }

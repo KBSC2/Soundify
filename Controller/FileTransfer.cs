@@ -20,10 +20,10 @@ namespace Controller
                 conf.GetValueOrDefault("Password")))
             {
                 client.Connect();
-                string localpath = RemotePathToLocalPath(inputPath);
-                using (Stream localfile = File.Create(localpath))
+                string localPath = RemotePathToLocalPath(inputPath);
+                using (Stream localFile = File.Create(localPath))
                 {
-                    client.Download("/home/student/files/" + inputPath, localfile);
+                    client.Download("/home/student/files/" + inputPath, localFile);
                 }
             }
         }
@@ -38,9 +38,9 @@ namespace Controller
                 conf.GetValueOrDefault("Password")))
             {
                 client.Connect();
-                using (Stream localfile = File.OpenRead(inputPath))
+                using (Stream localFile = File.OpenRead(inputPath))
                 {
-                    client.UploadFile(localfile, "/home/student/files/" + outputPath);
+                    client.UploadFile(localFile, "/home/student/files/" + outputPath);
                     return outputPath;
                 }
             }

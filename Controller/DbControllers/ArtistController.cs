@@ -7,6 +7,8 @@ namespace Controller.DbControllers
 {
     public class ArtistController : DbController<Artist>
     {
+        private UserController userController;
+
         public static ArtistController Create(IDatabaseContext context)
         {
             return ProxyController.AddToProxy<ArtistController>(new object[] { context }, context);
@@ -14,11 +16,29 @@ namespace Controller.DbControllers
 
         protected ArtistController(IDatabaseContext context) : base(context, context.Artists)
         {
+            userController = UserController.Create(Context);
         }
 
-        public int? GetArtistIDFromUserID(int userID)
+        public int? GetArtistIdFromUserId(int userId)
         {
-            return GetList().FirstOrDefault(a => a.UserID == userID)?.ID;
+            return GetList().FirstOrDefault(a => a.UserID == userId)?.ID;
+        }
+
+        // Can't this be a little bit more generic. Like update role or something??
+        public void MakeArtist(User user)
+        {
+            user.RoleID = 2;
+            userController.UpdateItem(user);
+            CreateItem(new Artist() { ArtistName = user.Username }); // change user.Username to artist name
+        }
+
+        public void RevokeArtist(User user)
+        {
+            user.RoleID = 1;
+            userController.UpdateItem(user);
+
+            var artistId = GetArtistIdFromUserId(user.ID);
+            if (artistId != null) DeleteItem((int)artistId);
         }
     }
 }

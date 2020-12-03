@@ -11,17 +11,14 @@ namespace Tests.Playlists
     [TestFixture]
     public class Controller_PlaylistControllor_DeactivateDeletePlaylist
     {
-        private MockDatabaseContext context;
         private PlaylistController playlistController;
         private Playlist playlist;
         private Playlist playlistDelete;
 
-
         [SetUp]
         public void SetUp()
         {
-            context = new MockDatabaseContext();
-            playlistController = PlaylistController.Create(context);
+            playlistController = PlaylistController.Create(new MockDatabaseContext());
             playlist = new Playlist()
                 {Name = "TestDeactivateDelete", ActivePlaylist = true, CreationDate = DateTime.Now};
             playlistDelete = new Playlist() {Name = "TestDelete", ActivePlaylist = true, CreationDate = DateTime.Now};

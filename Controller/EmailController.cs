@@ -6,7 +6,7 @@ using Model.MailTemplates;
 
 namespace Controller
 {
-    public class EmailController<T> where T: MailTemplate
+    public class EmailController
     {
         public SmtpClient SmtpClient { get;} 
 
@@ -18,9 +18,7 @@ namespace Controller
                 Port = 587,
                 Credentials = new NetworkCredential(conf.GetValueOrDefault("Email"), conf.GetValueOrDefault("Password")),
                 EnableSsl = true
-
             };
-
         }
 
         public static Dictionary<string, string> GetSMTPGMAILConfiguration()
@@ -34,10 +32,10 @@ namespace Controller
                 if (split.Length == 2)
                     result.Add(split[0].Trim(), split[1].Trim());
             }
-
             return result;
         }
-        public void SendEmail(T mailTemplate, string toMailAddress)
+
+        public void SendEmail<T>(T mailTemplate, string toMailAddress) where T : MailTemplate
         {
             var mailMessage = new MailMessage()
             {

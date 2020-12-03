@@ -14,9 +14,6 @@ using System.Windows.Input;
 using Model.Enums;
 using View;
 using View.DataContexts;
-
-using System.Timers;
-
 using View.Screens;
 
 
@@ -70,7 +67,6 @@ namespace Soundify
                 if (!Directory.Exists(Path.GetTempPath() + "Soundify/" + path.ToString().ToLower()))
                     Directory.CreateDirectory(Path.GetTempPath() + "Soundify/" + path.ToString().ToLower());
             }
-
 
             InitializeComponent();
             SSHController.Instance.OpenSSHTunnel();
@@ -180,6 +176,12 @@ namespace Soundify
                 SearchDataContext.Instance.SearchTerms = text.Split(" ").ToList();
                 SearchDataContext.Instance.OnPropertyChanged("");
             }   
+        }
+
+        private void WindowClosing(object sender, EventArgs e)
+        {
+            SSHController.Instance.CloseSSHTunnel();
+            Application.Current.Shutdown();
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Controller;
-using Controller.DbControllers;
+﻿using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
@@ -12,13 +10,13 @@ namespace Tests.Users
     [TestFixture]
     public class Controller_UserController_UserSignup
     {
-        private List<string> AccountsToRemove { get; }= new List<string>() { "test@gmail.com", "duplicate@gmail.com", "testindb@gmail.com" };
-        private UserController Controller { get; } = UserController.Create(new MockDatabaseContext());
+        private UserController controller;
 
         [SetUp]
         public void SetUp()
         {
-            Controller.CreateAccount(new User() {Email = "duplicate@gmail.com", Username = "test"}, "Sterk_W@chtw000rd2",
+            controller = UserController.Create(new MockDatabaseContext());
+            controller.CreateAccount(new User() { ID = 10, Email = "duplicate@gmail.com", Username = "test"}, "Sterk_W@chtw000rd2",
                 "Sterk_W@chtw000rd2"); // create account to test already exists
         }
 
@@ -30,7 +28,7 @@ namespace Tests.Users
         [TestCase("W@chtw00rdMetAll4s", ExpectedResult = PasswordScore.VeryStrong)]     // correct length,  with uppercase, with numbers,   with characters
         public PasswordScore Controller_PasswordController_TestPasswordScore(string password)
         {
-            return PasswordController.CheckStrength(password);
+            return CheckStrength(password);
         }
 
         [TestCase("zwak", "zwak", "test2@gmail.com", ExpectedResult = RegistrationResults.PasswordNotStrongEnough)]                     // password not strong enough
@@ -39,30 +37,26 @@ namespace Tests.Users
         [TestCase("Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2", "duplicate@gmail.com", ExpectedResult = RegistrationResults.EmailTaken)]    // email taken
         public RegistrationResults UserController_SignupResults(string password, string repeatPassword, string email)
         {
-            var result = Controller.CreateAccount(new User() {Email = email, Username = "test"}, password, repeatPassword);
+            var result = controller.CreateAccount(new User() {ID = 11, Email = email, Username = "test"}, password, repeatPassword);
             return result;
         }
 
         [TestCase("testindb@gmail.com", "SterkWachtw00rd@", ExpectedResult = true)]
         public bool UserController_AccountInDatabase(string email, string password)
         {
-            var result = Controller.CreateAccount(new User() { Email = email, Username = "test" }, password, password);
+            var result = controller.CreateAccount(new User() { ID = 12, Email = email, Username = "test" }, password, password);
             if (result != RegistrationResults.Succeeded)
                 return false;
-            var user = Controller.GetUserFromEmailOrUsername(email);
+            var user = controller.GetUserFromEmailOrUsername(email);
             return user != null;
         }
 
         [TearDown]
         public void TearDown()
         {
-            // Remove all acounts from the database, if they exist
-            AccountsToRemove.ForEach(email =>
-            {
-                var user = Controller.GetUserFromEmailOrUsername(email);
-                if (user != null)
-                    Controller.DeleteItem(user.ID);
-            });
+            // Remove all accounts from the database, if they exist
+            foreach (var i in new [] {10, 11, 12})
+                controller.DeleteItem(i);
         }
     }
 }

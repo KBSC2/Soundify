@@ -13,20 +13,20 @@ namespace Tests.Playlists
     [TestFixture]
     public class Controller_PlaylistSongController_AddDeleteFromPlaylistSong
     {
-        private MockDatabaseContext context;
         private SongController songController;
         private PlaylistController playlistController;
         private PlaylistSongController playlistSongController;
         private Song song;
         private Song song2;
         private Playlist playlist;
+
         [SetUp]
         public void SetUp()
         {
             song = new Song() { Duration = 60, Artist = "Rick Astley", Name = "Never gonna give you up", Path = "../Dit/is/een/path" };
             song2 = new Song() { Duration = 60, Artist = "PSY", Name = "Gangnam Style", Path = "../Dit/is/een/path", WrittenBy = "Park Jae-Sang, Yoo Gun Hyung", ProducedBy = "Park Jae-Sang, Yoo Gun Hyung", Description = "PSY - ‘I LUV IT’ M/V @ https://youtu.be/Xvjnoagk6GU PSY - ‘New Face’ M / V @https://youtu.be/OwJPPaEyqhI PSY - 8TH ALBUM '4X2=8' on iTunes @ https://smarturl.it/PSY_8thAlbum PSY - GANGNAM STYLE(강남스타일) on iTunes @ http://smarturl.it/PsyGangnam #PSY #싸이 #GANGNAMSTYLE #강남스타일"};
             playlist = new Playlist() {Name = "TESTPLAYLIST", CreationDate = DateTime.Now};
-            context = new MockDatabaseContext();
+            var context = new MockDatabaseContext();
             
             songController = SongController.Create(context);
             playlistController = PlaylistController.Create(context);
@@ -36,15 +36,16 @@ namespace Tests.Playlists
             songController.CreateItem(song2);
             playlistController.CreateItem(playlist);
         }
+
         [Test]
         public void PlaylistSongController_AddToPlayList()
         {
             playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
 
-            var lastSongID = song.ID;
-            var playlistID = playlist.ID;
+            var lastSongId = song.ID;
+            var playlistId = playlist.ID;
 
-            var existsInPlaylist = playlistSongController.RowExists(lastSongID, playlistID);
+            var existsInPlaylist = playlistSongController.RowExists(lastSongId, playlistId);
             Assert.IsTrue(existsInPlaylist);
 
             //After adding, remove it.
@@ -52,31 +53,32 @@ namespace Tests.Playlists
 
             //Remove the added song to the playlist at the end of the test.
             //Extra check to see whether the playlist is removed at the end.
-            existsInPlaylist = playlistSongController.RowExists(lastSongID, playlistID);
+            existsInPlaylist = playlistSongController.RowExists(lastSongId, playlistId);
             Assert.IsFalse(existsInPlaylist);
         }
+
         [Test]
         public void PlaylistSongController_DeleteFromPlayList()
         {
             //Same Concept as in AddToPlaylist, but it's more explicit for deleting from the playlist.
             //Just use a songID that exists.
-            var songID = song.ID;
-            var playlistID = playlist.ID;
+            var songId = song.ID;
+            var playlistId = playlist.ID;
 
             //Before adding
-            var existsInPlaylist = playlistSongController.RowExists(songID, playlistID);
+            var existsInPlaylist = playlistSongController.RowExists(songId, playlistId);
             Assert.IsFalse(existsInPlaylist);
 
-            playlistSongController.AddSongToPlaylist(songID, playlistID);
+            playlistSongController.AddSongToPlaylist(songId, playlistId);
 
             //After adding
-            existsInPlaylist = playlistSongController.RowExists(songID, playlistID);
+            existsInPlaylist = playlistSongController.RowExists(songId, playlistId);
             Assert.IsTrue(existsInPlaylist);
 
-            playlistSongController.RemoveFromPlaylist(songID, playlistID);
+            playlistSongController.RemoveFromPlaylist(songId, playlistId);
 
             //After removing
-            existsInPlaylist = playlistSongController.RowExists(songID, playlistID);
+            existsInPlaylist = playlistSongController.RowExists(songId, playlistId);
             Assert.IsFalse(existsInPlaylist);
         }
 
