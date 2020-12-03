@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -89,7 +86,7 @@ namespace View.Screens
 
             ArtistDataContext.Instance.OnPropertyChanged("");
 
-            var emailController = new EmailController<MailSongApprovalTemplate>();
+            var emailController = new EmailController();
             var email = new MailSongApprovalTemplate(new MailAddress("info.soundify@gmail.com"), artistName, songName);
             emailController.SendEmail(email, "info.soundify@gmail.com");
         }

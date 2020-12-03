@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System;
-using Renci.SshNet;
+ using System.Diagnostics;
+ using System.Runtime.InteropServices.ComTypes;
+ using Renci.SshNet;
 
 namespace Controller
 {
@@ -11,6 +13,7 @@ public class SSHController
     {
         // Set this to false, if using local Docker MSSQL database
         private bool CreateSSHTunnel = true;
+        private static bool running;
         
         private Thread thread;
 
@@ -27,7 +30,7 @@ public class SSHController
         }
 
         /**
-         * Open an SSH tunnel to our Ubunut machine
+         * Open an SSH tunnel to our Ubuntu machine
          * Start an SSHClient to connect
          */
         public void TunnelThread()
@@ -54,7 +57,7 @@ public class SSHController
                     return;
                 }
 
-                for (;;)
+                while(running)
                 {
                 }
             }
@@ -81,7 +84,7 @@ public class SSHController
         }
 
         /**
-         * Open an SSHtunnel if no current connection is found
+         * Open an SSH-tunnel if no current connection is found
          */
         public void OpenSSHTunnel()
         {
@@ -92,8 +95,14 @@ public class SSHController
             if (thread != null)
                 return;
 
+            running = true;
             thread = new Thread(TunnelThread);
             thread.Start();
+        }
+
+        public void CloseSSHTunnel()
+        {
+            running = false;
         }
     }
 }
