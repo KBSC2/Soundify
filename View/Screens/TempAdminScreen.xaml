@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="TempAdminScreen" Height="720" Width="1280">
     <Grid Margin="0,0,0,0" Background="#FF303651" >
-        <TextBlock Text="You have {some} requests remaining"  HorizontalAlignment="Left" Margin="110,72,0,0" VerticalAlignment="Top" FontSize="26.5" Foreground="White" FontWeight="Bold"/>
-        <Button Content="Request to be artist" HorizontalAlignment="Left" Margin="163,151,0,0" VerticalAlignment="Top" Width="305" Height="40" Background="{DynamicResource Orange}" Foreground="White" BorderThickness="0" FontSize="26.6" FontWeight="Bold" ></Button>
+        <Button Content="Review requests" HorizontalAlignment="Left" Margin="174,111,0,0" VerticalAlignment="Top" Width="226" Height="43" FontSize="26.5"  Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="Review_Button_Click" />
+        <Label Content="You have 100 requests" HorizontalAlignment="Left" Margin="138,42,0,0" VerticalAlignment="Top" FontSize="26.5" Foreground="White" FontWeight="Bold" Width="298"/>
     </Grid>
 </Window>

@@ -16,13 +16,15 @@ using Model.DbModels;
 namespace View.Screens
 {
     /// <summary>
-    /// Interaction logic for TempRequestScreen.xaml
+    /// Interaction logic for RequestScreen.xaml
     /// </summary>
-    public partial class TempRequestScreen : Window
+    public partial class RequestScreen : ResourceDictionary
     {
-        private List<Request> artistRequestsList = RequestController.Create(new DatabaseContext()).GetArtistRequests(); 
-        public TempRequestScreen()
+        public static RequestScreen RequestScreenInstance { get; set; }
+        private List<Request> artistRequestsList = RequestController.Create(new DatabaseContext()).GetArtistRequests();
+        public RequestScreen()
         {
+            RequestScreenInstance = this;
             InitializeComponent();
         }
         public void AddArtistRequests()
@@ -33,12 +35,12 @@ namespace View.Screens
                 expander.Header = $"{request.ArtistName} would like to become an artist";
                 Grid grid = new Grid();
 
-                var textblock = new TextBlock() {Text = request.ArtistReason};
+                var textblock = new TextBlock() { Text = request.ArtistReason };
                 textblock.SetValue(Grid.RowProperty, 0);
                 textblock.SetValue(Grid.ColumnSpanProperty, 2);
                 grid.Children.Add(textblock);
 
-                var approveButton = new Button(){Content = "Approve"};
+                var approveButton = new Button() { Content = "Approve" };
                 approveButton.SetValue(Grid.RowProperty, 1);
                 approveButton.SetValue(Grid.ColumnProperty, 0);
                 grid.Children.Add(approveButton);
@@ -49,7 +51,7 @@ namespace View.Screens
                 declineButton.SetValue(Grid.ColumnProperty, 1);
                 grid.Children.Add(declineButton);
 
-                ((Grid)FindName("RequestArtistGrid"))?.Children.Add(grid);
+                ((Grid)FindName("RequestScreen"))?.Children.Add(grid);
             }
         }
     }
