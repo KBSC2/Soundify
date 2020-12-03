@@ -55,6 +55,20 @@
             <Image Margin="6,0,66,10" Stretch="Fill" Source="Assets/soundify.png" Height="20" VerticalAlignment="Bottom"/>
             <Label x:Name="MoneyAdded" Content="+1" HorizontalAlignment="Center" Margin="0,0,0,52" Foreground="White" FontSize="14" Opacity="0.5" Height="29" VerticalAlignment="Bottom"/>
             <Label x:Name="Money" Content="{Binding CurrentUser.Coins}" HorizontalAlignment="Left" Margin="26,0,0,5" Width="67" Foreground="White" FontSize="16" Height="30" VerticalAlignment="Bottom"/>
+            <components:MenuButton ScreenName="AdminScreen"    Content="Admin"          Margin="0,0,0,126"  HorizontalAlignment="Center" Width="92" MaxHeight="30" Height="30" VerticalAlignment="Bottom" >
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Visibility" Value="Hidden">
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsAdmin}" Value="True">
+                                <Setter Property="Visibility" Value="Visible">
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </components:MenuButton>
         </Grid>
     </Grid>
 </Window>
