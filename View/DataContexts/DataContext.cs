@@ -43,6 +43,7 @@ namespace View.DataContexts
             Instance = this;
             _timer = new Timer {Interval = 10};
             _timer.Elapsed += OnTimedEvent;
+            _timer.Elapsed += CoinsController.Instance.EarnCoins;
             _timer.Start();
         }
 
