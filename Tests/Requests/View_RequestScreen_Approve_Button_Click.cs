@@ -37,5 +37,15 @@ namespace Tests.Requests
 
             Assert.True(artistId.HasValue);
         }
+
+        [TearDown]
+        public void TearDown()
+        {
+            requestController.DeleteItem(testRequest.ID);
+
+            var artistId = ArtistController.Create(context).GetArtistIdFromUserId(testRequest.UserID);
+            if(artistId != null)
+                ArtistController.Create(context).DeleteItem((int)artistId);
+        }
     }
 }
