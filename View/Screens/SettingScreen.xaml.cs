@@ -52,8 +52,6 @@ namespace View.Screens
             var request = new RequestArtist();
             request.Show();
             request.Focus();
-
-            SettingsDataContext.Instance.OnPropertyChanged("");
         }
     }
 }

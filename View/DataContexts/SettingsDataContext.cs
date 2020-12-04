@@ -22,6 +22,8 @@ namespace View.DataContexts
         }
         public Role Role => RoleController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.RoleID);
 
+        public string CurrentUserName => UserController.CurrentUser.Username;
+
         public string HasArtistRequested => UserController.Create(new DatabaseContext())
             .GetItem(UserController.CurrentUser.ID).RequestedArtist == true
             ? "Hidden"

@@ -19,12 +19,10 @@ namespace Controller
         }
 
         private int counter;
-        private UserController userController;
 
         private CoinsController()
         {
             counter = 0;
-            userController = UserController.Create(new DatabaseContext()); //TODO: if coinsController will be tested this has to be variable.
         }
 
         public void EarnCoins(object sender, EventArgs e)
@@ -35,18 +33,21 @@ namespace Controller
             if(counter == 1000)
             {
                 counter = 0;
-                AddCoins(UserController.CurrentUser);
+                AddCoins();
             } 
         }
 
-        public void AddCoins(User user, int coins = 1)
+        public void AddCoins(int coins = 1)
         {
+            var userController = UserController.Create(new DatabaseContext());
+            var user = userController.GetItem(UserController.CurrentUser.ID);
             user.Coins += coins;
             userController.UpdateItem(user);
         }
 
         public void RemoveCoins(User user, int coins = 1)
         {
+            var userController = UserController.Create(new DatabaseContext());
             user.Coins -= coins;
             userController.UpdateItem(user);
         }

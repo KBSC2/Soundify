@@ -58,6 +58,8 @@ namespace View
             createRequest.CreateItem(request);
 
             this.Close();
+
+            SettingsDataContext.Instance.OnPropertyChanged("");
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
