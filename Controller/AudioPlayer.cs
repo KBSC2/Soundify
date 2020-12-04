@@ -60,7 +60,6 @@ namespace Controller
 
                 PlaySong(NextInPlaylist[CurrentSongIndex]);
             }
-            
         }
 
         [HasPermission(Permission = Permissions.SongPrev)]
@@ -79,7 +78,8 @@ namespace Controller
             CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
             CurrentSong = song;
             WaveOutDevice.Init(CurrentSongFile.AudioFile);
-            NextSong?.Invoke(null, new EventArgs());
+            NextSong?.Invoke(this, new EventArgs());
+            //TODO:why is there a delay here?
             Task.Delay(500).ContinueWith(x => WaveOutDevice.Play());
         }
 

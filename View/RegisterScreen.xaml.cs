@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.Mail;
 using System.Windows;
 using System.Windows.Input;
 using Controller;
@@ -7,7 +6,6 @@ using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
-using Model.MailTemplates;
 using Soundify;
 
 namespace View
@@ -40,7 +38,7 @@ namespace View
                 {
                     var emailVerificationScreen = new EmailVerificationScreen(token, email);
                     emailVerificationScreen.Show();
-                    this.Hide();
+                    this.Close();
                     break;
                 }
                 case RegistrationResults.EmailTaken:
@@ -63,10 +61,9 @@ namespace View
                     this.PasswordConfirmRegister.Password = "";
                     break;
                 }
-
             }
-
         }
+
         private void Register_On_Enter_Key(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)

@@ -4,6 +4,7 @@ using System.Windows.Input;
 using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
+using Model.Enums;
 using Model.MailTemplates;
 using Soundify;
 
@@ -14,30 +15,29 @@ namespace View
     /// </summary>
     public partial class ForgotPasswordScreen : Window
     {
-        private string _email;
-        private string _token;
+        private string email;
+        private string token;
+
         public ForgotPasswordScreen(string text)
         {
             InitializeComponent();
-            _email = text;
+            email = text;
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
-            var cancelScreen = new LoginScreen();
+            MainWindow.InstanceLoginScreen.Show();
             this.Close();
-            cancelScreen.Show();
-            cancelScreen.Focus();
         }
 
         private void Confirm_Button_Click(object sender, RoutedEventArgs e)
-        {
-            var token = this.Token.Text;
+        { 
+            token = this.Token.Text;
             var newPassword = this.NewPassword.Password;
             var repeatPassword = this.RepeatPassword.Password;
 
             var controller = UserController.Create(new DatabaseContext());
-            var user = controller.GetUserFromEmailOrUsername(_email);
+            var user = controller.GetUserFromEmailOrUsername(email);
 
             if (token.Equals(user.Token))
             {
@@ -47,7 +47,7 @@ namespace View
                     return;
                 }
 
-                if (PasswordController.CheckStrength(newPassword) < PasswordController.PasswordScore.Strong)
+                if (PasswordController.CheckStrength(newPassword) < PasswordScore.Strong)
                 {
                     this.Error.Content = "Password is too weak";
                     return;
@@ -70,11 +70,11 @@ namespace View
 
         private void Resend_Token_Button_Click(object sender, RoutedEventArgs e)
         {
-            var emailController = new EmailController<ForgotPasswordTemplate>();
-            var mail = new ForgotPasswordTemplate(new MailAddress("info.soundify@gmail.com"), _token);
+            var emailController = new EmailController();
+            var mail = new ForgotPasswordTemplate(new MailAddress("info.soundify@gmail.com"), token);
 
-            if (_email.Contains(".") && _email.Contains("@"))
-                emailController.SendEmail(mail, _email);
+            if (email.Contains(".") && email.Contains("@"))
+                emailController.SendEmail(mail, email);
         }
     }
 }

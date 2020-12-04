@@ -73,7 +73,7 @@ namespace Controller
                 Context.Entry(item).State = EntityState.Deleted;
                 Context.SaveChanges();
             }
-            catch (ArgumentOutOfRangeException e)
+            catch (ArgumentOutOfRangeException)
             {
             }
         }
