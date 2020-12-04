@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Controller.DbControllers;
 using Controller.Proxy;
@@ -22,8 +23,8 @@ namespace Controller
 
         public int CurrentSongIndex  { get; set; }
 
+        public List<Song> Queue { get; set; } = new List<Song>();
         public List<Song> NextInQueue { get; set; } = new List<Song>();
-        public List<Song> NextInPlaylist { get; set; } = new List<Song>();
         public bool Looping { get; set; } = false;
 
         public static AudioPlayer Instance { get; set; }
@@ -44,32 +45,48 @@ namespace Controller
         }
 
         [HasPermission(Permission = Permissions.SongNext)]
-        public void Next(bool playQueue = true)
+        public void Next()
         {
-            if(NextInQueue.Count > 0 && playQueue)
+            if(CurrentSongIndex >= 0)
             {
-                PlayQueue();
-            } 
-            else
-            {
-                if (NextInPlaylist.Count == 0) return;
-                CurrentSongIndex++;
-                if (CurrentSongIndex >= NextInPlaylist.Count)
-                    CurrentSongIndex = Looping ? 0 : CurrentSongIndex - 1;
+                var previousSong = Queue[CurrentSongIndex];
 
-                PlaySong(NextInPlaylist[CurrentSongIndex]);
+                if (NextInQueue.Contains(previousSong))
+                    NextInQueue.Remove(previousSong);
+
+                if (Looping)
+                    AddSongToQueue(previousSong);
             }
+            
+            if (Queue.Count == 0) return;
+            CurrentSongIndex++;
+
+            if (CurrentSongIndex >= Queue.Count)
+                CurrentSongIndex--;
+
+            PlaySong(Queue[CurrentSongIndex]);
         }
 
         [HasPermission(Permission = Permissions.SongPrev)]
         public void Prev()
         {
-            if (NextInPlaylist.Count == 0) return;
+            if (Queue.Count == 0) return;
             CurrentSongIndex--;
             if (CurrentSongIndex < 0)
-                CurrentSongIndex = Looping ? NextInPlaylist.Count - 1 : 0;
+            {
+                if (Looping)
+                {
+                    CurrentSongIndex = Queue.Count - 1;
+                    List<Song> copyQueue = new List<Song>(Queue);
+                    copyQueue.ForEach(i => AddSongToQueue(i));
+                }
+                else
+                {
+                    CurrentSongIndex = 0;
+                }
+            }
 
-            PlaySong(NextInPlaylist[CurrentSongIndex]);
+            PlaySong(Queue[CurrentSongIndex]);
         }
 
         public void PlaySong(Song song)
@@ -78,44 +95,60 @@ namespace Controller
             CurrentSong = song;
             WaveOutDevice.Init(CurrentSongFile.AudioFile);
             NextSong?.Invoke(this, new EventArgs());
-            //TODO:why is there a delay here?
             Task.Delay(500).ContinueWith(x => WaveOutDevice.Play());
         }
 
-        public void AddSongToPlaylistQueue(Song song)
+        public void AddSongToQueue(Song song)
         {
-            NextInPlaylist.Add(song);
+            Queue.Add(song);
         }
 
         public void AddSongToSongQueue(Song song)
         {
             NextInQueue.Add(song);
+            Queue.Insert(CurrentSongIndex, song);
         }
 
-        private void ClearSongQueue()
+        public void ClearQueue()
         {
-            NextInPlaylist.Clear();
+            Queue.Clear();
         }
 
-        public void PlayPlaylist(Playlist playlist, int startIndex = -1, bool playQueue = true)
+        public void PlayPlaylist(Playlist playlist, int startIndex = -1)
         {
-            PlayPlaylist(PlaylistSongController.Create(new DatabaseContext()).GetSongsFromPlaylist(playlist.ID), startIndex, playQueue);
+            PlayPlaylist(PlaylistSongController.Create(new DatabaseContext()).GetSongsFromPlaylist(playlist.ID), startIndex);
         }
 
-        public void PlayPlaylist(List<PlaylistSong> songs, int startIndex = -1, bool playQueue = true)
+        public void PlayPlaylist(List<PlaylistSong> songs, int startIndex = -1)
         {
-            ClearSongQueue();
-            CurrentSongIndex = startIndex;
+            ClearQueue();
+            CurrentSongIndex = -1;
 
-            songs.ForEach(i => AddSongToPlaylistQueue(i.Song));
+            NextInQueue.ForEach(i => AddSongToQueue(i));
+            songs.Where(song => song.Index > startIndex).ToList().ForEach(i => AddSongToQueue(i.Song));
 
-            Next(playQueue);
+            if (Looping)
+            {
+                songs.ForEach(i => AddSongToQueue(i.Song));
+            }
+
+            Next();
         }
 
-        public void PlayQueue(int startIndex = 0)
+        [HasPermission(Permission = Permissions.SongLoop)]
+        public void Loop(Playlist playlist)
         {
-            PlaySong(NextInQueue[startIndex]);
-            NextInQueue.RemoveAt(startIndex);
+            Looping = !Looping;
+
+            if (Looping && playlist != null)
+            {
+                var songs = PlaylistSongController.Create(new DatabaseContext()).GetSongsFromPlaylist(playlist.ID);
+                songs.ForEach(i => AddSongToQueue(i.Song));
+            }
+            else if(!Looping)
+            {
+                Queue = Queue.GroupBy(p => p.ID).Select(g => g.First()).ToList();
+            }
         }
     }
 }

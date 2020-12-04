@@ -95,7 +95,7 @@ namespace Soundify
 
             if (AudioPlayer.Instance.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.Instance.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
             {
-                if (AudioPlayer.Instance.NextInPlaylist.Count > 0)
+                if (AudioPlayer.Instance.Queue.Count > 0)
                 {
                     AudioPlayer.Instance.WaveOutDevice.Play();
                     Play.Content = "=";
@@ -160,7 +160,7 @@ namespace Soundify
 
         private void Loop_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer.Instance.Looping = !AudioPlayer.Instance.Looping;
+            AudioPlayer.Instance.Loop(CurrentPlayList);
             QueueDataContext.Instance.OnPropertyChanged();
         }
 

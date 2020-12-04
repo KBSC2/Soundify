@@ -17,84 +17,37 @@ namespace View.Screens
             this.InitializeComponent();
         }
 
-        private void NextInPlaylist_SongRow_Click(object sender, MouseButtonEventArgs e)
+        private void Queue_SongRow_Click(object sender, MouseButtonEventArgs e)
         {
             var listViewItem = (ListViewItem)sender;
             var songInfo = (SongInfo)listViewItem.Content;
 
-            var index = AudioPlayer.Instance.NextInPlaylist.IndexOf(songInfo.Song);
+            var index = AudioPlayer.Instance.Queue.IndexOf(songInfo.Song);
 
-            AudioPlayer.Instance.PlayPlaylist(MainWindow.CurrentPlayList, index-1, false);
+            AudioPlayer.Instance.PlayPlaylist(MainWindow.CurrentPlayList, index-1);
             QueueDataContext.Instance.OnPropertyChanged();
         }
 
-        private void NextInQueue_SongRow_Click(object sender, MouseButtonEventArgs e)
-        {
-            var listViewItem = (ListViewItem)sender;
-            var songInfo = (SongInfo)listViewItem.Content;
-
-            var index = AudioPlayer.Instance.NextInQueue.IndexOf(songInfo.Song);
-
-            AudioPlayer.Instance.PlayQueue(index);
-            QueueDataContext.Instance.OnPropertyChanged();
-        }
-
-        private void NextInPlaylist_MoveUp_Click(object sender, RoutedEventArgs e)
+        private void Queue_MoveUp_Click(object sender, RoutedEventArgs e)
         {
             var mainGrid = (Grid)((Button)sender).Tag;
-            var listView = (ListView)mainGrid.FindName("NextInPlaylist");
-            var selectedSongInfo = (SongInfo)listView?.SelectedItem;
-            var index = listView.SelectedIndex;
-
-            if (listView.Items.Count > AudioPlayer.Instance.NextInPlaylist.Count)
-                if (index+1 >= AudioPlayer.Instance.NextInPlaylist.Count)
-                    index -= AudioPlayer.Instance.NextInPlaylist.Count;
-
-            if (selectedSongInfo == null || index - 1 < 0) return;
-
-            SwapSongs(index, index - 1, AudioPlayer.Instance.NextInPlaylist);
-        }
-
-        private void NextInPlaylist_MoveDown_Click(object sender, RoutedEventArgs e)
-        {
-            var mainGrid = (Grid)((Button)sender).Tag;
-            var listView = (ListView)mainGrid.FindName("NextInPlaylist");
-            var selectedSongInfo = (SongInfo)listView?.SelectedItem;
-            var index = listView.SelectedIndex;
-
-            if (listView.Items.Count > AudioPlayer.Instance.NextInPlaylist.Count)
-            {
-                if (index + 1 > listView.Items.Count - AudioPlayer.Instance.NextInPlaylist.Count)
-                    index -= AudioPlayer.Instance.NextInPlaylist.Count;
-                if (index + 1 >= listView.Items.Count - AudioPlayer.Instance.NextInPlaylist.Count) return;
-                if (index < 0) return;
-            }
-            else 
-                if (index + 1 >= listView.Items.Count) return;
-
-            SwapSongs(index, index + 1, AudioPlayer.Instance.NextInPlaylist);
-        }
-
-        private void NextInQueue_MoveUp_Click(object sender, RoutedEventArgs e)
-        {
-            var mainGrid = (Grid)((Button)sender).Tag;
-            var listView = (ListView)mainGrid.FindName("NextInQueue");
+            var listView = (ListView)mainGrid.FindName("Queue");
             var selectedSongInfo = (SongInfo)listView?.SelectedItem;
 
             if (selectedSongInfo == null || listView.SelectedIndex - 1 < 0) return;
 
-            SwapSongs(listView.SelectedIndex, listView.SelectedIndex - 1, AudioPlayer.Instance.NextInQueue);
+            SwapSongs(listView.SelectedIndex, listView.SelectedIndex - 1, AudioPlayer.Instance.Queue);
         }
 
-        private void NextInQueue_MoveDown_Click(object sender, RoutedEventArgs e)
+        private void Queue_MoveDown_Click(object sender, RoutedEventArgs e)
         {
             var mainGrid = (Grid)((Button)sender).Tag;
-            var listView = (ListView)mainGrid.FindName("NextInQueue");
+            var listView = (ListView)mainGrid.FindName("Queue");
             var selectedSongInfo = (SongInfo)listView?.SelectedItem;
 
             if (selectedSongInfo == null || listView.SelectedIndex + 1 >= listView.Items.Count) return;
 
-            SwapSongs(listView.SelectedIndex, listView.SelectedIndex + 1, AudioPlayer.Instance.NextInQueue);
+            SwapSongs(listView.SelectedIndex, listView.SelectedIndex + 1, AudioPlayer.Instance.Queue);
         }
 
         public void SwapSongs(int indexOne, int indexTwo, List<Song> list)
@@ -104,6 +57,16 @@ namespace View.Screens
 
             list[indexOne+1] = listitem2;
             list[indexTwo+1] = listitem1;
+
+            QueueDataContext.Instance.OnPropertyChanged();
+        }
+
+        public void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
+        {
+            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
+
+            AudioPlayer.Instance.Queue.Remove(song);
+            AudioPlayer.Instance.NextInQueue.Remove(song);
 
             QueueDataContext.Instance.OnPropertyChanged();
         }

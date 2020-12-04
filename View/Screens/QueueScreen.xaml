@@ -16,13 +16,12 @@
                 <Label Content="Artist" HorizontalAlignment="Left" Margin="550,20,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" FontWeight="Bold"/>
                 <Label Content="Duration" HorizontalAlignment="Left" Margin="800,20,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" FontWeight="Bold"/>
                 <Label Content="Now playing" HorizontalAlignment="Left" Margin="35,50,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
-                <Label Content="{Binding NextInQueueLabelContent}" HorizontalAlignment="Left" Margin="35,110,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
-                <Label Content="Next in playlist" HorizontalAlignment="Left" Margin="{Binding NextInPlaylistLabelMargin}" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
+                <Label Content="Next in queue" HorizontalAlignment="Left" Margin="35,110,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
                 <Label Content="{Binding CurrentSongName}" HorizontalAlignment="Left" Margin="303,60,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" />
                 <Label Content="{Binding CurrentSongArtist}" HorizontalAlignment="Left" Margin="550,60,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" />
                 <Label Content="{Binding CurrentSongDuration}" HorizontalAlignment="Left" Margin="800,60,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" />
             </Grid>
-            <ListView Margin="300,120,0,0" x:Name="NextInQueue" DataContext="{Binding}" Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding NextInQueueItems}" FontSize="20">
+            <ListView Margin="300,120,0,0" x:Name="Queue" DataContext="{Binding}" Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding NextInQueueItems}" FontSize="20">
                 <ListView.View>
                     <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
                         <GridViewColumn Header="Title" Width="250" DisplayMemberBinding="{Binding Song.Name}"/>
@@ -30,9 +29,15 @@
                         <GridViewColumn Header="Duration" Width="150" DisplayMemberBinding="{Binding Duration}"/>
                     </GridView>
                 </ListView.View>
+                <ListView.Resources>
+                    <ContextMenu x:Key="ItemContextMenu">
+                        <MenuItem Header="Remove song" Click="ListViewItem_RightClick_DeleteSong" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
+                    </ContextMenu>
+                </ListView.Resources>
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
-                        <EventSetter Event="MouseDoubleClick" Handler="NextInQueue_SongRow_Click" />
+                        <EventSetter Event="MouseDoubleClick" Handler="Queue_SongRow_Click" />
+                        <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
                         <Setter Property="Foreground" Value="White" />
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -47,38 +52,9 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
-            <ListView Margin="{Binding NextInPlaylistMargin}" x:Name="NextInPlaylist" DataContext="{Binding}" Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding NextInPlaylistItems}" FontSize="20">
-                <ListView.View>
-                    <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
-                        <GridViewColumn Header="Title" Width="250" DisplayMemberBinding="{Binding Song.Name}"/>
-                        <GridViewColumn Header="Artist" Width="250" DisplayMemberBinding="{Binding Song.Artist}"/>
-                        <GridViewColumn Header="Duration" Width="150" DisplayMemberBinding="{Binding Duration}"/>
-                    </GridView>
-                </ListView.View>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListViewItem}">
-                        <EventSetter Event="MouseDoubleClick" Handler="NextInPlaylist_SongRow_Click" />
-                        <Setter Property="Foreground" Value="White" />
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="White" />
-                                <Setter Property="Foreground" Value="Black"/>
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="#FF8390E4" />
-                                <Setter Property="Foreground" Value="Black"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
-            <Grid Margin="0,400,0,0" Background="#FF303651" Height="47" VerticalAlignment="Top">
-                <Button Content=" /\ " Tag="{Binding ElementName=MainGrid}"  HorizontalAlignment="Left" Margin="152,0,0,0" VerticalAlignment="Center" Background="{DynamicResource HighlighBlue}" Foreground="White" Click="NextInPlaylist_MoveUp_Click" Height="25" Width="25" BorderBrush="{x:Null}"/>
-                <Button Content=" \/ " Tag="{Binding ElementName=MainGrid}" HorizontalAlignment="Left" Margin="185,0,0,0" VerticalAlignment="Center" Background="{DynamicResource HighlighBlue}" Foreground="White" Click="NextInPlaylist_MoveDown_Click" Height="25" Width="25" BorderBrush="{x:Null}"/>
-            </Grid>
             <Grid Margin="0,500,0,0" Background="#FF303651" Height="47" VerticalAlignment="Top">
-                <Button Content=" /\ " Tag="{Binding ElementName=MainGrid}"  HorizontalAlignment="Left" Margin="152,0,0,0" VerticalAlignment="Center" Background="{DynamicResource HighlighBlue}" Foreground="White" Click="NextInQueue_MoveUp_Click" Height="25" Width="25" BorderBrush="{x:Null}"/>
-                <Button Content=" \/ " Tag="{Binding ElementName=MainGrid}" HorizontalAlignment="Left" Margin="185,0,0,0" VerticalAlignment="Center" Background="{DynamicResource HighlighBlue}" Foreground="White" Click="NextInQueue_MoveDown_Click" Height="25" Width="25" BorderBrush="{x:Null}"/>
+                <Button Content=" /\ " Tag="{Binding ElementName=MainGrid}"  HorizontalAlignment="Left" Margin="152,0,0,0" VerticalAlignment="Center" Background="{DynamicResource HighlighBlue}" Foreground="White" Click="Queue_MoveUp_Click" Height="25" Width="25" BorderBrush="{x:Null}"/>
+                <Button Content=" \/ " Tag="{Binding ElementName=MainGrid}" HorizontalAlignment="Left" Margin="185,0,0,0" VerticalAlignment="Center" Background="{DynamicResource HighlighBlue}" Foreground="White" Click="Queue_MoveDown_Click" Height="25" Width="25" BorderBrush="{x:Null}"/>
             </Grid>
         </Grid>
     </DataTemplate>
