@@ -22,7 +22,7 @@ namespace Controller.DbControllers
 
         public void UploadSong(Song song, string localpath)
         {
-            string remotePath =  FileTransfer.UploadFile(localpath, "songs/" + Path.GetFileName(localpath));
+            string remotePath =  FileTransfer.Create(new DatabaseContext()).UploadFile(localpath, "songs/" + Path.GetFileName(localpath));
             song.Path = remotePath;
             CreateItem(song);
         }

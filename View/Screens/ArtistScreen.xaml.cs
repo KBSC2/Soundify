@@ -61,7 +61,7 @@ namespace View.Screens
 
             var imageSource = ((BitmapImage)((Image)dataGrid.FindName("Image"))?.Source)?.UriSource;
 
-            if (imageSource != null) FileTransfer.UploadFile(imageSource?.LocalPath, "images/" + 
+            if (imageSource != null) FileTransfer.Create(new DatabaseContext()).UploadFile(imageSource?.LocalPath, "images/" + 
                 imageSource?.LocalPath.Split("\\").Last());
 
             var artistName = ((Label)dataGrid.FindName("Artist"))?.Content.ToString();
