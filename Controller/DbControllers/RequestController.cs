@@ -23,7 +23,7 @@ namespace Controller.DbControllers
 
         public virtual List<Request> GetArtistRequests()
         {
-            return GetList().Where(r => r.RequestType == RequestType.Artist).ToList();
+            return GetFilteredList(r => r.RequestType == RequestType.Artist);
         }
     }
 }
