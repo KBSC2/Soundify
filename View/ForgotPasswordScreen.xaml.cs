@@ -17,6 +17,7 @@ namespace View
     {
         private string email;
         private string token;
+
         public ForgotPasswordScreen(string text)
         {
             InitializeComponent();
@@ -30,8 +31,8 @@ namespace View
         }
 
         private void Confirm_Button_Click(object sender, RoutedEventArgs e)
-        {
-            var token = this.Token.Text;
+        { 
+            token = this.Token.Text;
             var newPassword = this.NewPassword.Password;
             var repeatPassword = this.RepeatPassword.Password;
 
