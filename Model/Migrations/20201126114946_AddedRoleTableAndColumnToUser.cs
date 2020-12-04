@@ -10,6 +10,7 @@ namespace Model.Migrations
                 name: "RoleID",
                 table: "Users",
                 type: "int",
+                defaultValue: 1,
                 nullable: true);
 
             migrationBuilder.CreateTable(
