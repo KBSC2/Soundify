@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.DbModels
 {
-    public class Playlist : DbModel 
+    public class Playlist : DbModel
     {
         [Required]
         public string Name { get; set; }
@@ -14,6 +15,7 @@ namespace Model.DbModels
         public DateTime CreationDate { get; set; }
 
         [Required]
+        [ForeignKey("Users")]
         public int UserID { get; set; }
 
         [Required]
@@ -22,6 +24,6 @@ namespace Model.DbModels
         public DateTime DeleteDateTime { get; set; }
 
 
-        public IList<PlaylistSong> PlaylistSongs { get; set; }
+        public virtual IList<PlaylistSong> PlaylistSongs { get; set; }
     }
 }

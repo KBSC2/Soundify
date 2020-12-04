@@ -29,7 +29,7 @@ namespace View.Screens
                 CreationDate = DateTime.Now,
                 UserID = UserController.CurrentUser.ID
             };
-
+            var user = UserController.CurrentUser;
             playlistController.CreateItem(playlist);
             PlaylistMenuDataContext.Instance.OnPropertyChanged("");
         }

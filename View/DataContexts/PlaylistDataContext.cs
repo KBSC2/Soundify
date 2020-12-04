@@ -21,8 +21,7 @@ namespace View.DataContexts
             }
         }
 
-        public List<SongInfo> PlaylistItems => SongInfo.ConvertSongListToSongInfo(Soundify.MainWindow.CurrentPlayList,
-            PlaylistSongController.Create(new DatabaseContext()).GetSongsFromPlaylist(Soundify.MainWindow.CurrentPlayList.ID));
+        public List<SongInfo> PlaylistItems => SongInfo.ConvertSongListToSongInfo(Soundify.MainWindow.CurrentPlayList);
         public Playlist Playlist => Soundify.MainWindow.CurrentPlayList;
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -12,7 +12,7 @@ namespace Controller
 public class SSHController
     {
         // Set this to false, if using local Docker MSSQL database
-        private bool CreateSSHTunnel = true;
+        private bool CreateSSHTunnel = false;
         private static bool running;
         
         private Thread thread;

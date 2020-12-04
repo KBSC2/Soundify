@@ -28,11 +28,11 @@ namespace View
             Duration = TimeSpan.FromSeconds(song.Duration).ToString("m':'ss");
         }
 
-        public static List<SongInfo> ConvertSongListToSongInfo(Playlist playlist, List<PlaylistSong> songs)
+        public static List<SongInfo> ConvertSongListToSongInfo(Playlist playlist)
         {
             var playlistSongController = PlaylistSongController.Create(new DatabaseContext());
 
-            return songs.Select(song => new SongInfo(song.Song, playlistSongController.GetPlaylistSong(playlist.ID, song.SongID)))
+            return playlist.PlaylistSongs.Select(song => new SongInfo(song.Song, playlistSongController.GetPlaylistSong(playlist.ID, song.SongID)))
                 .ToList();
         }
 
