@@ -42,6 +42,7 @@ namespace Controller
         {
             WaveOutDevice = new WaveOut { Volume = 0.05f };
             MaxVolume = 0.2;
+            CurrentSongIndex = -1;
         }
 
         [HasPermission(Permission = Permissions.SongNext)]
@@ -105,8 +106,15 @@ namespace Controller
 
         public void AddSongToSongQueue(Song song)
         {
-            NextInQueue.Add(song);
-            Queue.Insert(CurrentSongIndex, song);
+            Queue.Insert(CurrentSongIndex+1, song);
+
+            if (CurrentSong == null)
+            {
+                CurrentSongIndex = 0;
+                PlaySong(song);
+            }
+            else
+                NextInQueue.Add(song);
         }
 
         public void ClearQueue()
