@@ -31,7 +31,7 @@ namespace Tests.Requests
             var requestScreen = new RequestScreen();
             requestScreen.ApproveUser(testRequest.ID, context);
 
-            Assert.False(RequestController.Create(context).GetList().Contains(testRequest));
+            Assert.False(requestController.GetList().Contains(testRequest));
 
             var artistId = ArtistController.Create(context).GetArtistIdFromUserId(testRequest.UserID);
 

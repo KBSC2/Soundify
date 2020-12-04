@@ -24,15 +24,9 @@ namespace Tests.Requests
         {
             requestController.CreateItem(testRequest);
 
-            var requestItem = requestController.GetItem(testRequest.ID);
+            var requestItem = requestController.GetItem(1);
 
             Assert.AreEqual(requestItem, testRequest);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            requestController.DeleteItem(testRequest.ID);
         }
     }
 }
