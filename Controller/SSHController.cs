@@ -8,8 +8,7 @@ using System;
 
 namespace Controller
 {
-
-public class SSHController
+    public class SSHController
     {
         // Set this to false, if using local Docker MSSQL database
         private bool CreateSSHTunnel = true;

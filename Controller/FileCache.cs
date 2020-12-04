@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Model.Database.Contexts;
 
 namespace Controller
 {
@@ -23,9 +24,10 @@ namespace Controller
 
         public string GetFile(string path)
         {
-            if (!File.Exists(FileTransfer.RemotePathToLocalPath(path)))
-                FileTransfer.DownloadFile(path);
-            return FileTransfer.RemotePathToLocalPath(path);
+            var context = new DatabaseContext();
+            if (!File.Exists(FileTransfer.Create(context).RemotePathToLocalPath(path)))
+                FileTransfer.Create(context).DownloadFile(path);
+            return FileTransfer.Create(context).RemotePathToLocalPath(path);
         }
 
         public void ClearCache()
