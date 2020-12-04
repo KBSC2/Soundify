@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Controller.Proxy;
-using System.Security.Cryptography.X509Certificates;
 using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
@@ -34,7 +33,7 @@ namespace Controller.DbControllers
         }
 
         /**
-         * Attept to login the user
+         * Attempt to login the user
          *
          * @param emailOrUsername User's email or username to log in
          * @param password Password to check against database's password hash
@@ -75,7 +74,7 @@ namespace Controller.DbControllers
             if (!password.Equals(passwordRepeat))
                 return RegistrationResults.PasswordNoMatch;
 
-            if (PasswordController.CheckStrength(password) < PasswordController.PasswordScore.Strong)
+            if (PasswordController.CheckStrength(password) < PasswordScore.Strong)
                 return RegistrationResults.PasswordNotStrongEnough;
 
             user.Password = PasswordController.EncryptPassword(password);
@@ -83,23 +82,6 @@ namespace Controller.DbControllers
             // Insert user object into database
             CreateItem(user);
             return RegistrationResults.Succeeded;
-        }
-
-        // Can't this be a little bit more generic. Like update role or something??
-        public void MakeArtist(User user)
-        {
-            user.RoleID = 2;
-            UpdateItem(user);
-            ArtistController.Create(Context).CreateItem(new Artist() {ArtistName = user.Username}); // change user.Username to artist name
-        }
-
-        public void RevokeArtist(User user)
-        {
-            user.RoleID = 1;
-            UpdateItem(user);
-
-            var artistID = ArtistController.Create(Context).GetArtistIDFromUserID(user.ID);
-            if(artistID != null) ArtistController.Create(Context).DeleteItem((int)artistID);
         }
 
         /**

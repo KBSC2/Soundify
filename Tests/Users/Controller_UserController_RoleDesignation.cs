@@ -8,43 +8,48 @@ namespace Tests.Users
     [TestFixture]
     public class Controller_UserController_RoleDesignation
     {
-        private UserController Controller { get; } = UserController.Create(new MockDatabaseContext());
-        private User User { get; set; }
+        private UserController userController;
+        private ArtistController controller;
+        private User user;
 
         [SetUp]
         public void SetUp()
         {
-            User = new User() { ID = 1, Email = "test@gmail.com", Username = "test" };
-            Controller.CreateAccount(User, "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2");
+            var mock = new MockDatabaseContext();
+            controller = ArtistController.Create(mock);
+            userController = UserController.Create(mock);
+
+            user = new User() { ID = 10, Email = "test@gmail.com", Username = "test" };
+            userController.CreateAccount(user, "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2");
         }
 
         [Test]
         public void UserController_CreateAccount_UserRoleIDShouldBeUser()
         {
-            var result = Controller.GetItem(User.ID);
+            var result = userController.GetItem(user.ID);
             Assert.AreEqual(result.RoleID, 1);
         }
 
         [Test]
         public void UserController_MakeArtiest_UserRoleIDShouldBeArtist()
         {
-            Controller.MakeArtist(User);
-            var result = User.RoleID;
+            controller.MakeArtist(user);
+            var result = user.RoleID;
             Assert.AreEqual(result, 2);
         }
 
         [Test]
         public void UserController_RevokeArtiest_UserRoleIDShouldBeUser()
         {
-            Controller.RevokeArtist(User);
-            var result = User.RoleID;
+            controller.RevokeArtist(user);
+            var result = user.RoleID;
             Assert.AreEqual(result, 1);
         }
 
         [TearDown]
         public void TearDown()
         {
-            Controller.DeleteItem(User.ID);
+            controller.DeleteItem(user.ID);
         }
     }
 }

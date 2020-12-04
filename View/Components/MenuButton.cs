@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using Model;
 using Model.EventArgs;
@@ -7,7 +6,7 @@ using Soundify;
 
 namespace View.Components
 {
-    public class MenuButton : Button
+    public class MenuButton : PermissionButton
     {
 
         public ScreenNames ScreenName { get; set; }

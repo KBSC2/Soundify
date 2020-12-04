@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Model.Annotations;
+using Model.Enums;
 using Renci.SshNet;
 
 namespace Controller
@@ -18,13 +20,15 @@ namespace Controller
                 conf.GetValueOrDefault("Password")))
             {
                 client.Connect();
-                string localpath = RemotePathToLocalPath(inputPath);
-                using (Stream localfile = File.Create(localpath))
+                string localPath = RemotePathToLocalPath(inputPath);
+                using (Stream localFile = File.Create(localPath))
                 {
-                    client.Download("/home/student/files/" + inputPath, localfile);
+                    client.Download("/home/student/files/" + inputPath, localFile);
                 }
             }
         }
+
+        [HasPermission(Permission = Permissions.SongUpload)]
         public static string UploadFile(string inputPath, string outputPath)
         {
             var conf = SSHController.GetSSHConfiguration();
@@ -34,9 +38,9 @@ namespace Controller
                 conf.GetValueOrDefault("Password")))
             {
                 client.Connect();
-                using (Stream localfile = File.OpenRead(inputPath))
+                using (Stream localFile = File.OpenRead(inputPath))
                 {
-                    client.UploadFile(localfile, "/home/student/files/" + outputPath);
+                    client.UploadFile(localFile, "/home/student/files/" + outputPath);
                     return outputPath;
                 }
             }

@@ -13,7 +13,10 @@
     WindowState="Maximized"
     WindowStyle="SingleBorderWindow"
     WindowStartupLocation="CenterScreen"
-    DataContext="{x:Static dataContexts:DataContext.Instance}">
+    DataContext="{x:Static dataContexts:DataContext.Instance}"
+    Closed="WindowClosing"
+    Closing="WindowClosing"
+    >
 
     <Grid>
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="92,54,0,74" ContentTemplate="{StaticResource HomeScreen}"/>
@@ -22,9 +25,9 @@
             <Label x:Name="CurrentTime" Content="{Binding CurrentTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top" Foreground="White"/>
             <Label x:Name="TotalTime" Content="{Binding TotalTimeLabel, Mode=OneWay}" Margin="0,5,0,0" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Right" />
             <components:PermissionButton Permission="SongPrev" x:Name="Prev" MaxWidth="60" Content="Prev" Margin="254,20,394,0" VerticalAlignment="Top" Click="Prev_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" RenderTransformOrigin="0.91,0.588" Grid.RowSpan="2"/>
-            <Button x:Name="Next" MaxWidth="60" Content="Next" Margin="394,20,254,0" VerticalAlignment="Top" Click="Next_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" Grid.RowSpan="2"/>
-            <Button x:Name="Loop" MaxWidth="60" Content="Loop" Margin="174,20,474,0" VerticalAlignment="Top" Click="Loop_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" Grid.RowSpan="2"/>
-            <Button x:Name="Shuffle" MaxWidth="60" Content="Shuffle" Margin="476,20,172,0" VerticalAlignment="Top" Click="Shuffle_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" Grid.RowSpan="2"/>
+            <components:PermissionButton Permission="SongNext" x:Name="Next" MaxWidth="60" Content="Next" Margin="394,20,254,0" VerticalAlignment="Top" Click="Next_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" Grid.RowSpan="2"/>
+            <components:PermissionButton Permission="SongLoop" x:Name="Loop" MaxWidth="60" Content="Loop" Margin="174,20,474,0" VerticalAlignment="Top" Click="Loop_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" Grid.RowSpan="2"/>
+            <components:PermissionButton Permission="SongShuffle" x:Name="Shuffle" MaxWidth="60" Content="Shuffle" Margin="476,20,172,0" VerticalAlignment="Top" Click="Shuffle_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" Grid.RowSpan="2"/>
             <Slider x:Name="Volume" Margin="0,28,10,0" IsMoveToPointEnabled="True" VerticalAlignment="Top" Maximum="{Binding MaxVolume, Mode=OneWay}" ValueChanged="Volume_ValueChanged" Value="{Binding Volume, Mode=OneWay}" SmallChange="0.001" LargeChange="0.01" Grid.RowSpan="2" HorizontalAlignment="Right" Width="100"/>
             <Slider x:Name="Duration" Margin="-6,-8,-4,64" IsMoveToPointEnabled="True" Foreground="White" Minimum="0.00" Maximum="{Binding TotalTime, Mode=OneWay}" Value="{Binding CurrentTime, Mode=OneWay}" ValueChanged="Duration_ValueChanged"/>
         </Grid>
@@ -41,6 +44,7 @@
             <components:MenuButton ScreenName="ArtistScreen" Content="Upload"  Margin="0,200,0,0" Height="30" MaxHeight="30" VerticalAlignment="Top" >
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
+                        <Setter Property="Visibility" Value="Hidden"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsArtist}" Value="True">
                                 <Setter Property="Visibility" Value="Visible"/>
