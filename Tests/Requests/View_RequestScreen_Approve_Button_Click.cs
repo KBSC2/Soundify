@@ -1,16 +1,20 @@
-﻿using Controller.DbControllers;
+﻿using System.Windows;
+using System.Windows.Controls;
+using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using NUnit.Framework;
+using View.Screens;
 
 namespace Tests.Requests
 {
     [TestFixture]
-    public class Controller_RequestController_AddRequest
+    public class View_RequestScreen_Approve_Button_Click
     {
         private MockDatabaseContext context;
         private RequestController requestController;
         private Request testRequest;
+
         [SetUp]
         public void SetUp()
         {
@@ -18,23 +22,20 @@ namespace Tests.Requests
             requestController = RequestController.Create(context);
             testRequest = new Request()
                 {ID = 1, UserID = 1, ArtistName = "TestArtist", ArtistReason = "Just because I'm testing"};
-
+            requestController.CreateItem(testRequest);
         }
 
         [Test]
-        public void AddRequest()
+        public void ApproveUserAsArtist()
         {
-            requestController.CreateItem(testRequest);
+            var requestScreen = new RequestScreen();
+            requestScreen.ApproveUser(testRequest.ID, context);
 
-            var requestItem = requestController.GetItem(testRequest.ID);
+            Assert.False(RequestController.Create(context).GetList().Contains(testRequest));
 
-            Assert.AreEqual(requestItem, testRequest);
-        }
+            var artistId = ArtistController.Create(context).GetArtistIdFromUserId(testRequest.UserID);
 
-        [TearDown]
-        public void TearDown()
-        {
-            requestController.DeleteItem(testRequest.ID);
+            Assert.True(artistId.HasValue);
         }
     }
 }

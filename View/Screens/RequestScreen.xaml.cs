@@ -29,32 +29,43 @@ namespace View.Screens
         private void Approve_Button_Click(object sender, RoutedEventArgs e)
         {
             var requestID = (int)((Button) sender).Tag;
-            var request = RequestController.Create(new DatabaseContext()).GetItem(requestID);
+
+            ApproveUser(requestID, new DatabaseContext());
+
+            RequestDatacontext.Instance.OnPropertyChanged("");
+        }
+
+        public void ApproveUser(int requestID, IDatabaseContext databaseContext)
+        {
+            var request = RequestController.Create(databaseContext).GetItem(requestID);
+
             var userID = request.UserID;
 
-            ArtistController.Create(new DatabaseContext()).MakeArtist(userID);
+            ArtistController.Create(databaseContext).MakeArtist(userID);
 
-            RequestController.Create(new DatabaseContext()).DeleteItem(requestID);
-
-            //Doesn't work, fix
-            RequestDatacontext.Instance.OnPropertyChanged("");
+            RequestController.Create(databaseContext).DeleteItem(requestID);
         }
 
         private void Decline_Button_Click(object sender, RoutedEventArgs e)
         {
             var requestID = (int)((Button)sender).Tag;
-            var request = RequestController.Create(new DatabaseContext()).GetItem(requestID);
+            
+            DeclineUser(requestID, new DatabaseContext());
+
+            RequestDatacontext.Instance.OnPropertyChanged("");
+        }
+
+        public void DeclineUser(int requestID, IDatabaseContext databaseContext)
+        {
+            var request = RequestController.Create(databaseContext).GetItem(requestID);
             var userID = request.UserID;
 
-            var userController = UserController.Create(new DatabaseContext());
+            var userController = UserController.Create(databaseContext);
             var user = userController.GetItem(userID);
             user.RequestedArtist = false;
             userController.UpdateItem(user);
 
-            RequestController.Create(new DatabaseContext()).DeleteItem(requestID);
-
-            //Doesn't work, fix
-            RequestDatacontext.Instance.OnPropertyChanged("");
+            RequestController.Create(databaseContext).DeleteItem(requestID);
         }
     }
 }

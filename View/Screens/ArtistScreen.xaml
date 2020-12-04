@@ -36,7 +36,7 @@
                                 <Setter Property="Content">
                                     <Setter.Value>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="/Screens/whiteUpload.png" Width="31" Height="32" Margin="10 0 10 0"/>
+                                            <Image Source="/Assets/whiteUpload.png" Width="31" Height="32" Margin="10 0 10 0"/>
                                             <TextBlock Text="Upload song" VerticalAlignment="Center" Margin="0 0 10 0"/>
                                         </StackPanel>
                                     </Setter.Value>

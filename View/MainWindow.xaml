@@ -16,7 +16,7 @@
     DataContext="{x:Static dataContexts:DataContext.Instance}"
     Closed="WindowClosing"
     Closing="WindowClosing"
-    >
+    Icon="Assets\soundifysmall.ico">
 
     <Grid>
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="92,54,0,74" ContentTemplate="{StaticResource HomeScreen}"/>

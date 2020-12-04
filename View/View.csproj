@@ -11,7 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\cross.png" />
     <None Remove="Assets\soundify.png" />
+    <None Remove="Assets\soundifySmall.ico" />
+    <None Remove="Assets\tick.png" />
+    <None Remove="Assets\whiteUpload.png" />
     <None Remove="dansenaandegracht.mp3" />
     <None Remove="dansenaandegracht2.mp3" />
   </ItemGroup>
@@ -29,9 +33,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\cross.png" />
     <Resource Include="Assets\soundify.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\soundifySmall.ico" />
+    <Resource Include="Assets\tick.png" />
+    <Resource Include="Assets\whiteUpload.png" />
   </ItemGroup>
 
   <ItemGroup>
