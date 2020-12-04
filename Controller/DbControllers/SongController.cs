@@ -29,15 +29,12 @@ namespace Controller.DbControllers
         
         public List<Song> SearchSongsOnString(List<string> searchterms)
         {
-
-            var songs = GetList(); /*Context.Songs.AsEnumerable();*/
-            List<Song> searchSongs = songs
+            return GetList()
                 .Where(song => (searchterms.Any(s => song.Name != null && song.Name.ToLower().Contains(s.ToLower())) ||
                                searchterms.Any(s => song.Artist != null && song.Artist.ToLower().Contains(s.ToLower()))) &&
                                song.Status != SongStatus.AwaitingApproval)
                 .Take(8)
                 .ToList();
-            return searchSongs;
         }
     }
 }

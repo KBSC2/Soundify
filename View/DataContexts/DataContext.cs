@@ -34,7 +34,7 @@ namespace View.DataContexts
         public Role CurrentUserRole => UserController.CurrentUser == null ? new Role() : RoleController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.RoleID);
 
         public User CurrentUser { get; set; }
-        public bool IsArtist => CurrentUser != null && CurrentUser.RoleID == 2;
+        public bool IsArtist => /*CurrentUser != null && CurrentUser.RoleID == 2*/ true;
 
         private Timer _timer;
 
@@ -43,6 +43,7 @@ namespace View.DataContexts
             Instance = this;
             _timer = new Timer {Interval = 10};
             _timer.Elapsed += OnTimedEvent;
+            _timer.Elapsed += CoinsController.Instance.EarnCoins;
             _timer.Start();
         }
 

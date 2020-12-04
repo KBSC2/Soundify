@@ -41,7 +41,7 @@ namespace View
                         return;
                     }
 
-                    if (PasswordController.CheckStrength(newPassword) < PasswordController.PasswordScore.Strong)
+                    if (PasswordController.CheckStrength(newPassword) < PasswordScore.Strong)
                     {
                         this.Error.Content = "Password is too weak";
                         return;
@@ -60,6 +60,7 @@ namespace View
                 }
             }
         }
+
         private void Confirm_On_Enter_Key(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)

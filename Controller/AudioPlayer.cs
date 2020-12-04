@@ -39,8 +39,7 @@ namespace Controller
 
         public void Initialize()
         {
-            WaveOutDevice = new WaveOut();
-            WaveOutDevice.Volume = 0.05f;
+            WaveOutDevice = new WaveOut { Volume = 0.05f };
             MaxVolume = 0.2;
         }
 
@@ -62,6 +61,7 @@ namespace Controller
             }
         }
 
+        [HasPermission(Permission = Permissions.SongPrev)]
         public void Prev()
         {
             if (NextInPlaylist.Count == 0) return;
@@ -77,7 +77,8 @@ namespace Controller
             CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
             CurrentSong = song;
             WaveOutDevice.Init(CurrentSongFile.AudioFile);
-            NextSong?.Invoke(null, new EventArgs());
+            NextSong?.Invoke(this, new EventArgs());
+            //TODO:why is there a delay here?
             Task.Delay(500).ContinueWith(x => WaveOutDevice.Play());
         }
 

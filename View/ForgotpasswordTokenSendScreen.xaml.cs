@@ -30,7 +30,7 @@ namespace View
             var email = Email.Text;
             var token = Guid.NewGuid().ToString();
 
-            var emailController = new EmailController<ForgotPasswordTemplate>();
+            var emailController = new EmailController();
             var mail = new ForgotPasswordTemplate(new MailAddress("info.soundify@gmail.com"), token);
             
             if (email.Contains(".") && email.Contains("@"))

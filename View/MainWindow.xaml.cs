@@ -16,6 +16,7 @@ using View;
 using View.DataContexts;
 using View.Screens;
 
+
 namespace Soundify
 {
     /// <summary>
@@ -34,8 +35,8 @@ namespace Soundify
         {
             get
             {
-                if (_instanceMainWindow == null) _instanceMainWindow = new MainWindow();
-                return _instanceMainWindow;
+                if (instanceMainWindow == null) instanceMainWindow = new MainWindow();
+                return instanceMainWindow;
             }
         }
 
@@ -43,19 +44,20 @@ namespace Soundify
         {
             get
             {
-                if (_instanceLoginScreen == null) _instanceLoginScreen = new LoginScreen();
-                return _instanceLoginScreen;
+                if (instanceLoginScreen == null) instanceLoginScreen = new LoginScreen();
+                return instanceLoginScreen;
             }
         }
 
-        private static MainWindow _instanceMainWindow;
-        private static LoginScreen _instanceLoginScreen;
+        private static MainWindow instanceMainWindow;
+        private static LoginScreen instanceLoginScreen;
 
         public MainWindow()
         {
             AudioPlayer.Create(new DatabaseContext());
+
             AudioPlayer.Instance.NextSong += PlaylistScreen.Instance.OnNextSong;
-            _instanceMainWindow = this;
+            instanceMainWindow = this;
 
             if (!Directory.Exists(Path.GetTempPath() + "Soundify"))
                 Directory.CreateDirectory(Path.GetTempPath() + "Soundify");
@@ -75,19 +77,21 @@ namespace Soundify
             SetScreen(ScreenNames.HomeScreen);
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
 
-            FileCache.Instance.GetFile("images/gangnamstyle.png");
             if (UserController.CurrentUser == null)
             {
                 InstanceLoginScreen.Show();
                 InstanceMainWindow.Hide();
             }
+            
+            PermissionController.NoRightsEvent += ShowNoRights;
         }
-
         private void Play_Button_Click(object sender, RoutedEventArgs e)
         {
             if (AudioPlayer.Instance.CurrentSongFile == null)
+            {
                 AudioPlayer.Instance.Next();
                 QueueDataContext.Instance.OnPropertyChanged();
+            }
 
             if (AudioPlayer.Instance.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.Instance.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
             {
@@ -175,6 +179,18 @@ namespace Soundify
                 SearchDataContext.Instance.SearchTerms = text.Split(" ").ToList();
                 SearchDataContext.Instance.OnPropertyChanged("");
             }   
+        }
+
+        public void ShowNoRights(object sender, NoRightsEventArgs e)
+        {
+            PopUpNoRights popUpNoRights = new PopUpNoRights(e.Permission);
+            popUpNoRights.ShowDialog();
+        }
+
+        private void WindowClosing(object sender, EventArgs e)
+        {
+            SSHController.Instance.CloseSSHTunnel();
+            Application.Current.Shutdown();
         }
     }
 }

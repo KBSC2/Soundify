@@ -23,7 +23,7 @@ namespace View
             _previousToken = token;
             _email = email;
             var mailVerification = new MailVerificationTemplate(new MailAddress("info.soundify@gmail.com"), token);
-            new EmailController<MailVerificationTemplate>().SendEmail(mailVerification, email);
+            new EmailController().SendEmail(mailVerification, email);
         }
 
         public void Confirm_On_Enter_Key(object sender, KeyEventArgs e)
@@ -37,7 +37,7 @@ namespace View
         public void Resend_Token_Button_Click(object sender, RoutedEventArgs e)
         {
             var mailVerification = new MailVerificationTemplate(new MailAddress("info.soundify@gmail.com"), _previousToken);
-            new EmailController<MailVerificationTemplate>().SendEmail(mailVerification, _email);
+            new EmailController().SendEmail(mailVerification, _email);
         }
 
         public void Confirm_Button_Click(object sender, RoutedEventArgs e)
@@ -63,9 +63,5 @@ namespace View
             MainWindow.InstanceLoginScreen.Show();
             this.Close();
         }
-
-
-
-
     }
 }

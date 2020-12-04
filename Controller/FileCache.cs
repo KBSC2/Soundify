@@ -5,19 +5,15 @@ namespace Controller
 {
     public class FileCache
     {
-        private static FileCache _instance;
+        private static FileCache instance;
 
         public static FileCache Instance
         {
             get
             {
-                if (_instance == null)
-                    _instance = new FileCache();
-                return _instance;
-            }
-            set
-            {
-                _instance = value;
+                if (instance == null)
+                    instance = new FileCache();
+                return instance;
             }
         }
 
@@ -50,17 +46,9 @@ namespace Controller
                     }
                     catch (IOException)
                     {
-
                     }
                 }
             }
         }
     }
-
-    public class CachedFile
-    {
-        public string LocalPath { get; set; }
-        public DateTime ExpiryDate { get; set; }
-    }
-
 }

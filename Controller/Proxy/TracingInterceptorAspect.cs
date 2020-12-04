@@ -6,6 +6,7 @@ using Castle.DynamicProxy;
 using Controller.DbControllers;
 using Model.Annotations;
 using Model.Database.Contexts;
+using Model.EventArgs;
 
 namespace Controller.Proxy
 {
@@ -20,7 +21,7 @@ namespace Controller.Proxy
 
         /**
          * Every time a method within a routed class gets called, it goes through this fuction.
-         * invocation.Proceed() is what calles the actual method.
+         * invocation.Proceed() is what calls the actual method.
          *
          * If the function has an HasPermission annotation, check for permissions.
          * If not allowed display the Not Allowed popup
@@ -48,8 +49,7 @@ namespace Controller.Proxy
             }
             else
             {
-                // Open not allowed thingy : Ben
-                Debug.WriteLine("NEE, MAG NIET");
+                PermissionController.NoRightsEvent?.Invoke(this, new NoRightsEventArgs() { Permission = x.HasMaxValue ? x.MaxValue : x.Permission });
             }
         }
     }
