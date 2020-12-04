@@ -10,6 +10,7 @@ namespace Model.Migrations
                 name: "RoleID",
                 table: "Users",
                 type: "int",
+                defaultValue: 1,
                 nullable: true);
 
             migrationBuilder.CreateTable(
@@ -44,9 +45,9 @@ namespace Model.Migrations
                 columns: new[] { "Designation", "ColorCode" },
                 values: new object[,]
                 {
-                    { "Admin", "#bccc0e" },
-                    { "User", "#0bb013" },
-                    { "Artist", "#ad0a18"}
+                    { "a user", "#0bb013" },
+                    { "an artist", "#ad0a18"},
+                    { "an admin", "#bccc0e" }
                 });
         }
 

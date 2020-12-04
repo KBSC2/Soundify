@@ -3,25 +3,23 @@
                     x:Class="View.Screens.SettingScreen">
     <DataTemplate x:Key="SettingScreen">
         <!-- Start homescreen screen -->
-        <Grid Margin="0,0,0,0" Background="#FF303651" >
-            <Grid.DataContext>
-		        <DataContexts:SettingsDataContext/>
-	        </Grid.DataContext>
-            <Button Content="Change Password" HorizontalAlignment="Left" Margin="138,99,0,0" VerticalAlignment="Top" Width="300" Height="43" FontSize="26.5"  Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="ChangePassword_Button_Click"/>
-            <ComboBox HorizontalAlignment="Left" Margin="206,178,0,0" VerticalAlignment="Top" Width="164" Height="43" Background="#FF707070" FontSize="26.5" FontWeight="Bold" SelectionChanged="VolumeComboBox_SelectedChanged">
-                <ComboBoxItem>Quiet</ComboBoxItem >
-                <ComboBoxItem IsSelected="True">Normal</ComboBoxItem>
-                <ComboBoxItem>Loud</ComboBoxItem>
-            </ComboBox>
-            <Image Margin="152,187,1006,364" Stretch="Fill" Source="../Assets/Sound.png" Width="30" Height="25"/>
-            <Button Content="Logout" HorizontalAlignment="Left" Margin="223,483,0,0" VerticalAlignment="Top" Width="130" Height="40" Background="#FFF70E0E" Foreground="White" BorderThickness="0" FontSize="26.6" FontWeight="Bold" Click="Logout_Button_Click"/>
-            <Label Content="You are " HorizontalAlignment="Left" Margin="176,25,0,0" VerticalAlignment="Top" FontSize="26.5" Foreground="White" FontWeight="Bold"/>
-            <!-- Data binding for the role goes here -->
-            <Label Content="{Binding Role.Designation}" HorizontalAlignment="Left" Margin="312,25,0,0" VerticalAlignment="Top" FontSize="26.5" Foreground="{Binding Role.ColorCode}" FontWeight="Bold"/>
-            <Button Content="Request to be artist" HorizontalAlignment="Left" Margin="104,410,0,0" VerticalAlignment="Top" Width="368" Height="40" Background="#FF3EBF65" Foreground="White" BorderThickness="0" FontSize="26.6" FontWeight="Bold" Click="Request_Button_Click"/>
-            <!-- Data binding for the username goes here -->
-            <Label Content="Welcome Naamnaam!" HorizontalAlignment="Left" Margin="741
-                   ,25,0,0" VerticalAlignment="Top" FontSize="26.5" Foreground="White" FontWeight="Bold"/>
+        <Grid Margin="0,0,0,0" Background="#FF303651"  DataContext="{x:Static DataContexts:SettingsDataContext.Instance}">
+            <Grid Margin="0,0,640,0">
+                <Button Content="Change Password" HorizontalAlignment="Center" Margin="0,112,0,0" VerticalAlignment="Top" Width="300" Height="44" FontSize="26.5"  Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="ChangePassword_Button_Click"/>
+                <ComboBox HorizontalAlignment="Center" Margin="0,178,0,0" VerticalAlignment="Top" Width="164" Height="43" Background="#FF707070" FontSize="26.5" FontWeight="Bold" SelectionChanged="VolumeComboBox_SelectedChanged">
+                    <ComboBoxItem>Quiet</ComboBoxItem >
+                    <ComboBoxItem IsSelected="True">Normal</ComboBoxItem>
+                    <ComboBoxItem>Loud</ComboBoxItem>
+                </ComboBox>
+                <Image Margin="152,187,1006,364" Stretch="Fill" Source="../Assets/Sound.png" Width="30" Height="25"/>
+                <Button Content="Logout" HorizontalAlignment="Center" Margin="0,483,0,0" VerticalAlignment="Top" Width="130" Height="40" Background="#FFF70E0E" Foreground="White" BorderThickness="0" FontSize="26.6" FontWeight="Bold" Click="Logout_Button_Click"/>
+                <Label Content="You are" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,14,0,0" VerticalAlignment="Top" FontSize="26.5" Foreground="White" FontWeight="Bold"/>
+                <Label Content="{Binding Role.Designation}" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" FontSize="26.5" Foreground="{Binding Role.ColorCode}" FontWeight="Bold" Height="auto" Width="163"/>
+                <Button Visibility="{Binding HasArtistRequested}" Content="Request to be artist" HorizontalAlignment="Center" Margin="0,410,0,0" VerticalAlignment="Top" Width="368" Height="40" Background="#FF3EBF65" Foreground="White" BorderThickness="0" FontSize="26.6" FontWeight="Bold" Click="Request_Button_Click" />
+            </Grid>
+            <Grid Margin="640,0,0,0">
+                <Label Content="{Binding CurrentUserName}" ContentStringFormat="Welcome {0}!" HorizontalAlignment="Center" Margin="0,25,50,0" VerticalAlignment="Top" FontSize="26.5" Foreground="White" FontWeight="Bold" Width="auto" Height="auto"/>
+            </Grid>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

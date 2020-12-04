@@ -16,6 +16,7 @@ namespace Model.Database.Contexts
         public override DbSet<PlaylistSong> PlaylistSongs { get; set; }
         public override DbSet<User> Users{ get; set; }
         public override DbSet<Role> Roles { get; set; }
+        public override DbSet<Request> Requests { get; set; }
         public override DbSet<Permission> Permissions { get; set; }
         public override DbSet<RolePermissions> RolePermissions { get; set; }
         public override DbSet<Artist> Artists { get; set; }
@@ -53,6 +54,7 @@ namespace Model.Database.Contexts
                 new RolePermissions() {RoleID = 3, PermissionID = 12, Value = 2}
             });
             Artists = GetQueryableMockDbSet(new List<Artist>());
+            Requests = GetQueryableMockDbSet(new List<Request>());
         }
 
         /**
