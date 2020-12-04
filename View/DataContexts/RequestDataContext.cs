@@ -11,14 +11,14 @@ namespace View.DataContexts
 {
     public class RequestDatacontext : INotifyPropertyChanged
     {
-        private static RequestDatacontext _instance;
+        private static RequestDatacontext instance;
         public static RequestDatacontext Instance
         {
             get
             {
-                if (_instance == null)
-                    _instance = new RequestDatacontext();
-                return _instance;
+                if (instance == null)
+                    instance = new RequestDatacontext();
+                return instance;
             }
         }
         public List<Request> ArtistRequests => RequestController.Create(new DatabaseContext()).GetArtistRequests();

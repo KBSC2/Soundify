@@ -34,5 +34,11 @@ namespace Tests.Requests
             Assert.False(RequestController.Create(context).GetList().Contains(testRequest));
             Assert.False(UserController.Create(context).GetItem(testRequest.UserID).RequestedArtist);
         }
+
+        [TearDown]
+        public void TearDown()
+        {
+            requestController.DeleteItem(testRequest.ID);
+        }
     }
 }

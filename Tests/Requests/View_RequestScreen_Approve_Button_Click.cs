@@ -31,11 +31,21 @@ namespace Tests.Requests
             var requestScreen = new RequestScreen();
             requestScreen.ApproveUser(testRequest.ID, context);
 
-            Assert.False(RequestController.Create(context).GetList().Contains(testRequest));
+            Assert.False(requestController.GetList().Contains(testRequest));
 
             var artistId = ArtistController.Create(context).GetArtistIdFromUserId(testRequest.UserID);
 
             Assert.True(artistId.HasValue);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            requestController.DeleteItem(testRequest.ID);
+
+            var artistId = ArtistController.Create(context).GetArtistIdFromUserId(testRequest.UserID);
+            if(artistId != null)
+                ArtistController.Create(context).DeleteItem((int)artistId);
         }
     }
 }
