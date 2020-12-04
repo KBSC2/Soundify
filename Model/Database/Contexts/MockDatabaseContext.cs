@@ -42,13 +42,15 @@ namespace Model.Database.Contexts
             });
             Permissions = GetQueryableMockDbSet(new List<Permission>()
             {
+                new Permission() {ID = 5, Name = Enums.Permissions.SongUpload.ToString()},
                 new Permission() {ID = 11, Name = Enums.Permissions.PlaylistCreate.ToString()},
                 new Permission() {ID = 12, Name = Enums.Permissions.PlaylistLimit.ToString(), HasValue = true}
             });
             RolePermissions = GetQueryableMockDbSet(new List<RolePermissions>()
             {
-                new RolePermissions() {RoleID = 1, PermissionID = 11},
-                new RolePermissions() {RoleID = 1, PermissionID = 12, Value = 100}
+                new RolePermissions() {RoleID = 3, PermissionID = 5},
+                new RolePermissions() {RoleID = 3, PermissionID = 11},
+                new RolePermissions() {RoleID = 3, PermissionID = 12, Value = 2}
             });
             Artists = GetQueryableMockDbSet(new List<Artist>());
         }
