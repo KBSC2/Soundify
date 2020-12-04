@@ -1,4 +1,5 @@
-﻿using System.Net.Mail;
+﻿using System.Collections.Generic;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -35,7 +36,7 @@ namespace View
             var artistName = this.ArtistName.Text;
             var artistReason = this.ArtistReason.Text;
 
-            var emailController = new EmailController<MailArtistVerification>();
+            var emailController = new EmailController();
             var email =  new MailArtistVerification(new MailAddress("info.soundify@gmail.com"), artistName, artistReason);
             emailController.SendEmail(email, "info.soundify@gmail.com");
 

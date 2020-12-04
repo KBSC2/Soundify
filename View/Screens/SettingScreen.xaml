@@ -4,8 +4,7 @@
     <DataTemplate x:Key="SettingScreen">
         <!-- Start homescreen screen -->
         <Grid Margin="0,0,0,0" Background="#FF303651"  DataContext="{x:Static DataContexts:SettingsDataContext.Instance}">
-            
-            <Button Content="Change Password" HorizontalAlignment="Left" Margin="138,99,0,0" VerticalAlignment="Top" Width="300" Height="43" FontSize="26.5"  Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="ChangePassword_Button_Click"/>
+	        <Button Content="Change Password" HorizontalAlignment="Left" Margin="138,99,0,0" VerticalAlignment="Top" Width="300" Height="43" FontSize="26.5"  Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="ChangePassword_Button_Click"/>
             <ComboBox HorizontalAlignment="Left" Margin="206,178,0,0" VerticalAlignment="Top" Width="164" Height="43" Background="#FF707070" FontSize="26.5" FontWeight="Bold" SelectionChanged="VolumeComboBox_SelectedChanged">
                 <ComboBoxItem>Quiet</ComboBoxItem >
                 <ComboBoxItem IsSelected="True">Normal</ComboBoxItem>

@@ -32,17 +32,12 @@ namespace View.Screens
             var request = RequestController.Create(new DatabaseContext()).GetItem(requestID);
             var userID = request.UserID;
 
-            var userController = UserController.Create(new DatabaseContext());
-            var user = userController.GetItem(userID);
-            user.RoleID = 2;
-            userController.UpdateItem(user);
-
-            ArtistController.Create(new DatabaseContext()).CreateItem(new Artist(){ArtistName = request.ArtistName, UserID = userID});
+            ArtistController.Create(new DatabaseContext()).MakeArtist(userID);
 
             RequestController.Create(new DatabaseContext()).DeleteItem(requestID);
 
             //Doesn't work, fix
-            //RequestDatacontext.Instance.OnPropertyChanged("");
+            RequestDatacontext.Instance.OnPropertyChanged("");
         }
 
         private void Decline_Button_Click(object sender, RoutedEventArgs e)
@@ -59,7 +54,7 @@ namespace View.Screens
             RequestController.Create(new DatabaseContext()).DeleteItem(requestID);
 
             //Doesn't work, fix
-            //RequestDatacontext.Instance.OnPropertyChanged("");
+            RequestDatacontext.Instance.OnPropertyChanged("");
         }
     }
 }

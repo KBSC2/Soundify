@@ -50,9 +50,10 @@ namespace View.Screens
         private void Request_Button_Click(object sender, RoutedEventArgs e)
         {
             var request = new RequestArtist();
-                request.Show();
-                request.Focus();
+            request.Show();
+            request.Focus();
 
+            SettingsDataContext.Instance.OnPropertyChanged("");
         }
     }
 }

@@ -10,14 +10,14 @@ namespace View.DataContexts
 {
     public class SettingsDataContext : INotifyPropertyChanged
     {
-        private static SettingsDataContext _instance;
+        private static SettingsDataContext instance;
         public static SettingsDataContext Instance
         {
             get
             {
-                if (_instance == null)
-                    _instance = new SettingsDataContext();
-                return _instance;
+                if (instance == null)
+                    instance = new SettingsDataContext();
+                return instance;
             }
         }
         public Role Role => RoleController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.RoleID);
