@@ -38,21 +38,6 @@ namespace View.DataContexts
                 if (queue.Count > 12) break;
             }
 
-            if (AudioPlayer.Instance.Looping)
-            {
-                for (int i = 0; i < index; i++)
-                {
-                    queue.Add(songs[i]);
-                    if (queue.Count > 12) break;
-                }
-
-                for (int i = index; i < songs.Count; i++)
-                {
-                    queue.Add(songs[i]);
-                    if (queue.Count > 12) break;
-                }
-            }
-
             return SongInfo.ConvertSongListToSongInfo(queue);
         }
 
