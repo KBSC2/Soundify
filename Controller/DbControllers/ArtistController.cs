@@ -25,11 +25,13 @@ namespace Controller.DbControllers
         }
 
         // Can't this be a little bit more generic. Like update role or something??
-        public void MakeArtist(User user)
+        public void MakeArtist(int userId)
         {
+            var user = userController.GetItem(userId);
+
             user.RoleID = 2;
             userController.UpdateItem(user);
-            CreateItem(new Artist() { ArtistName = user.Username }); // change user.Username to artist name
+            CreateItem(new Artist() { ArtistName = user.Username, UserID = user.ID}); // change user.Username to artist name
         }
 
         public void RevokeArtist(User user)

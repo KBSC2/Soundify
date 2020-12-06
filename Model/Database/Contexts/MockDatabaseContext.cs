@@ -16,6 +16,7 @@ namespace Model.Database.Contexts
         public override DbSet<PlaylistSong> PlaylistSongs { get; set; }
         public override DbSet<User> Users{ get; set; }
         public override DbSet<Role> Roles { get; set; }
+        public override DbSet<Request> Requests { get; set; }
         public override DbSet<Permission> Permissions { get; set; }
         public override DbSet<RolePermissions> RolePermissions { get; set; }
         public override DbSet<Artist> Artists { get; set; }
@@ -42,15 +43,18 @@ namespace Model.Database.Contexts
             });
             Permissions = GetQueryableMockDbSet(new List<Permission>()
             {
+                new Permission() {ID = 5, Name = Enums.Permissions.SongUpload.ToString()},
                 new Permission() {ID = 11, Name = Enums.Permissions.PlaylistCreate.ToString()},
                 new Permission() {ID = 12, Name = Enums.Permissions.PlaylistLimit.ToString(), HasValue = true}
             });
             RolePermissions = GetQueryableMockDbSet(new List<RolePermissions>()
             {
-                new RolePermissions() {RoleID = 1, PermissionID = 11},
-                new RolePermissions() {RoleID = 1, PermissionID = 12, Value = 100}
+                new RolePermissions() {RoleID = 3, PermissionID = 5},
+                new RolePermissions() {RoleID = 3, PermissionID = 11},
+                new RolePermissions() {RoleID = 3, PermissionID = 12, Value = 2}
             });
             Artists = GetQueryableMockDbSet(new List<Artist>());
+            Requests = GetQueryableMockDbSet(new List<Request>());
         }
 
         /**

@@ -10,6 +10,8 @@ namespace Model
         Logout,
         SettingScreen,
         SearchScreen,
-        ArtistScreen
+        ArtistScreen,
+        AdminScreen,
+        RequestScreen
     }
 }

@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using Controller;
 using Controller.DbControllers;
 using Soundify;
+using View.DataContexts;
 
 namespace View.Screens
 {
@@ -49,8 +50,8 @@ namespace View.Screens
         private void Request_Button_Click(object sender, RoutedEventArgs e)
         {
             var request = new RequestArtist();
-                request.Show();
-                request.Focus();
+            request.Show();
+            request.Focus();
         }
     }
 }

@@ -56,7 +56,8 @@ namespace Controller.DbControllers
 
         public void ReorderSongIndexes(int playlistId)
         {
-            set.AsEnumerable().Where(x => x.PlaylistID == playlistId)
+            set.AsEnumerable()
+                .Where(x => x.PlaylistID == playlistId)
                 .OrderBy(x => x.Index)
                 .Select((p,i) => new {song = p, index = i})
                 .Where(p => p.song.Index != p.index).ToList()

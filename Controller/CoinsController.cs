@@ -5,7 +5,7 @@ using Model.DbModels;
 
 namespace Controller
 {
-   public class CoinsController
+    public class CoinsController
     {
         private static CoinsController instance;
         public static CoinsController Instance
@@ -32,11 +32,11 @@ namespace Controller
             if (AudioPlayer.Instance.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing)
                 counter++;
 
-            if(counter == 1000)
+            if (counter == 1000)
             {
                 counter = 0;
-                AddCoins(UserController.CurrentUser);
-            } 
+                AddCoins(userController.GetItem(UserController.CurrentUser.ID));
+            }
         }
 
         public void AddCoins(User user, int coins = 1)

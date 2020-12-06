@@ -1,14 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Controller.DbControllers;
+using Controller.Proxy;
 using Model.Annotations;
+using Model.Database.Contexts;
 using Model.Enums;
 using Renci.SshNet;
 
 namespace Controller
 {
-    public static class FileTransfer
+    public class FileTransfer
     {
-        public static void DownloadFile(string inputPath)
+        public static FileTransfer Create(IDatabaseContext context)
+        {
+            return ProxyController.AddToProxy<FileTransfer>(context);
+        }
+
+        public virtual void DownloadFile(string inputPath)
         {
             if(inputPath == "") return;
 
@@ -29,7 +37,7 @@ namespace Controller
         }
 
         [HasPermission(Permission = Permissions.SongUpload)]
-        public static string UploadFile(string inputPath, string outputPath)
+        public virtual string UploadFile(string inputPath, string outputPath)
         {
             var conf = SSHController.GetSSHConfiguration();
             using (SftpClient client = new SftpClient(
@@ -46,7 +54,7 @@ namespace Controller
             }
         }
 
-        public static string RemotePathToLocalPath(string remotePath)
+        public virtual string RemotePathToLocalPath(string remotePath)
         {
             return Path.GetTempPath() + "Soundify/" +  remotePath;
         }
