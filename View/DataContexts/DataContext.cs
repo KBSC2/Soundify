@@ -30,31 +30,38 @@ namespace View.DataContexts
         public double CurrentTime => AudioPlayer.Instance.CurrentSongFile == null ? 0 : AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong;
         public string TotalTimeLabel => AudioPlayer.Instance.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSongFile.TotalTimeSong).ToString("m':'ss");
         public string CurrentTimeLabel => AudioPlayer.Instance.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong).ToString("m':'ss");
-        
-        public Role CurrentUserRole => UserController.CurrentUser == null ? new Role() : RoleController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.RoleID);
 
-        public User CurrentUser => UserController.CurrentUser;
+        public User CurrentUser => UserController.CurrentUser == null ? null : UserController.Create(new DatabaseContext())
+                .GetItem(UserController.CurrentUser.ID);
+        public int? CurrentUserCoins => CurrentUser?.Coins;
+        public Role CurrentUserRole => UserController.CurrentUser == null ? null : RoleController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.RoleID);
+        public bool? IsAdmin => CurrentUser?.RoleID.Equals(3);
+        public bool? IsArtist => CurrentUser?.RoleID.Equals(2);
 
-        public bool? IsAdmin => UserController.CurrentUser != null
-            ? UserController.Create(new DatabaseContext())
-                .GetItem(UserController.CurrentUser.ID)?.RoleID.Equals(3)
-            : false;
-        public bool IsArtist => UserController.CurrentUser != null && UserController.CurrentUser.RoleID == 2;
-
-        private Timer _timer;
+        private Timer timerSlider;
+        private Timer timer;
 
         private DataContext()
         {
             Instance = this;
-            _timer = new Timer {Interval = 10};
-            _timer.Elapsed += OnTimedEvent;
-            _timer.Elapsed += CoinsController.Instance.EarnCoins;
-            _timer.Start();
+            timer = new Timer {Interval = 1000};
+            timer.Elapsed += OnTimedEvent;
+            timer.Elapsed += CoinsController.Instance.EarnCoins;
+            timer.Start();
+
+            timerSlider = new Timer { Interval = 10 };
+            timerSlider.Elapsed += OnTimedEventSlider;
+            timerSlider.Start();
         }
 
         public void OnTimedEvent(object sender, EventArgs e)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(""));
+        }
+
+        public void OnTimedEventSlider(object sender, EventArgs e)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentTime"));
         }
     }
 }

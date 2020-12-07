@@ -50,7 +50,7 @@ namespace Tests.Local
         [Test, Category("Local")]
         public void AudioPlayer_PlayPlaylist_SongQueue_ContainsSongs()
         {
-            AudioPlayer.Instance.NextInPlaylist.Clear();
+            AudioPlayer.Instance.ClearQueue();
 
             playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
             playlistSongController.AddSongToPlaylist(song2.ID, playlist.ID);
@@ -61,7 +61,7 @@ namespace Tests.Local
             bool areEqual = true;
             for (int i = 0; i < playlistSongs.Count; i++)
             {
-                if (playlistSongs[i].Song.ID != AudioPlayer.Instance.NextInPlaylist[i].ID) areEqual = false;
+                if (playlistSongs[i].Song.ID != AudioPlayer.Instance.Queue[i].ID) areEqual = false;
             }
 
             Assert.IsTrue(areEqual);

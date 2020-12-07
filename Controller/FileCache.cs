@@ -41,13 +41,15 @@ namespace Controller
             {
                 DateTime creation = File.GetCreationTime(path);
                 if (creation + timeSpan <= DateTime.Now)
-                    try 
+                {
+                    try
                     {
                         File.Delete(path);
                     }
                     catch (IOException)
                     {
                     }
+                }
             }
         }
     }

@@ -23,14 +23,10 @@ namespace View.DataContexts
             }
         }
 
-        public List<SongInfo> NextInQueueItems => SongInfo.ConvertSongListToSongInfo(AudioPlayer.Instance.NextInQueue);
-        public List<SongInfo> NextInPlaylistItems => QueueGenerator(AudioPlayer.Instance.NextInPlaylist, AudioPlayer.Instance.CurrentSongIndex);
+        public List<SongInfo> NextInQueueItems => QueueGenerator(AudioPlayer.Instance.Queue, AudioPlayer.Instance.CurrentSongIndex);
         public string CurrentSongName => AudioPlayer.Instance.CurrentSong == null ? "" : AudioPlayer.Instance.CurrentSong.Name;
         public string CurrentSongArtist => AudioPlayer.Instance.CurrentSong == null ? "" : AudioPlayer.Instance.CurrentSong.Artist;
         public string CurrentSongDuration => AudioPlayer.Instance.CurrentSong == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSong.Duration).ToString("m':'ss");
-        public string NextInQueueLabelContent => AudioPlayer.Instance.NextInQueue.Count == 0 ? "" : "Next in queue";
-        public string NextInPlaylistLabelMargin => "35," + (120 + (AudioPlayer.Instance.NextInQueue.Count * 30)).ToString() + ",0,0";
-        public string NextInPlaylistMargin => "300," + (130 + (AudioPlayer.Instance.NextInQueue.Count * 30)).ToString() + ",0,0";
 
         public List<SongInfo> QueueGenerator(List<Song> songs, int index)
         {
@@ -40,21 +36,6 @@ namespace View.DataContexts
             {
                 queue.Add(songs[i]);
                 if (queue.Count > 12) break;
-            }
-
-            if (AudioPlayer.Instance.Looping)
-            {
-                for (int i = 0; i < index; i++)
-                {
-                    queue.Add(songs[i]);
-                    if (queue.Count > 12) break;
-                }
-
-                for (int i = index; i < songs.Count; i++)
-                {
-                    queue.Add(songs[i]);
-                    if (queue.Count > 12) break;
-                }
             }
 
             return SongInfo.ConvertSongListToSongInfo(queue);

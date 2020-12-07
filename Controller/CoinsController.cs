@@ -32,7 +32,7 @@ namespace Controller
             if (AudioPlayer.Instance.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing)
                 counter++;
 
-            if (counter == 1000)
+            if (counter == 10)
             {
                 counter = 0;
                 AddCoins(userController.GetItem(UserController.CurrentUser.ID));

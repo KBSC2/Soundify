@@ -21,7 +21,7 @@ namespace View
             if(File.Exists(Path.GetTempPath() + "Soundify/settings/loginInfo"))
             {
                 string text = File.ReadAllText(Path.GetTempPath() + "Soundify/settings/loginInfo");
-                if (text != String.Empty)
+                if (text != "")
                 {
                     string[] split = text.Split(",");
 
