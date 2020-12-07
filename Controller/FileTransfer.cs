@@ -36,7 +36,7 @@ namespace Controller
             }
         }
 
-        [HasPermission(Permission = Permissions.SongUpload)]
+        //[HasPermission(Permission = Permissions.SongUpload)]
         public virtual string UploadFile(string inputPath, string outputPath)
         {
             var conf = SSHController.GetSSHConfiguration();

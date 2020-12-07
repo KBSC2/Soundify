@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using Controller;
 using Controller.DbControllers;
+using Model;
 using Soundify;
 using View.DataContexts;
 
@@ -17,8 +18,10 @@ namespace View.Screens
         private void Logout_Button_Click(object sender, RoutedEventArgs e)
         {
             UserController.CurrentUser = null;
+
             MainWindow.InstanceMainWindow.Hide();
             MainWindow.InstanceLoginScreen.Show();
+            MainWindow.InstanceMainWindow.SetScreen(ScreenNames.HomeScreen);
         }
 
         private void ChangePassword_Button_Click(object sender, RoutedEventArgs e)
