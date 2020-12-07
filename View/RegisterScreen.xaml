@@ -7,7 +7,8 @@
         xmlns:DataContexts="clr-namespace:View.DataContexts" x:Class="View.RegisterScreen"
         mc:Ignorable="d"
         Title="Register" Height="715" Width="617"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Icon="Assets\soundifysmall.ico">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -25,6 +26,8 @@
         <Label x:Name="Error" Content="" HorizontalAlignment="Center" Margin="0,562,0,0" VerticalAlignment="Top" Width="355" Foreground="{DynamicResource Red}" FontSize="16" HorizontalContentAlignment="Center"/>
         <Button x:Name="Join" Content="Join" Click="Register_Button_Click"  HorizontalAlignment="Left" Margin="331,598,0,0" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Width="237" Height="55" Background="{DynamicResource Orange}" Foreground="White"/>
         <Button Content="Cancel " HorizontalAlignment="Left" Margin="39,598,0,0" VerticalAlignment="Top" Foreground="White" FontSize="40" FontWeight="Bold" Background="{DynamicResource Red}" Width="237" Height="55" BorderThickness="0,0,0,0" Click="BackToLogin_Button_Click"/>
-        <Image Margin="263,11,263,598" Stretch="Fill" Source="Assets/soundify.png" Width="66" Height="66"/>
+        <Canvas Grid.Row="1">
+            <Image Margin="263,23,263,584" Stretch="Fill" Source="Assets/soundifySmall.png" Width="91" Height="91"/>
+        </Canvas>
     </Grid>
 </Window>
