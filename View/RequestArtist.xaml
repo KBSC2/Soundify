@@ -7,7 +7,8 @@
         xmlns:DataContexts="clr-namespace:View.DataContexts" x:Class="View.RequestArtist"
         mc:Ignorable="d"
         Title="Request to be an artist" Height="715" Width="617"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Icon="Assets\soundifysmall.ico">
     <Window.Resources>
         <ResourceDictionary Source="Styles/Watermark.xaml"/>
     </Window.Resources>
@@ -17,7 +18,9 @@
         <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="ArtistName" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,264,0,0" Tag="Artist name" TextWrapping="NoWrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="{DynamicResource InputBackground}" Foreground="White"/>
         <Button x:Name="Confirm" Content="Request" Click="Confirm_Button_Click"  HorizontalAlignment="Left" Margin="333,589,0,0" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Width="196" Height="60" Background="{DynamicResource Orange}" Foreground="White"/>
         <Button Content="Cancel" HorizontalAlignment="Left" Margin="87,589,0,0" VerticalAlignment="Top" Foreground="White" FontSize="40" FontWeight="Bold" Background="{DynamicResource Red}" Width="196" Height="60" BorderThickness="0,0,0,0" Click="Cancel_Button_Click"/>
-        <Image Margin="263,15,263,593" Stretch="Fill" Source="Assets/soundifySmall.png" Width="91" Height="91"/>
         <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="ArtistReason" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,350,0,0" Tag="What is your reason?" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="152" FontSize="20" Background="{DynamicResource InputBackground}" Foreground="White" VerticalContentAlignment="Top"/>
+        <Canvas Grid.Row="1">
+            <Image Margin="263,23,263,584" Stretch="Fill" Source="Assets/soundifySmall.png" Width="91" Height="91"/>
+        </Canvas>
     </Grid>
 </Window>

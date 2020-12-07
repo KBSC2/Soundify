@@ -11,7 +11,7 @@
         WindowStyle="SingleBorderWindow"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        >
+        Icon="Assets\soundifysmall.ico">
     <Window.DataContext>
         <DataContexts:SongInfoDataContext/>
     </Window.DataContext>
