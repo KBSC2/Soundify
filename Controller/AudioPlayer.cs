@@ -46,7 +46,7 @@ namespace Controller
         }
 
         [HasPermission(Permission = Permissions.SongNext)]
-        public void Next()
+        public virtual void Next()
         {
             if(CurrentSongIndex >= 0)
             {
@@ -69,7 +69,7 @@ namespace Controller
         }
 
         [HasPermission(Permission = Permissions.SongPrev)]
-        public void Prev()
+        public virtual void Prev()
         {
             if (Queue.Count == 0) return;
             CurrentSongIndex--;
@@ -144,7 +144,7 @@ namespace Controller
         }
 
         [HasPermission(Permission = Permissions.SongLoop)]
-        public void Loop(Playlist playlist)
+        public virtual void Loop(Playlist playlist)
         {
             Looping = !Looping;
 
