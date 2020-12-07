@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Title="SongInfoScreen" Height="200" Width="500"
         WindowStartupLocation="CenterOwner"
+        Icon="Assets\soundifysmall.ico"
         ResizeMode="NoResize">
     <Grid Background="{DynamicResource Background4Color }">
         <TextBlock x:Name="TypeOfRight" Text="You dont have this feature&#x0a;More features available in the shop" FontSize="20" Margin="0 0 0 50" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="White" />
