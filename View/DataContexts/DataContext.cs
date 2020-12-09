@@ -38,6 +38,10 @@ namespace View.DataContexts
         public bool? IsAdmin => CurrentUser?.RoleID.Equals(3);
         public bool? IsArtist => CurrentUser?.RoleID.Equals(2);
 
+        public string DisplayName => IsArtist.GetValueOrDefault(false)
+            ? ArtistController.Create(new DatabaseContext()).GetArtistFromUserId(UserController.CurrentUser?.ID)?.ArtistName 
+            : UserController.CurrentUser?.Username;
+
         private Timer timerSlider;
         private Timer timer;
 

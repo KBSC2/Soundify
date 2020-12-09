@@ -38,10 +38,8 @@ namespace View.Screens
         public void ApproveUser(int requestID, IDatabaseContext databaseContext)
         {
             var request = RequestController.Create(databaseContext).GetItem(requestID);
-
-            var userID = request.UserID;
-
-            ArtistController.Create(databaseContext).MakeArtist(userID);
+            
+            ArtistController.Create(databaseContext).MakeArtist(request);
 
             RequestController.Create(databaseContext).DeleteItem(requestID);
         }
