@@ -21,6 +21,11 @@ namespace Controller.DbControllers
         {
         }
 
+        /**
+         * gets a lists of all the requests to become an artist
+         *
+         * @return List<Request> a list with all the requests
+         */
         public virtual List<Request> GetArtistRequests()
         {
             return GetFilteredList(r => r.RequestType == RequestType.Artist);

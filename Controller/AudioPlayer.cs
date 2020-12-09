@@ -29,7 +29,7 @@ namespace Controller
 
         public static AudioPlayer Instance { get; set; }
 
-
+        
         public static AudioPlayer Create(IDatabaseContext context)
         {
             var x = ProxyController.AddToProxy<AudioPlayer>(context);
@@ -38,6 +38,11 @@ namespace Controller
             return x;
         }
 
+        /**
+         * initializes the waveOut device
+         *
+         * @return void
+         */
         public void Initialize()
         {
             WaveOutDevice = new WaveOut { Volume = 0.05f };
@@ -45,6 +50,11 @@ namespace Controller
             CurrentSongIndex = -1;
         }
 
+        /**
+         * skips to the next song
+         *
+         * @return void
+         */
         [HasPermission(Permission = Permissions.SongNext)]
         public virtual void Next()
         {
@@ -68,6 +78,11 @@ namespace Controller
             PlaySong(Queue[CurrentSongIndex]);
         }
 
+        /**
+         * goes back to the previous song
+         *
+         * @return void
+         */
         [HasPermission(Permission = Permissions.SongPrev)]
         public virtual void Prev()
         {
@@ -90,6 +105,13 @@ namespace Controller
             PlaySong(Queue[CurrentSongIndex]);
         }
 
+        /**
+         * plays the current selected song
+         *
+         * @param song the song that has to be played
+         *
+         * @return void
+         */
         public void PlaySong(Song song)
         {
             CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
@@ -99,11 +121,25 @@ namespace Controller
             Task.Delay(500).ContinueWith(x => WaveOutDevice.Play());
         }
 
+        /**
+         * adds a song to the Queue
+         *
+         * @param song the song that has to be played
+         *
+         * @return void
+         */
         public void AddSongToQueue(Song song)
         {
             Queue.Add(song);
         }
 
+        /**
+         * adds a song to the songQueue
+         *
+         * @param song the song that has to be played
+         *
+         * @return void
+         */
         public void AddSongToSongQueue(Song song)
         {
             Queue.Insert(CurrentSongIndex+1, song);
@@ -117,11 +153,23 @@ namespace Controller
                 NextInQueue.Add(song);
         }
 
+        /**
+         * clears the Queue
+         *
+         * @return void
+         */
         public void ClearQueue()
         {
             Queue.Clear();
         }
 
+        /**
+         * plays a playlist
+         *
+         * @param playlist and the index gets the playlist that has to be played and the corresponding index
+         *
+         * @return void
+         */
         public void PlayPlaylist(Playlist playlist, int startIndex = -1)
         {
             PlayPlaylist(PlaylistSongController.Create(new DatabaseContext()).GetSongsFromPlaylist(playlist.ID), startIndex);
@@ -143,6 +191,13 @@ namespace Controller
             Next();
         }
 
+        /**
+         * keeps playing the playlists over and over again
+         *
+         * @param playlist which playlist needs to be looped over
+         *
+         * @return void
+         */
         [HasPermission(Permission = Permissions.SongLoop)]
         public virtual void Loop(Playlist playlist)
         {

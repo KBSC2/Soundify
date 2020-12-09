@@ -10,6 +10,7 @@ namespace Controller
     {
         public SmtpClient SmtpClient { get;} 
 
+
         public EmailController()
         {
             var conf = GetSMTPGMAILConfiguration();
@@ -21,6 +22,11 @@ namespace Controller
             };
         }
 
+        /**
+         * gets variables for connection with the mailserver
+         *
+         * @return Dictionary<string, string> : configuration for the email client
+         */
         public static Dictionary<string, string> GetSMTPGMAILConfiguration()
         {
             Dictionary<string, string> result = new Dictionary<string, string>();
@@ -35,6 +41,13 @@ namespace Controller
             return result;
         }
 
+        /**
+         * sends the email
+         *
+         * @param mailTemplate and mailAddress gets the template variant and the address where the mail needs to go
+         *
+         * @return void
+         */
         public void SendEmail<T>(T mailTemplate, string toMailAddress) where T : MailTemplate
         {
             var mailMessage = new MailMessage()

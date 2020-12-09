@@ -16,6 +16,13 @@ namespace Controller
             return ProxyController.AddToProxy<FileTransfer>(context);
         }
 
+        /**
+         * Downloads a file from the ubuntu server.
+         *
+         * @param inputPath path from where to download the file
+         *
+         * @return void
+         */
         public virtual void DownloadFile(string inputPath)
         {
             if(inputPath == "") return;
@@ -36,6 +43,13 @@ namespace Controller
             }
         }
 
+        /**
+         * uploads a file to the ubuntu server
+         *
+         * @param inputPath path from where to download the file
+         *
+         * @return string : the path where the file is stored
+         */
         [HasPermission(Permission = Permissions.SongUpload)]
         public virtual string UploadFile(string inputPath, string outputPath)
         {
@@ -54,6 +68,13 @@ namespace Controller
             }
         }
 
+        /**
+         * Gives the local path based on the remote path
+         *
+         * @param remotePath path from where the file is stored remotely
+         *
+         * @return string : the path where the file should be stored locally
+         */
         public virtual string RemotePathToLocalPath(string remotePath)
         {
             return Path.GetTempPath() + "Soundify/" +  remotePath;
