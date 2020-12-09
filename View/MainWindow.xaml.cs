@@ -93,19 +93,7 @@ namespace Soundify
                 QueueDataContext.Instance.OnPropertyChanged();
             }
 
-            if (AudioPlayer.Instance.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.Instance.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
-            {
-                if (AudioPlayer.Instance.Queue.Count > 0)
-                {
-                    AudioPlayer.Instance.WaveOutDevice.Play();
-                    Play.Content = "=";
-                }
-            }
-            else
-            {
-                AudioPlayer.Instance.WaveOutDevice.Pause();
-                Play.Content = ">";
-            }
+            AudioPlayer.Instance.PlayPause();
         }
 
         private void Duration_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -145,7 +133,7 @@ namespace Soundify
 
         private void Next_Button_Click(object sender, RoutedEventArgs e)
         {
-            AudioPlayer.Instance.Next();
+            AudioPlayer.Instance.NextButton();
             QueueDataContext.Instance.OnPropertyChanged();
         }
 

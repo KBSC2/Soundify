@@ -28,6 +28,7 @@ namespace Controller
         public bool Looping { get; set; } = false;
 
         public static AudioPlayer Instance { get; set; }
+        public static IDatabaseContext Context { get; set; }
 
 
         public static AudioPlayer Create(IDatabaseContext context)
@@ -35,6 +36,7 @@ namespace Controller
             var x = ProxyController.AddToProxy<AudioPlayer>(context);
             x.Initialize();
             Instance = x;
+            Context = context;
             return x;
         }
 
@@ -45,18 +47,17 @@ namespace Controller
             CurrentSongIndex = -1;
         }
 
-        [HasPermission(Permission = Permissions.SongNext)]
-        public virtual void Next()
+        public void Next()
         {
             if(CurrentSongIndex >= 0)
             {
                 var previousSong = Queue[CurrentSongIndex];
 
+                if (Looping && !NextInQueue.Contains(previousSong))
+                    AddSongToQueue(previousSong);
+
                 if (NextInQueue.Contains(previousSong))
                     NextInQueue.Remove(previousSong);
-
-                if (Looping)
-                    AddSongToQueue(previousSong);
             }
             
             if (Queue.Count == 0) return;
@@ -66,6 +67,12 @@ namespace Controller
                 CurrentSongIndex--;
 
             PlaySong(Queue[CurrentSongIndex]);
+        }
+
+        [HasPermission(Permission = Permissions.SongNext)]
+        public virtual void NextButton()
+        {
+            Next();
         }
 
         [HasPermission(Permission = Permissions.SongPrev)]
@@ -82,9 +89,7 @@ namespace Controller
                     copyQueue.ForEach(i => AddSongToQueue(i));
                 }
                 else
-                {
                     CurrentSongIndex = 0;
-                }
             }
 
             PlaySong(Queue[CurrentSongIndex]);
@@ -124,16 +129,18 @@ namespace Controller
 
         public void PlayPlaylist(Playlist playlist, int startIndex = -1)
         {
-            PlayPlaylist(PlaylistSongController.Create(new DatabaseContext()).GetSongsFromPlaylist(playlist.ID), startIndex);
-        }
+            var songs = PlaylistSongController.Create(Context).GetSongsFromPlaylist(playlist.ID);
 
-        public void PlayPlaylist(List<PlaylistSong> songs, int startIndex = -1)
-        {
             ClearQueue();
-            CurrentSongIndex = -1;
+            if(NextInQueue.Count > 0)
+            {
+                NextInQueue.ForEach(i => AddSongToQueue(i));
+                CurrentSongIndex = -1;
+            }
+            else
+                CurrentSongIndex = startIndex;
 
-            NextInQueue.ForEach(i => AddSongToQueue(i));
-            songs.Where(song => song.Index > startIndex).ToList().ForEach(i => AddSongToQueue(i.Song));
+            songs.ForEach(i => AddSongToQueue(i.Song));
 
             if (Looping)
             {
@@ -150,13 +157,21 @@ namespace Controller
 
             if (Looping && playlist != null)
             {
-                var songs = PlaylistSongController.Create(new DatabaseContext()).GetSongsFromPlaylist(playlist.ID);
+                var songs = PlaylistSongController.Create(Context).GetSongsFromPlaylist(playlist.ID);
                 songs.ForEach(i => AddSongToQueue(i.Song));
             }
             else if(!Looping)
             {
                 Queue = Queue.GroupBy(p => p.ID).Select(g => g.First()).ToList();
             }
+        }
+
+        public void PlayPause()
+        {
+            if (WaveOutDevice.PlaybackState == PlaybackState.Paused || WaveOutDevice.PlaybackState == PlaybackState.Stopped)
+                WaveOutDevice.Play();
+            else
+                WaveOutDevice.Pause();
         }
     }
 }

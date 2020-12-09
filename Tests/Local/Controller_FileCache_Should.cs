@@ -12,7 +12,7 @@ namespace Tests.Local
         [SetUp]
         public void SetUp()
         {
-            Path = Controller.FileCache.Instance.GetFile("songs/untrago.mp3");
+            Path = Controller.FileCache.Instance.GetFile("songs/loveyoubetter.mp3");
         }
 
         [Test, Category("Local")]
