@@ -16,6 +16,11 @@ namespace Controller.DbControllers
         private RoleController RoleController { get; set; }
         private PermissionController PermissionController { get; set; }
 
+        /**
+         * This function creates a instance of this controller
+         * It adds the controller to the proxy
+         * @returns the proxy with a instance of this controller included
+         */
         public static RolePermissionsController Create(IDatabaseContext context)
         {
             return ProxyController.AddToProxy<RolePermissionsController>(new object[] { context }, context);

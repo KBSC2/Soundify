@@ -13,6 +13,11 @@ namespace Controller.DbControllers
         public static EventHandler<NoRightsEventArgs> NoRightsEvent;
         #endregion
 
+        /**
+         * This function creates a instance of this controller
+         * It adds the controller to the proxy
+         * @returns the proxy with a instance of this controller included
+         */
         public static PermissionController Create(IDatabaseContext context)
         {
             return ProxyController.AddToProxy<PermissionController>(new object[] { context }, context);

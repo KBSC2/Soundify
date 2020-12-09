@@ -6,6 +6,11 @@ namespace Controller.DbControllers
 {
     public class RoleController : DbController<Role>
     {
+        /**
+         * This function creates a instance of this controller
+         * It adds the controller to the proxy
+         * @returns the proxy with a instance of this controller included
+         */
         public static RoleController Create(IDatabaseContext context)
         {
             return ProxyController.AddToProxy<RoleController>(new object[] { context }, context);

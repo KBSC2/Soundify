@@ -16,11 +16,20 @@ namespace Controller.DbControllers
 
         private DbSet<PlaylistSong> set;
 
+        /**
+         * This function creates a instance of this controller
+         * It adds the controller to the proxy
+         * @returns the proxy with a instance of this controller included
+         */
         public static PlaylistSongController Create(IDatabaseContext context)
         {
             return ProxyController.AddToProxy<PlaylistSongController>(new object[] { context }, context);
         }
 
+        /**
+         * This controller is made for a join table,
+         * If the class is constructed, the song controller and the playlist controller are created as well   
+         */
         protected PlaylistSongController(IDatabaseContext context)
         {
             this.context = context;
@@ -29,6 +38,10 @@ namespace Controller.DbControllers
             playlistController = PlaylistController.Create(context);
         }
 
+        /**
+         * adds a song to the designated playlist
+         * if the song is already added then immediately returns
+         */
         public void AddSongToPlaylist(int songID, int playlistID)
         {
             ReorderSongIndexes(playlistID);
@@ -54,6 +67,9 @@ namespace Controller.DbControllers
             context.SaveChanges();
         }
 
+        /**
+         * reorders the songs in the playlist based on the index
+         */
         public void ReorderSongIndexes(int playlistId)
         {
             set.AsEnumerable()
@@ -68,6 +84,10 @@ namespace Controller.DbControllers
                 });
         }
 
+        /**
+         * adds a song to the designated playlist
+         * @throws ArgumentOutOfRangeException if the song is does not consist in the playlist
+         */
         public void RemoveFromPlaylist(int songId, int playlistId)
         {
             if (!RowExists(songId, playlistId))
@@ -86,6 +106,9 @@ namespace Controller.DbControllers
             ReorderSongIndexes(playlistId);
         }
 
+        /**
+         * Determines if the PlaylistSong exist in the table 
+         */
         public bool RowExists(int songId, int playlistId)
         {
             return set
@@ -93,6 +116,10 @@ namespace Controller.DbControllers
                 .Any(s => s.SongID == songId);
         }
 
+
+        /**
+         * @return a list of songs contained in the designated playlist
+         */
         public List<PlaylistSong> GetSongsFromPlaylist(int playlistId)
         {
             ReorderSongIndexes(playlistId);
@@ -106,18 +133,27 @@ namespace Controller.DbControllers
             return songs;
         }
 
+        /**
+         * @return a single song from a the designated playlist
+         */
         public PlaylistSong GetPlaylistSong(int playlistId, int songId)
         {
             return GetSongsFromPlaylist(playlistId)
                 .First(s => s.SongID == songId);
         }
 
+        /**
+         * @return a single song based on index from a the designated playlist
+         */
         public PlaylistSong GetPlaylistSongFromIndex(int playlistId, int index)
         {
             return GetSongsFromPlaylist(playlistId)
                 .First(s => s.Index == index);
         }
 
+        /**
+         * updates the PlaylistSong
+         */
         public void UpdatePlaylistSong(PlaylistSong playlistSong)
         {
             set.Update(playlistSong);
@@ -126,8 +162,11 @@ namespace Controller.DbControllers
 
             context.Entry(playlistSong).State = EntityState.Modified;
             context.SaveChanges();
-        }
-
+        } 
+        
+        /**
+         * Determine if the database is a real database, or a mock database
+         */
         public bool RealDatabase()
         {
             return context is DatabaseContext;

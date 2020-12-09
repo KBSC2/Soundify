@@ -13,6 +13,12 @@ namespace Controller.DbControllers
     public class RequestController : DbController<Request>
     {
         private DbSet<RequestController> set { get; set; }
+
+        /**
+         * This function creates a instance of this controller
+         * It adds the controller to the proxy
+         * @returns the proxy with a instance of this controller included
+         */
         public static RequestController Create(IDatabaseContext context)
         {
             return ProxyController.AddToProxy<RequestController>(new object[] { context }, context);

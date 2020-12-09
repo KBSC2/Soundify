@@ -91,7 +91,7 @@ namespace Controller
         }
 
         /**
-         * Determine if the database is a real databse, or a mock database
+         * Determine if the database is a real database, or a mock database
          */
         public bool RealDatabase()
         {
