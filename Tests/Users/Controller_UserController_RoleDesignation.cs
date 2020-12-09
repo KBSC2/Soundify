@@ -33,7 +33,7 @@ namespace Tests.Users
         [Test]
         public void UserController_MakeArtiest_UserRoleIDShouldBeArtist()
         {
-            controller.MakeArtist(user.ID);
+            controller.MakeArtist(new Request {UserID = user.ID, ArtistName = "test artiest"});
             var result = user.RoleID;
             Assert.AreEqual(result, 2);
         }
