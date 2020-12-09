@@ -10,7 +10,11 @@ namespace Controller.DbControllers
 {
     public class SongController : DbController<Song>
     {
-
+        /**
+         * This function creates a instance of this controller
+         * It adds the controller to the proxy
+         * @returns the proxy with a instance of this controller included
+         */
         public static SongController Create(IDatabaseContext context)
         {
             return ProxyController.AddToProxy<SongController>(new object[] { context }, context);
@@ -20,13 +24,21 @@ namespace Controller.DbControllers
         {
         }
 
+        /**
+         * uploads a song to the ubuntu filesystem
+         */
         public void UploadSong(Song song, string localpath)
         {
             string remotePath =  FileTransfer.Create(Context).UploadFile(localpath, "songs/" + Path.GetFileName(localpath));
             song.Path = remotePath;
             CreateItem(song);
         }
-        
+
+        /**
+         * @param searchTerms 
+         * @returns a list of maximum 8 songs based on the searchTerms
+         * The playlist gets selected on Name, Artist
+         */
         public List<Song> SearchSongsOnString(List<string> searchterms)
         {
             return GetList()

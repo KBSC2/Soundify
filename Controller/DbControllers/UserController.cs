@@ -11,6 +11,11 @@ namespace Controller.DbControllers
     {
         public static User CurrentUser;
 
+        /**
+         * This function creates a instance of this controller
+         * It adds the controller to the proxy
+         * @returns the proxy with a instance of this controller included
+         */
         public static UserController Create(IDatabaseContext context)
         {
             return ProxyController.AddToProxy<UserController>(new object[] {context}, context);
