@@ -35,6 +35,12 @@ namespace View
             {
                 case LoginResults.Success:
                 {
+                    if (newPassword == "" || repeatPassword == "")
+                    {
+                        var s = (newPassword == "" && repeatPassword == "") ? "s are" : " is";
+                        this.Error.Content = $"Password field{s} blank";
+                        return;
+                    }
                     if (!newPassword.Equals(repeatPassword))
                     {
                         this.Error.Content = "Passwords don't match";

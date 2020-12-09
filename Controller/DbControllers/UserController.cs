@@ -42,7 +42,7 @@ namespace Controller.DbControllers
          */
         public virtual LoginResults UserLogin(string emailOrUsername, string password)
         {
-            var user = GetUserFromEmailOrUsername(emailOrUsername);
+            var user = emailOrUsername == "" ? null : GetUserFromEmailOrUsername(emailOrUsername);
             if (user == null)
                 return LoginResults.EmailNotFound;
 
