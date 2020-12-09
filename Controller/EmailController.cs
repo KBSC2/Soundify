@@ -23,9 +23,9 @@ namespace Controller
         }
 
         /**
-         * gets variables for connection with the mailserver
+         * Gets variables for connection with the mailserver
          *
-         * @return Dictionary<string, string> : configuration for the email client
+         * @return Dictionary<string, string> : Configuration for the email client
          */
         public static Dictionary<string, string> GetSMTPGMAILConfiguration()
         {
@@ -42,10 +42,10 @@ namespace Controller
         }
 
         /**
-         * sends the email
+         * Sends the email
          *
-         * @param mailTemplate gets the template variant
-         * @param mailAddress  gets the address where the mail needs to go
+         * @param MailTemplate gets the template variant
+         * @param MailAddress  gets the address where the mail needs to go
          *
          * @return void
          */

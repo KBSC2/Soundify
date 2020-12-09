@@ -32,7 +32,7 @@ namespace Controller.DbControllers
          *  This is the same function as in the base class,
          *  but this function is restricted by permissions
          *
-         *  @param item The playlist data object
+         *  @param Item The playlist data object
          *
          *  @return void
          */
@@ -96,11 +96,11 @@ namespace Controller.DbControllers
         }
 
         /**
-         * gets a list of active playlists
+         * Gets a list of active playlists
          *
          * @param userId the of the currentUser
          *
-         * @return a list of active playlist
+         * @return A list of active playlist
          */
         public virtual List<Playlist> GetActivePlaylists(int userId)
         {
@@ -108,9 +108,9 @@ namespace Controller.DbControllers
         }
 
         /**
-         * gets a list of all active playlists
+         * Gets a list of all active playlists
          *
-         * @return a list of active playlists
+         * @return A list of active playlists
          */
         public virtual List<Playlist> GetActivePlaylists()
         {

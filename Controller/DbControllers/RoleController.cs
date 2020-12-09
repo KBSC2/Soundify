@@ -10,9 +10,9 @@ namespace Controller.DbControllers
          * Creates a instance of this controller
          * It adds the controller to the proxy
          *
-         * @param IDatabaseContext instance of a database session
+         * @param IDatabaseContext Instance of a database session
          *
-         * @returns RoleController : the proxy with a instance of this controller included
+         * @returns RoleController : The proxy with a instance of this controller included
          */
         public static RoleController Create(IDatabaseContext context)
         {

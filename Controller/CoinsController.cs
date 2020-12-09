@@ -28,7 +28,7 @@ namespace Controller
         }
 
         /**
-         * determines the timing of which coins need to be added
+         * Determines the timing of which coins need to be added
          *
          * @return void
          */
@@ -45,10 +45,10 @@ namespace Controller
         }
 
         /**
-         * adds coins to the currentUser's account
+         * Adds coins to the currentUser's account
          *
-         * @param user currentUser
-         * @param coins number of coins that need to be added
+         * @param user CurrentUser
+         * @param coins Number of coins that need to be added
          *
          * @return void
          */
@@ -59,10 +59,10 @@ namespace Controller
         }
 
         /**
-          * removes coins to the currentUser's account
+          * Removes coins to the currentUser's account
           *
-          * @param user currentUser
-          * @param coins number of coins that need to be removed
+          * @param user CurrentUser
+          * @param coins Number of coins that need to be removed
           *
           * @return void
           */

@@ -72,9 +72,9 @@ namespace Controller
         /**
          * Gives the local path based on the remote path
          *
-         * @param remotePath path from where the file is stored remotely
+         * @param remotePath Path from where the file is stored remotely
          *
-         * @return string : the path where the file should be stored locally
+         * @return string : The path where the file should be stored locally
          */
         public virtual string RemotePathToLocalPath(string remotePath)
         {

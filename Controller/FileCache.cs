@@ -23,11 +23,11 @@ namespace Controller
         }
 
         /**
-         * gets the local path to the song file. if the song is not downloaded yet it gets downloaded
+         * Gets the local path to the song file. if the song is not downloaded yet it gets downloaded
          *
-         * @param path the path where the song is stored remotely
+         * @param Path The path where the song is stored remotely
          *
-         * @return string : the path where the song is stored locally
+         * @return string : The path where the song is stored locally
          */
         public string GetFile(string path)
         {
@@ -38,7 +38,7 @@ namespace Controller
         }
 
         /**
-         * clears the cache every hour
+         * Clears the cache every hour
          *
          * @return void
          */
@@ -48,9 +48,9 @@ namespace Controller
         }
 
         /**
-         * clears the cache based on the input
+         * Clears the cache based on the input
          *
-         * @param Timespan the timespan after which the file needs to be removed
+         * @param Timespan The timespan after which the file needs to be removed
          *
          * @return void
          */

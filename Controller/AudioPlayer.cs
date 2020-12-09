@@ -39,7 +39,7 @@ namespace Controller
         }
 
         /**
-         * initializes the waveOut device
+         * Initializes the waveOut device
          *
          * @return void
          */
@@ -51,7 +51,7 @@ namespace Controller
         }
 
         /**
-         * skips to the next song
+         * Skips to the next song
          *
          * @return void
          */
@@ -79,7 +79,7 @@ namespace Controller
         }
 
         /**
-         * goes back to the previous song
+         * Goes back to the previous song
          *
          * @return void
          */
@@ -106,9 +106,9 @@ namespace Controller
         }
 
         /**
-         * plays the current selected song
+         * Plays the current selected song
          *
-         * @param song the song that has to be played
+         * @param song The song that has to be played
          *
          * @return void
          */
@@ -122,9 +122,9 @@ namespace Controller
         }
 
         /**
-         * adds a song to the Queue
+         * Adds a song to the Queue
          *
-         * @param song the song that has to be played
+         * @param song The song that has to be played
          *
          * @return void
          */
@@ -134,9 +134,9 @@ namespace Controller
         }
 
         /**
-         * adds a song to the songQueue
+         * Adds a song to the songQueue
          *
-         * @param song the song that has to be played
+         * @param song The song that has to be played
          *
          * @return void
          */
@@ -154,7 +154,7 @@ namespace Controller
         }
 
         /**
-         * clears the Queue
+         * Clears the Queue
          *
          * @return void
          */
@@ -164,10 +164,10 @@ namespace Controller
         }
 
         /**
-         * plays a playlist
+         * Plays a playlist
          *
-         * @param gets the playlist 
-         * @param index gets the corresponding index
+         * @param playlist Gets the playlist 
+         * @param index Gets the corresponding index
          *
          * @return void
          */
@@ -193,9 +193,9 @@ namespace Controller
         }
 
         /**
-         * keeps playing the playlists over and over again
+         * Keeps playing the playlists over and over again
          *
-         * @param playlist which playlist needs to be looped over
+         * @param playlist Which playlist needs to be looped over
          *
          * @return void
          */

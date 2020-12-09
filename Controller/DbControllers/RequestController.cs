@@ -18,9 +18,9 @@ namespace Controller.DbControllers
          * Creates a instance of this controller
          * It adds the controller to the proxy
          *
-         * @param IDatabaseContext instance of a database session
+         * @param IDatabaseContext Instance of a database session
          *
-         * @returns RequestController : the proxy with a instance of this controller included
+         * @returns RequestController : The proxy with a instance of this controller included
          */
         public static RequestController Create(IDatabaseContext context)
         {
@@ -31,9 +31,9 @@ namespace Controller.DbControllers
         }
 
         /**
-         * gets a lists of all the requests to become an artist
+         * Gets a lists of all the requests to become an artist
          *
-         * @return List<Request> a list with all the requests
+         * @return List<Request> A list with all the requests
          */
         public virtual List<Request> GetArtistRequests()
         {
