@@ -43,7 +43,7 @@ namespace Controller.DbControllers
 
         public virtual List<Playlist> SearchPlayListOnString(List<string> searchTerms, int userId)
         {
-            return GetActivePlaylists(userId)
+            return GetActivePlaylists()
                 .Where(playlist => searchTerms.Any(s => playlist.Name != null && playlist.Name.Contains(s)) ||
                                    searchTerms.Any(
                                        s => playlist.Description != null &&
@@ -62,6 +62,12 @@ namespace Controller.DbControllers
         public virtual List<Playlist> GetActivePlaylists(int userId)
         {
             return GetList(userId).Where(x => x.ActivePlaylist).ToList();
+        }
+
+
+        public virtual List<Playlist> GetActivePlaylists()
+        {
+            return GetList().Where(x => x.ActivePlaylist).ToList();
         }
     }
 }

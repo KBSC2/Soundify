@@ -116,15 +116,6 @@ namespace Soundify
 
         public void SetScreen(ScreenNames screenName)
         {
-            if (screenName == ScreenNames.Logout)
-            {
-                UserController.CurrentUser = null;
-                var login = new LoginScreen();
-                login.Show();
-                login.Focus();
-                this.Hide();
-                return;
-            }
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
         }
         public void SetScreen(ScreenNames screenName, Playlist playlist)
