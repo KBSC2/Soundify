@@ -58,6 +58,10 @@ namespace View
                 this.Close();
                 MainWindow.InstanceLoginScreen.Show();
             }
+            else
+            {
+                this.Error.Content = "Token does not match";
+            }
         }
 
         private void Confirm_On_Enter_Key(object sender, KeyEventArgs e)

@@ -21,6 +21,7 @@ namespace Tests.Users
         }
 
         [TestCase("", ExpectedResult = PasswordScore.Blank)]                            // empty
+        [TestCase("h", ExpectedResult = PasswordScore.VeryWeak)]                        // too short,       no uppercase,   no numbers,     no characters
         [TestCase("hallo", ExpectedResult = PasswordScore.VeryWeak)]                    // too short,       no uppercase,   no numbers,     no characters
         [TestCase("wachtwoord", ExpectedResult = PasswordScore.Weak)]                   // medium length,   no uppercase,   no numbers,     no characters
         [TestCase("HalloLangWachtwoord", ExpectedResult = PasswordScore.Medium)]        // correct length,  with uppercase, no numbers,     no characters
