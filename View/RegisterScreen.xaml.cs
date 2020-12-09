@@ -34,6 +34,18 @@ namespace View
 
             switch(result)
             {
+                case RegistrationResults.NoName:
+                {
+                    this.Error.Content = "You must enter a name to sign up";
+                    this.EmailRegister.Text = "";
+                    break;
+                }
+                case RegistrationResults.NoEmail:
+                {
+                    this.Error.Content = "You must enter a valid email to sign up";
+                    this.EmailRegister.Text = "";
+                    break;
+                }
                 case RegistrationResults.Succeeded:
                 {
                     var emailVerificationScreen = new EmailVerificationScreen(token, email);
@@ -56,7 +68,7 @@ namespace View
                 }
                 case RegistrationResults.PasswordNotStrongEnough:
                 {
-                    this.Error.Content = $"Password is {PasswordController.CheckStrength(password).ToString()}";
+                    this.Error.Content = $"Password is {PasswordController.CheckStrength(password)}";
                     this.PasswordRegister.Password = "";
                     this.PasswordConfirmRegister.Password = "";
                     break;

@@ -7,5 +7,7 @@ namespace Model.Enums
         PasswordNoMatch,
         Succeeded,
         PasswordNotStrongEnough,
+        NoName,
+        NoEmail
     }
 }
