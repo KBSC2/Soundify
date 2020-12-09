@@ -12,8 +12,11 @@ namespace Controller.DbControllers
     public class PlaylistController : DbController<Playlist>
     {
         /**
-         * This function creates a instance of this controller
+         * Creates a instance of this controller
          * It adds the controller to the proxy
+         *
+         * @param IDatabaseContext instance of a database session
+         *
          * @returns the proxy with a instance of this controller included
          */
         public static PlaylistController Create(IDatabaseContext context)
@@ -27,7 +30,9 @@ namespace Controller.DbControllers
 
         /**
          *  This is the same function as in the base class,
-         *  but this function is restricted by permissions 
+         *  but this function is restricted by permissions
+         *
+         *  @param item The playlist data object
          */
         [HasPermission(Permission = Permissions.PlaylistCreate, MaxValue = Permissions.PlaylistLimit)]
         public override void CreateItem(Playlist item)
@@ -37,6 +42,7 @@ namespace Controller.DbControllers
 
         /**
          * A playlist is set to de-activated upon calling this function
+         * @param playlistId the id of designated playlist
          */
         public virtual void DeactivatePlaylist(int playlistId)
         {
@@ -58,9 +64,11 @@ namespace Controller.DbControllers
         }
 
         /**
-         * @param searchTerms 
-         * @returns a list of maximum 8 playlist based on the searchTerms
          * The playlist gets selected on Name, Description, Genre
+         *
+         * @param searchTerms a list of strings containing searchterms
+         *
+         * @returns a list of maximum 8 playlist based on the searchTerms
          */
         public virtual List<Playlist> SearchPlayListOnString(List<string> searchTerms, int userId)
         {

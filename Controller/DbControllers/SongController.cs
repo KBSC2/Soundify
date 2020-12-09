@@ -11,8 +11,11 @@ namespace Controller.DbControllers
     public class SongController : DbController<Song>
     {
         /**
-         * This function creates a instance of this controller
+         * Creates a instance of this controller
          * It adds the controller to the proxy
+         *
+         * @param IDatabaseContext instance of a database session
+         *
          * @returns the proxy with a instance of this controller included
          */
         public static SongController Create(IDatabaseContext context)
@@ -26,6 +29,9 @@ namespace Controller.DbControllers
 
         /**
          * uploads a song to the ubuntu filesystem
+         *
+         * @param song A song data object
+         * @param localpath a string with the localpath of where the file is stored
          */
         public void UploadSong(Song song, string localpath)
         {
@@ -35,9 +41,11 @@ namespace Controller.DbControllers
         }
 
         /**
-         * @param searchTerms 
-         * @returns a list of maximum 8 songs based on the searchTerms
          * The playlist gets selected on Name, Artist
+         *
+         * @param searchTerms a list of strings containing searchTerms
+         *
+         * @returns a list of maximum 8 songs based on the searchTerms
          */
         public List<Song> SearchSongsOnString(List<string> searchterms)
         {

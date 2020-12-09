@@ -41,6 +41,8 @@ namespace Controller.DbControllers
         /**
          * adds a song to the designated playlist
          * if the song is already added then immediately returns
+         * @param playlistId the id of the designated playlist
+         * @param songId the id of the song         
          */
         public void AddSongToPlaylist(int songID, int playlistID)
         {
@@ -68,6 +70,7 @@ namespace Controller.DbControllers
         }
 
         /**
+         * @param playlistId the id of the designated playlist
          * reorders the songs in the playlist based on the index
          */
         public void ReorderSongIndexes(int playlistId)
@@ -86,6 +89,8 @@ namespace Controller.DbControllers
 
         /**
          * adds a song to the designated playlist
+         * @param playlistId the id of the designated playlist
+         * @param songId the id of the song
          * @throws ArgumentOutOfRangeException if the song is does not consist in the playlist
          */
         public void RemoveFromPlaylist(int songId, int playlistId)
@@ -107,7 +112,9 @@ namespace Controller.DbControllers
         }
 
         /**
-         * Determines if the PlaylistSong exist in the table 
+         * Determines if the PlaylistSong exist in the table
+         * @param playlistId the id of the designated playlist
+         * @param songId the id of the song
          */
         public bool RowExists(int songId, int playlistId)
         {
@@ -118,6 +125,8 @@ namespace Controller.DbControllers
 
 
         /**
+         * @param playlistId the id of the designated playlist
+         *
          * @return a list of songs contained in the designated playlist
          */
         public List<PlaylistSong> GetSongsFromPlaylist(int playlistId)
@@ -134,6 +143,9 @@ namespace Controller.DbControllers
         }
 
         /**
+         * @param playlistId the id of the designated playlist
+         * @param songId the id of the song
+         *
          * @return a single song from a the designated playlist
          */
         public PlaylistSong GetPlaylistSong(int playlistId, int songId)
@@ -143,6 +155,9 @@ namespace Controller.DbControllers
         }
 
         /**
+         * @param playlistId the id of the designated playlist
+         * @param songId the id of the song
+         *
          * @return a single song based on index from a the designated playlist
          */
         public PlaylistSong GetPlaylistSongFromIndex(int playlistId, int index)
@@ -152,6 +167,8 @@ namespace Controller.DbControllers
         }
 
         /**
+         * @param playlistSong the data object PlaylistSong
+         *
          * updates the PlaylistSong
          */
         public void UpdatePlaylistSong(PlaylistSong playlistSong)

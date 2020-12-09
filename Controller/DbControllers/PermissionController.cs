@@ -14,8 +14,11 @@ namespace Controller.DbControllers
         #endregion
 
         /**
-         * This function creates a instance of this controller
+         * Creates a instance of this controller
          * It adds the controller to the proxy
+         *
+         * @param IDatabaseContext instance of a database session
+         *
          * @returns the proxy with a instance of this controller included
          */
         public static PermissionController Create(IDatabaseContext context)
