@@ -40,7 +40,7 @@ namespace Controller
 
         public void Initialize()
         {
-            WaveOutDevice = new WaveOut { Volume = 0.05f };
+            WaveOutDevice = new WaveOutEvent { Volume = 0.05f };
             MaxVolume = 0.2;
             CurrentSongIndex = -1;
         }
