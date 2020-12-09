@@ -68,6 +68,12 @@ namespace Controller.DbControllers
          */
         public virtual RegistrationResults CreateAccount(User user, string password, string passwordRepeat)
         {
+            if (user.Username == "")
+                return RegistrationResults.NoName;
+
+            if (user.Email == "" || !user.Email.Contains("@"))
+                return RegistrationResults.NoEmail;
+
             if (GetUserFromEmailOrUsername(user.Email) != null)
                 return RegistrationResults.EmailTaken;
 
