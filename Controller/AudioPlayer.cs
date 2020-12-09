@@ -166,7 +166,8 @@ namespace Controller
         /**
          * plays a playlist
          *
-         * @param playlist and the index gets the playlist that has to be played and the corresponding index
+         * @param gets the playlist 
+         * @param index gets the corresponding index
          *
          * @return void
          */

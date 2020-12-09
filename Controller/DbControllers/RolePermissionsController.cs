@@ -22,7 +22,7 @@ namespace Controller.DbControllers
          *
          * @param IDatabaseContext instance of a database session
          *
-         * @returns the proxy with a instance of this controller included
+         * @returns RolePermissionController : the proxy with a instance of this controller included
          */
         public static RolePermissionsController Create(IDatabaseContext context)
         {

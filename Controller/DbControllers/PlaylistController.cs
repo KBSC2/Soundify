@@ -17,7 +17,7 @@ namespace Controller.DbControllers
          *
          * @param IDatabaseContext instance of a database session
          *
-         * @returns the proxy with a instance of this controller included
+         * @returns PlaylistController : the proxy with a instance of this controller included
          */
         public static PlaylistController Create(IDatabaseContext context)
         {
@@ -33,6 +33,8 @@ namespace Controller.DbControllers
          *  but this function is restricted by permissions
          *
          *  @param item The playlist data object
+         *
+         *  @return void
          */
         [HasPermission(Permission = Permissions.PlaylistCreate, MaxValue = Permissions.PlaylistLimit)]
         public override void CreateItem(Playlist item)
@@ -43,6 +45,8 @@ namespace Controller.DbControllers
         /**
          * A playlist is set to de-activated upon calling this function
          * @param playlistId the id of designated playlist
+         *
+         * @return void
          */
         public virtual void DeactivatePlaylist(int playlistId)
         {
@@ -56,6 +60,8 @@ namespace Controller.DbControllers
         /**
          * Determines if the playlist activation date is in the past,
          * if so the playlist gets deleted from the table
+         *
+         *  @return void
          */
         public virtual void DeletePlaylistOnDateStamp()
         {
@@ -68,7 +74,7 @@ namespace Controller.DbControllers
          *
          * @param searchTerms a list of strings containing searchterms
          *
-         * @returns a list of maximum 8 playlist based on the searchTerms
+         * @returns List<Playlist> : a list of maximum 8 playlist based on the searchTerms
          */
         public virtual List<Playlist> SearchPlayListOnString(List<string> searchTerms, int userId)
         {
@@ -83,15 +89,17 @@ namespace Controller.DbControllers
                 .ToList();
         }
 
-        /**
-         * @return list based on userId
-         */
+       
         public virtual List<Playlist> GetList(int userId)
         {
             return base.GetFilteredList(x => x.UserID == userId);
         }
 
         /**
+         * gets a list of active playlists
+         *
+         * @param userId the of the currentUser
+         *
          * @return a list of active playlist
          */
         public virtual List<Playlist> GetActivePlaylists(int userId)
@@ -99,7 +107,11 @@ namespace Controller.DbControllers
             return GetList(userId).Where(x => x.ActivePlaylist).ToList();
         }
 
-
+        /**
+         * gets a list of all active playlists
+         *
+         * @return a list of active playlists
+         */
         public virtual List<Playlist> GetActivePlaylists()
         {
             return GetList().Where(x => x.ActivePlaylist).ToList();

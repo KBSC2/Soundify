@@ -15,7 +15,7 @@ namespace Controller.DbControllers
          *
          * @param IDatabaseContext instance of a database session
          *
-         * @returns the proxy with a instance of this controller included
+         * @returns ArtistController : the proxy with a instance of this controller included
          */
         public static ArtistController Create(IDatabaseContext context)
         {
@@ -32,7 +32,7 @@ namespace Controller.DbControllers
          *
          * @param userId int of the userID
          *
-         * @return int of the artistId
+         * @return int : the artistId
          */
         public int? GetArtistIdFromUserId(int userId)
         {
@@ -43,6 +43,8 @@ namespace Controller.DbControllers
          * Grants the role of artist to a user
          *
          * @param userId userid of the of the user
+         *
+         *  @return void
          */
         public void MakeArtist(int userId)
         {
@@ -57,6 +59,8 @@ namespace Controller.DbControllers
          * Revokes the role of artist back to a user
          *
          * @param user A User data object
+         *
+         *  @return void
          */
         public void RevokeArtist(User user)
         {

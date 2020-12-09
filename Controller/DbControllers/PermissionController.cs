@@ -19,7 +19,7 @@ namespace Controller.DbControllers
          *
          * @param IDatabaseContext instance of a database session
          *
-         * @returns the proxy with a instance of this controller included
+         * @returns PermissionController : the proxy with a instance of this controller included
          */
         public static PermissionController Create(IDatabaseContext context)
         {

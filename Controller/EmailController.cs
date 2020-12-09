@@ -44,7 +44,8 @@ namespace Controller
         /**
          * sends the email
          *
-         * @param mailTemplate and mailAddress gets the template variant and the address where the mail needs to go
+         * @param mailTemplate gets the template variant
+         * @param mailAddress  gets the address where the mail needs to go
          *
          * @return void
          */

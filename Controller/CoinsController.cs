@@ -47,6 +47,9 @@ namespace Controller
         /**
          * adds coins to the currentUser's account
          *
+         * @param user currentUser
+         * @param coins number of coins that need to be added
+         *
          * @return void
          */
         public void AddCoins(User user, int coins = 1)
@@ -57,6 +60,9 @@ namespace Controller
 
         /**
           * removes coins to the currentUser's account
+          *
+          * @param user currentUser
+          * @param coins number of coins that need to be removed
           *
           * @return void
           */

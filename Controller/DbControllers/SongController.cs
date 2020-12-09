@@ -32,6 +32,8 @@ namespace Controller.DbControllers
          *
          * @param song A song data object
          * @param localpath a string with the localpath of where the file is stored
+         *
+         * @return void
          */
         public void UploadSong(Song song, string localpath)
         {
@@ -45,7 +47,7 @@ namespace Controller.DbControllers
          *
          * @param searchTerms a list of strings containing searchTerms
          *
-         * @returns a list of maximum 8 songs based on the searchTerms
+         * @returns List<Song> : a list of maximum 8 songs based on the searchTerms
          */
         public List<Song> SearchSongsOnString(List<string> searchterms)
         {

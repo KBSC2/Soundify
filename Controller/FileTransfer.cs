@@ -47,6 +47,7 @@ namespace Controller
          * uploads a file to the ubuntu server
          *
          * @param inputPath path from where to download the file
+         * @param outputPath where the file needs to be placed
          *
          * @return string : the path where the file is stored
          */

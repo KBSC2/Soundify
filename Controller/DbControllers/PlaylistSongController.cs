@@ -19,6 +19,9 @@ namespace Controller.DbControllers
         /**
          * This function creates a instance of this controller
          * It adds the controller to the proxy
+         *
+         * @param context gets the databasecontext
+         *
          * @returns the proxy with a instance of this controller included
          */
         public static PlaylistSongController Create(IDatabaseContext context)
@@ -28,7 +31,7 @@ namespace Controller.DbControllers
 
         /**
          * This controller is made for a join table,
-         * If the class is constructed, the song controller and the playlist controller are created as well   
+         * If the class is constructed, the song controller and the playlist controller are created as well
          */
         protected PlaylistSongController(IDatabaseContext context)
         {
@@ -41,8 +44,11 @@ namespace Controller.DbControllers
         /**
          * adds a song to the designated playlist
          * if the song is already added then immediately returns
+         *
          * @param playlistId the id of the designated playlist
-         * @param songId the id of the song         
+         * @param songId the id of the song
+         *
+         * @return void
          */
         public void AddSongToPlaylist(int songID, int playlistID)
         {
@@ -72,6 +78,8 @@ namespace Controller.DbControllers
         /**
          * @param playlistId the id of the designated playlist
          * reorders the songs in the playlist based on the index
+         *
+         * @return void
          */
         public void ReorderSongIndexes(int playlistId)
         {
@@ -89,9 +97,13 @@ namespace Controller.DbControllers
 
         /**
          * adds a song to the designated playlist
+         *
          * @param playlistId the id of the designated playlist
          * @param songId the id of the song
+         *
          * @throws ArgumentOutOfRangeException if the song is does not consist in the playlist
+         *
+         * @return void
          */
         public void RemoveFromPlaylist(int songId, int playlistId)
         {
@@ -113,8 +125,11 @@ namespace Controller.DbControllers
 
         /**
          * Determines if the PlaylistSong exist in the table
+         *
          * @param playlistId the id of the designated playlist
          * @param songId the id of the song
+         *
+         * @return bool : returns if the row exsists or not
          */
         public bool RowExists(int songId, int playlistId)
         {
@@ -125,6 +140,8 @@ namespace Controller.DbControllers
 
 
         /**
+         * gets the songs from the playlist given in the parameter
+         *
          * @param playlistId the id of the designated playlist
          *
          * @return a list of songs contained in the designated playlist
@@ -143,10 +160,12 @@ namespace Controller.DbControllers
         }
 
         /**
+         * gets a specific song from a given playlist
+         *
          * @param playlistId the id of the designated playlist
          * @param songId the id of the song
          *
-         * @return a single song from a the designated playlist
+         * @return playlistSong : a single song from a the designated playlist
          */
         public PlaylistSong GetPlaylistSong(int playlistId, int songId)
         {
@@ -155,6 +174,8 @@ namespace Controller.DbControllers
         }
 
         /**
+         *gets the song from a specific index
+         *
          * @param playlistId the id of the designated playlist
          * @param songId the id of the song
          *
@@ -167,9 +188,11 @@ namespace Controller.DbControllers
         }
 
         /**
+         * Updates the PlaylistSong
+         *
          * @param playlistSong the data object PlaylistSong
          *
-         * updates the PlaylistSong
+         * @return void
          */
         public void UpdatePlaylistSong(PlaylistSong playlistSong)
         {
@@ -183,6 +206,8 @@ namespace Controller.DbControllers
         
         /**
          * Determine if the database is a real database, or a mock database
+         *
+         * @return bool : checks if it is a real database or not
          */
         public bool RealDatabase()
         {
