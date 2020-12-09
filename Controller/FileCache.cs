@@ -22,6 +22,13 @@ namespace Controller
         {
         }
 
+        /**
+         * Gets the local path to the song file. if the song is not downloaded yet it gets downloaded
+         *
+         * @param Path The path where the song is stored remotely
+         *
+         * @return string : The path where the song is stored locally
+         */
         public string GetFile(string path)
         {
             var context = new DatabaseContext();
@@ -30,11 +37,23 @@ namespace Controller
             return FileTransfer.Create(context).RemotePathToLocalPath(path);
         }
 
+        /**
+         * Clears the cache every hour
+         *
+         * @return void
+         */
         public void ClearCache()
         {
             ClearCache(TimeSpan.FromHours(1));
         }
 
+        /**
+         * Clears the cache based on the input
+         *
+         * @param Timespan The timespan after which the file needs to be removed
+         *
+         * @return void
+         */
         public void ClearCache(TimeSpan timeSpan)
         {
             foreach (string path in Directory.GetFiles(Path.GetTempPath() + "Soundify", "*.*" , SearchOption.AllDirectories))

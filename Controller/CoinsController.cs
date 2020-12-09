@@ -27,6 +27,11 @@ namespace Controller
             userController = UserController.Create(new DatabaseContext()); //TODO: if coinsController will be tested this has to be variable.
         }
 
+        /**
+         * Determines the timing of which coins need to be added
+         *
+         * @return void
+         */
         public void EarnCoins(object sender, EventArgs e)
         {
             if (AudioPlayer.Instance.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing)
@@ -39,12 +44,28 @@ namespace Controller
             }
         }
 
+        /**
+         * Adds coins to the currentUser's account
+         *
+         * @param user CurrentUser
+         * @param coins Number of coins that need to be added
+         *
+         * @return void
+         */
         public void AddCoins(User user, int coins = 1)
         {
             user.Coins += coins;
             userController.UpdateItem(user);
         }
 
+        /**
+          * Removes coins to the currentUser's account
+          *
+          * @param user CurrentUser
+          * @param coins Number of coins that need to be removed
+          *
+          * @return void
+          */
         public void RemoveCoins(User user, int coins = 1)
         {
             user.Coins -= coins;
