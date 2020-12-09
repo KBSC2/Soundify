@@ -27,12 +27,23 @@ namespace Controller.DbControllers
             userController = UserController.Create(Context);
         }
 
+        /**
+         * Returns the artistId based on the userId
+         *
+         * @param userId int of the userID
+         *
+         * @return int of the artistId
+         */
         public int? GetArtistIdFromUserId(int userId)
         {
             return GetList().FirstOrDefault(a => a.UserID == userId)?.ID;
         }
 
-        // Can't this be a little bit more generic. Like update role or something??
+        /**
+         * Grants the role of artist to a user
+         *
+         * @param userId userid of the of the user
+         */
         public void MakeArtist(int userId)
         {
             var user = userController.GetItem(userId);
@@ -42,6 +53,11 @@ namespace Controller.DbControllers
             CreateItem(new Artist() { ArtistName = user.Username, UserID = user.ID}); // change user.Username to artist name
         }
 
+        /**
+         * Revokes the role of artist back to a user
+         *
+         * @param user A User data object
+         */
         public void RevokeArtist(User user)
         {
             user.RoleID = 1;
