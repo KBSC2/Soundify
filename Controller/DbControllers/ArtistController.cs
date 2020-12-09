@@ -2,6 +2,7 @@
 using Model.Database.Contexts;
 using Model.DbModels;
 using System.Linq;
+using Model.Annotations;
 
 namespace Controller.DbControllers
 {
@@ -24,14 +25,19 @@ namespace Controller.DbControllers
             return GetList().FirstOrDefault(a => a.UserID == userId)?.ID;
         }
 
-        // Can't this be a little bit more generic. Like update role or something??
-        public void MakeArtist(int userId)
+        public Artist GetArtistFromUserId(int? userId)
         {
-            var user = userController.GetItem(userId);
+            return GetList().FirstOrDefault(a => a.UserID == userId);
+        }
+
+        // Can't this be a little bit more generic. Like update role or something??
+        public void MakeArtist(Request request)
+        {
+            var user = userController.GetItem(request.UserID);
 
             user.RoleID = 2;
             userController.UpdateItem(user);
-            CreateItem(new Artist() { ArtistName = user.Username, UserID = user.ID}); // change user.Username to artist name
+            CreateItem(new Artist { ArtistName = request.ArtistName, UserID = user.ID});
         }
 
         public void RevokeArtist(User user)
