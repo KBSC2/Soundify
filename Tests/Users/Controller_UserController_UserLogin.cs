@@ -31,15 +31,14 @@ namespace Tests.Users
             var result = controller.UserLogin(emailOrUsername, password);
             return result;
         }
+
         [Test]
         public void UserController_CurrentUser_LoggedIn()
         {
             var email = "test@gmail.com";
             var result = controller.UserLogin(email, "Sterk_W@chtw00rd2");
-            if (result == LoginResults.Success)
-            {
+            if (result == LoginResults.Success) 
                 UserController.CurrentUser = controller.GetUserFromEmailOrUsername(email);
-            }
             Assert.AreEqual(UserController.CurrentUser, controller.GetUserFromEmailOrUsername(email));
         }
     }

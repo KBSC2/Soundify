@@ -36,7 +36,7 @@ namespace Tests.Users
         [TestCase("Paul", "match", "no match", "test2@gmail.com", ExpectedResult = RegistrationResults.PasswordNoMatch)]                        // password mismatch
         [TestCase("Sietse", "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2", "test@gmail.com", ExpectedResult = RegistrationResults.Succeeded)]        // success
         [TestCase("Vincent", "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2", "duplicate@gmail.com", ExpectedResult = RegistrationResults.EmailTaken)] // email taken
-        [TestCase("Ben", "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2", "SlechtEmail", ExpectedResult = RegistrationResults.InvalidEmail)]    // username taken
+        [TestCase("Ben", "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2", "SlechtEmail", ExpectedResult = RegistrationResults.InvalidEmail)]           // invalid email
         [TestCase("test1", "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2", "uniek@gmail.com", ExpectedResult = RegistrationResults.UsernameTaken)]    // username taken
         public RegistrationResults UserController_SignupResults(string username, string password, string repeatPassword, string email)
         {
