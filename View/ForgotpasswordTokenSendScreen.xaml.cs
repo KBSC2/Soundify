@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net.Mail;
 using System.Windows;
 using Controller;
@@ -43,6 +43,13 @@ namespace View
 
             var controller = UserController.Create(new DatabaseContext());
             var user = controller.GetUserFromEmailOrUsername(email);
+
+            if (user == null)
+            {
+                this.Error.Content = "This email was not recognized, please try again";
+                return;
+            }
+
             user.Token = token;
             controller.UpdateItem(user);
 
