@@ -14,7 +14,8 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <ListView Grid.Row="0" Name="SearchSongs" Background="#FF303651" BorderBrush="{x:Null}" Foreground="White"
+            <ContentPresenter ContentTemplate="{DynamicResource SongList}"/>
+            <!--<ListView Grid.Row="0" Name="SearchSongs" Background="#FF303651" BorderBrush="{x:Null}" Foreground="White"
                       ItemsSource="{Binding SearchSongs}">
                 <ListView.View>
                     <GridView>
@@ -45,7 +46,7 @@
                 </ListView.Resources>
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
-<!--                        <EventSetter Event="MouseDoubleClick" Handler="SongRow_Click"/>-->
+
                         <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}"></Setter>
                         <Setter Property="Background" Value="#FF445399" />
                         <Setter Property="Foreground" Value="White" />
@@ -61,7 +62,7 @@
                         </Style.Triggers>
                     </Style>
                 </ListView.ItemContainerStyle>
-            </ListView>
+            </ListView> -->
             <ListView Grid.Row="1" Name="SearchPlaylists" Background="#FF303651" BorderBrush="{x:Null}"
                       Foreground="White" ItemsSource="{Binding SearchPlaylists}">
                 <ListView.View>

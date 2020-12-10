@@ -1,0 +1,88 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dataContext="clr-namespace:View.DataContexts"
+                    xmlns:components="clr-namespace:View.Components"
+                    x:Class="View.Resources.SongContextMenuInfo">
+    <DataTemplate x:Key="SongList">
+        <DataTemplate.Resources>
+            <components:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+           
+        </DataTemplate.Resources>
+        <ListView x:Name="songlistview"
+                  Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}"
+                  ItemsSource="{Binding SongInfoList}" FontSize="16"
+                  DataContext="{x:Static dataContext:SongListDataContext.Instance}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Title" Width="200" DisplayMemberBinding="{Binding Song.Name}" />
+                    <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Song.Artist}" />
+                    <GridViewColumn Header="Duration" Width="75" DisplayMemberBinding="{Binding Duration}" />
+                    <GridViewColumn Header="Added" Width="150" DisplayMemberBinding="{Binding Added}" />
+                </GridView>
+            </ListView.View>
+            <ListView.Resources>
+                <CollectionViewSource x:Key="AllPlaylists" Source="{Binding AllPlaylists}"/>
+                <ContextMenu x:Key="ItemContextMenu" x:Name="ItemContextMenu" >
+                    <MenuItem Header="Add song to queue" Click="ListViewItem_RightClickAddQueue"
+                              CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
+                    <MenuItem Header="Song information" Click="ListViewItem_RightClickSongInfo"
+                              Visibility="{PriorityBinding Bindings= {Binding IsPlaylistScreen, Converter={StaticResource BooleanToVisibilityConverter}}}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
+                    <MenuItem Name="DeleteSongFromPlaylist" Header="Remove song"
+                              Click="ListViewItem_RightClick_DeleteSong"
+                              Visibility="{Binding IsPlaylistScreen,   Converter={StaticResource BooleanToVisibilityConverter}}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
+                    <MenuItem Header="Add to Playlist"  
+                              CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" >
+                        <MenuItem.ItemsSource>
+                            <CompositeCollection>
+                                <CollectionContainer Collection="{Binding Source={StaticResource AllPlaylists }}" />
+                            </CompositeCollection>
+                        </MenuItem.ItemsSource>
+                        <MenuItem.ItemContainerStyle>
+                            <Style TargetType="{x:Type MenuItem}">
+                                <EventSetter Event="PreviewMouseDown" Handler="MenuItem_LeftClick"/>
+                                <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem}}"/>
+                                <Setter Property="MenuItem.Header" Value="{Binding Name}"/>
+                            </Style>
+                        </MenuItem.ItemContainerStyle>
+                    </MenuItem>
+                    <!--ContextMenu.Style>
+                        <Style TargetType="{x:Type ContextMenu}">
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding IsPlaylistScreen}" Value="True"/>
+                                        <Condition Binding="{Binding ElementName=DeleteSongFromPlaylist}"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </-->
+                </ContextMenu>
+            </ListView.Resources>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <EventSetter Event="MouseDoubleClick" Handler="SongRow_Click" />
+                    <Setter Property="Background" Value="#FF445399" />
+                    <Setter Property="Foreground" Value="{Binding Playing}" />
+                    <Setter Property="ContextMenu" Value="{DynamicResource ItemContextMenu}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding }" />
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="White" />
+                            <Setter Property="Foreground" Value="Black" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#FF8390E4" />
+                            <Setter Property="Foreground" Value="Black" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+    </DataTemplate>
+
+
+</ResourceDictionary>

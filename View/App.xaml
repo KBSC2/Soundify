@@ -18,6 +18,7 @@
                 <ResourceDictionary Source="Screens/RequestScreen.xaml"/>
                 <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/Watermark.xaml"/>
+                <ResourceDictionary Source="Styles/SongList.xaml"/>
 
                 <ResourceDictionary>
                     <Brush x:Key="BackgroundColor">#FF09132E</Brush>

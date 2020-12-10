@@ -9,6 +9,7 @@ using Model;
 using Model.EventArgs;
 using Soundify;
 using System;
+using Model.Enums;
 
 namespace View.Screens
 {
