@@ -90,6 +90,13 @@ namespace Soundify
             PermissionController.NoRightsEvent += ShowNoRights;
         }
 
+        /**
+         * Find all the objects on specified window
+         *
+         * @param depObj The window you want the objects to be selected from
+         *
+         * @return IEnumerable<T> : Returns the object from type T
+         */
         public static IEnumerable<T> FindLogicalChildren<T>(DependencyObject depObj) where T : DependencyObject
         {
             if (depObj != null)
@@ -98,28 +105,28 @@ namespace Soundify
                 {
                     if (rawChild is DependencyObject)
                     {
-                        DependencyObject child = (DependencyObject)rawChild;
+                        DependencyObject child = (DependencyObject) rawChild;
                         if (child is T)
                         {
-                            yield return (T)child;
+                            yield return (T) child;
                         }
 
                         foreach (T childOfChild in FindLogicalChildren<T>(child))
-                        {
                             yield return childOfChild;
-                        }
                     }
                 }
             }
         }
 
+        /**
+         * Updates all the permission buttons on MainWindow
+         *
+         * @return void
+         */
         public void UpdateButtons()
         {
             foreach (PermissionButton button in FindLogicalChildren<PermissionButton>(MainWindow.InstanceMainWindow))
-            {
                 button.UpdateButton();
-                
-            }
         }
 
         private void Play_Button_Click(object sender, RoutedEventArgs e)
