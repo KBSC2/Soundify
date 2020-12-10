@@ -16,7 +16,7 @@ namespace Tests.Users
         public void SetUp()
         {
             controller = UserController.Create(new MockDatabaseContext());
-            controller.CreateAccount(new User() { ID = 10, Email = "duplicate@gmail.com", Username = "test"}, "Sterk_W@chtw000rd2",
+            controller.CreateAccount(new User() { ID = 10, Email = "duplicate@gmail.com", Username = "test1"}, "Sterk_W@chtw000rd2",
                 "Sterk_W@chtw000rd2"); // create account to test already exists
         }
 
@@ -32,20 +32,21 @@ namespace Tests.Users
             return CheckStrength(password);
         }
 
-        [TestCase("zwak", "zwak", "test2@gmail.com", ExpectedResult = RegistrationResults.PasswordNotStrongEnough)]                     // password not strong enough
-        [TestCase("match", "no match", "test2@gmail.com", ExpectedResult = RegistrationResults.PasswordNoMatch)]                        // password mismatch
-        [TestCase("Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2", "test@gmail.com", ExpectedResult = RegistrationResults.Succeeded)]          // success
-        [TestCase("Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2", "duplicate@gmail.com", ExpectedResult = RegistrationResults.EmailTaken)]    // email taken
-        public RegistrationResults UserController_SignupResults(string password, string repeatPassword, string email)
+        [TestCase("Hai", "zwak", "zwak", "test2@gmail.com", ExpectedResult = RegistrationResults.PasswordNotStrongEnough)]                     // password not strong enough
+        [TestCase("Paul", "match", "no match", "test2@gmail.com", ExpectedResult = RegistrationResults.PasswordNoMatch)]                        // password mismatch
+        [TestCase("Sietse", "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2", "test@gmail.com", ExpectedResult = RegistrationResults.Succeeded)]          // success
+        [TestCase("Vincent", "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2", "duplicate@gmail.com", ExpectedResult = RegistrationResults.EmailTaken)]    // email taken
+        [TestCase("test1", "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2", "uniek@gmail.com", ExpectedResult = RegistrationResults.UsernameTaken)]    // username taken
+        public RegistrationResults UserController_SignupResults(string username, string password, string repeatPassword, string email)
         {
-            var result = controller.CreateAccount(new User() {ID = 11, Email = email, Username = "test"}, password, repeatPassword);
+            var result = controller.CreateAccount(new User() {ID = 11, Email = email, Username = username}, password, repeatPassword);
             return result;
         }
 
         [TestCase("testindb@gmail.com", "SterkWachtw00rd@", ExpectedResult = true)]
         public bool UserController_AccountInDatabase(string email, string password)
         {
-            var result = controller.CreateAccount(new User() { ID = 12, Email = email, Username = "test" }, password, password);
+            var result = controller.CreateAccount(new User() { ID = 12, Email = email, Username = "test2" }, password, password);
             if (result != RegistrationResults.Succeeded)
                 return false;
             var user = controller.GetUserFromEmailOrUsername(email);
