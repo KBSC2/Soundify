@@ -22,6 +22,7 @@ namespace View.Screens
 
             MainWindow.InstanceMainWindow.Hide();
             MainWindow.InstanceLoginScreen.Show();
+            MainWindow.InstanceLoginScreen.RememberData.IsChecked = false;
             MainWindow.InstanceMainWindow.SetScreen(ScreenNames.HomeScreen);
         }
 

@@ -1,4 +1,8 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Data.OleDb;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Controls;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.Enums;
@@ -17,7 +21,7 @@ namespace View.Components
                 UpdateButton();
             }
         }
-
+        public bool HideOnBlocked { get; set; }
         private UserController controller;
 
         public PermissionButton()
@@ -28,7 +32,10 @@ namespace View.Components
 
         public void UpdateButton()
         {
-            this.Opacity = controller.HasPermission(UserController.CurrentUser, this.Permission) ? 1f : 0.5f;
+            var allowed = controller.HasPermission(UserController.CurrentUser, this.Permission);
+            this.Opacity = allowed ? 1f : 0.5f;
+            if (HideOnBlocked)
+                this.Visibility = allowed ? Visibility.Visible : Visibility.Hidden;
         }
 
         protected override void OnClick()
