@@ -6,13 +6,17 @@ using Model.DbModels;
 using Model.EventArgs;
 using NAudio.Wave;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using Model.Enums;
 using View;
+using View.Components;
 using View.DataContexts;
 using View.Screens;
 
@@ -85,6 +89,39 @@ namespace Soundify
             
             PermissionController.NoRightsEvent += ShowNoRights;
         }
+
+        public static IEnumerable<T> FindLogicalChildren<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                foreach (object rawChild in LogicalTreeHelper.GetChildren(depObj))
+                {
+                    if (rawChild is DependencyObject)
+                    {
+                        DependencyObject child = (DependencyObject)rawChild;
+                        if (child is T)
+                        {
+                            yield return (T)child;
+                        }
+
+                        foreach (T childOfChild in FindLogicalChildren<T>(child))
+                        {
+                            yield return childOfChild;
+                        }
+                    }
+                }
+            }
+        }
+
+        public void UpdateButtons()
+        {
+            foreach (PermissionButton button in FindLogicalChildren<PermissionButton>(MainWindow.InstanceMainWindow))
+            {
+                button.UpdateButton();
+                
+            }
+        }
+
         private void Play_Button_Click(object sender, RoutedEventArgs e)
         {
             if (AudioPlayer.Instance.CurrentSongFile == null)
