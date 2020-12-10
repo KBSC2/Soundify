@@ -26,6 +26,7 @@ namespace Controller
         public List<Song> Queue { get; set; } = new List<Song>();
         public List<Song> NextInQueue { get; set; } = new List<Song>();
         public bool Looping { get; set; } = false;
+        public bool Shuffling { get; set; } = false;
 
         public static AudioPlayer Instance { get; set; }
         public static IDatabaseContext Context { get; set; }
@@ -163,6 +164,41 @@ namespace Controller
             else if(!Looping)
             {
                 Queue = Queue.GroupBy(p => p.ID).Select(g => g.First()).ToList();
+            }
+        }
+
+        [HasPermission(Permission = Permissions.SongShuffle)]
+        public virtual void Shuffle(Playlist playlist)
+        {
+            Shuffling = !Shuffling;
+
+            if(playlist != null)
+            {
+                if (Looping)
+                {
+                    if (Shuffling)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                } 
+                else
+                {
+                    if (Shuffling)
+                    {
+                        var queueFromCurrentSongIndex = Queue.GetRange(CurrentSongIndex + 1, Queue.Count - (CurrentSongIndex + 1));
+                        queueFromCurrentSongIndex = queueFromCurrentSongIndex.OrderBy(i => Guid.NewGuid()).ToList();
+                        Queue.RemoveRange(CurrentSongIndex + 1, Queue.Count - (CurrentSongIndex + 1));
+                        Queue.AddRange(queueFromCurrentSongIndex);
+                    } 
+                    else
+                    {
+
+                    }
+                }
             }
         }
 

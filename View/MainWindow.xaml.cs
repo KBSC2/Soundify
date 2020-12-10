@@ -145,6 +145,7 @@ namespace Soundify
 
         private void Shuffle_Button_Click(object sender, RoutedEventArgs e)
         {
+            AudioPlayer.Instance.Shuffle(CurrentPlayList);
             QueueDataContext.Instance.OnPropertyChanged();
         }
 
