@@ -12,7 +12,7 @@ namespace Controller
         private static string salt = ConfigurationManager.AppSettings["MD5SALT"];
 
         /**
-         * Transform a password to an md5, hashed password
+         * Transform A password to an md5, hashed password
          *
          * @param password Password string to encrypt
          *
@@ -33,7 +33,7 @@ namespace Controller
          *
          * @param password Password to check strength
          *
-         * @ return PasswordScore : strength of password
+         * @ return PasswordScore : Strength of password
          */
         public static PasswordScore CheckStrength(string password)
         {
