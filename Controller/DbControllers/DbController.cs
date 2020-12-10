@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Model.Database.Contexts;
 using Model.DbModels;
@@ -25,12 +26,13 @@ namespace Controller
         }
 
         // READ
-        public virtual T GetItem(int id)
+        public virtual Task<T> GetItem(int id)
         {
             if (!RowExists(id))
                 throw new ArgumentOutOfRangeException();
 
-            return Set.FirstOrDefault(x => x.ID == id);
+            return Set.FirstOrDefaultAsync(x => x.ID == id);
+
         }
 
         // CREATE
@@ -39,39 +41,40 @@ namespace Controller
             Set.Add(item);
 
             // If the database is a mock one, do not use the context (not required)
-            if (!RealDatabase()) return;
-
-            Context.Add(item);
-            Context.Entry(item).State = EntityState.Added;
-            Context.SaveChanges();
+            if (RealDatabase())
+            {
+                Context.Add(item);
+                Context.Entry(item).State = EntityState.Added;
+                Context.SaveChangesAsync();
+            }
         }
 
         // UPDATE
-        public virtual void UpdateItem(T item)
+        public virtual async void UpdateItem(T item)
         {
-            var dbItem = GetItem(item.ID);
+            var dbItem = await GetItem(item.ID);
             dbItem = item;
 
             // If the database is a mock one, do not use the context (not required)
             if (!RealDatabase()) return;
 
             Context.Entry(dbItem).State = EntityState.Modified;
-            Context.SaveChanges();
+            Context.SaveChangesAsync();
         }
 
         // DELETE
-        public virtual void DeleteItem(int id)
+        public virtual async void DeleteItem(int id)
         {
             try
             {
-                var item = GetItem(id);
+                var item = await GetItem(id);
                 Set.Remove(item);
 
                 // If the database is a mock one, do not use the context (not required)
                 if (!RealDatabase()) return;
 
                 Context.Entry(item).State = EntityState.Deleted;
-                Context.SaveChanges();
+                Context.SaveChangesAsync();
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -79,15 +82,15 @@ namespace Controller
         }
 
         // GET LIST
-        public virtual List<T> GetList()
+        public virtual Task<List<T>> GetList()
         {
-            return Set.ToList();
+            return Set.ToListAsync();
         }
 
         // GET LIST WITH FILTER
-        public virtual List<T> GetFilteredList(Func<T, bool> filter)
+        public virtual Task<List<T>> GetFilteredList(Func<T, bool> filter)
         {
-            return Set.Where(filter).ToList();
+            return Set.Where(filter).AsQueryable().ToListAsync();
         }
 
         /**

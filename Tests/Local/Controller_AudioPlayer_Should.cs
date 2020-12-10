@@ -33,8 +33,8 @@ namespace Tests.Local
             playlist = new Playlist() { Name = "Test", ActivePlaylist = true, CreationDate = DateTime.Now };
             playlistController.CreateItem(playlist);
 
-            song = new Song() { ID = 1, Artist = "test", Duration = 11, Name = "test", Path = "songs/dansenaandegracht.mp3" };
-            song2 = new Song() { ID = 2, Artist = "test2", Duration = 11, Name = "test2", Path = "songs/untrago.mp3" };
+            song = new Song() { ID = 1, ArtistID = 1, Duration = 11, Name = "test", Path = "songs/dansenaandegracht.mp3" };
+            song2 = new Song() { ID = 2, ArtistID = 1, Duration = 11, Name = "test2", Path = "songs/untrago.mp3" };
 
             songController.CreateItem(song);
             songController.CreateItem(song2);
@@ -44,7 +44,7 @@ namespace Tests.Local
         public void AudioPlayer_AddSong_Queue_Contains()
         {
             AudioPlayer.Instance.AddSongToSongQueue(song);
-            Assert.IsTrue(AudioPlayer.Instance.NextInQueue.Contains(song));
+            Assert.IsTrue(AudioPlayer.Instance.Queue.Contains(song));
         }
 
         [Test, Category("Local")]
@@ -55,18 +55,21 @@ namespace Tests.Local
             playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
             playlistSongController.AddSongToPlaylist(song2.ID, playlist.ID);
 
-            var playlistSongs = PlaylistSongController.Create(context).GetSongsFromPlaylist(playlist.ID);
-            AudioPlayer.Instance.PlayPlaylist(playlistSongs);
-
-            bool areEqual = true;
-            for (int i = 0; i < playlistSongs.Count; i++)
+            PlaylistSongController.Create(context).GetSongsFromPlaylist(playlist.ID).ContinueWith(res =>
             {
-                if (playlistSongs[i].Song.ID != AudioPlayer.Instance.Queue[i].ID) areEqual = false;
-            }
+                var playlistSongs = res.Result;
+                AudioPlayer.Instance.PlayPlaylist(playlistSongs);
 
-            Assert.IsTrue(areEqual);
-            playlistSongController.RemoveFromPlaylist(song.ID, playlist.ID);
-            playlistSongController.RemoveFromPlaylist(song2.ID, playlist.ID);
+                bool areEqual = true;
+                for (int i = 0; i < playlistSongs.Count; i++)
+                {
+                    if (playlistSongs[i].Song.ID != AudioPlayer.Instance.Queue[i].ID) areEqual = false;
+                }
+
+                Assert.IsTrue(areEqual);
+                playlistSongController.RemoveFromPlaylist(song.ID, playlist.ID);
+                playlistSongController.RemoveFromPlaylist(song2.ID, playlist.ID);
+            });
         }
 
         [TearDown, Category("Local")]

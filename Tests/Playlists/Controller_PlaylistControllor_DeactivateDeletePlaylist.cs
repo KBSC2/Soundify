@@ -19,33 +19,41 @@ namespace Tests.Playlists
         public void SetUp()
         {
             playlistController = PlaylistController.Create(new MockDatabaseContext());
+
             playlist = new Playlist()
-                {Name = "TestDeactivateDelete", ActivePlaylist = true, CreationDate = DateTime.Now};
-            playlistDelete = new Playlist() {Name = "TestDelete", ActivePlaylist = true, CreationDate = DateTime.Now};
+                { ID = 1, Name = "TestDeactivateDelete", ActivePlaylist = true, CreationDate = DateTime.Now};
+            playlistDelete = new Playlist() 
+                { ID = 2, Name = "TestDelete", ActivePlaylist = true, CreationDate = DateTime.Now};
+
+            playlistController.CreateItem(playlist);
+            playlistController.CreateItem(playlistDelete);
         }
 
         [Test]
         public void PlaylistController_DeactivatePlaylistTest_DeactivatedPlaylist()
         {
-            playlistController.CreateItem(playlist);
-            playlistController.DeactivatePlaylist(playlist.ID);
-            var testVariable = playlistController.GetItem(playlist.ID);
-            Assert.IsFalse(testVariable.ActivePlaylist);
-            playlistController.DeleteItem(playlist.ID);
+            playlistController.DeactivatePlaylist(1);
+            playlistController.GetItem(1).ContinueWith(res =>
+                Assert.IsFalse(res.Result.ActivePlaylist)
+            );
+
         }
 
         [Test]
         public void PlaylistController_DeletePlaylistTest_DeletedPlaylist()
         {
-            playlistController.CreateItem(playlistDelete);
             playlistController.DeactivatePlaylist(playlistDelete.ID);
-            var testVariable = playlistController.GetItem(playlistDelete.ID);
-            testVariable.DeleteDateTime = DateTime.Now.AddMilliseconds(1500);
-            playlistController.UpdateItem(testVariable);
-            Thread.Sleep(2000);
-            playlistController.DeletePlaylistOnDateStamp();
-            Thread.Sleep(3000);
-            Assert.Throws<ArgumentOutOfRangeException>((() => playlistController.GetItem(playlistDelete.ID)));
+
+            playlistController.GetItem(playlistDelete.ID).ContinueWith(res =>
+            {
+                var testVariable = res.Result;
+                testVariable.DeleteDateTime = DateTime.Now - TimeSpan.FromMilliseconds(1500);
+
+                playlistController.UpdateItem(testVariable);
+                playlistController.DeletePlaylistOnDateStamp();
+
+                Assert.Throws<ArgumentOutOfRangeException>((() => playlistController.GetItem(playlistDelete.ID).Start()));
+            });
         }
     }
 }

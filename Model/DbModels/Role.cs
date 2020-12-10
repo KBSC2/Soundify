@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Model.DbModels
 {
@@ -8,5 +9,7 @@ namespace Model.DbModels
         public string Designation { get; set; }
         [Required]
         public string ColorCode { get; set; }
+
+        public List<User> Users { get; set; }
     }
 }

@@ -124,7 +124,9 @@ namespace Controller
 
         public void PlayPlaylist(Playlist playlist, int startIndex = -1)
         {
-            PlayPlaylist(PlaylistSongController.Create(new DatabaseContext()).GetSongsFromPlaylist(playlist.ID), startIndex);
+            PlaylistSongController.Create(new DatabaseContext()).GetSongsFromPlaylist(playlist.ID).ContinueWith(res =>
+                PlayPlaylist(res.Result, startIndex)
+            );
         }
 
         public void PlayPlaylist(List<PlaylistSong> songs, int startIndex = -1)
@@ -150,8 +152,10 @@ namespace Controller
 
             if (Looping && playlist != null)
             {
-                var songs = PlaylistSongController.Create(new DatabaseContext()).GetSongsFromPlaylist(playlist.ID);
-                songs.ForEach(i => AddSongToQueue(i.Song));
+                PlaylistSongController.Create(new DatabaseContext()).GetSongsFromPlaylist(playlist.ID).ContinueWith(
+                    res =>
+                        res.Result.ForEach(i => AddSongToQueue(i.Song))
+                );
             }
             else if(!Looping)
             {

@@ -1,4 +1,5 @@
-﻿using Controller.DbControllers;
+﻿using System.Threading.Tasks;
+using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
@@ -15,10 +16,21 @@ namespace Tests.Users
         public void SetUp()
         {
             controller = UserController.Create(new MockDatabaseContext());
-            controller.CreateAccount(new User() { ID = 10, Email = "test@gmail.com", Username = "test", IsActive = true }, 
-                "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2");
-            controller.CreateAccount(new User() { ID = 11, Email = "test2@gmail.com", Username = "test2", IsActive = false }, 
-                "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2");
+        }
+
+        private async Task<bool> CreateAccounts()
+        {
+            await Task.WhenAll(new Task[]
+            {
+                controller.CreateAccount(
+                    new User() {ID = 10, Email = "test@gmail.com", Username = "test", IsActive = true},
+                    "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2"),
+                controller.CreateAccount(
+                    new User() {ID = 11, Email = "test2@gmail.com", Username = "test2", IsActive = false},
+                    "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2")
+            });
+
+            return true;
         }
 
         [TestCase("test@gmail.com", "Sterk_W@chtw00rd2", ExpectedResult = LoginResults.Success)]        // Successful account login
@@ -28,15 +40,12 @@ namespace Tests.Users
         [TestCase("test2", "Sterk_W@chtw00rd2", ExpectedResult = LoginResults.UserNotActive)]           // Account from username
         public LoginResults UserController_SignupResults(string emailOrUsername, string password)
         {
-            var result = controller.UserLogin(emailOrUsername, password);
-            return result;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            controller.DeleteItem(11);
-            controller.DeleteItem(12);
+            return CreateAccounts().ContinueWith(_ =>
+            {
+                return controller.UserLogin(emailOrUsername, password).ContinueWith(res =>
+                    res.Result
+                ).Result;
+            }).Result;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Controller.DbControllers;
+﻿using System.Threading.Tasks;
+using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
@@ -16,8 +17,14 @@ namespace Tests.Users
         public void SetUp()
         {
             controller = UserController.Create(new MockDatabaseContext());
-            controller.CreateAccount(new User() { ID = 10, Email = "duplicate@gmail.com", Username = "test"}, "Sterk_W@chtw000rd2",
+        }
+
+        private async Task<bool> CreateAccounts()
+        {
+            await controller.CreateAccount(new User() {ID = 10, Email = "duplicate@gmail.com", Username = "test"},
+                "Sterk_W@chtw000rd2",
                 "Sterk_W@chtw000rd2"); // create account to test already exists
+            return true;
         }
 
         [TestCase("", ExpectedResult = PasswordScore.Blank)]                            // empty
@@ -37,18 +44,28 @@ namespace Tests.Users
         [TestCase("Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2", "duplicate@gmail.com", ExpectedResult = RegistrationResults.EmailTaken)]    // email taken
         public RegistrationResults UserController_SignupResults(string password, string repeatPassword, string email)
         {
-            var result = controller.CreateAccount(new User() {ID = 11, Email = email, Username = "test"}, password, repeatPassword);
-            return result;
+            return CreateAccounts().ContinueWith(_ =>
+            {
+                return controller
+                    .CreateAccount(new User() {ID = 11, Email = email, Username = "test"}, password, repeatPassword)
+                    .ContinueWith(res =>
+                        res.Result
+                    ).Result;
+            }).Result;
         }
 
         [TestCase("testindb@gmail.com", "SterkWachtw00rd@", ExpectedResult = true)]
         public bool UserController_AccountInDatabase(string email, string password)
         {
-            var result = controller.CreateAccount(new User() { ID = 12, Email = email, Username = "test" }, password, password);
-            if (result != RegistrationResults.Succeeded)
-                return false;
-            var user = controller.GetUserFromEmailOrUsername(email);
-            return user != null;
+            return controller.CreateAccount(new User() { ID = 12, Email = email, Username = "test" }, password, password).ContinueWith(res =>
+            {
+                var result = res.Result;
+                if (result != RegistrationResults.Succeeded)
+                    return false;
+                var user = controller.GetUserFromEmailOrUsername(email);
+                return user != null;
+            }).Result;
+            
         }
 
         [TearDown]

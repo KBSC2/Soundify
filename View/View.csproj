@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>soundifySmall.ico</ApplicationIcon>
+    <ApplicationIcon>Assets/soundifySmall.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

@@ -21,7 +21,7 @@ namespace View.DataContexts
                 return instance;
             }
         }
-        public List<Request> ArtistRequests => RequestController.Create(new DatabaseContext()).GetArtistRequests();
+        public List<Request> ArtistRequests => RequestController.Create(new DatabaseContext()).GetArtistRequests().Result;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)

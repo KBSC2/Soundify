@@ -35,9 +35,9 @@ namespace View.Screens
             RequestDatacontext.Instance.OnPropertyChanged("");
         }
 
-        public void ApproveUser(int requestID, IDatabaseContext databaseContext)
+        public async void ApproveUser(int requestID, IDatabaseContext databaseContext)
         {
-            var request = RequestController.Create(databaseContext).GetItem(requestID);
+            var request = await RequestController.Create(databaseContext).GetItem(requestID);
 
             var userID = request.UserID;
 
@@ -57,15 +57,20 @@ namespace View.Screens
 
         public void DeclineUser(int requestID, IDatabaseContext databaseContext)
         {
-            var request = RequestController.Create(databaseContext).GetItem(requestID);
-            var userID = request.UserID;
+            RequestController.Create(databaseContext).GetItem(requestID).ContinueWith(res =>
+            {
+                var request = res.Result;
+                var userID = request.UserID;
 
-            var userController = UserController.Create(databaseContext);
-            var user = userController.GetItem(userID);
-            user.RequestedArtist = false;
-            userController.UpdateItem(user);
-
-            RequestController.Create(databaseContext).DeleteItem(requestID);
+                var userController = UserController.Create(databaseContext);
+                userController.GetItem(userID).ContinueWith(x =>
+                {
+                    var user = x.Result;
+                    user.RequestedArtist = false;
+                    userController.UpdateItem(user);
+                    RequestController.Create(databaseContext).DeleteItem(requestID);
+                });
+            });
         }
     }
 }

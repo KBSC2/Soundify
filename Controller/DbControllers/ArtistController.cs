@@ -1,7 +1,9 @@
-﻿using Controller.Proxy;
+﻿using System.Collections.Generic;
+using Controller.Proxy;
 using Model.Database.Contexts;
 using Model.DbModels;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Controller.DbControllers
 {
@@ -19,28 +21,37 @@ namespace Controller.DbControllers
             userController = UserController.Create(Context);
         }
 
-        public int? GetArtistIdFromUserId(int userId)
+        public async Task<Artist> GetArtistFromUserId(int userId)
         {
-            return GetList().FirstOrDefault(a => a.UserID == userId)?.ID;
+            var list = await GetList();
+            return list.FirstOrDefault(a => a.UserID == userId);
         }
 
         // Can't this be a little bit more generic. Like update role or something??
-        public void MakeArtist(int userId)
+        public async void MakeArtist(int userId)
         {
-            var user = userController.GetItem(userId);
+            var user = await userController.GetItem(userId);
 
             user.RoleID = 2;
             userController.UpdateItem(user);
-            CreateItem(new Artist() { ArtistName = user.Username, UserID = user.ID}); // change user.Username to artist name
+            CreateItem(new Artist { ArtistName = user.Username, UserID = user.ID });
         }
 
-        public void RevokeArtist(User user)
+        public async void RevokeArtist(User user)
         {
             user.RoleID = 1;
             userController.UpdateItem(user);
 
-            var artistId = GetArtistIdFromUserId(user.ID);
-            if (artistId != null) DeleteItem((int)artistId);
+            var artistId = await GetArtistFromUserId(user.ID);
+            if (artistId != null) DeleteItem(artistId.ID);
+        }
+
+        public async Task<Task<List<Song>>> GetSongsForArtist(int userId)
+        {
+            var songController = SongController.Create(Context);
+
+            var artist = await GetArtistFromUserId(userId);
+            return songController.GetFilteredList(x => x.ArtistID == artist.ID);
         }
     }
 }

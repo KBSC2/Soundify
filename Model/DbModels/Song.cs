@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Model.Enums;
 
 namespace Model.DbModels
@@ -9,8 +10,9 @@ namespace Model.DbModels
         [Required]
         public string Name { get; set; }
 
-        [Required]
-        public string Artist { get; set; }
+        [ForeignKey("Artist")]
+        public int ArtistID { get; set; }
+        public Artist Artist { get; set; }
 
         [Required]
         public string Path { get; set; }

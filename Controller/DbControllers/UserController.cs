@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Controller.Proxy;
 using Model.Database.Contexts;
 using Model.DbModels;
@@ -9,7 +10,7 @@ namespace Controller.DbControllers
 {
     public class UserController : DbController<User>
     {
-        public static User CurrentUser;
+        public static User CurrentUser { get; set; }
 
         public static UserController Create(IDatabaseContext context)
         {
@@ -27,9 +28,11 @@ namespace Controller.DbControllers
          *
          * @return User object if found, otherwise null
          */
-        public virtual User GetUserFromEmailOrUsername(string emailOrUsername)
+        public virtual async Task<User> GetUserFromEmailOrUsername(string emailOrUsername)
         {
-            return this.GetList().FirstOrDefault(x => x.Email == emailOrUsername || x.Username == emailOrUsername);
+            return await GetList().ContinueWith(res =>
+                res.Result.FirstOrDefault(x => x.Email == emailOrUsername || x.Username == emailOrUsername)
+            );
         }
 
         /**
@@ -40,20 +43,25 @@ namespace Controller.DbControllers
          *
          * @return LoginResult : Result of the user login
          */
-        public virtual LoginResults UserLogin(string emailOrUsername, string password)
+        public virtual Task<LoginResults> UserLogin(string emailOrUsername, string password)
         {
-            var user = GetUserFromEmailOrUsername(emailOrUsername);
-            if (user == null)
-                return LoginResults.EmailNotFound;
+            return GetUserFromEmailOrUsername(emailOrUsername).ContinueWith(res =>
+            {
+                var user = res.Result;
+                if (user == null)
+                    return LoginResults.EmailNotFound;
 
-            string passwordHash = PasswordController.EncryptPassword(password);
-            if (user.Password != passwordHash)
-                return LoginResults.PasswordIncorrect;
+                string passwordHash = PasswordController.EncryptPassword(password);
+                if (user.Password != passwordHash)
+                    return LoginResults.PasswordIncorrect;
 
-            if (user.IsActive == false)
-                return LoginResults.UserNotActive;
+                if (user.IsActive == false)
+                    return LoginResults.UserNotActive;
 
-            return LoginResults.Success;
+                CurrentUser = user;
+                return LoginResults.Success;
+            });
+            
         }
 
         /**
@@ -66,22 +74,26 @@ namespace Controller.DbControllers
          *
          * @return RegistrationResult : Result of the user account creation
          */
-        public virtual RegistrationResults CreateAccount(User user, string password, string passwordRepeat)
+        public virtual async Task<RegistrationResults> CreateAccount(User user, string password, string passwordRepeat)
         {
-            if (GetUserFromEmailOrUsername(user.Email) != null)
-                return RegistrationResults.EmailTaken;
+            return await GetUserFromEmailOrUsername(user.Email).ContinueWith(res =>
+            {
+                var usr = res.Result;
+                if (usr != null)
+                    return RegistrationResults.EmailTaken;
 
-            if (!password.Equals(passwordRepeat))
-                return RegistrationResults.PasswordNoMatch;
+                if (!password.Equals(passwordRepeat))
+                    return RegistrationResults.PasswordNoMatch;
 
-            if (PasswordController.CheckStrength(password) < PasswordScore.Strong)
-                return RegistrationResults.PasswordNotStrongEnough;
+                if (PasswordController.CheckStrength(password) < PasswordScore.Strong)
+                    return RegistrationResults.PasswordNotStrongEnough;
 
-            user.Password = PasswordController.EncryptPassword(password);
-            user.RoleID = 1;
-            // Insert user object into database
-            CreateItem(user);
-            return RegistrationResults.Succeeded;
+                user.Password = PasswordController.EncryptPassword(password);
+                user.RoleID = 1;
+                // Insert user object into database
+                CreateItem(user);
+                return RegistrationResults.Succeeded;
+            });
         }
 
         /**
@@ -93,17 +105,16 @@ namespace Controller.DbControllers
          *
          * @return user has permission
          */
-        public bool HasPermission(User user, Permissions permission, Permissions maxValue)
+        public async Task<bool> HasPermission(User user, Permissions permission, Permissions maxValue)
         {
             if (!HasPermission(user, permission))
                 return false;
 
             var rpController = RolePermissionsController.Create(Context);
             var max = rpController.GetPermissionValueCount(user, maxValue);
-
             Dictionary<Permissions, int> maxValues = new Dictionary<Permissions, int>()
             {
-                { Permissions.PlaylistLimit, PlaylistController.Create(Context).GetActivePlaylists(user.ID).Count },
+                { Permissions.PlaylistLimit, PlaylistController.Create(Context).GetActivePlaylists(user.ID).Result.Count },
                 { Permissions.PlaylistSongsLimit, 3} //implement current playlist max songs
             };
 
@@ -121,7 +132,8 @@ namespace Controller.DbControllers
         public bool HasPermission(User user, Permissions permission)
         {
             var controller = RolePermissionsController.Create(Context);
-            return controller.GetPermission(user, permission) != null;
+            var x = controller.GetPermission(user, permission);
+            return x != null;
         }
     }
 }

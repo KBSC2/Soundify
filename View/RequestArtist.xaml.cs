@@ -50,9 +50,12 @@ namespace View
             };
 
             var userController = UserController.Create(new DatabaseContext());
-            var user = userController.GetItem(UserController.CurrentUser.ID);
-            user.RequestedArtist = true;
-            userController.UpdateItem(user);
+            userController.GetItem(UserController.CurrentUser.ID).ContinueWith(res =>
+            {
+                var user = res.Result;
+                user.RequestedArtist = true;
+                userController.UpdateItem(user);
+            });
 
             var createRequest = RequestController.Create(new DatabaseContext());
             createRequest.CreateItem(request);

@@ -70,19 +70,21 @@ namespace View.Screens
             var playlistID = (int)((Button)sender).Tag;
 
             var playlistController = PlaylistController.Create(new DatabaseContext());
-            var playlistName = playlistController.GetItem(playlistID).Name;
-
-            var removeConfirm = MessageBox.Show($"Are you sure you want to delete {playlistName}?", $"Remove {playlistName.ToString()}", MessageBoxButton.YesNoCancel);
-            switch (removeConfirm)
+            playlistController.GetItem(playlistID).ContinueWith(res =>
             {
-                case MessageBoxResult.Yes:
-                    playlistController.DeactivatePlaylist(playlistID);
-                    MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs() { ScreenName = ScreenNames.PlaylistMenuScreen } );
-                    break;
-                case MessageBoxResult.No:
-                case MessageBoxResult.Cancel:
-                    break;
-            }
+                var playlistName = res.Result;
+                var removeConfirm = MessageBox.Show($"Are you sure you want to delete {playlistName}?", $"Remove {playlistName.ToString()}", MessageBoxButton.YesNoCancel);
+                switch (removeConfirm)
+                {
+                    case MessageBoxResult.Yes:
+                        playlistController.DeactivatePlaylist(playlistID);
+                        MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs() { ScreenName = ScreenNames.PlaylistMenuScreen });
+                        break;
+                    case MessageBoxResult.No:
+                    case MessageBoxResult.Cancel:
+                        break;
+                }
+            });
         }
 
         private void MoveUp_Click(object sender, RoutedEventArgs e)
@@ -111,14 +113,16 @@ namespace View.Screens
         {
             var playlistSongController = PlaylistSongController.Create(new DatabaseContext());
             int playlistID = MainWindow.CurrentPlayList.ID;
-            var songOne = playlistSongController.GetPlaylistSongFromIndex(playlistID, indexOne);
-            var songTwo = playlistSongController.GetPlaylistSongFromIndex(playlistID, indexTwo);
 
-            songOne.Index = indexTwo;
-            songTwo.Index = indexOne;
-
-            playlistSongController.UpdatePlaylistSong(songOne);
-            playlistSongController.UpdatePlaylistSong(songTwo);
+            foreach (var i in new [] {indexOne, indexTwo})
+            {
+                playlistSongController.GetPlaylistSongFromIndex(playlistID, i).ContinueWith(res =>
+                {
+                    var song = res.Result;
+                    song.Index = (i == indexOne ? indexTwo : indexOne);
+                    playlistSongController.UpdatePlaylistSong(song);
+                });
+            }
 
             PlaylistDataContext.Instance.OnPropertyChanged("");
         }

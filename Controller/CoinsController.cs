@@ -35,7 +35,7 @@ namespace Controller
             if (counter == 10)
             {
                 counter = 0;
-                AddCoins(userController.GetItem(UserController.CurrentUser.ID));
+                AddCoins(UserController.CurrentUser);
             }
         }
 

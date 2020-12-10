@@ -37,9 +37,12 @@ namespace View
                 emailController.SendEmail(mail, email);
 
             var controller = UserController.Create(new DatabaseContext());
-            var user = controller.GetUserFromEmailOrUsername(email);
-            user.Token = token;
-            controller.UpdateItem(user);
+            controller.GetUserFromEmailOrUsername(email).ContinueWith(res =>
+            {
+                var user = res.Result;
+                user.Token = token;
+                controller.UpdateItem(user);
+            });
 
             var forgotPasswordScreen = new ForgotPasswordScreen(email);
             this.Close();

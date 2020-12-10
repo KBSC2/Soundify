@@ -32,7 +32,7 @@ namespace View
         {
             var playlistSongController = PlaylistSongController.Create(new DatabaseContext());
 
-            return songs.Select(song => new SongInfo(song.Song, playlistSongController.GetPlaylistSong(playlist.ID, song.SongID)))
+            return songs.Select(song => new SongInfo(song.Song, playlistSongController.GetPlaylistSong(playlist.ID, song.SongID).Result))
                 .ToList();
         }
 

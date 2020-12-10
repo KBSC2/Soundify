@@ -44,18 +44,21 @@ namespace View
         {
             var token = this.Token;
             var controller = UserController.Create(new DatabaseContext());
-            var user = controller.GetUserFromEmailOrUsername(_email);
-            if (token.Text.Equals(_previousToken))
+            controller.GetUserFromEmailOrUsername(_email).ContinueWith(res =>
             {
-                user.IsActive = true;
-                controller.UpdateItem(user);
-                MainWindow.InstanceLoginScreen.Show();
-                this.Close();
-            }
-            else
-            {
-                this.Error.Content = "Tokens do not match";
-            }
+                var user = res.Result;
+                if (token.Text.Equals(_previousToken))
+                {
+                    user.IsActive = true;
+                    controller.UpdateItem(user);
+                    MainWindow.InstanceLoginScreen.Show();
+                    this.Close();
+                }
+                else
+                {
+                    this.Error.Content = "Tokens do not match";
+                }
+            });
         }
 
         public void Cancel_Button_Click(object sender, RoutedEventArgs e)

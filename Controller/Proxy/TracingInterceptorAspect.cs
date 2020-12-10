@@ -6,6 +6,7 @@ using Castle.DynamicProxy;
 using Controller.DbControllers;
 using Model.Annotations;
 using Model.Database.Contexts;
+using Model.DbModels;
 using Model.EventArgs;
 
 namespace Controller.Proxy
@@ -38,19 +39,34 @@ namespace Controller.Proxy
                 invocation.Proceed();
                 return;
             }
+            
 
-            var allowed = x.HasMaxValue
-                ? controller.HasPermission(UserController.CurrentUser, x.Permission, x.MaxValue)
-                : controller.HasPermission(UserController.CurrentUser, x.Permission);
 
-            if (allowed)
+            if (x.HasMaxValue)
             {
-                invocation.Proceed();
+                controller.HasPermission(UserController.CurrentUser, x.Permission, x.MaxValue).ContinueWith(res =>
+                {
+                    var z = res.Result;
+                    RunTask(invocation, z, x);
+                });
+                /*var z = await controller.HasPermission(UserController.CurrentUser, x.Permission, x.MaxValue);
+                RunTask(invocation, z, x);*/
             }
             else
             {
-                PermissionController.NoRightsEvent?.Invoke(this, new NoRightsEventArgs() { Permission = x.HasMaxValue ? x.MaxValue : x.Permission });
+                var allowed = controller.HasPermission(UserController.CurrentUser, x.Permission);
+                RunTask(invocation, allowed, x);
             }
+
+
+        }
+
+        private void RunTask(IInvocation invocation, bool allowed, HasPermission x)
+        {
+            if (allowed)
+                invocation.Proceed();
+            else
+                PermissionController.NoRightsEvent?.Invoke(this, new NoRightsEventArgs() { Permission = x.HasMaxValue ? x.MaxValue : x.Permission });
         }
     }
 }

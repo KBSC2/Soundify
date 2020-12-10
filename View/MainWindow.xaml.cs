@@ -58,7 +58,12 @@ namespace Soundify
 
             AudioPlayer.Instance.NextSong += PlaylistScreen.Instance.OnNextSong;
             instanceMainWindow = this;
+            SSHController.Instance.OpenSSHTunnel();
 
+            Context = new DatabaseContext();
+            InitializeComponent();
+
+            /*
             if (!Directory.Exists(Path.GetTempPath() + "Soundify"))
                 Directory.CreateDirectory(Path.GetTempPath() + "Soundify");
 
@@ -68,12 +73,9 @@ namespace Soundify
                     Directory.CreateDirectory(Path.GetTempPath() + "Soundify/" + path.ToString().ToLower());
             }
 
-            InitializeComponent();
-            SSHController.Instance.OpenSSHTunnel();
-
-            Context = new DatabaseContext();
             PlaylistController.Create(Context).DeletePlaylistOnDateStamp();
-
+            
+            */
             SetScreen(ScreenNames.HomeScreen);
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
 
@@ -82,8 +84,8 @@ namespace Soundify
                 InstanceLoginScreen.Show();
                 InstanceMainWindow.Hide();
             }
-            
-            PermissionController.NoRightsEvent += ShowNoRights;
+            /*
+            PermissionController.NoRightsEvent += ShowNoRights;*/
         }
         private void Play_Button_Click(object sender, RoutedEventArgs e)
         {

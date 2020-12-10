@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
@@ -31,60 +34,85 @@ namespace View
             }
         }
 
-        private void Login_Button_Click(object sender, RoutedEventArgs e)
+        private async void Login_Button_Click(object sender, RoutedEventArgs e)
         {
             var emailOrUsername = this.UsernameLogin.Text;
             var password = this.PasswordLogin.Password;
 
             var controller = UserController.Create(new DatabaseContext());
-            var result = controller.UserLogin(emailOrUsername, password);
+
+            var result = await controller.UserLogin(emailOrUsername, password);
             switch (result)
             {
                 case LoginResults.Success:
                 {
-                    UserController.CurrentUser = controller.GetUserFromEmailOrUsername(emailOrUsername);
-                    var main = MainWindow.InstanceMainWindow;
-                    main.Show();
-                    main.Focus();
+
+                    MainWindow.InstanceMainWindow.Show();
+                    MainWindow.InstanceMainWindow.Focus();
                     this.Hide();
-                    File.Create(Path.GetTempPath() + "Soundify/settings/loginInfo").Close();
 
-                    if (RememberData.IsChecked ?? false)
-                    {
-                        string path = Path.GetTempPath() + "Soundify/settings/loginInfo";
-                        string text = password + "," + emailOrUsername;
-                        File.WriteAllText(path, text);
-                    }
 
-                    this.UsernameLogin.Text = "";
-                    this.PasswordLogin.Password = "";
-                    break;
-                }
-                case LoginResults.EmailNotFound:
-                {
-                    this.Error.Content = "Email not found";
-                    break;
-                }
-                case LoginResults.PasswordIncorrect:
-                {
-                    this.Error.Content = "Password incorrect";
-                    break;
-                }
-                case LoginResults.UserNotActive:
-                {
-                    var token = Guid.NewGuid().ToString();
-                    var user = controller.GetUserFromEmailOrUsername(emailOrUsername);
-                    if (user != null)
-                    {
-                        var userEmail = user.Email;
-                        var emailVerificationScreen = new EmailVerificationScreen(token, userEmail);
-                        emailVerificationScreen.Error.Content = "User not active";
-                        emailVerificationScreen.Show();
-                        this.Hide();
-                    } 
                     break;
                 }
             }
+
+            
+                /*
+                
+    
+                            var result = await controller.UserLogin(emailOrUsername, password);
+                            switch (result)
+                            {
+                                case LoginResults.Success:
+                                {
+                                    UserController.CurrentUser = await controller.GetUserFromEmailOrUsername(emailOrUsername);
+    
+                                    File.Create(Path.GetTempPath() + "Soundify/settings/loginInfo").Close();
+    
+                                    if (RememberData.IsChecked ?? false)
+                                    {
+                                        string path = Path.GetTempPath() + "Soundify/settings/loginInfo";
+                                        string text = password + "," + emailOrUsername;
+                                        File.WriteAllText(path, text);
+                                    }
+    
+                                    this.UsernameLogin.Text = "";
+                                    this.PasswordLogin.Password = "";
+    
+    
+    
+                                    this.Dispatcher.Invoke(() => { this.Hide(); });
+                                    var main = new MainWindow();
+                                    main.Show();
+                                    main.Focus();
+    
+                                    break;
+                                }
+                                case LoginResults.EmailNotFound:
+                                {
+                                    this.Error.Content = "Email not found";
+                                    break;
+                                }
+                                case LoginResults.PasswordIncorrect:
+                                {
+                                    this.Error.Content = "Password incorrect";
+                                    break;
+                                }
+                                case LoginResults.UserNotActive:
+                                {
+                                    var token = Guid.NewGuid().ToString();
+                                    var user = await controller.GetUserFromEmailOrUsername(emailOrUsername);
+    
+                                    if (user == null) return;
+    
+                                    var userEmail = user.Email;
+                                    var emailVerificationScreen = new EmailVerificationScreen(token, userEmail);
+                                    emailVerificationScreen.Error.Content = "User not active";
+                                    emailVerificationScreen.Show();
+                                    this.Hide();
+                                    break;
+                                }
+                            }*/
         }
 
         private void Login_On_Enter_Key(object sender, KeyEventArgs e)

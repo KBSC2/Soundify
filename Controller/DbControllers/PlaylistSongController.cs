@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Controller.Proxy;
 using Microsoft.EntityFrameworkCore;
 using Model.Database.Contexts;
@@ -33,25 +34,30 @@ namespace Controller.DbControllers
         {
             ReorderSongIndexes(playlistID);
 
-            if (GetSongsFromPlaylist(playlistID).Any(x => x.SongID == songID))
-                return;
-
-            var playlistSong = new PlaylistSong()
+            GetSongsFromPlaylist(playlistID).ContinueWith(res =>
             {
-                PlaylistID = playlistID, 
-                SongID = songID, 
-                Index = set.Count(), 
-                Song = songController.GetItem(songID), 
-                Playlist = playlistController.GetItem(playlistID), 
-                Added = DateTime.Now
-            };
+                var x = res.Result;
 
-            set.Add(playlistSong);
+                if (x.Any(x => x.SongID == songID))
+                    return;
 
-            if (!RealDatabase()) return;
+                var playlistSong = new PlaylistSong()
+                {
+                    PlaylistID = playlistID,
+                    SongID = songID,
+                    Index = set.Count(),
+                    Song = songController.GetItem(songID).Result,
+                    Playlist = playlistController.GetItem(playlistID).Result,
+                    Added = DateTime.Now
+                };
 
-            context.Entry(playlistSong).State = EntityState.Added;
-            context.SaveChanges();
+                set.Add(playlistSong);
+
+                if (!RealDatabase()) return;
+
+                context.Entry(playlistSong).State = EntityState.Added;
+                context.SaveChanges();
+            });
         }
 
         public void ReorderSongIndexes(int playlistId)
@@ -70,52 +76,71 @@ namespace Controller.DbControllers
 
         public void RemoveFromPlaylist(int songId, int playlistId)
         {
-            if (!RowExists(songId, playlistId))
-                throw new ArgumentOutOfRangeException();
-
-            var playlistSong = GetPlaylistSong(playlistId, songId);
-
-            set.Remove(playlistSong);
-
-            if (RealDatabase())
+            RowExists(songId, playlistId).ContinueWith(res =>
             {
-                context.Entry(playlistSong).State = EntityState.Deleted;
-                context.SaveChanges();
-            }
+                if (!res.Result)
+                    throw new ArgumentOutOfRangeException();
 
-            ReorderSongIndexes(playlistId);
-        }
+                GetPlaylistSong(playlistId, songId).ContinueWith(ps =>
+                {
+                    var playlistSong = ps.Result;
+                    set.Remove(playlistSong);
 
-        public bool RowExists(int songId, int playlistId)
-        {
-            return set
-                .Where(p => p.PlaylistID == playlistId)
-                .Any(s => s.SongID == songId);
-        }
+                    if (RealDatabase())
+                    {
+                        context.Entry(playlistSong).State = EntityState.Deleted;
+                        context.SaveChanges();
+                    }
 
-        public List<PlaylistSong> GetSongsFromPlaylist(int playlistId)
-        {
-            ReorderSongIndexes(playlistId);
-            var songs = set.Where(ps => ps.PlaylistID == playlistId).OrderBy(ps => ps.Index).ToList();
-            songs.ForEach(s =>
-            {
-                s.Song = songController.GetItem(s.SongID);
-                s.Playlist = playlistController.GetItem(s.PlaylistID);
+                    ReorderSongIndexes(playlistId);
+                });
             });
-
-            return songs;
         }
 
-        public PlaylistSong GetPlaylistSong(int playlistId, int songId)
+        public virtual async Task<List<PlaylistSong>> GetList()
         {
-            return GetSongsFromPlaylist(playlistId)
-                .First(s => s.SongID == songId);
+            return await Task.Run(() => set.ToList());
         }
 
-        public PlaylistSong GetPlaylistSongFromIndex(int playlistId, int index)
+        public async Task<bool> RowExists(int songId, int playlistId)
         {
-            return GetSongsFromPlaylist(playlistId)
-                .First(s => s.Index == index);
+            return await GetList().ContinueWith(res => 
+                    res.Result
+                        .Where(p => p.PlaylistID == playlistId)
+                        .Any(s => s.SongID == songId
+                    )
+               );
+        }
+
+        public async Task<List<PlaylistSong>> GetSongsFromPlaylist(int playlistId)
+        {
+            ReorderSongIndexes(playlistId);
+
+            return await GetList().ContinueWith(res =>
+            {
+                var songs = res.Result;
+                songs.ForEach(s =>
+                {
+                    s.Song = songController.GetItem(s.SongID).Result;
+                    s.Playlist = playlistController.GetItem(s.PlaylistID).Result;
+                });
+                return songs;
+            });
+        }
+
+        public async Task<PlaylistSong> GetPlaylistSong(int playlistId, int songId)
+        {
+            return await GetSongsFromPlaylist(playlistId).ContinueWith(res =>
+                res.Result.First(s => s.SongID == songId)
+            );
+
+        }
+
+        public async Task<PlaylistSong> GetPlaylistSongFromIndex(int playlistId, int index)
+        {
+            return await GetSongsFromPlaylist(playlistId).ContinueWith(res =>  
+                res.Result.First(s => s.Index == index)
+            );
         }
 
         public void UpdatePlaylistSong(PlaylistSong playlistSong)

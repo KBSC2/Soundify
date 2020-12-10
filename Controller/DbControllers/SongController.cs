@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Controller.Proxy;
 using Model.Database.Contexts;
 using Model.DbModels;
@@ -27,14 +28,17 @@ namespace Controller.DbControllers
             CreateItem(song);
         }
         
-        public List<Song> SearchSongsOnString(List<string> searchterms)
+        public async Task<List<Song>> SearchSongsOnString(List<string> searchterms)
         {
-            return GetList()
-                .Where(song => (searchterms.Any(s => song.Name != null && song.Name.ToLower().Contains(s.ToLower())) ||
-                               searchterms.Any(s => song.Artist != null && song.Artist.ToLower().Contains(s.ToLower()))) &&
-                               song.Status != SongStatus.AwaitingApproval)
-                .Take(8)
-                .ToList();
+            return await GetList().ContinueWith(res =>
+                res.Result
+                    .Where(song =>
+                        (searchterms.Any(s => song.Name != null && song.Name.ToLower().Contains(s.ToLower())) ||
+                         searchterms.Any(s => song.Artist.ArtistName != null && song.Artist.ArtistName.ToLower().Contains(s.ToLower()))) &&
+                        song.Status != SongStatus.AwaitingApproval)
+                    .Take(8)
+                    .ToList()
+            );
         }
     }
 }

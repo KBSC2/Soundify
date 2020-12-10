@@ -33,9 +33,12 @@ namespace Tests.Playlists
             testPlaylist2.ActivePlaylist = false;
             playlistController.UpdateItem(testPlaylist2);
 
-            var result = playlistController.GetActivePlaylists(1);
-            Assert.True(result.Contains(testPlaylist1));
-            Assert.False(result.Contains(testPlaylist2));
+            playlistController.GetActivePlaylists(1).ContinueWith(res =>
+            {
+                var result = res.Result;
+                Assert.True(result.Contains(testPlaylist1));
+                Assert.False(result.Contains(testPlaylist2));
+            });
         }
 
         //Everytime you test, remove the added items out of the database.

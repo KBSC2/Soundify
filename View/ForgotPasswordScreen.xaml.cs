@@ -37,17 +37,18 @@ namespace View
             var repeatPassword = this.RepeatPassword.Password;
 
             var controller = UserController.Create(new DatabaseContext());
-            var user = controller.GetUserFromEmailOrUsername(email);
-
-            if (token.Equals(user.Token))
+            controller.GetUserFromEmailOrUsername(email).ContinueWith(res =>
             {
+                var user = res.Result;
+                if (!token.Equals(user.Token)) return;
+
                 if (!newPassword.Equals(repeatPassword))
                 {
                     this.Error.Content = "Passwords don't match";
                     return;
                 }
 
-                if (PasswordController.CheckStrength(newPassword) < PasswordScore.Strong)
+                else if (PasswordController.CheckStrength(newPassword) < PasswordScore.Strong)
                 {
                     this.Error.Content = "Password is too weak";
                     return;
@@ -57,7 +58,7 @@ namespace View
                 controller.UpdateItem(user);
                 this.Close();
                 MainWindow.InstanceLoginScreen.Show();
-            }
+            });
         }
 
         private void Confirm_On_Enter_Key(object sender, KeyEventArgs e)

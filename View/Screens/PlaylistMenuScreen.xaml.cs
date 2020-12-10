@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -25,13 +26,14 @@ namespace View.Screens
 
             var playlist = new Playlist
             {
-                Name = $"Playlist {playlistController.GetActivePlaylists(UserController.CurrentUser.ID).Count + 1}",
+                Name =
+                    $"Playlist {PlaylistMenuDataContext.Instance.PlaylistsSource.Count + 1}",
                 CreationDate = DateTime.Now,
                 UserID = UserController.CurrentUser.ID
             };
 
             playlistController.CreateItem(playlist);
-            PlaylistMenuDataContext.Instance.OnPropertyChanged("");
+            PlaylistMenuDataContext.Instance.UpdatePlaylists();
         }
 
         private void PlaylistsRow_Click(object sender, MouseButtonEventArgs e)

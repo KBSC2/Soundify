@@ -20,12 +20,12 @@ namespace View.DataContexts
                 return instance;
             }
         }
-        public Role Role => RoleController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.RoleID);
+        public Role Role => RoleController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.RoleID).Result;
 
         public string CurrentUserName => UserController.CurrentUser.Username;
 
         public string HasArtistRequested => UserController.Create(new DatabaseContext())
-            .GetItem(UserController.CurrentUser.ID).RequestedArtist == true
+            .GetItem(UserController.CurrentUser.ID).Result.RequestedArtist
             ? "Hidden"
             : "Visible";
 

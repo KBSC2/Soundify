@@ -28,21 +28,17 @@ namespace View.Components
 
         public void UpdateButton()
         {
-            this.Opacity = controller.HasPermission(UserController.CurrentUser, this.Permission) ? 1f : 0.5f;
+            var x = controller.HasPermission(UserController.CurrentUser, this.Permission);
+            this.Opacity = x ? 1f : 0.5f;
+            
         }
 
         protected override void OnClick()
         {
             if (controller.HasPermission(UserController.CurrentUser, Permission))
-            {
                 base.OnClick();
-            }
-            else
-            {
-                // open not allowed screen thingy
-            } 
-                
+            //else
+                // open not allowed thingy
         }
-
     }
 }

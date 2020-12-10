@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Controller.Proxy;
 using Model.Annotations;
 using Model.Database.Contexts;
@@ -26,48 +27,50 @@ namespace Controller.DbControllers
             base.CreateItem(item);
         }
 
-        public virtual void DeactivatePlaylist(int playlistId)
+        public virtual async void DeactivatePlaylist(int playlistId)
         {
             DateTime dateTime = DateTime.Now;
-            var playlist = GetItem(playlistId);
+            var playlist = await GetItem(playlistId);
+
             playlist.DeleteDateTime = dateTime.AddDays(1);
             playlist.ActivePlaylist = false;
             UpdateItem(playlist);
         }
 
-        public virtual void DeletePlaylistOnDateStamp()
+        public virtual async void DeletePlaylistOnDateStamp()
         {
-            GetList().Where(p => p.ActivePlaylist == false && p.DeleteDateTime < DateTime.Now).
-                ToList().ForEach(p => DeleteItem(p.ID));
+            var list = await GetList();
+            list.Where(p => p.ActivePlaylist == false && p.DeleteDateTime < DateTime.Now)
+                .ToList().ForEach(p => DeleteItem(p.ID));
         }
 
-        public virtual List<Playlist> SearchPlayListOnString(List<string> searchTerms, int userId)
+        public virtual async Task<List<Playlist>> SearchPlayListOnString(List<string> searchTerms, int userId)
         {
-            return GetActivePlaylists()
-                .Where(playlist => searchTerms.Any(s => playlist.Name != null && playlist.Name.Contains(s)) ||
-                                   searchTerms.Any(
-                                       s => playlist.Description != null &&
-                                            playlist.Description.ToLower().Contains(s.ToLower())) ||
-                                   searchTerms.Any(s =>
-                                       playlist.Genre != null && playlist.Genre.ToLower().Contains(s.ToLower())))
+            var list = await GetActivePlaylists();
+            return list
+                .Where(playlist =>
+                    searchTerms.Any(s => playlist.Name != null && playlist.Name.Contains(s)) ||
+                    searchTerms.Any(
+                        s => playlist.Description != null &&
+                             playlist.Description.ToLower().Contains(s.ToLower())) ||
+                    searchTerms.Any(s =>
+                        playlist.Genre != null && playlist.Genre.ToLower().Contains(s.ToLower())))
                 .Take(8)
                 .ToList();
+
         }
 
-        public virtual List<Playlist> GetList(int userId)
+        public virtual async Task<List<Playlist>> GetActivePlaylists(int userId)
         {
-            return base.GetFilteredList(x => x.UserID == userId);
-        }
-
-        public virtual List<Playlist> GetActivePlaylists(int userId)
-        {
-            return GetList(userId).Where(x => x.ActivePlaylist).ToList();
+            var list = await GetActivePlaylists();
+            return list.Where(x => x.UserID == userId).ToList();
         }
 
 
-        public virtual List<Playlist> GetActivePlaylists()
+        public virtual async Task<List<Playlist>> GetActivePlaylists()
         {
-            return GetList().Where(x => x.ActivePlaylist).ToList();
+            var list = await GetList();
+            return list.Where(x => x.ActivePlaylist).ToList();
         }
     }
 }

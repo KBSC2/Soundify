@@ -29,36 +29,44 @@ namespace View
             var repeatPassword = this.RepeatPassword.Password;
 
             var controller = UserController.Create(new DatabaseContext());
-            var user = controller.GetUserFromEmailOrUsername(UserController.CurrentUser.Email);
-            var result = controller.UserLogin(user.Email, currentPassword);
-            switch (result)
+
+            controller.GetUserFromEmailOrUsername(UserController.CurrentUser.Email).ContinueWith(res =>
             {
-                case LoginResults.Success:
+                var user = res.Result;
+                controller.UserLogin(user.Email, currentPassword).ContinueWith(res2 =>
                 {
-                    if (!newPassword.Equals(repeatPassword))
+                    var result = res2.Result;
+                    switch (result)
                     {
-                        this.Error.Content = "Passwords don't match";
-                        return;
+                        case LoginResults.Success:
+                        {
+                            if (!newPassword.Equals(repeatPassword))
+                            {
+                                this.Error.Content = "Passwords don't match";
+                                return;
+                            }
+
+                            if (PasswordController.CheckStrength(newPassword) < PasswordScore.Strong)
+                            {
+                                this.Error.Content = "Password is too weak";
+                                return;
+                            }
+
+                            user.Password = PasswordController.EncryptPassword(newPassword);
+                            controller.UpdateItem(user);
+                            this.Close();
+                            break;
+                        }
+
+                        case LoginResults.PasswordIncorrect:
+                        {
+                            this.Error.Content = "Password incorrect";
+                            break;
+                        }
                     }
+                });
 
-                    if (PasswordController.CheckStrength(newPassword) < PasswordScore.Strong)
-                    {
-                        this.Error.Content = "Password is too weak";
-                        return;
-                    }
-
-                    user.Password = PasswordController.EncryptPassword(newPassword);
-                    controller.UpdateItem(user);
-                    this.Close();
-                    break;
-                }
-
-                case LoginResults.PasswordIncorrect:
-                {
-                    this.Error.Content = "Password incorrect";
-                    break;
-                }
-            }
+            });
         }
 
         private void Confirm_On_Enter_Key(object sender, KeyEventArgs e)

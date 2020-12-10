@@ -13,6 +13,7 @@ namespace Tests.Requests
     {
         private MockDatabaseContext context;
         private RequestController requestController;
+        private ArtistController artistController;
         private Request testRequest;
 
         [SetUp]
@@ -20,32 +21,29 @@ namespace Tests.Requests
         {
             context = new MockDatabaseContext();
             requestController = RequestController.Create(context);
+            artistController = ArtistController.Create(context);
             testRequest = new Request()
                 {ID = 1, UserID = 1, ArtistName = "TestArtist", ArtistReason = "Just because I'm testing"};
-            requestController.CreateItem(testRequest);
         }
 
         [Test]
         public void ApproveUserAsArtist()
         {
+            requestController.CreateItem(testRequest);
+                
             var requestScreen = new RequestScreen();
             requestScreen.ApproveUser(testRequest.ID, context);
 
-            Assert.False(requestController.GetList().Contains(testRequest));
+            requestController.GetList().ContinueWith(res =>
+                res.Result.Contains(testRequest)).ContinueWith(res =>
+                Assert.IsFalse(res.Result)
+            );
 
-            var artistId = ArtistController.Create(context).GetArtistIdFromUserId(testRequest.UserID);
 
-            Assert.True(artistId.HasValue);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            requestController.DeleteItem(testRequest.ID);
-
-            var artistId = ArtistController.Create(context).GetArtistIdFromUserId(testRequest.UserID);
-            if(artistId != null)
-                ArtistController.Create(context).DeleteItem((int)artistId);
+            artistController.GetArtistFromUserId(testRequest.UserID).ContinueWith(res =>
+            {
+                Assert.NotNull(res.Result);
+            });
         }
     }
 }

@@ -39,6 +39,16 @@ namespace Model.Database.Contexts
                 .Property(p => p.ActivePlaylist)
                 .HasDefaultValue(1);
 
+            modelBuilder.Entity<Song>()
+                .HasOne(p => p.Artist)
+                .WithMany(b => b.Songs)
+                .HasForeignKey(p => p.ArtistID);
+
+            modelBuilder.Entity<User>()
+                .HasOne(p => p.Role)
+                .WithMany(b => b.Users)
+                .HasForeignKey(p => p.RoleID);
+
             base.OnModelCreating(modelBuilder);
         }
     }

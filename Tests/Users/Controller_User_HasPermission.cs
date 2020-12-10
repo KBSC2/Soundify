@@ -14,11 +14,12 @@ namespace Tests.Users
     public class Controller_User_HasPermission
     {
         private UserController userController;
+        private MockDatabaseContext mock;
 
         [SetUp]
         public void SetUp()
         {
-            var mock = new MockDatabaseContext();
+            mock = new MockDatabaseContext();
             userController = UserController.Create(mock);
 
             userController.CreateItem(new User() {ID = 10, Email = "boe@gmail.com", RoleID = 3});
@@ -28,10 +29,8 @@ namespace Tests.Users
         [Test]
         public void User_HasPermission_UploadSong()
         {
-            UserController.CurrentUser = userController.GetItem(11);
-
+            UserController.CurrentUser = userController.GetItem(11).Result;
             Assert.IsNull(FileTransfer.Create(new MockDatabaseContext()).UploadFile("nog iets", "iets anders "));
-
         }
 
         [TestCase(10)]
@@ -39,24 +38,30 @@ namespace Tests.Users
         [TestCase(11, typeof(ArgumentOutOfRangeException))]
         public void User_HasPermission_CreatePlaylist(int userId, Type exception = null, int amountOfPlaylists = 1)
         {
-            var pc = PlaylistController.Create(new MockDatabaseContext());
+            var pc = PlaylistController.Create(mock);
             var startId = 98;
 
-            UserController.CurrentUser = userController.GetItem(userId);
-            for (int i = 0; i < amountOfPlaylists; i++)
+            userController.GetItem(userId).ContinueWith(res =>
             {
-                pc.CreateItem(new Playlist
+                UserController.CurrentUser = res.Result;
+
+                for (int i = 0; i < amountOfPlaylists; i++)
                 {
-                    Name = "2",
-                    UserID = UserController.CurrentUser.ID,
-                    ID = startId + i
-                });
-            }
+                    pc.CreateItem(new Playlist
+                    {
+                        Name = "2",
+                        UserID = UserController.CurrentUser.ID,
+                        ID = startId + i
+                    });
+                }
+
+                if (exception != null)
+                    Assert.Throws(exception, () => pc.GetItem(startId));
+                else
+                    Assert.IsNotNull(pc.GetItem(startId + (amountOfPlaylists - 1)));
+            });
+
             
-            if (exception != null)
-                Assert.Throws(exception, () => pc.GetItem(startId));
-            else
-                Assert.IsNotNull(pc.GetItem(startId + (amountOfPlaylists -1)));
         }
     }
 }

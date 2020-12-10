@@ -26,11 +26,11 @@ namespace View.DataContexts
 
         public List<string> SearchTerms { get; set; } = new List<string>();
         
-        public List<SongInfo> SearchSongs => SongInfo.ConvertSongListToSongInfo(SongController.Create(new DatabaseContext()).SearchSongsOnString(SearchTerms));
+        public List<SongInfo> SearchSongs => SongInfo.ConvertSongListToSongInfo(SongController.Create(new DatabaseContext()).SearchSongsOnString(SearchTerms).Result);
         
-        public List<Playlist> SearchPlaylists => PlaylistController.Create(new DatabaseContext()).SearchPlayListOnString(SearchTerms, UserController.CurrentUser.ID);
+        public List<Playlist> SearchPlaylists => PlaylistController.Create(new DatabaseContext()).SearchPlayListOnString(SearchTerms, UserController.CurrentUser.ID).Result;
 
-        public List<Playlist> AllPlaylists => PlaylistController.Create(new DatabaseContext()).GetActivePlaylists(UserController.CurrentUser.ID);
+        public List<Playlist> AllPlaylists => PlaylistController.Create(new DatabaseContext()).GetActivePlaylists(UserController.CurrentUser.ID).Result;
 
         [NotifyPropertyChangedInvocator]
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)

@@ -23,9 +23,9 @@ namespace Tests.Playlists
         [SetUp]
         public void SetUp()
         {
-            song = new Song() { Duration = 60, Artist = "Rick Astley", Name = "Never gonna give you up", Path = "../Dit/is/een/path" };
-            song2 = new Song() { Duration = 60, Artist = "PSY", Name = "Gangnam Style", Path = "../Dit/is/een/path", WrittenBy = "Park Jae-Sang, Yoo Gun Hyung", ProducedBy = "Park Jae-Sang, Yoo Gun Hyung", Description = "PSY - ‘I LUV IT’ M/V @ https://youtu.be/Xvjnoagk6GU PSY - ‘New Face’ M / V @https://youtu.be/OwJPPaEyqhI PSY - 8TH ALBUM '4X2=8' on iTunes @ https://smarturl.it/PSY_8thAlbum PSY - GANGNAM STYLE(강남스타일) on iTunes @ http://smarturl.it/PsyGangnam #PSY #싸이 #GANGNAMSTYLE #강남스타일"};
-            playlist = new Playlist() {Name = "TESTPLAYLIST", CreationDate = DateTime.Now};
+            song =  new Song() { ID = 10, Duration = 60, ArtistID = 1, Name = "Never gonna give you up", Path = "../Dit/is/een/path" };
+            song2 = new Song() { ID = 11, Duration = 60, ArtistID = 1, Name = "Gangnam Style", Path = "../Dit/is/een/path", WrittenBy = "Park Jae-Sang, Yoo Gun Hyung", ProducedBy = "Park Jae-Sang, Yoo Gun Hyung", Description = "PSY - ‘I LUV IT’ M/V @ https://youtu.be/Xvjnoagk6GU PSY - ‘New Face’ M / V @https://youtu.be/OwJPPaEyqhI PSY - 8TH ALBUM '4X2=8' on iTunes @ https://smarturl.it/PSY_8thAlbum PSY - GANGNAM STYLE(강남스타일) on iTunes @ http://smarturl.it/PsyGangnam #PSY #싸이 #GANGNAMSTYLE #강남스타일"};
+            playlist = new Playlist() { ID = 10, Name = "TESTPLAYLIST", CreationDate = DateTime.Now};
             var context = new MockDatabaseContext();
             
             songController = SongController.Create(context);
@@ -45,16 +45,19 @@ namespace Tests.Playlists
             var lastSongId = song.ID;
             var playlistId = playlist.ID;
 
-            var existsInPlaylist = playlistSongController.RowExists(lastSongId, playlistId);
-            Assert.IsTrue(existsInPlaylist);
+            playlistSongController.RowExists(lastSongId, playlistId).ContinueWith(res =>
+                Assert.IsTrue(res.Result)
+            );
+            
 
             //After adding, remove it.
             playlistSongController.RemoveFromPlaylist(song.ID, playlist.ID);
 
             //Remove the added song to the playlist at the end of the test.
             //Extra check to see whether the playlist is removed at the end.
-            existsInPlaylist = playlistSongController.RowExists(lastSongId, playlistId);
-            Assert.IsFalse(existsInPlaylist);
+            playlistSongController.RowExists(lastSongId, playlistId).ContinueWith(res =>
+                Assert.IsFalse(res.Result)
+            );
         }
 
         [Test]
@@ -66,20 +69,24 @@ namespace Tests.Playlists
             var playlistId = playlist.ID;
 
             //Before adding
-            var existsInPlaylist = playlistSongController.RowExists(songId, playlistId);
-            Assert.IsFalse(existsInPlaylist);
+            playlistSongController.RowExists(songId, playlistId).ContinueWith(res => 
+                Assert.IsFalse(res.Result)
+            );
+            
 
             playlistSongController.AddSongToPlaylist(songId, playlistId);
 
             //After adding
-            existsInPlaylist = playlistSongController.RowExists(songId, playlistId);
-            Assert.IsTrue(existsInPlaylist);
+            playlistSongController.RowExists(songId, playlistId).ContinueWith(res =>
+                Assert.IsTrue(res.Result)
+            );
 
             playlistSongController.RemoveFromPlaylist(songId, playlistId);
 
             //After removing
-            existsInPlaylist = playlistSongController.RowExists(songId, playlistId);
-            Assert.IsFalse(existsInPlaylist);
+            playlistSongController.RowExists(songId, playlistId).ContinueWith(res =>
+                Assert.IsFalse(res.Result)
+            );
         }
 
         [Test]

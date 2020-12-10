@@ -22,23 +22,23 @@ namespace Tests.Requests
             requestController = RequestController.Create(context);
             testRequest = new Request()
                 { ID = 1, UserID = 1, ArtistName = "TestArtist", ArtistReason = "Just because I'm testing" };
-            requestController.CreateItem(testRequest);
         }
 
         [Test]
         public void DeclineUserAsArtist()
         {
+            requestController.CreateItem(testRequest);
+
             var requestScreen = new RequestScreen();
             requestScreen.DeclineUser(testRequest.ID, context);
 
-            Assert.False(RequestController.Create(context).GetList().Contains(testRequest));
-            Assert.False(UserController.Create(context).GetItem(testRequest.UserID).RequestedArtist);
-        }
+            requestController.GetList().ContinueWith(res =>
+                Assert.IsFalse(res.Result.Contains(testRequest))
+            );
 
-        [TearDown]
-        public void TearDown()
-        {
-            requestController.DeleteItem(testRequest.ID);
+            UserController.Create(context).GetItem(testRequest.UserID).ContinueWith(res =>
+                Assert.IsFalse(res.Result.RequestedArtist)
+            );
         }
     }
 }

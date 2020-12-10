@@ -23,20 +23,25 @@ namespace View.DataContexts
         public bool IsSongSelected { get; set; }
 
         public string ArtistName => ArtistController.Create(new DatabaseContext())
-            .GetList().FirstOrDefault(a => a.UserID == UserController.CurrentUser.ID)
-            ?.ArtistName;
+            .GetList().ContinueWith(res =>
+                res.Result.FirstOrDefault(a => a.UserID == UserController.CurrentUser.ID)?.ArtistName).Result;
 
-        public List<SongInfo> UploadedSongs => SongInfo.ConvertSongListToSongInfo(SongController.Create(new DatabaseContext()).GetList()
-            .Where(s => s.Artist == ArtistController.Create(new DatabaseContext()).GetList()
-                .FirstOrDefault(a => a.UserID == UserController.CurrentUser.ID)?.ArtistName).ToList());
 
+        public List<SongInfo> UploadedSongs => new List<SongInfo>();
+            /*SongInfo.ConvertSongListToSongInfo(ArtistController.Create(new DatabaseContext())
+            .GetSongsForArtist(UserController.CurrentUser.ID).Result);*/
 
         public bool ArtistHasSongPending { get; set; } 
 
         public ArtistDataContext()
         {
-            ArtistHasSongPending = SongController.Create(new DatabaseContext())
-                .GetList().Where(s => s.Artist == ArtistName && s.Status == SongStatus.AwaitingApproval).ToList().Count > 0;
+            /*var list = await ConfiguredTaskAwaitable ArtistController.Create(new DatabaseContext())
+                .GetSongsForArtist(UserController.CurrentUser.ID);
+
+
+            ArtistHasSongPending = ArtistController.Create(new DatabaseContext())
+                .GetSongsForArtist(UserController.CurrentUser.ID)
+                .ContinueWith(res => res.Result.Any(s => s.Status == SongStatus.AwaitingApproval)).Result;*/
 
             StatusMessage = ArtistHasSongPending ? "Awaiting Approval" : "Waiting for song";
 

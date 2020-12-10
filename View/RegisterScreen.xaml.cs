@@ -28,40 +28,42 @@ namespace View
             var passwordRepeat = this.PasswordConfirmRegister.Password;
             var token = Guid.NewGuid().ToString();
 
-            var result =
-                UserController.Create(new DatabaseContext()).CreateAccount(new User() {Email = email, Username = username, Token = token },
-                    password, passwordRepeat);
-
-            switch(result)
+            UserController.Create(new DatabaseContext()).CreateAccount(new User() {Email = email, Username = username, Token = token },
+                    password, passwordRepeat)
+                .ContinueWith(res =>
             {
-                case RegistrationResults.Succeeded:
+                var result = res.Result;
+                switch (result)
                 {
-                    var emailVerificationScreen = new EmailVerificationScreen(token, email);
-                    emailVerificationScreen.Show();
-                    this.Close();
-                    break;
+                    case RegistrationResults.Succeeded:
+                    {
+                        var emailVerificationScreen = new EmailVerificationScreen(token, email);
+                        emailVerificationScreen.Show();
+                        this.Close();
+                        break;
+                    }
+                    case RegistrationResults.EmailTaken:
+                    {
+                        this.Error.Content = "Email has already been taken";
+                        this.EmailRegister.Text = "";
+                        break;
+                    }
+                    case RegistrationResults.PasswordNoMatch:
+                    {
+                        this.Error.Content = "Passwords do not match";
+                        this.PasswordRegister.Password = "";
+                        this.PasswordConfirmRegister.Password = "";
+                        break;
+                    }
+                    case RegistrationResults.PasswordNotStrongEnough:
+                    {
+                        this.Error.Content = $"Password is {PasswordController.CheckStrength(password).ToString()}";
+                        this.PasswordRegister.Password = "";
+                        this.PasswordConfirmRegister.Password = "";
+                        break;
+                    }
                 }
-                case RegistrationResults.EmailTaken:
-                {
-                    this.Error.Content = "Email has already been taken";
-                    this.EmailRegister.Text = "";
-                    break;
-                }
-                case RegistrationResults.PasswordNoMatch:
-                {
-                    this.Error.Content = "Passwords do not match";
-                    this.PasswordRegister.Password = "";
-                    this.PasswordConfirmRegister.Password = "";
-                    break;
-                }
-                case RegistrationResults.PasswordNotStrongEnough:
-                {
-                    this.Error.Content = $"Password is {PasswordController.CheckStrength(password).ToString()}";
-                    this.PasswordRegister.Password = "";
-                    this.PasswordConfirmRegister.Password = "";
-                    break;
-                }
-            }
+            });
         }
 
         private void Register_On_Enter_Key(object sender, KeyEventArgs e)

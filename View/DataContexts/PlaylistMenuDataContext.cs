@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Controller.DbControllers;
 using Model.Annotations;
 using Model.Database.Contexts;
@@ -12,18 +13,33 @@ namespace View.DataContexts
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private static PlaylistMenuDataContext _instance;
+        private static PlaylistMenuDataContext instance;
         public static PlaylistMenuDataContext Instance
         {
             get
             {
-                if (_instance == null)
-                    _instance = new PlaylistMenuDataContext();
-                return _instance;
+                if (instance == null)
+                    instance = new PlaylistMenuDataContext();
+                return instance;
             }
         }
 
-        public List<Playlist> PlaylistsSource => PlaylistController.Create(new DatabaseContext()).GetActivePlaylists(UserController.CurrentUser.ID);
+        public List<Playlist> PlaylistsSource {get; set; } = new List<Playlist>();
+
+        public PlaylistMenuDataContext()
+        {
+            UpdatePlaylists();
+        }
+
+        public void UpdatePlaylists()
+        {
+            PlaylistController.Create(new DatabaseContext()).GetActivePlaylists(UserController.CurrentUser.ID).ContinueWith(res =>
+            {
+                PlaylistsSource = res.Result;
+                OnPropertyChanged("");
+            });
+        }
+
 
         [NotifyPropertyChangedInvocator]
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
