@@ -32,9 +32,9 @@
             <Slider x:Name="Duration" Margin="-6,-8,-4,64" IsMoveToPointEnabled="True" Foreground="White" Minimum="0.00" Maximum="{Binding TotalTime, Mode=OneWay}" Value="{Binding CurrentTime, Mode=OneWay}" ValueChanged="Duration_ValueChanged"/>
         </Grid>
         <Grid Margin="89,0,0,0" Background="{DynamicResource Background2Color}" Height="54" VerticalAlignment="Top" ShowGridLines="False">
-            <TextBox Style="{StaticResource WatermarkTextbox }" HorizontalAlignment="Center" Tag="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="192" Height="25" KeyDown="SetSearchTerms" BorderBrush="{x:Null}" Background="White"/>
+	        <Label Content="{Binding DisplayName}" Foreground="{Binding CurrentUserRole.ColorCode, Converter={StaticResource colorConverter}}" Margin="10,14,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Width="auto"/>
+	        <TextBox Style="{StaticResource WatermarkTextbox }" HorizontalAlignment="Center" Tag="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="192" Height="25" KeyDown="SetSearchTerms" BorderBrush="{x:Null}" Background="White"/>
             <components:MenuButton MaxHeight="34" MaxWidth="70" ScreenName="SettingScreen"         Content="Settings"        Margin="0,0,10,0" VerticalAlignment="Center" Height="30" HorizontalAlignment="Right" Width="78"/>
-            <Label Content="{Binding CurrentUser.Username}" Foreground="{Binding CurrentUserRole.ColorCode, Converter={StaticResource colorConverter}}" Margin="715,14,301,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Width="175"/>
         </Grid>
         <Grid Background="{DynamicResource BackgroundColor}" HorizontalAlignment="Left" Width="92" ShowGridLines="False">
             <Image Margin="26,6,26,0" Stretch="Fill" Source="Assets/soundifySmall.png" Width="40" Height="40" MaxHeight="40" VerticalAlignment="Top"/>
@@ -57,7 +57,7 @@
 
             <Image Margin="6,0,66,10" Stretch="Fill" Source="Assets/soundify.png" Height="20" VerticalAlignment="Bottom"/>
             <!-- <Label x:Name="MoneyAdded" Content="+1" HorizontalAlignment="Center" Margin="0,0,0,52" Foreground="White" FontSize="14" Opacity="0.5" Height="29" VerticalAlignment="Bottom"/> -->
-            <Label x:Name="Money" Content="{Binding CurrentUserCoins}" HorizontalAlignment="Left" Margin="26,0,0,5" Width="67" Foreground="White" FontSize="16" Height="30" VerticalAlignment="Bottom"/> 
+            <Label x:Name="Money" Content="{Binding CurrentUserCoins}" HorizontalAlignment="Left" Margin="26,0,0,5" Width="67" Foreground="White" FontSize="16" Height="30" VerticalAlignment="Bottom"/>
             <components:MenuButton ScreenName="AdminScreen"    Content="Admin"          Margin="0,0,0,126"  HorizontalAlignment="Center" Width="92" MaxHeight="30" Height="30" VerticalAlignment="Bottom" >
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">

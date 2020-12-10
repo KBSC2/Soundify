@@ -16,6 +16,14 @@ namespace Controller.DbControllers
         private RoleController RoleController { get; set; }
         private PermissionController PermissionController { get; set; }
 
+        /**
+         * Creates a instance of this controller
+         * It adds the controller to the proxy
+         *
+         * @param IDatabaseContext Instance of a database session
+         *
+         * @returns RolePermissionController : The proxy with a instance of this controller included
+         */
         public static RolePermissionsController Create(IDatabaseContext context)
         {
             return ProxyController.AddToProxy<RolePermissionsController>(new object[] { context }, context);
@@ -33,9 +41,9 @@ namespace Controller.DbControllers
         /**
          * Get all permissions assigned to the role id's
          *
-         * @param roleIDs list of role id's
+         * @param roleIDs List of role id's
          *
-         * Return a list of all permissions
+         * @return List<RolePermission> : A list of all permissions
          */
         public List<RolePermissions> GetPermissionsFromRoles(int[] roleIDs)
         {
