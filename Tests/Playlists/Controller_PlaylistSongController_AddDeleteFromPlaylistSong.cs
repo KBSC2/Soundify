@@ -3,6 +3,8 @@ using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using NUnit.Framework;
+using View;
+using View.Screens;
 
 /*It's important to notice that the database should stay unchanged after running the tests.
  At the start of the test, the database should be in the same state as at the end of the test. */
@@ -88,6 +90,20 @@ namespace Tests.Playlists
             Assert.AreEqual("Park Jae-Sang, Yoo Gun Hyung", song2.WrittenBy);
             Assert.AreEqual("Park Jae-Sang, Yoo Gun Hyung", song2.ProducedBy);
             Assert.AreEqual("PSY - ‘I LUV IT’ M/V @ https://youtu.be/Xvjnoagk6GU PSY - ‘New Face’ M / V @https://youtu.be/OwJPPaEyqhI PSY - 8TH ALBUM '4X2=8' on iTunes @ https://smarturl.it/PSY_8thAlbum PSY - GANGNAM STYLE(강남스타일) on iTunes @ http://smarturl.it/PsyGangnam #PSY #싸이 #GANGNAMSTYLE #강남스타일", song2.Description);
+        }
+
+        [Test]
+        public void PlaylistSongController_MoveSongUpDownInPlaylist()
+        {
+            playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
+            playlistSongController.AddSongToPlaylist(song2.ID, playlist.ID);
+            int indexSong1 = playlistSongController.GetPlaylistSong(playlist.ID, song.ID).Index;
+            int indexSong2 = playlistSongController.GetPlaylistSong(playlist.ID, song2.ID).Index;
+
+            playlistController.SwapSongs(indexSong1, indexSong2, playlist.ID);
+
+            Assert.AreEqual(playlistSongController.GetPlaylistSong(playlist.ID, song.ID).Index, indexSong2);
+            Assert.AreEqual(playlistSongController.GetPlaylistSong(playlist.ID, song2.ID).Index, indexSong1);
         }
 
         //Everytime you test, remove the added items out of the database.
