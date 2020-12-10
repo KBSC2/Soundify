@@ -10,15 +10,17 @@ namespace Tests.Users
     public class Controller_UserController_UserLogin
     {
         private UserController controller;
+        private User user1;
+        private User user2;
 
         [SetUp]
         public void SetUp()
         {
             controller = UserController.Create(new MockDatabaseContext());
-            controller.CreateAccount(new User() { ID = 10, Email = "test@gmail.com", Username = "test", IsActive = true }, 
-                "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2");
-            controller.CreateAccount(new User() { ID = 11, Email = "test2@gmail.com", Username = "test2", IsActive = false }, 
-                "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2");
+            user1 = new User() { ID = 10, Email = "test@gmail.com", Username = "test", IsActive = true };
+            user2 = new User() { ID = 11, Email = "test2@gmail.com", Username = "test2", IsActive = false };
+            controller.CreateAccount(user1, "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2");
+            controller.CreateAccount(user2, "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2");
         }
 
         [TestCase("test@gmail.com", "Sterk_W@chtw00rd2", ExpectedResult = LoginResults.Success)]        // Successful account login
@@ -31,12 +33,17 @@ namespace Tests.Users
             var result = controller.UserLogin(emailOrUsername, password);
             return result;
         }
-
-        [TearDown]
-        public void TearDown()
+        [Test]
+        public void UserController_CurrentUser_LoggedIn()
         {
-            controller.DeleteItem(11);
-            controller.DeleteItem(12);
+            var email = "test@gmail.com";
+            var password = "Sterk_W@chtw00rd2";
+            var result = controller.UserLogin(email, password);
+            if (result == LoginResults.Success)
+            {
+                UserController.CurrentUser = controller.GetUserFromEmailOrUsername(email);
+            }
+            Assert.AreEqual(UserController.CurrentUser, user1);
         }
     }
 }

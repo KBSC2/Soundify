@@ -42,7 +42,7 @@ namespace Controller.DbControllers
          */
         public virtual LoginResults UserLogin(string emailOrUsername, string password)
         {
-            var user = emailOrUsername == "" ? null : GetUserFromEmailOrUsername(emailOrUsername);
+            var user = GetUserFromEmailOrUsername(emailOrUsername);
             if (user == null)
                 return LoginResults.EmailNotFound;
 
@@ -76,6 +76,9 @@ namespace Controller.DbControllers
 
             if (GetUserFromEmailOrUsername(user.Email) != null)
                 return RegistrationResults.EmailTaken;
+
+            if (GetUserFromEmailOrUsername(user.Username) != null)
+                return RegistrationResults.UsernameTaken;
 
             if (!password.Equals(passwordRepeat))
                 return RegistrationResults.PasswordNoMatch;

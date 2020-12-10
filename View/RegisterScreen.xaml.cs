@@ -53,6 +53,12 @@ namespace View
                     this.Close();
                     break;
                 }
+                case RegistrationResults.UsernameTaken:
+                {
+                    this.Error.Content = "Username has already been taken";
+                    this.EmailRegister.Text = "";
+                    break;
+                    }
                 case RegistrationResults.EmailTaken:
                 {
                     this.Error.Content = "Email has already been taken";
