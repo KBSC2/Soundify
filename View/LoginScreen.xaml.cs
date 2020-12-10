@@ -27,6 +27,7 @@ namespace View
 
                     UsernameLogin.Text = split[1];
                     PasswordLogin.Password = split[0];
+                    RememberData.IsChecked = true;
                 }
             }
         }

@@ -15,9 +15,9 @@ namespace Tests.Users
         public void SetUp()
         {
             controller = UserController.Create(new MockDatabaseContext());
-            controller.CreateAccount(new User() { ID = 10, Email = "test@gmail.com", Username = "test", IsActive = true }, 
+            controller.CreateAccount(new User() { ID = 10, Email = "test@gmail.com", Username = "test", IsActive = true },
                 "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2");
-            controller.CreateAccount(new User() { ID = 11, Email = "test2@gmail.com", Username = "test2", IsActive = false }, 
+            controller.CreateAccount(new User() { ID = 11, Email = "test2@gmail.com", Username = "test2", IsActive = false },
                 "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2");
         }
 
@@ -32,11 +32,14 @@ namespace Tests.Users
             return result;
         }
 
-        [TearDown]
-        public void TearDown()
+        [Test]
+        public void UserController_CurrentUser_LoggedIn()
         {
-            controller.DeleteItem(11);
-            controller.DeleteItem(12);
+            var email = "test@gmail.com";
+            var result = controller.UserLogin(email, "Sterk_W@chtw00rd2");
+            if (result == LoginResults.Success) 
+                UserController.CurrentUser = controller.GetUserFromEmailOrUsername(email);
+            Assert.AreEqual(UserController.CurrentUser, controller.GetUserFromEmailOrUsername(email));
         }
     }
 }
