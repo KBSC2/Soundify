@@ -174,6 +174,8 @@ namespace Controller
 
             if(playlist != null)
             {
+                var songs = PlaylistSongController.Create(Context).GetSongsFromPlaylist(playlist.ID);
+
                 if (Looping)
                 {
                     if (Shuffling)
@@ -187,17 +189,16 @@ namespace Controller
                 } 
                 else
                 {
-                    if (Shuffling)
-                    {
-                        var queueFromCurrentSongIndex = Queue.GetRange(CurrentSongIndex + 1, Queue.Count - (CurrentSongIndex + 1));
-                        queueFromCurrentSongIndex = queueFromCurrentSongIndex.OrderBy(i => Guid.NewGuid()).ToList();
-                        Queue.RemoveRange(CurrentSongIndex + 1, Queue.Count - (CurrentSongIndex + 1));
-                        Queue.AddRange(queueFromCurrentSongIndex);
-                    } 
-                    else
-                    {
+                    var queueFromCurrentSongIndex = Queue.GetRange(CurrentSongIndex + 1, Queue.Count - (CurrentSongIndex + 1));
+                    NextInQueue.ForEach(x => queueFromCurrentSongIndex.Remove(x));
 
-                    }
+                    if (Shuffling)
+                        queueFromCurrentSongIndex = queueFromCurrentSongIndex.OrderBy(i => Guid.NewGuid()).ToList();
+                    else
+                        queueFromCurrentSongIndex = songs.Where(x => queueFromCurrentSongIndex.Contains(x.Song)).Select(x => x.Song).ToList();
+
+                    Queue.RemoveRange(CurrentSongIndex + 1 + NextInQueue.Count, Queue.Count - (CurrentSongIndex + 1 + NextInQueue.Count));
+                    Queue.AddRange(queueFromCurrentSongIndex);
                 }
             }
         }
