@@ -60,7 +60,7 @@ namespace View
                 case RegistrationResults.UsernameTaken:
                 {
                     this.Error.Content = "Username has already been taken";
-                    this.EmailRegister.Text = "";
+                    this.UsernameRegister.Text = "";
                     break;
                     }
                 case RegistrationResults.EmailTaken:
