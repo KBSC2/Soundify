@@ -42,12 +42,13 @@ namespace View
 
             var request = new Request()
             {
-                ArtistName = artistName, 
-                ArtistReason = artistReason, 
+                ArtistName = artistName,
+                ArtistReason = artistReason,
                 UserID = UserController.CurrentUser.ID,
                 RequestType = RequestType.Artist,
                 SongID = null
             };
+
 
             var userController = UserController.Create(new DatabaseContext());
             var user = userController.GetItem(UserController.CurrentUser.ID);
@@ -59,8 +60,10 @@ namespace View
 
             this.Close();
 
+            MessageBox.Show("Request Artist is confirmed!");
             SettingsDataContext.Instance.OnPropertyChanged("");
         }
+
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
