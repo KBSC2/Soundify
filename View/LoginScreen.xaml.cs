@@ -48,6 +48,7 @@ namespace View
                     main.Focus();
                     this.Hide();
                     File.Create(Path.GetTempPath() + "Soundify/settings/loginInfo").Close();
+                    MainWindow.InstanceMainWindow.UpdateButtons();
 
                     if (RememberData.IsChecked ?? false)
                     {
