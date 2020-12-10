@@ -6,12 +6,13 @@
     <DataTemplate x:Key="SongList">
         <DataTemplate.Resources>
             <components:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-           
+            <dataContext:SongListDataContext x:Key="SongListDataContext"/>
         </DataTemplate.Resources>
         <ListView x:Name="songlistview"
                   Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}"
                   ItemsSource="{Binding SongInfoList}" FontSize="16"
-                  DataContext="{x:Static dataContext:SongListDataContext.Instance}">
+                  DataContext="{x:Static dataContext:SongListDataContext.Instance}"
+                  Tag="{x:Static dataContext:SongListDataContext.Instance}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Title" Width="200" DisplayMemberBinding="{Binding Song.Name}" />
@@ -28,9 +29,9 @@
                     <MenuItem Header="Song information" Click="ListViewItem_RightClickSongInfo"
                               CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
                     <MenuItem Name="DeleteSongFromPlaylist" Header="Remove song"
+                              DataContext="{DynamicResource SongListDataContext}"
                               Click="ListViewItem_RightClick_DeleteSong"
-                              Visibility="{Binding IsPlaylistScreen,   Converter={StaticResource BooleanToVisibilityConverter}}"
-                              CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
+                              Visibility="{Binding Path=IsPlaylistScreen, Converter={StaticResource BooleanToVisibilityConverter}}" />
                     <MenuItem Header="Add to Playlist"  
                               CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" >
                         <MenuItem.ItemsSource>
@@ -46,19 +47,6 @@
                             </Style>
                         </MenuItem.ItemContainerStyle>
                     </MenuItem>
-                    <!--ContextMenu.Style>
-                        <Style TargetType="{x:Type ContextMenu}">
-                            <Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding IsPlaylistScreen}" Value="True"/>
-                                        <Condition Binding="{Binding ElementName=DeleteSongFromPlaylist}"/>
-                                    </MultiDataTrigger.Conditions>
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </MultiDataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </-->
                 </ContextMenu>
             </ListView.Resources>
             <ListView.ItemContainerStyle>

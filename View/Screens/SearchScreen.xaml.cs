@@ -19,21 +19,5 @@ namespace View.Screens
 
         }
 
-        
-        private void MenuItem_LeftClick(object sender, MouseButtonEventArgs e)
-        {
-            var playlist = ((Playlist)((MenuItem)sender).DataContext);
-            var song = ((SongInfo)((MenuItem)((MenuItem)sender).Tag).DataContext).Song;
-
-            var playlistSongController = PlaylistSongController.Create(new DatabaseContext());
-            playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
-        }
-
-        public void ListViewItem_RightClickAddQueue(object sender, RoutedEventArgs e)
-        {
-            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
-
-            AudioPlayer.Instance.AddSongToSongQueue(song);
-        }
     }
 }
