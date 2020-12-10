@@ -26,7 +26,6 @@
                     <MenuItem Header="Add song to queue" Click="ListViewItem_RightClickAddQueue"
                               CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
                     <MenuItem Header="Song information" Click="ListViewItem_RightClickSongInfo"
-                              Visibility="{PriorityBinding Bindings= {Binding IsPlaylistScreen, Converter={StaticResource BooleanToVisibilityConverter}}}"
                               CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
                     <MenuItem Name="DeleteSongFromPlaylist" Header="Remove song"
                               Click="ListViewItem_RightClick_DeleteSong"
