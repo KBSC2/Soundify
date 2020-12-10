@@ -189,6 +189,7 @@ namespace Controller
                 } 
                 else
                 {
+                    Queue = Queue.GroupBy(p => p.ID).Select(g => g.First()).ToList();   
                     var queueFromCurrentSongIndex = Queue.GetRange(CurrentSongIndex + 1, Queue.Count - (CurrentSongIndex + 1));
                     NextInQueue.ForEach(x => queueFromCurrentSongIndex.Remove(x));
 
