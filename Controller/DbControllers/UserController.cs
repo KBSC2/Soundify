@@ -77,8 +77,11 @@ namespace Controller.DbControllers
             if (user.Username == "")
                 return RegistrationResults.NoName;
 
-            if (user.Email == "" || !user.Email.Contains("@"))
+            if (user.Email == "")
                 return RegistrationResults.NoEmail;
+
+            if (!user.Email.Contains("@"))
+                return RegistrationResults.InvalidEmail;
 
             if (GetUserFromEmailOrUsername(user.Email) != null)
                 return RegistrationResults.EmailTaken;
