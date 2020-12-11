@@ -46,8 +46,7 @@ namespace View.DataContexts
                     break;
                 case ScreenNames.ArtistScreen:
                     songlist = SongController.Create(new DatabaseContext()).GetList()
-                        .Where(s => s.Artist == ArtistController.Create(new DatabaseContext()).GetList()
-                            .FirstOrDefault(a => a.UserID == UserController.CurrentUser.ID)?.ArtistName).ToList();
+                        .Where(s => s.Artist == ArtistController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.ID).ID).ToList();
                     break;
             }
 

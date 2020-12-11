@@ -10,6 +10,9 @@ namespace Controller.DbControllers
 {
     public class SongController : DbController<Song>
     {
+
+        private ArtistController artistController { get; set; }
+
         /**
          * Creates a instance of this controller
          * It adds the controller to the proxy
@@ -25,6 +28,7 @@ namespace Controller.DbControllers
 
         protected SongController(IDatabaseContext context) : base(context, context.Songs)
         {
+            artistController = ArtistController.Create(Context);
         }
 
         /**
@@ -37,7 +41,7 @@ namespace Controller.DbControllers
          */
         public void UploadSong(Song song, string localpath)
         {
-            string remotePath =  FileTransfer.Create(Context).UploadFile(localpath, "songs/" + Path.GetFileName(localpath));
+            string remotePath = FileTransfer.Create(Context).UploadFile(localpath, "songs/" + Path.GetFileName(localpath));
             song.Path = remotePath;
             CreateItem(song);
         }
@@ -53,10 +57,11 @@ namespace Controller.DbControllers
         {
             return GetList()
                 .Where(song => (searchterms.Any(s => song.Name != null && song.Name.ToLower().Contains(s.ToLower())) ||
-                               searchterms.Any(s => song.Artist != null && song.Artist.ToLower().Contains(s.ToLower()))) &&
+                                searchterms.Any(s => artistController.GetItem(song.Artist).ArtistName.ToLower().Contains(s.ToLower()))) &&
                                song.Status != SongStatus.AwaitingApproval)
                 .Take(8)
                 .ToList();
         }
+
     }
 }
