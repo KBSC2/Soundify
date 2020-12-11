@@ -37,7 +37,7 @@ namespace View
             var artistReason = this.ArtistReason.Text;
 
             var emailController = new EmailController();
-            var email =  new MailArtistVerification(new MailAddress("info.soundify@gmail.com"), artistName, artistReason);
+            var email = new MailArtistVerification(new MailAddress("info.soundify@gmail.com"), artistName, artistReason);
 
             switch (email)
             {
@@ -64,7 +64,11 @@ namespace View
                         createRequest.CreateItem(request);
 
                         this.Close();
-                    
+
+
+                        MessageBox.Show("Request Artist is confirmed!");
+                        SettingsDataContext.Instance.OnPropertyChanged("");
+
                         this.ArtistName.Text = "";
                         this.ArtistReason.Text = "";
                         break;
@@ -79,15 +83,13 @@ namespace View
                         this.Error.Content = "You haven't given a reason to become an artist";
                         break;
                     }
-
-                    MessageBox.Show("Request Artist is confirmed!");
-            SettingsDataContext.Instance.OnPropertyChanged("");
+            }
         }
-
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
     }
+}
 }
