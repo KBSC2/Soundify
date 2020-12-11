@@ -31,7 +31,6 @@ namespace View.Screens
         {
             PlaylistDataContext.Instance.OnPropertyChanged("");
         }
-
         private void Play_Playlist_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Instance.PlayPlaylist(MainWindow.CurrentPlayList);
@@ -77,6 +76,5 @@ namespace View.Screens
             playlistSongController.SwapSongs(selectedSongInfo.Index, selectedSongInfo.Index + 1, MainWindow.CurrentPlayList.ID);
             PlaylistDataContext.Instance.OnPropertyChanged("");
         }
-
     }
 }

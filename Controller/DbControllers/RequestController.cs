@@ -39,5 +39,38 @@ namespace Controller.DbControllers
         {
             return GetFilteredList(r => r.RequestType == RequestType.Artist);
         }
+
+        /**
+         * Approves a request from a user to become an artist
+         *
+         * @param requestID The ID of the request in question
+         */
+        public void ApproveUser(int requestID)
+        {
+            var request = GetItem(requestID);
+
+            ArtistController.Create(Context).MakeArtist(request);
+
+            DeleteItem(requestID);
+        }
+
+
+        /**
+         * Declines the request from a user to become an artist
+         *
+         * @param requestID The ID of the request in question
+         */
+        public void DeclineUser(int requestID)
+        {
+            var request = GetItem(requestID);
+            var userID = request.UserID;
+
+            var userController = UserController.Create(Context);
+            var user = userController.GetItem(userID);
+            user.RequestedArtist = false;
+            userController.UpdateItem(user);
+
+            DeleteItem(requestID);
+        }
     }
 }

@@ -19,7 +19,9 @@ namespace View
         {
             InitializeComponent();
             StartTimer();
-            
+
+            var rpController = RolePermissionsController.Create(new DatabaseContext());
+
             //Decides what text should show up in the popup message
             switch (permission)
             {
@@ -45,7 +47,6 @@ namespace View
                     }
                 case Permissions.PlaylistLimit:
                     {
-                        var rpController = RolePermissionsController.Create(new DatabaseContext());
                         var max = rpController.GetPermissionValueCount(UserController.CurrentUser, permission);
                         TypeOfRight.Text = $"You have reached the\n{max} playlists that you can make\nMore features available in the shop";
                         break;
@@ -57,7 +58,6 @@ namespace View
                     }
                 case Permissions.PlaylistSongsLimit:
                     {
-                        var rpController = RolePermissionsController.Create(new DatabaseContext());
                         var max = rpController.GetPermissionValueCount(UserController.CurrentUser, permission);
                         TypeOfRight.Text = $"You have reached the maximum of\n{max} songs that you can add to the playlist\nMore features available in the shop";
                         break;

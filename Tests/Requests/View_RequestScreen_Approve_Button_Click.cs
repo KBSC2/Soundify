@@ -28,8 +28,7 @@ namespace Tests.Requests
         [Test]
         public void ApproveUserAsArtist()
         {
-            var requestScreen = new RequestScreen();
-            requestScreen.ApproveUser(testRequest.ID, context);
+            requestController.ApproveUser(testRequest.ID);
 
             Assert.False(requestController.GetList().Contains(testRequest));
 
