@@ -6,7 +6,6 @@
     <DataTemplate x:Key="SongList">
         <DataTemplate.Resources>
             <components:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-            
         </DataTemplate.Resources>
         <ListView x:Name="songlistview"
                   Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}"
@@ -17,7 +16,16 @@
                     <GridViewColumn Header="Title" Width="200" DisplayMemberBinding="{Binding Song.Name}" />
                     <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Song.Artist}" />
                     <GridViewColumn Header="Duration" Width="75" DisplayMemberBinding="{Binding Duration}" />
-                    <GridViewColumn Header="Added" Width="150" DisplayMemberBinding="{Binding Added}" />
+                    <GridViewColumn Header="Added" Width="175" DisplayMemberBinding="{Binding Added}" />
+                    <GridViewColumn Width="150">
+                        <GridViewColumnHeader Content="Edit" Visibility="{Binding IsSongListScreen, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                              components:GridViewBehaviours.CollapseableColumn="True"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate >
+                                <Button x:Name ="EditSong" Content="Edit Song" Foreground="White" Background="{DynamicResource Orange}" Click="ListViewItem_ButtonClick_EditSong"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
             <ListView.Resources>
@@ -55,6 +63,7 @@
                     <Setter Property="Background" Value="#FF445399" />
                     <Setter Property="Foreground" Value="{Binding Playing}" />
                     <Setter Property="ContextMenu" Value="{DynamicResource ItemContextMenu}" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding }" />
                         <Trigger Property="IsMouseOver" Value="True">

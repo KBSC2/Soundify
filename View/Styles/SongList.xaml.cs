@@ -52,6 +52,9 @@ namespace View.Resources
                     case ScreenNames.ArtistScreen:
                         AudioPlayer.Instance.PlaySong(songInfo.Song);
                         break;
+                    case ScreenNames.SongListScreen:
+                        AudioPlayer.Instance.PlaySong(songInfo.Song);
+                        break;
                 }
             }
 
@@ -77,6 +80,13 @@ namespace View.Resources
             playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
 
             SongListDataContext.Instance.OnPropertyChanged();
+        }
+
+        public void ListViewItem_ButtonClick_EditSong(object sender, RoutedEventArgs e)
+        {
+            var button = (sender as Button);
+            var song = button.DataContext as SongInfo;
+            //TODO: Open the songalteration screen from here PROJ 55-56
         }
     }
 }
