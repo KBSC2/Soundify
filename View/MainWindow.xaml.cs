@@ -210,14 +210,13 @@ namespace Soundify
             {
                 var textBox = (TextBox) sender;
                 var text = textBox.Text;
-                
-                SongListDataContext.Instance.SongList = SongController.Create(new DatabaseContext()).SearchSongsOnString(text.Split(" ").ToList());
+
+                SearchDataContext.Instance.SearchTerms = text.Split(" ").ToList();
+
                 SongListDataContext.Instance.ScreenName = ScreenNames.SearchScreen;
-
-                SongListDataContext.Instance.OnPropertyChanged();
-
                 SetScreen(ScreenNames.SearchScreen);
                 SearchDataContext.Instance.OnPropertyChanged("");
+                SongListDataContext.Instance.OnPropertyChanged();
             }   
         }
 

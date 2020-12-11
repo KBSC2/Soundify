@@ -40,17 +40,15 @@ namespace View.Screens
         {
             var dataGridRow = (DataGridRow)sender;
             var selectedPlaylist = (Playlist)dataGridRow.Item;
-            var selectedPlaylistSongs = PlaylistSongController.Create(new DatabaseContext())
-                .GetSongsFromPlaylist(selectedPlaylist.ID);
-            SongListDataContext.Instance.SongList = selectedPlaylistSongs.Select(ps => ps.Song).ToList();
-            SongListDataContext.Instance.ScreenName = ScreenNames.PlaylistScreen;
-            SongListDataContext.Instance.OnPropertyChanged();
+            
 
             MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs
             {
                 ScreenName = ScreenNames.PlaylistScreen,
                 Playlist = selectedPlaylist
             });
+            SongListDataContext.Instance.ScreenName = ScreenNames.PlaylistScreen;
+            SongListDataContext.Instance.OnPropertyChanged();
         }
     }
 }

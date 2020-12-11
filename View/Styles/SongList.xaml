@@ -5,14 +5,13 @@
                     x:Class="View.Resources.SongContextMenuInfo">
     <DataTemplate x:Key="SongList">
         <DataTemplate.Resources>
-            <components:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-            <dataContext:SongListDataContext x:Key="SongListDataContext"/>
+            <components:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            
         </DataTemplate.Resources>
         <ListView x:Name="songlistview"
                   Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}"
                   ItemsSource="{Binding SongInfoList}" FontSize="16"
-                  DataContext="{x:Static dataContext:SongListDataContext.Instance}"
-                  Tag="{x:Static dataContext:SongListDataContext.Instance}">
+                  DataContext="{x:Static dataContext:SongListDataContext.Instance}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Title" Width="200" DisplayMemberBinding="{Binding Song.Name}" />
@@ -22,18 +21,18 @@
                 </GridView>
             </ListView.View>
             <ListView.Resources>
-                <CollectionViewSource x:Key="AllPlaylists" Source="{Binding AllPlaylists}"/>
-                <ContextMenu x:Key="ItemContextMenu" x:Name="ItemContextMenu" >
+                <CollectionViewSource x:Key="AllPlaylists" Source="{Binding AllPlaylists}" />
+                <ContextMenu x:Key="ItemContextMenu" x:Name="ItemContextMenu">
                     <MenuItem Header="Add song to queue" Click="ListViewItem_RightClickAddQueue"
                               CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
                     <MenuItem Header="Song information" Click="ListViewItem_RightClickSongInfo"
                               CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
                     <MenuItem Name="DeleteSongFromPlaylist" Header="Remove song"
-                              DataContext="{DynamicResource SongListDataContext}"
+                              CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
                               Click="ListViewItem_RightClick_DeleteSong"
-                              Visibility="{Binding Path=IsPlaylistScreen, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                    <MenuItem Header="Add to Playlist"  
-                              CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" >
+                              Visibility="{Binding IsPlaylistScreen, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <MenuItem Header="Add to Playlist"
+                              CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}">
                         <MenuItem.ItemsSource>
                             <CompositeCollection>
                                 <CollectionContainer Collection="{Binding Source={StaticResource AllPlaylists }}" />
@@ -41,9 +40,10 @@
                         </MenuItem.ItemsSource>
                         <MenuItem.ItemContainerStyle>
                             <Style TargetType="{x:Type MenuItem}">
-                                <EventSetter Event="PreviewMouseDown" Handler="MenuItem_LeftClick"/>
-                                <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem}}"/>
-                                <Setter Property="MenuItem.Header" Value="{Binding Name}"/>
+                                <EventSetter Event="PreviewMouseDown" Handler="MenuItem_LeftClick" />
+                                <Setter Property="Tag"
+                                        Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=MenuItem}}" />
+                                <Setter Property="MenuItem.Header" Value="{Binding Name}" />
                             </Style>
                         </MenuItem.ItemContainerStyle>
                     </MenuItem>
