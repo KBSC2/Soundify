@@ -19,10 +19,12 @@ namespace Tests.SearchTests
         [SetUp]
         public void SetUp()
         {
-            artistController = ArtistController.Create(new MockDatabaseContext());
+            var mockdatabaseContext = new MockDatabaseContext();
+
+            artistController = ArtistController.Create(mockdatabaseContext);
             artistController.CreateItem(new Artist() { ID = 11, ArtistName = "Tester", UserID = 1 });
 
-            songController = SongController.Create(new MockDatabaseContext());
+            songController = SongController.Create(mockdatabaseContext);
             songController.CreateItem(new Song() { ID = 1, Name = "SongNameTest", Artist = 11, Duration = 10, Path = "../path" });
             songController.CreateItem(new Song() { ID = 2, Name = "Ik WIl Testen, liefst ieder kwartier", Artist = 11, Duration = 10, Path = "../path" });
         }
@@ -43,12 +45,6 @@ namespace Tests.SearchTests
         {
              Assert.IsFalse(songController.SearchSongsOnString(searches.ToList())
                .Any(x => !expected.Contains(x.ID)));
-        }
-
-        [Test]
-        public void test()
-        {
-            var artistList = artistController.SearchOnString(new List<string>{"Tester"});
         }
     }
 }

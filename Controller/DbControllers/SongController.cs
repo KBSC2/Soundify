@@ -55,7 +55,6 @@ namespace Controller.DbControllers
          */
         public List<Song> SearchSongsOnString(List<string> searchterms)
         {
-            var artistList = artistController.SearchOnString(new List<string> { "Tester" });
             return GetList()
                 .Where(song => (searchterms.Any(s => song.Name != null && song.Name.ToLower().Contains(s.ToLower())) ||
                               artistController.SearchOnString(searchterms).Contains(artistController.GetItem(song.Artist))) &&
