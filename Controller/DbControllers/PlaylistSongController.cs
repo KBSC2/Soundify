@@ -214,5 +214,17 @@ namespace Controller.DbControllers
         {
             return context is DatabaseContext;
         }
+
+        public void SwapSongs(int indexOne, int indexTwo, int playlistID)
+        {
+            var songOne = GetPlaylistSongFromIndex(playlistID, indexOne);
+            var songTwo = GetPlaylistSongFromIndex(playlistID, indexTwo);
+
+            songOne.Index = indexTwo;
+            songTwo.Index = indexOne;
+
+            UpdatePlaylistSong(songOne);
+            UpdatePlaylistSong(songTwo);
+        }
     }
 }
