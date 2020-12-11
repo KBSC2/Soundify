@@ -100,7 +100,7 @@ namespace Tests.Playlists
             int indexSong1 = playlistSongController.GetPlaylistSong(playlist.ID, song.ID).Index;
             int indexSong2 = playlistSongController.GetPlaylistSong(playlist.ID, song2.ID).Index;
 
-            playlistController.SwapSongs(indexSong1, indexSong2, playlist.ID);
+            playlistSongController.SwapSongs(indexSong1, indexSong2, playlist.ID);
 
             Assert.AreEqual(playlistSongController.GetPlaylistSong(playlist.ID, song.ID).Index, indexSong2);
             Assert.AreEqual(playlistSongController.GetPlaylistSong(playlist.ID, song2.ID).Index, indexSong1);

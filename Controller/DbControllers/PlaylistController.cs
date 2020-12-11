@@ -116,17 +116,5 @@ namespace Controller.DbControllers
         {
             return GetList().Where(x => x.ActivePlaylist).ToList();
         }
-        public void SwapSongs(int indexOne, int indexTwo, int playlistID)
-        {
-            var playlistSongController = PlaylistSongController.Create(Context);
-            var songOne = playlistSongController.GetPlaylistSongFromIndex(playlistID, indexOne);
-            var songTwo = playlistSongController.GetPlaylistSongFromIndex(playlistID, indexTwo);
-
-            songOne.Index = indexTwo;
-            songTwo.Index = indexOne;
-
-            playlistSongController.UpdatePlaylistSong(songOne);
-            playlistSongController.UpdatePlaylistSong(songTwo);
-        }
     }
 }

@@ -15,6 +15,7 @@ namespace View.Screens
     partial class PlaylistScreen : ResourceDictionary
     {
         private PlaylistController playlistController;
+        private PlaylistSongController playlistSongController;
         public static PlaylistScreen Instance { get; set; }
 
         public PlaylistScreen()
@@ -22,6 +23,7 @@ namespace View.Screens
             this.InitializeComponent();
             Instance = this;
             playlistController = PlaylistController.Create(new DatabaseContext());
+            playlistSongController = PlaylistSongController.Create(new DatabaseContext());
         }
 
         public void OnNextSong(object sender, EventArgs e)
@@ -92,7 +94,7 @@ namespace View.Screens
 
             if (selectedSongInfo == null || selectedSongInfo.Index - 1 < 0) return;
 
-            playlistController.SwapSongs(selectedSongInfo.Index, selectedSongInfo.Index - 1, MainWindow.CurrentPlayList.ID);
+            playlistSongController.SwapSongs(selectedSongInfo.Index, selectedSongInfo.Index - 1, MainWindow.CurrentPlayList.ID);
             PlaylistDataContext.Instance.OnPropertyChanged("");
         }
 
@@ -104,7 +106,7 @@ namespace View.Screens
 
             if (selectedSongInfo == null || selectedSongInfo.Index + 1 >= listView.Items.Count) return;
             
-            playlistController.SwapSongs(selectedSongInfo.Index, selectedSongInfo.Index + 1, MainWindow.CurrentPlayList.ID);
+            playlistSongController.SwapSongs(selectedSongInfo.Index, selectedSongInfo.Index + 1, MainWindow.CurrentPlayList.ID);
             PlaylistDataContext.Instance.OnPropertyChanged("");
         }
 
