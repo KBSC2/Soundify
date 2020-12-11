@@ -5,6 +5,8 @@ using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
+using Model.Enums;
+using View.DataContexts;
 
 namespace View
 {
@@ -15,6 +17,9 @@ namespace View
         public DateTime Added { get; set; }
         public int Index { get; set; }
         public string Playing => AudioPlayer.Instance.CurrentSong == null ? "White" : Song.ID == AudioPlayer.Instance.CurrentSong.ID ? "#FFF78D0E" : "White";
+
+        //Says is not used, but is used in songlist
+        public static bool IsPlaylistScreen => SongListDataContext.Instance.ScreenName.Equals(ScreenNames.PlaylistScreen);
 
         public SongInfo(Song song, PlaylistSong playlistSong) : this(song)
         {

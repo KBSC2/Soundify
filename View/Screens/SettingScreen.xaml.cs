@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using Controller;
 using Controller.DbControllers;
 using Model;
+using Model.Enums;
 using Soundify;
 using View.DataContexts;
 
