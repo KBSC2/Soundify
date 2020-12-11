@@ -57,27 +57,7 @@ namespace View.DataContexts
 
             SongInfoList = SongInfo.ConvertSongListToSongInfo(songlist);
         }
-
-        /**
-
-        public List<Song> SongList = SetScreenForLambda(ScreenName =>
-        {
-            switch (ScreenName)
-            {
-                case ScreenNames.PlaylistScreen:
-                    return PlaylistSongController.Create(new DatabaseContext())
-                        .GetSongsFromPlaylist(MainWindow.CurrentPlayList.ID);
-                case ScreenNames.SearchScreen:
-                    return
-            }
-        }); 
         
-
-        public static List<Song> SetScreenForLambda(Func<ScreenNames, List<Song>> callBack)
-        {
-            return callBack()
-        } */
-
 
         public List<SongInfo> SongInfoList { get; set; }
 

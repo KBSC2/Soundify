@@ -21,7 +21,6 @@
                 <Label Content="{Binding CurrentSongArtist}" HorizontalAlignment="Left" Margin="550,60,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" />
                 <Label Content="{Binding CurrentSongDuration}" HorizontalAlignment="Left" Margin="800,60,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" />
             </Grid>
-            <ContentPresenter Margin="300,120,0,0" ContentTemplate="{DynamicResource SongList}"/>
             <ListView Margin="300,120,0,0" x:Name="Queue" DataContext="{Binding}" Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding NextInQueueItems}" FontSize="20">
                 <ListView.View>
                     <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
