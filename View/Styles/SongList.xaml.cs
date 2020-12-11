@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,6 +9,7 @@ using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
+using Model.Enums;
 using Soundify;
 using View.DataContexts;
 
@@ -38,7 +40,18 @@ namespace View.Resources
             var listViewItem = (ListViewItem)sender;
             var songInfo = (SongInfo)listViewItem.Content;
 
-            AudioPlayer.Instance.PlayPlaylist(MainWindow.CurrentPlayList, songInfo.Index - 1);
+            switch (SongListDataContext.Instance.ScreenName)
+            {
+                case ScreenNames.PlaylistScreen:
+                    AudioPlayer.Instance.PlayPlaylist(MainWindow.CurrentPlayList, songInfo.Index - 1);
+                    break;
+                case ScreenNames.SearchScreen:
+                    AudioPlayer.Instance.PlaySong(songInfo.Song);
+                    break;
+                
+            }
+
+            
             SongListDataContext.Instance.OnPropertyChanged();
         }
         public void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
