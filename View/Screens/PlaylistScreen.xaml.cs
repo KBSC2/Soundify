@@ -43,7 +43,7 @@ namespace View.Screens
         {
             var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
             var playlist = MainWindow.CurrentPlayList;
-            PlaylistSongController.Create(new DatabaseContext()).RemoveFromPlaylist(song.ID, playlist.ID);
+            playlistSongController.RemoveFromPlaylist(song.ID, playlist.ID);
 
             PlaylistDataContext.Instance.OnPropertyChanged("");
         }
@@ -109,6 +109,5 @@ namespace View.Screens
             playlistSongController.SwapSongs(selectedSongInfo.Index, selectedSongInfo.Index + 1, MainWindow.CurrentPlayList.ID);
             PlaylistDataContext.Instance.OnPropertyChanged("");
         }
-
     }
 }
