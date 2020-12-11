@@ -20,6 +20,10 @@
                 <ResourceDictionary Source="Styles/Watermark.xaml"/>
 
                 <ResourceDictionary>
+                    <FontFamily x:Key="SoundifyFont">Segoe UI</FontFamily>
+                </ResourceDictionary>
+                
+                <ResourceDictionary>
                     <Brush x:Key="BackgroundColor">#FF09132E</Brush>
                     <Brush x:Key="Background2Color">#FF112355</Brush>
                     <Brush x:Key="Background3Color">#FF254DBB</Brush>
