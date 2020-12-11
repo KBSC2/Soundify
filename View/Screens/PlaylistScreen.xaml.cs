@@ -73,7 +73,7 @@ namespace View.Screens
 
             var playlistName = playlistController.GetItem(playlistID).Name;
 
-            var removeConfirm = MessageBox.Show($"Are you sure you want to delete {playlistName}?", $"Remove {playlistName.ToString()}", MessageBoxButton.YesNoCancel);
+            var removeConfirm = MessageBox.Show($"Are you sure you want to delete {playlistName}?", $"Remove {playlistName.ToString()}", MessageBoxButton.YesNo);
             switch (removeConfirm)
             {
                 case MessageBoxResult.Yes:
@@ -81,7 +81,6 @@ namespace View.Screens
                     MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs() { ScreenName = ScreenNames.PlaylistMenuScreen } );
                     break;
                 case MessageBoxResult.No:
-                case MessageBoxResult.Cancel:
                     break;
             }
         }
