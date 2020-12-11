@@ -79,10 +79,5 @@ namespace Controller.DbControllers
             var artistId = GetArtistIdFromUserId(user.ID);
             if (artistId != null) DeleteItem((int)artistId);
         }
-
-        public List<Artist> SearchOnString(List<string> searchterms)
-        {
-            return GetList().Where(artist => (searchterms.Any(s => artist.ArtistName != null && artist.ArtistName.ToLower().Contains(s.ToLower())))).ToList();
-        }
     }
 }
