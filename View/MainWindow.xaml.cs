@@ -56,7 +56,6 @@ namespace Soundify
         {
             AudioPlayer.Create(new DatabaseContext());
 
-            AudioPlayer.Instance.NextSong += PlaylistScreen.Instance.OnNextSong;
             instanceMainWindow = this;
 
             if (!Directory.Exists(Path.GetTempPath() + "Soundify"))

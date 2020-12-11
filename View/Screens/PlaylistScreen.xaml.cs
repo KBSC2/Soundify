@@ -22,11 +22,6 @@ namespace View.Screens
             Instance = this;
         }
 
-        public void OnNextSong(object sender, EventArgs e)
-        {
-            PlaylistDataContext.Instance.OnPropertyChanged("");
-        }
-
         private void ListViewItem_RightClickSongInfo(object sender, RoutedEventArgs e)
         {
             var song = ((SongInfo)((MenuItem)sender).DataContext).Song;

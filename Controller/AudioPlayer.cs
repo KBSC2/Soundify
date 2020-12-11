@@ -130,8 +130,6 @@ namespace Controller
 
         public void PlayPlaylist(Playlist playlist, int startIndex = -1)
         {
-            var songs = PlaylistSongController.Create(Context).GetSongsFromPlaylist(playlist.ID);
-
             ClearQueue();
             if(NextInQueue.Count > 0)
             {
@@ -141,13 +139,7 @@ namespace Controller
             else
                 CurrentSongIndex = startIndex;
 
-            songs.ForEach(i => AddSongToQueue(i.Song));
-
-            if (Looping)
-            {
-                songs.ForEach(i => AddSongToQueue(i.Song));
-            }
-
+            FillQueue(playlist);
             Next();
         }
 
@@ -155,52 +147,53 @@ namespace Controller
         public virtual void Loop(Playlist playlist)
         {
             Looping = !Looping;
-
-            if (Looping && playlist != null)
-            {
-                var songs = PlaylistSongController.Create(Context).GetSongsFromPlaylist(playlist.ID);
-                songs.ForEach(i => AddSongToQueue(i.Song));
-            }
-            else if(!Looping)
-            {
-                Queue = Queue.GroupBy(p => p.ID).Select(g => g.First()).ToList();
-            }
+            FillQueue(playlist);
         }
 
         [HasPermission(Permission = Permissions.SongShuffle)]
         public virtual void Shuffle(Playlist playlist)
         {
             Shuffling = !Shuffling;
+            FillQueue(playlist);
+        }
 
-            if(playlist != null)
+        public void FillQueue(Playlist playlist)
+        {
+            if (playlist != null)
             {
                 var songs = PlaylistSongController.Create(Context).GetSongsFromPlaylist(playlist.ID);
+                var queueFromCurrentSongIndex = Queue.GetRange(CurrentSongIndex + 1, Queue.Count - (CurrentSongIndex + 1));
+                NextInQueue.ForEach(x => queueFromCurrentSongIndex.Remove(x));
 
                 if (Looping)
                 {
                     if (Shuffling)
                     {
+                        if (queueFromCurrentSongIndex.Count >= songs.Count)
+                            queueFromCurrentSongIndex = queueFromCurrentSongIndex.GroupBy(p => p.ID).Select(g => g.First()).ToList();
 
+
+
+                        queueFromCurrentSongIndex = queueFromCurrentSongIndex.OrderBy(i => Guid.NewGuid()).ToList();
+                        queueFromCurrentSongIndex.ForEach(i => AddSongToQueue(i));
+                        songs.Where(x => !queueFromCurrentSongIndex.Contains(x.Song)).Select(x => x.Song).ToList().ForEach(i => AddSongToQueue(i));
+                        queueFromCurrentSongIndex.ForEach(i => AddSongToQueue(i));
                     }
                     else
-                    {
-
-                    }
-                } 
+                        songs.ForEach(i => AddSongToQueue(i.Song));
+                }
                 else
                 {
-                    Queue = Queue.GroupBy(p => p.ID).Select(g => g.First()).ToList();   
-                    var queueFromCurrentSongIndex = Queue.GetRange(CurrentSongIndex + 1, Queue.Count - (CurrentSongIndex + 1));
-                    NextInQueue.ForEach(x => queueFromCurrentSongIndex.Remove(x));
+                    queueFromCurrentSongIndex = queueFromCurrentSongIndex.GroupBy(p => p.ID).Select(g => g.First()).ToList();
 
                     if (Shuffling)
                         queueFromCurrentSongIndex = queueFromCurrentSongIndex.OrderBy(i => Guid.NewGuid()).ToList();
                     else
                         queueFromCurrentSongIndex = songs.Where(x => queueFromCurrentSongIndex.Contains(x.Song)).Select(x => x.Song).ToList();
-
-                    Queue.RemoveRange(CurrentSongIndex + 1 + NextInQueue.Count, Queue.Count - (CurrentSongIndex + 1 + NextInQueue.Count));
-                    Queue.AddRange(queueFromCurrentSongIndex);
                 }
+
+                Queue.RemoveRange(CurrentSongIndex + 1 + NextInQueue.Count, Queue.Count - (CurrentSongIndex + 1 + NextInQueue.Count));
+                Queue.AddRange(queueFromCurrentSongIndex);
             }
         }
 
