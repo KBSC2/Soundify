@@ -13,6 +13,8 @@
 
   <ItemGroup>
     <None Remove="Assets\cross.png" />
+    <None Remove="Assets\NoImage.png" />
+    <None Remove="Assets\null.png" />
     <None Remove="Assets\soundify.png" />
     <None Remove="Assets\soundifySmall.ico" />
     <None Remove="Assets\soundifySmall.png" />
@@ -36,6 +38,8 @@
 
   <ItemGroup>
     <Resource Include="Assets\cross.png" />
+    <Resource Include="Assets\NoImage.png" />
+    <Resource Include="Assets\null.png" />
     <Resource Include="Assets\soundify.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

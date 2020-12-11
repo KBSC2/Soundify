@@ -21,6 +21,9 @@
     <Grid>
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="92,54,0,74" ContentTemplate="{StaticResource HomeScreen}"/>
         <Grid Margin="89,0,0,0" Background="{DynamicResource Background2Color}" Height="74" VerticalAlignment="Bottom" ShowGridLines="False">
+            <Image Source="{Binding PathToImage}" Height="60" Width="60" HorizontalAlignment="Left" Margin="40,0,0,0"/>
+            <TextBlock Text="{Binding CurrentSong.Name}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="110,10,0,37" MaxWidth="200" Foreground="White"/>
+            <TextBlock Text="{Binding CurrentSong.Artist}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="110,37,0,10" MaxWidth="200" FontStyle="Italic" Foreground="White"/>
             <Button x:Name="Play" MaxWidth="40" MaxHeight="34"  Content=">" Margin="334,20,334,0" VerticalAlignment="Top" Click="Play_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" Grid.RowSpan="2"/>
             <Label x:Name="CurrentTime" Content="{Binding CurrentTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top" Foreground="White"/>
             <Label x:Name="TotalTime" Content="{Binding TotalTimeLabel, Mode=OneWay}" Margin="0,5,0,0" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Right" />

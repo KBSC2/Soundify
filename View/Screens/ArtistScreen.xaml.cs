@@ -74,12 +74,12 @@ namespace View.Screens
             {
                 Name = songName,
                 Artist = (int)artistId,
-                Description = ((TextBox)dataGrid.FindName("Description"))?.Text,
+                Description = dataGrid.FindName("Description") != null ? ((TextBox)dataGrid.FindName("Description"))?.Text : null,
                 Duration = TimeSpan.Parse(((Label)dataGrid.FindName("Duration"))?.Content.ToString() ?? string.Empty).TotalSeconds,
                 Path = ArtistDataContext.Instance.SelectedSong.Name,
-                PathToImage = imageSource != null ? "images/" + imageSource.LocalPath.Split("\\").Last() : "",
-                ProducedBy = ((TextBox)dataGrid.FindName("Producer"))?.Text,
-                WrittenBy = ((TextBox)dataGrid.FindName("Writer"))?.Text,
+                PathToImage = imageSource != null ? "images/" + imageSource.LocalPath.Split("\\").Last() : null,
+                ProducedBy = dataGrid.FindName("Producer") != null ? ((TextBox)dataGrid.FindName("Producer"))?.Text : null,
+                WrittenBy = dataGrid.FindName("Writer") != null ? ((TextBox)dataGrid.FindName("Writer"))?.Text : null,
                 Status = SongStatus.AwaitingApproval
             }, ArtistDataContext.Instance.SelectedSong.Name);
 
