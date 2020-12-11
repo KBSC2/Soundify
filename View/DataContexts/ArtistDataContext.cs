@@ -26,11 +26,7 @@ namespace View.DataContexts
             .GetList().FirstOrDefault(a => a.UserID == UserController.CurrentUser.ID)
             ?.ArtistName;
 
-        public List<SongInfo> UploadedSongs => SongInfo.ConvertSongListToSongInfo(SongController.Create(new DatabaseContext()).GetList()
-            .Where(s => s.Artist == ArtistController.Create(new DatabaseContext()).GetList()
-                .FirstOrDefault(a => a.UserID == UserController.CurrentUser.ID)?.ArtistName).ToList());
-
-
+        
         public bool ArtistHasSongPending { get; set; } 
 
         public ArtistDataContext()
