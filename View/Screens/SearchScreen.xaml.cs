@@ -20,14 +20,12 @@ namespace View.Screens
         public SearchScreen()
         {
             InitializeComponent();
-
         }
 
         public void PlaylistRow_Click(object sender, MouseButtonEventArgs e)
         {
             var listViewItem = (ListViewItem)sender;
             var selectedPlaylist = (Playlist)listViewItem.Content;
-
 
             MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs
             {
@@ -36,9 +34,6 @@ namespace View.Screens
             });
             SongListDataContext.Instance.ScreenName = ScreenNames.PlaylistScreen;
             SongListDataContext.Instance.OnPropertyChanged();
-
         }
-
-
     }
 }

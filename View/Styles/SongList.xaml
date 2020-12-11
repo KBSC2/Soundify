@@ -70,6 +70,4 @@
             </ListView.ItemContainerStyle>
         </ListView>
     </DataTemplate>
-
-
 </ResourceDictionary>
