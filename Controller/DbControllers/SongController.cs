@@ -10,6 +10,9 @@ namespace Controller.DbControllers
 {
     public class SongController : DbController<Song>
     {
+
+        private ArtistController artistController { get; set; }
+
         /**
          * Creates a instance of this controller
          * It adds the controller to the proxy
@@ -25,6 +28,7 @@ namespace Controller.DbControllers
 
         protected SongController(IDatabaseContext context) : base(context, context.Songs)
         {
+            artistController = ArtistController.Create(Context);
         }
 
         /**
@@ -51,9 +55,10 @@ namespace Controller.DbControllers
          */
         public List<Song> SearchSongsOnString(List<string> searchterms)
         {
+            var artistList = artistController.SearchOnString(new List<string> { "Tester" });
             return GetList()
                 .Where(song => (searchterms.Any(s => song.Name != null && song.Name.ToLower().Contains(s.ToLower())) ||
-                               searchterms.Any(s => song.Artist != null && ArtistController.Create(Context).GetItem(song.Artist).ArtistName.ToLower().Contains(s.ToLower()))) &&
+                              artistController.SearchOnString(searchterms).Contains(artistController.GetItem(song.Artist))) &&
                                song.Status != SongStatus.AwaitingApproval)
                 .Take(8)
                 .ToList();
