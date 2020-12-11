@@ -47,8 +47,6 @@ namespace View.Screens
                 ScreenName = ScreenNames.PlaylistScreen,
                 Playlist = selectedPlaylist
             });
-            SongListDataContext.Instance.ScreenName = ScreenNames.PlaylistScreen;
-            SongListDataContext.Instance.OnPropertyChanged();
         }
     }
 }

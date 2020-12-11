@@ -32,42 +32,9 @@ namespace View.Screens
             PlaylistDataContext.Instance.OnPropertyChanged("");
         }
 
-        private void ListViewItem_RightClickSongInfo(object sender, RoutedEventArgs e)
-        {
-            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
-
-            SongInfoScreen songInfoScreen = new SongInfoScreen(song);
-            songInfoScreen.Show();
-        }
-
-        public void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
-        {
-            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
-            var playlist = MainWindow.CurrentPlayList;
-            PlaylistSongController.Create(new DatabaseContext()).RemoveFromPlaylist(song.ID, playlist.ID);
-
-            PlaylistDataContext.Instance.OnPropertyChanged("");
-        }
-
-        public void ListViewItem_RightClickAddQueue(object sender, RoutedEventArgs e)
-        {
-            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
-
-            AudioPlayer.Instance.AddSongToSongQueue(song);
-        }
-
         private void Play_Playlist_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Instance.PlayPlaylist(MainWindow.CurrentPlayList);
-        }
-
-        private void SongRow_Click(object sender, MouseButtonEventArgs e)
-        {
-
-            var listViewItem = (ListViewItem)sender;
-            var songInfo = (SongInfo)listViewItem.Content;
-
-            AudioPlayer.Instance.PlayPlaylist(MainWindow.CurrentPlayList, songInfo.Index-1);
         }
 
         private void RemovePlaylistButton_Click(object sender, RoutedEventArgs e)

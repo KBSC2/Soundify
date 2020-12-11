@@ -161,13 +161,9 @@ namespace Soundify
         public void SetScreen(ScreenNames screenName)
         {
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
-            if (screenName == ScreenNames.PlaylistScreen ||
-                screenName == ScreenNames.SearchScreen ||
-                screenName == ScreenNames.ArtistScreen)
-            {
-                SongListDataContext.Instance.ScreenName = screenName;
-                SongListDataContext.Instance.OnPropertyChanged(); 
-            }
+            SongListDataContext.Instance.ScreenName = screenName;
+            SongListDataContext.Instance.OnPropertyChanged(); 
+            
         }
         public void SetScreen(ScreenNames screenName, Playlist playlist)
         {
