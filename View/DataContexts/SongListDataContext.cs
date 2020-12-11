@@ -29,9 +29,7 @@ namespace View.DataContexts
             }
         }
 
-
         public ScreenNames ScreenName { get; set; }
-        
 
         public void UpdateSongInfoList()
         {
@@ -43,26 +41,20 @@ namespace View.DataContexts
                         .GetSongsFromPlaylist(Soundify.MainWindow.CurrentPlayList.ID).Select(ps => ps.Song).ToList();
                     break;
                 case ScreenNames.SearchScreen:
-                    songlist = SongController.Create(new DatabaseContext()).SearchSongsOnString(SearchDataContext.Instance.SearchTerms.ToList());
+                    songlist = SongController.Create(new DatabaseContext())
+                        .SearchSongsOnString(SearchDataContext.Instance.SearchTerms.ToList());
                     break;
                 case ScreenNames.ArtistScreen:
                     songlist = SongController.Create(new DatabaseContext()).GetList()
                         .Where(s => s.Artist == ArtistController.Create(new DatabaseContext()).GetList()
                             .FirstOrDefault(a => a.UserID == UserController.CurrentUser.ID)?.ArtistName).ToList();
                     break;
-                default:
-                    songlist = new List<Song>();
-                    break;
             }
 
             SongInfoList = SongInfo.ConvertSongListToSongInfo(songlist);
         }
-        
 
         public List<SongInfo> SongInfoList { get; set; }
-
-
-
 
         public List<Playlist> AllPlaylists => PlaylistController.Create(new DatabaseContext())
             .GetActivePlaylists(UserController.CurrentUser.ID);
