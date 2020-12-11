@@ -41,7 +41,7 @@ namespace Controller.DbControllers
          */
         public void UploadSong(Song song, string localpath)
         {
-            string remotePath =  FileTransfer.Create(Context).UploadFile(localpath, "songs/" + Path.GetFileName(localpath));
+            string remotePath = FileTransfer.Create(Context).UploadFile(localpath, "songs/" + Path.GetFileName(localpath));
             song.Path = remotePath;
             CreateItem(song);
         }
@@ -57,10 +57,11 @@ namespace Controller.DbControllers
         {
             return GetList()
                 .Where(song => (searchterms.Any(s => song.Name != null && song.Name.ToLower().Contains(s.ToLower())) ||
-                              artistController.SearchOnString(searchterms).Contains(artistController.GetItem(song.Artist))) &&
+                                searchterms.Any(s => artistController.GetItem(song.Artist).ArtistName.ToLower().Contains(s.ToLower()))) &&
                                song.Status != SongStatus.AwaitingApproval)
                 .Take(8)
                 .ToList();
         }
+
     }
 }
