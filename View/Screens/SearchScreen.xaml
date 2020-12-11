@@ -43,8 +43,6 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
-
         </Grid>
     </DataTemplate>
-
 </ResourceDictionary>
