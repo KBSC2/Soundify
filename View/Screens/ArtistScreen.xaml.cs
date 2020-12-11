@@ -20,6 +20,7 @@ namespace View.Screens
         public ArtistScreen()
         {
             InitializeComponent();
+            SongListDataContext.Instance.ScreenName = ScreenNames.ArtistScreen;
         }
 
         private void UploadSongButton_Click(object sender, RoutedEventArgs e)

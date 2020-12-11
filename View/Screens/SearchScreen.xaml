@@ -27,7 +27,7 @@
                 </ListView.View>
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}"  >
- <!--                       <EventSetter Event="MouseDoubleClick" Handler="PlaylistRow_Click"/>-->
+                        <EventSetter Event="MouseDoubleClick" Handler="PlaylistRow_Click"/>
                         <Setter Property="Background" Value="#FF445399" />
                         <Setter Property="Foreground" Value="White" />
                         <Style.Triggers>

@@ -42,13 +42,14 @@ namespace View.DataContexts
                     songlist = PlaylistSongController.Create(new DatabaseContext())
                         .GetSongsFromPlaylist(Soundify.MainWindow.CurrentPlayList.ID).Select(ps => ps.Song).ToList();
                     break;
-                //case ScreenNames.QueueScreen:
-                  //  break;
                 case ScreenNames.SearchScreen:
                     songlist = SongController.Create(new DatabaseContext()).SearchSongsOnString(SearchDataContext.Instance.SearchTerms.ToList());
                     break;
-                //case ScreenNames.ArtistScreen:
-                    //break;
+                case ScreenNames.ArtistScreen:
+                    songlist = SongController.Create(new DatabaseContext()).GetList()
+                        .Where(s => s.Artist == ArtistController.Create(new DatabaseContext()).GetList()
+                            .FirstOrDefault(a => a.UserID == UserController.CurrentUser.ID)?.ArtistName).ToList();
+                    break;
                 default:
                     songlist = new List<Song>();
                     break;

@@ -102,7 +102,8 @@
                 </Button>
             </Grid>
             <Grid Margin="0,270,0,0">
-                <ListView x:Name="SongList" Margin="0,64,0,0" Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding UploadedSongs}" FontSize="16">
+                <ContentPresenter Margin="0,64,0,0" ContentTemplate="{DynamicResource SongList}"/>
+                <!--ListView x:Name="SongList" Margin="0,64,0,0" Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding UploadedSongs}" FontSize="16">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Title" Width="200" DisplayMemberBinding="{Binding Song.Name}"/>
@@ -126,7 +127,7 @@
                             </Style.Triggers>
                         </Style>
                     </ListView.ItemContainerStyle>
-                </ListView>
+                </ListView-->
                 <Label Content="Already uploaded" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" FontSize="36" FontWeight="Bold"/>
             </Grid>
         </Grid>
