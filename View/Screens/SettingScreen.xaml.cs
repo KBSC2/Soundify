@@ -37,18 +37,7 @@ namespace View.Screens
             ComboBox comboBox = (ComboBox)sender;
             int selectedItem = comboBox.SelectedIndex;
 
-            switch (selectedItem) 
-            {
-                case 0:
-                    AudioPlayer.Instance.MaxVolume = 0.1;
-                    break;
-                case 2:
-                    AudioPlayer.Instance.MaxVolume = 0.4;
-                    break;
-                default:
-                    AudioPlayer.Instance.MaxVolume = 0.2;
-                    break;
-            }
+            AudioPlayer.Instance.ChangeVolume(selectedItem);
         }
         
         private void Request_Button_Click(object sender, RoutedEventArgs e)
