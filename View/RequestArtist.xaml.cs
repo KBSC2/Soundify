@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Windows;
@@ -10,6 +11,7 @@ using Model.DbModels;
 using Model.Enums;
 using Model.MailTemplates;
 using View.DataContexts;
+
 
 namespace View
 {
@@ -39,7 +41,9 @@ namespace View
             var emailController = new EmailController();
             var email = new MailArtistVerification(new MailAddress("info.soundify@gmail.com"), artistName, artistReason);
 
-            switch (email)
+            var controller = RequestController.Create(new DatabaseContext());
+            var result = controller.RequestArtist(artistName, artistReason);
+            switch (result)
             {
                 case RequestArtistResults.Success:
                     {
@@ -54,7 +58,6 @@ namespace View
                             SongID = null
                         };
 
-
                         var userController = UserController.Create(new DatabaseContext());
                         var user = userController.GetItem(UserController.CurrentUser.ID);
                         user.RequestedArtist = true;
@@ -62,27 +65,31 @@ namespace View
 
                         var createRequest = RequestController.Create(new DatabaseContext());
                         createRequest.CreateItem(request);
-
                         this.Close();
 
 
                         MessageBox.Show("Request Artist is confirmed!");
                         SettingsDataContext.Instance.OnPropertyChanged("");
-
+                    }
                         this.ArtistName.Text = "";
                         this.ArtistReason.Text = "";
                         break;
-                    }
+                    
                 case RequestArtistResults.ArtistNameNotFound:
                     {
-                        this.Error.Content = "No Artist name has been entered";
+                        this.Error.Content ="Your artist name is empty, please go back and fill in your artist name before proceeding.";
                         break;
                     }
                 case RequestArtistResults.ReasonNotFound:
                     {
-                        this.Error.Content = "You haven't given a reason to become an artist";
+                        this.Error.Content = "please fill in your reason as to why you want to become an artist before proceeding.";
                         break;
                     }
+                case RequestArtistResults.NameAndReasonNotFound:
+                {
+                        this.Error.Content = "please fill in your Artist name and reason to become an artist before proceeding.";
+                        break;
+                }
             }
         }
 
@@ -91,5 +98,4 @@ namespace View
             this.Close();
         }
     }
-}
 }

@@ -25,5 +25,17 @@ namespace Controller.DbControllers
         {
             return GetFilteredList(r => r.RequestType == RequestType.Artist);
         }
+
+
+        public virtual RequestArtistResults RequestArtist(string ArtistName, string ArtistReason)
+        {
+            if (ArtistName == "" && ArtistReason == "")
+                return RequestArtistResults.NameAndReasonNotFound;
+            if (ArtistName == "")
+                return RequestArtistResults.ArtistNameNotFound;
+            if (ArtistReason == "")
+                return RequestArtistResults.ReasonNotFound;
+            return RequestArtistResults.Success;
+        }
     }
 }

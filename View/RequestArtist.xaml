@@ -15,6 +15,7 @@
     <Grid Background="{DynamicResource BackgroundColor}" KeyDown="Confirm_On_Enter_Key">
         <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,97,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" Height="79"/>
         <Label Content="Fill in your information" HorizontalAlignment="Center" Margin="0,164,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
+        <Label x:Name="Error" Content="" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,525,0,0" VerticalAlignment="Top" Foreground="{DynamicResource Red}" FontSize="15" Height="57" Width="597" RenderTransformOrigin="0.497,0.508"/>
         <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="ArtistName" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,264,0,0" Tag="Artist name" TextWrapping="NoWrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="{DynamicResource InputBackground}" Foreground="White"/>
         <Button x:Name="Confirm" Content="Request" Click="Confirm_Button_Click"  HorizontalAlignment="Left" Margin="333,589,0,0" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Width="196" Height="60" Background="{DynamicResource Orange}" Foreground="White"/>
         <Button Content="Cancel" HorizontalAlignment="Left" Margin="87,589,0,0" VerticalAlignment="Top" Foreground="White" FontSize="40" FontWeight="Bold" Background="{DynamicResource Red}" Width="196" Height="60" BorderThickness="0,0,0,0" Click="Cancel_Button_Click"/>
