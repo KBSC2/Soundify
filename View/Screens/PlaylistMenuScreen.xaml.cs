@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -6,6 +7,7 @@ using Controller.DbControllers;
 using Model;
 using Model.Database.Contexts;
 using Model.DbModels;
+using Model.Enums;
 using Model.EventArgs;
 using Soundify;
 using View.DataContexts;
@@ -38,6 +40,7 @@ namespace View.Screens
         {
             var dataGridRow = (DataGridRow)sender;
             var selectedPlaylist = (Playlist)dataGridRow.Item;
+            
 
             MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs
             {
