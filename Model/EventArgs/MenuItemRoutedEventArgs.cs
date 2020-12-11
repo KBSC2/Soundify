@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Model.DbModels;
+using Model.Enums;
 
 namespace Model.EventArgs
 {

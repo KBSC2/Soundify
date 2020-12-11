@@ -163,11 +163,14 @@ namespace Soundify
         public void SetScreen(ScreenNames screenName)
         {
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
+            SongListDataContext.Instance.ScreenName = screenName;
+            SongListDataContext.Instance.OnPropertyChanged(); 
+            
         }
         public void SetScreen(ScreenNames screenName, Playlist playlist)
         {
-            MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
             CurrentPlayList = playlist;
+            SetScreen(screenName);
         }
 
         public void OnMenuItemRoutedEvent(object sender, MenuItemRoutedEventArgs args)
@@ -212,8 +215,9 @@ namespace Soundify
             {
                 var textBox = (TextBox) sender;
                 var text = textBox.Text;
-                SetScreen(ScreenNames.SearchScreen);
+
                 SearchDataContext.Instance.SearchTerms = text.Split(" ").ToList();
+                SetScreen(ScreenNames.SearchScreen);
                 SearchDataContext.Instance.OnPropertyChanged("");
             }   
         }
