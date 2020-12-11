@@ -38,29 +38,49 @@ namespace View
 
             var emailController = new EmailController();
             var email =  new MailArtistVerification(new MailAddress("info.soundify@gmail.com"), artistName, artistReason);
-            emailController.SendEmail(email, "info.soundify@gmail.com");
 
-            var request = new Request()
+            switch (email)
             {
-                ArtistName = artistName,
-                ArtistReason = artistReason,
-                UserID = UserController.CurrentUser.ID,
-                RequestType = RequestType.Artist,
-                SongID = null
-            };
+                case RequestArtistResults.Success:
+                    {
+                        emailController.SendEmail(email, "info.soundify@gmail.com");
+
+                        var request = new Request()
+                        {
+                            ArtistName = artistName,
+                            ArtistReason = artistReason,
+                            UserID = UserController.CurrentUser.ID,
+                            RequestType = RequestType.Artist,
+                            SongID = null
+                        };
 
 
-            var userController = UserController.Create(new DatabaseContext());
-            var user = userController.GetItem(UserController.CurrentUser.ID);
-            user.RequestedArtist = true;
-            userController.UpdateItem(user);
+                        var userController = UserController.Create(new DatabaseContext());
+                        var user = userController.GetItem(UserController.CurrentUser.ID);
+                        user.RequestedArtist = true;
+                        userController.UpdateItem(user);
 
-            var createRequest = RequestController.Create(new DatabaseContext());
-            createRequest.CreateItem(request);
+                        var createRequest = RequestController.Create(new DatabaseContext());
+                        createRequest.CreateItem(request);
 
-            this.Close();
+                        this.Close();
+                    
+                        this.ArtistName.Text = "";
+                        this.ArtistReason.Text = "";
+                        break;
+                    }
+                case RequestArtistResults.ArtistNameNotFound:
+                    {
+                        this.Error.Content = "No Artist name has been entered";
+                        break;
+                    }
+                case RequestArtistResults.ReasonNotFound:
+                    {
+                        this.Error.Content = "You haven't given a reason to become an artist";
+                        break;
+                    }
 
-            MessageBox.Show("Request Artist is confirmed!");
+                    MessageBox.Show("Request Artist is confirmed!");
             SettingsDataContext.Instance.OnPropertyChanged("");
         }
 
