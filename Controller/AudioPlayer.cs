@@ -114,7 +114,7 @@ namespace Controller
          */
         public void PlaySong(Song song)
         {
-            if(CurrentSong!= null) 
+            if(CurrentSong != null)
                 WaveOutDevice.Stop();
             CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
             CurrentSong = song;

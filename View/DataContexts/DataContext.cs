@@ -25,7 +25,7 @@ namespace View.DataContexts
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Song CurrentSong => AudioPlayer.Instance.CurrentSong;
-        public string PathToImage => CurrentSong == null ? "" : CurrentSong.PathToImage == null ? FileCache.Instance.GetFile("images/noimage.png") : FileCache.Instance.GetFile(CurrentSong.PathToImage);
+        public string PathToImage => CurrentSong == null ? "../Assets/null.png" : CurrentSong.PathToImage == null ? "../Assets/NoImage.png" : FileCache.Instance.GetFile(CurrentSong.PathToImage);
         public double Volume => AudioPlayer.Instance.WaveOutDevice.Volume;
         public double MaxVolume => AudioPlayer.Instance.MaxVolume;
         public double TotalTime => AudioPlayer.Instance.CurrentSongFile == null ? 0 : AudioPlayer.Instance.CurrentSongFile.TotalTimeSong;
