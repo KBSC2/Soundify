@@ -112,6 +112,7 @@ namespace View
             forgotPasswordTokenSendScreen.Show();
             forgotPasswordTokenSendScreen.Focus();
         }
+
         private void WindowClosing(object sender, EventArgs e)
         {
             SSHController.Instance.CloseSSHTunnel();

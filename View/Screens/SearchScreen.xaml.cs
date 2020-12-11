@@ -16,10 +16,8 @@ namespace View.Screens
         public SearchScreen()
         {
             InitializeComponent();
-
         }
 
-        
         private void MenuItem_LeftClick(object sender, MouseButtonEventArgs e)
         {
             var playlist = ((Playlist)((MenuItem)sender).DataContext);

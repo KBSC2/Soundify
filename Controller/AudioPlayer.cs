@@ -214,5 +214,16 @@ namespace Controller
                 Queue = Queue.GroupBy(p => p.ID).Select(g => g.First()).ToList();
             }
         }
+
+        public void ChangeVolume(int selectedItem)
+        {
+            MaxVolume = selectedItem switch
+            {
+                0 => 0.1,
+                1 => 0.2,
+                2 => 0.4,
+                _ => 0.0
+            };
+        }
     }
 }
