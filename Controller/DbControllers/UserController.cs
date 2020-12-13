@@ -11,6 +11,12 @@ namespace Controller.DbControllers
     {
         public static User CurrentUser;
 
+        /**
+         * This function creates a instance of this controller
+         * It adds the controller to the proxy
+         *
+         * @returns the proxy with a instance of this controller included
+         */
         public static UserController Create(IDatabaseContext context)
         {
             return ProxyController.AddToProxy<UserController>(new object[] {context}, context);
@@ -68,8 +74,20 @@ namespace Controller.DbControllers
          */
         public virtual RegistrationResults CreateAccount(User user, string password, string passwordRepeat)
         {
+            if (user.Username == "")
+                return RegistrationResults.NoName;
+
+            if (user.Email == "")
+                return RegistrationResults.NoEmail;
+
+            if (!user.Email.Contains("@"))
+                return RegistrationResults.InvalidEmail;
+
             if (GetUserFromEmailOrUsername(user.Email) != null)
                 return RegistrationResults.EmailTaken;
+
+            if (GetUserFromEmailOrUsername(user.Username) != null)
+                return RegistrationResults.UsernameTaken;
 
             if (!password.Equals(passwordRepeat))
                 return RegistrationResults.PasswordNoMatch;

@@ -10,7 +10,7 @@ namespace Model.DbModels
         public string Name { get; set; }
 
         [Required]
-        public string Artist { get; set; }
+        public int Artist { get; set; }
 
         [Required]
         public string Path { get; set; }

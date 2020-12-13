@@ -24,10 +24,10 @@ namespace View.Screens
 
         private void UploadSongButton_Click(object sender, RoutedEventArgs e)
         {
-            var fileDialog = new OpenFileDialog {DefaultExt = ".mp3", Filter = "MP3 Files (.mp3)|*.mp3"};
+            var fileDialog = new OpenFileDialog { DefaultExt = ".mp3", Filter = "MP3 Files (.mp3)|*.mp3" };
 
             if (fileDialog.ShowDialog() != true) return;
-            
+
             var file = TagLib.File.Create(fileDialog.FileName);
 
             ArtistDataContext.Instance.SelectedSong = file;
@@ -50,8 +50,8 @@ namespace View.Screens
 
         private void ConfirmUpload_Click(object sender, RoutedEventArgs e)
         {
-            var dataGrid = (Grid) ((Button) sender).CommandParameter;
-            var titleTextBox = (TextBox) ((Button) sender).Tag;
+            var dataGrid = (Grid)((Button)sender).CommandParameter;
+            var titleTextBox = (TextBox)((Button)sender).Tag;
 
             if (titleTextBox.Text == "")
             {
@@ -61,21 +61,25 @@ namespace View.Screens
 
             var imageSource = ((BitmapImage)((Image)dataGrid.FindName("Image"))?.Source)?.UriSource;
 
-            if (imageSource != null) FileTransfer.Create(new DatabaseContext()).UploadFile(imageSource?.LocalPath, "images/" + 
+            if (imageSource != null) FileTransfer.Create(new DatabaseContext()).UploadFile(imageSource?.LocalPath, "images/" +
                 imageSource?.LocalPath.Split("\\").Last());
 
             var artistName = ((Label)dataGrid.FindName("Artist"))?.Content.ToString();
             var songName = ((TextBox)dataGrid.FindName("Title"))?.Text;
+            var artistId = ArtistController.Create(new DatabaseContext()).GetArtistIdFromUserId(UserController.CurrentUser.ID);
 
-            SongController.Create(new DatabaseContext()).UploadSong(new Song {
-                Name = songName, 
-                Artist = artistName, 
-                Description = ((TextBox)dataGrid.FindName("Description"))?.Text, 
-                Duration = TimeSpan.Parse(((Label)dataGrid.FindName("Duration"))?.Content.ToString() ?? string.Empty).TotalSeconds, 
-                Path = ArtistDataContext.Instance.SelectedSong.Name, 
-                PathToImage = imageSource != null ? "images/" + imageSource.LocalPath.Split("\\").Last() : "", 
-                ProducedBy = ((TextBox)dataGrid.FindName("Producer"))?.Text, 
-                WrittenBy = ((TextBox)dataGrid.FindName("Writer"))?.Text,
+            if (artistId == null) return;
+
+            SongController.Create(new DatabaseContext()).UploadSong(new Song
+            {
+                Name = songName,
+                Artist = (int)artistId,
+                Description = dataGrid.FindName("Description") != null ? ((TextBox)dataGrid.FindName("Description"))?.Text : null,
+                Duration = TimeSpan.Parse(((Label)dataGrid.FindName("Duration"))?.Content.ToString() ?? string.Empty).TotalSeconds,
+                Path = ArtistDataContext.Instance.SelectedSong.Name,
+                PathToImage = imageSource != null ? "images/" + imageSource.LocalPath.Split("\\").Last() : null,
+                ProducedBy = dataGrid.FindName("Producer") != null ? ((TextBox)dataGrid.FindName("Producer"))?.Text : null,
+                WrittenBy = dataGrid.FindName("Writer") != null ? ((TextBox)dataGrid.FindName("Writer"))?.Text : null,
                 Status = SongStatus.AwaitingApproval
             }, ArtistDataContext.Instance.SelectedSong.Name);
 

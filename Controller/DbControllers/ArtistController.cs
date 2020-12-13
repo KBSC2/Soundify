@@ -1,7 +1,9 @@
-﻿using Controller.Proxy;
+﻿using System.Collections.Generic;
+using Controller.Proxy;
 using Model.Database.Contexts;
 using Model.DbModels;
 using System.Linq;
+using Model.Annotations;
 
 namespace Controller.DbControllers
 {
@@ -9,6 +11,14 @@ namespace Controller.DbControllers
     {
         private UserController userController;
 
+        /**
+         * Creates a instance of this controller
+         * It adds the controller to the proxy
+         *
+         * @param IDatabaseContext instance of a database session
+         *
+         * @returns ArtistController : the proxy with a instance of this controller included
+         */
         public static ArtistController Create(IDatabaseContext context)
         {
             return ProxyController.AddToProxy<ArtistController>(new object[] { context }, context);
@@ -19,21 +29,48 @@ namespace Controller.DbControllers
             userController = UserController.Create(Context);
         }
 
+        /**
+         * Returns the artistId based on the userId
+         *
+         * @param userId int of the userID
+         *
+         * @return int : the artistId
+         */
         public int? GetArtistIdFromUserId(int userId)
         {
             return GetList().FirstOrDefault(a => a.UserID == userId)?.ID;
         }
 
-        // Can't this be a little bit more generic. Like update role or something??
-        public void MakeArtist(int userId)
+        public Artist GetArtistFromUserId(int? userId)
         {
-            var user = userController.GetItem(userId);
+            return GetList().FirstOrDefault(a => a.UserID == userId);
+        }
+        
+        /**
+         * Grants the role of artist to a user
+         *
+         * @param userId userid of the of the user
+         *
+         *  @return void
+         */
+        // Can't this be a little bit more generic. Like update role or something??
+        public void MakeArtist(Request request)
+
+        {
+            var user = userController.GetItem(request.UserID);
 
             user.RoleID = 2;
             userController.UpdateItem(user);
-            CreateItem(new Artist() { ArtistName = user.Username, UserID = user.ID}); // change user.Username to artist name
+            CreateItem(new Artist { ArtistName = request.ArtistName, UserID = user.ID});
         }
 
+        /**
+         * Revokes the role of artist back to a user
+         *
+         * @param user A User data object
+         *
+         *  @return void
+         */
         public void RevokeArtist(User user)
         {
             user.RoleID = 1;

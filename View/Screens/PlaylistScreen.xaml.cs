@@ -9,41 +9,22 @@ using Model;
 using Model.EventArgs;
 using Soundify;
 using System;
+using Model.Enums;
 
 namespace View.Screens
 {
     partial class PlaylistScreen : ResourceDictionary
     {
+        private PlaylistController playlistController;
+        private PlaylistSongController playlistSongController;
         public static PlaylistScreen Instance { get; set; }
 
         public PlaylistScreen()
         {
             this.InitializeComponent();
             Instance = this;
-        }
-
-        private void ListViewItem_RightClickSongInfo(object sender, RoutedEventArgs e)
-        {
-            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
-
-            SongInfoScreen songInfoScreen = new SongInfoScreen(song);
-            songInfoScreen.Show();
-        }
-
-        public void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
-        {
-            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
-            var playlist = MainWindow.CurrentPlayList;
-            PlaylistSongController.Create(new DatabaseContext()).RemoveFromPlaylist(song.ID, playlist.ID);
-
-            PlaylistDataContext.Instance.OnPropertyChanged("");
-        }
-
-        public void ListViewItem_RightClickAddQueue(object sender, RoutedEventArgs e)
-        {
-            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
-
-            AudioPlayer.Instance.AddSongToSongQueue(song);
+            playlistController = PlaylistController.Create(new DatabaseContext());
+            playlistSongController = PlaylistSongController.Create(new DatabaseContext());
         }
 
         private void Play_Playlist_Button_Click(object sender, RoutedEventArgs e)
@@ -51,23 +32,13 @@ namespace View.Screens
             AudioPlayer.Instance.PlayPlaylist(MainWindow.CurrentPlayList);
         }
 
-        private void SongRow_Click(object sender, MouseButtonEventArgs e)
-        {
-
-            var listViewItem = (ListViewItem)sender;
-            var songInfo = (SongInfo)listViewItem.Content;
-
-            AudioPlayer.Instance.PlayPlaylist(MainWindow.CurrentPlayList, songInfo.Index-1);
-        }
-
         private void RemovePlaylistButton_Click(object sender, RoutedEventArgs e)
         {
             var playlistID = (int)((Button)sender).Tag;
 
-            var playlistController = PlaylistController.Create(new DatabaseContext());
             var playlistName = playlistController.GetItem(playlistID).Name;
 
-            var removeConfirm = MessageBox.Show($"Are you sure you want to delete {playlistName}?", $"Remove {playlistName.ToString()}", MessageBoxButton.YesNoCancel);
+            var removeConfirm = MessageBox.Show($"Are you sure you want to delete {playlistName}?", $"Remove {playlistName.ToString()}", MessageBoxButton.YesNo);
             switch (removeConfirm)
             {
                 case MessageBoxResult.Yes:
@@ -75,7 +46,6 @@ namespace View.Screens
                     MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs() { ScreenName = ScreenNames.PlaylistMenuScreen } );
                     break;
                 case MessageBoxResult.No:
-                case MessageBoxResult.Cancel:
                     break;
             }
         }
@@ -87,8 +57,8 @@ namespace View.Screens
 
             if (selectedSongInfo == null || selectedSongInfo.Index - 1 < 0) return;
 
-
-            SwapSongs(selectedSongInfo.Index, selectedSongInfo.Index - 1);
+            playlistSongController.SwapSongs(selectedSongInfo.Index, selectedSongInfo.Index - 1, MainWindow.CurrentPlayList.ID);
+            PlaylistDataContext.Instance.OnPropertyChanged("");
         }
 
         private void MoveDown_Click(object sender, RoutedEventArgs e)
@@ -98,23 +68,8 @@ namespace View.Screens
             var selectedSongInfo = (SongInfo)listView?.SelectedItem;
 
             if (selectedSongInfo == null || selectedSongInfo.Index + 1 >= listView.Items.Count) return;
-
-            SwapSongs(selectedSongInfo.Index, selectedSongInfo.Index + 1);
-        }
-
-        public void SwapSongs(int indexOne, int indexTwo)
-        {
-            var playlistSongController = PlaylistSongController.Create(new DatabaseContext());
-            int playlistID = MainWindow.CurrentPlayList.ID;
-            var songOne = playlistSongController.GetPlaylistSongFromIndex(playlistID, indexOne);
-            var songTwo = playlistSongController.GetPlaylistSongFromIndex(playlistID, indexTwo);
-
-            songOne.Index = indexTwo;
-            songTwo.Index = indexOne;
-
-            playlistSongController.UpdatePlaylistSong(songOne);
-            playlistSongController.UpdatePlaylistSong(songTwo);
-
+            
+            playlistSongController.SwapSongs(selectedSongInfo.Index, selectedSongInfo.Index + 1, MainWindow.CurrentPlayList.ID);
             PlaylistDataContext.Instance.OnPropertyChanged("");
         }
     }

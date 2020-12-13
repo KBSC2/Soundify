@@ -21,51 +21,30 @@ namespace View.Screens
     /// </summary>
     public partial class RequestScreen : ResourceDictionary
     {
+        private RequestController requestController;
+
         public RequestScreen()
         {
             InitializeComponent();
+            requestController = RequestController.Create(new DatabaseContext());
         }
 
         private void Approve_Button_Click(object sender, RoutedEventArgs e)
         {
             var requestID = (int)((Button) sender).Tag;
 
-            ApproveUser(requestID, new DatabaseContext());
+            requestController.ApproveUser(requestID);
 
             RequestDatacontext.Instance.OnPropertyChanged("");
-        }
-
-        public void ApproveUser(int requestID, IDatabaseContext databaseContext)
-        {
-            var request = RequestController.Create(databaseContext).GetItem(requestID);
-
-            var userID = request.UserID;
-
-            ArtistController.Create(databaseContext).MakeArtist(userID);
-
-            RequestController.Create(databaseContext).DeleteItem(requestID);
         }
 
         private void Decline_Button_Click(object sender, RoutedEventArgs e)
         {
             var requestID = (int)((Button)sender).Tag;
             
-            DeclineUser(requestID, new DatabaseContext());
+            requestController.DeclineUser(requestID);
 
             RequestDatacontext.Instance.OnPropertyChanged("");
-        }
-
-        public void DeclineUser(int requestID, IDatabaseContext databaseContext)
-        {
-            var request = RequestController.Create(databaseContext).GetItem(requestID);
-            var userID = request.UserID;
-
-            var userController = UserController.Create(databaseContext);
-            var user = userController.GetItem(userID);
-            user.RequestedArtist = false;
-            userController.UpdateItem(user);
-
-            RequestController.Create(databaseContext).DeleteItem(requestID);
         }
     }
 }

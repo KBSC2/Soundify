@@ -54,8 +54,8 @@ namespace View
             user.RequestedArtist = true;
             userController.UpdateItem(user);
 
-            var createRequest = RequestController.Create(new DatabaseContext());
-            createRequest.CreateItem(request);
+            var requestController = RequestController.Create(new DatabaseContext());
+            requestController.CreateItem(request);
 
             this.Close();
 

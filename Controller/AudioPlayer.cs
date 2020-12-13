@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,6 +41,11 @@ namespace Controller
             return x;
         }
 
+        /**
+         * Initializes the waveOut device
+         *
+         * @return void
+         */
         public void Initialize()
         {
             WaveOutDevice = new WaveOut { Volume = 0.05f };
@@ -48,6 +53,11 @@ namespace Controller
             CurrentSongIndex = -1;
         }
 
+        /**
+         * Skips to the next song
+         *
+         * @return void
+         */
         public void Next()
         {
             if(CurrentSongIndex >= 0)
@@ -76,6 +86,11 @@ namespace Controller
             Next();
         }
 
+        /**
+         * Goes back to the previous song
+         *
+         * @return void
+         */
         [HasPermission(Permission = Permissions.SongPrev)]
         public virtual void Prev()
         {
@@ -96,6 +111,13 @@ namespace Controller
             PlaySong(Queue[CurrentSongIndex]);
         }
 
+        /**
+         * Plays the current selected song
+         *
+         * @param song The song that has to be played
+         *
+         * @return void
+         */
         public void PlaySong(Song song)
         {
             CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
@@ -105,11 +127,25 @@ namespace Controller
             Task.Delay(500).ContinueWith(x => WaveOutDevice.Play());
         }
 
+        /**
+         * Adds a song to the Queue
+         *
+         * @param song The song that has to be played
+         *
+         * @return void
+         */
         public void AddSongToQueue(Song song)
         {
             Queue.Add(song);
         }
 
+        /**
+         * Adds a song to the songQueue
+         *
+         * @param song The song that has to be played
+         *
+         * @return void
+         */
         public void AddSongToSongQueue(Song song)
         {
             Queue.Insert(CurrentSongIndex+1, song);
@@ -122,12 +158,25 @@ namespace Controller
             else
                 NextInQueue.Add(song);
         }
-
+        
+        /**
+         * Clears the Queue
+         *
+         * @return void
+         */
         public void ClearQueue()
         {
             Queue.Clear();
         }
 
+        /**
+         * Plays a playlist
+         *
+         * @param playlist Gets the playlist 
+         * @param index Gets the corresponding index
+         *
+         * @return void
+         */
         public void PlayPlaylist(Playlist playlist, int startIndex = -1)
         {
             ClearQueue();
@@ -143,6 +192,13 @@ namespace Controller
             Next();
         }
 
+        /**
+         * Keeps playing the playlists over and over again
+         *
+         * @param playlist Which playlist needs to be looped over
+         *
+         * @return void
+         */
         [HasPermission(Permission = Permissions.SongLoop)]
         public virtual void Loop(Playlist playlist)
         {
@@ -203,6 +259,17 @@ namespace Controller
                 WaveOutDevice.Play();
             else
                 WaveOutDevice.Pause();
+        }
+
+        public void ChangeVolume(int selectedItem)
+        {
+            MaxVolume = selectedItem switch
+            {
+                0 => 0.1,
+                1 => 0.2,
+                2 => 0.4,
+                _ => 0.0
+            };
         }
     }
 }

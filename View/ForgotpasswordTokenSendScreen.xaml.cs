@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net.Mail;
 using System.Windows;
 using Controller;
@@ -32,12 +32,24 @@ namespace View
 
             var emailController = new EmailController();
             var mail = new ForgotPasswordTemplate(new MailAddress("info.soundify@gmail.com"), token);
-            
-            if (email.Contains(".") && email.Contains("@"))
+
+            if (email != "" && email.Contains(".") && email.Contains("@"))
                 emailController.SendEmail(mail, email);
+            else
+            {
+                this.Error.Content = "You must enter a valid email address to continue";
+                return;
+            }
 
             var controller = UserController.Create(new DatabaseContext());
             var user = controller.GetUserFromEmailOrUsername(email);
+
+            if (user == null)
+            {
+                this.Error.Content = "This email was not recognized, please try again";
+                return;
+            }
+
             user.Token = token;
             controller.UpdateItem(user);
 

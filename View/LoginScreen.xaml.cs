@@ -27,6 +27,7 @@ namespace View
 
                     UsernameLogin.Text = split[1];
                     PasswordLogin.Password = split[0];
+                    RememberData.IsChecked = true;
                 }
             }
         }
@@ -48,6 +49,7 @@ namespace View
                     main.Focus();
                     this.Hide();
                     File.Create(Path.GetTempPath() + "Soundify/settings/loginInfo").Close();
+                    MainWindow.InstanceMainWindow.UpdateButtons();
 
                     if (RememberData.IsChecked ?? false)
                     {
@@ -110,6 +112,7 @@ namespace View
             forgotPasswordTokenSendScreen.Show();
             forgotPasswordTokenSendScreen.Focus();
         }
+
         private void WindowClosing(object sender, EventArgs e)
         {
             SSHController.Instance.CloseSSHTunnel();

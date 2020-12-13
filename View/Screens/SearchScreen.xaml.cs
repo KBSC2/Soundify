@@ -5,6 +5,10 @@ using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
+using Model.Enums;
+using Model.EventArgs;
+using Soundify;
+using View.DataContexts;
 
 namespace View.Screens
 {
@@ -16,24 +20,18 @@ namespace View.Screens
         public SearchScreen()
         {
             InitializeComponent();
-
         }
 
-        
-        private void MenuItem_LeftClick(object sender, MouseButtonEventArgs e)
+        public void PlaylistRow_Click(object sender, MouseButtonEventArgs e)
         {
-            var playlist = ((Playlist)((MenuItem)sender).DataContext);
-            var song = ((SongInfo)((MenuItem)((MenuItem)sender).Tag).DataContext).Song;
+            var listViewItem = (ListViewItem)sender;
+            var selectedPlaylist = (Playlist)listViewItem.Content;
 
-            var playlistSongController = PlaylistSongController.Create(new DatabaseContext());
-            playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
-        }
-
-        public void ListViewItem_RightClickAddQueue(object sender, RoutedEventArgs e)
-        {
-            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
-
-            AudioPlayer.Instance.AddSongToSongQueue(song);
+            MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs
+            {
+                ScreenName = ScreenNames.PlaylistScreen,
+                Playlist = selectedPlaylist
+            });
         }
     }
 }
