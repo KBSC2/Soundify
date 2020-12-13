@@ -180,7 +180,7 @@ namespace Controller
                         queueFromCurrentSongIndex.ForEach(i => AddSongToQueue(i));
                     }
                     else
-                        songs.ForEach(i => AddSongToQueue(i.Song));
+                        songs.ForEach(i => queueFromCurrentSongIndex.Add(i.Song));
                 }
                 else
                 {
