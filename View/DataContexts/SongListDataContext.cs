@@ -57,15 +57,17 @@ namespace View.DataContexts
                             artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID))).ToList();
                     break;
                 case ScreenNames.SongListScreen:
-                    if ((bool)DataContext.Instance.IsAdmin)
+                    if (DataContext.Instance.IsAdmin != null && (bool)DataContext.Instance.IsAdmin)
                     {
-                        songlist = SongController.Create(new DatabaseContext()).SearchSongsOnString(Instance.SongListSearchTerms.ToList());
+                        songlist = SongController.Create(new DatabaseContext())
+                            .SearchSongsOnString(Instance.SongListSearchTerms.ToList());
                     }
-                    else if ((bool) DataContext.Instance.IsArtist)
+                    else if (DataContext.Instance.IsArtist != null && (bool) DataContext.Instance.IsArtist)
                     {
-                        songlist = SongController.Create(new DatabaseContext()).SearchSongsOnString(Instance.SongListSearchTerms.ToList())
-                            .Where(s => s.Artist == artistController.GetItem((int) artistController
-                                .GetArtistIdFromUserId(UserController.CurrentUser.ID)).ID).ToList();
+                        songlist = SongController.Create(new DatabaseContext())
+                            .SearchSongsOnString(Instance.SongListSearchTerms.ToList())
+                            .Where(s => s.Artist.Equals(
+                                artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID))).ToList();
                     }
                     break;
             }
