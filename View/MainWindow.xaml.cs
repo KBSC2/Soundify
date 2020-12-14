@@ -29,7 +29,9 @@ namespace Soundify
     public partial class MainWindow : Window
     {
         #region Events
+
         public static EventHandler<MenuItemRoutedEventArgs> MenuItemRoutedEvent;
+
         #endregion
 
         public DatabaseContext Context { get; set; }
@@ -86,7 +88,7 @@ namespace Soundify
                 InstanceLoginScreen.Show();
                 InstanceMainWindow.Hide();
             }
-            
+
             PermissionController.NoRightsEvent += ShowNoRights;
         }
 
@@ -137,7 +139,8 @@ namespace Soundify
                 QueueDataContext.Instance.OnPropertyChanged();
             }
 
-            if (AudioPlayer.Instance.WaveOutDevice.PlaybackState == PlaybackState.Paused || AudioPlayer.Instance.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
+            if (AudioPlayer.Instance.WaveOutDevice.PlaybackState == PlaybackState.Paused ||
+                AudioPlayer.Instance.WaveOutDevice.PlaybackState == PlaybackState.Stopped)
             {
                 if (AudioPlayer.Instance.Queue.Count > 0)
                 {
@@ -154,7 +157,8 @@ namespace Soundify
         {
             if (sender is Slider slider)
             {
-                AudioPlayer.Instance.CurrentSongFile.AudioFile.Skip((int)(slider.Value - AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong));
+                AudioPlayer.Instance.CurrentSongFile.AudioFile.Skip(
+                    (int) (slider.Value - AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong));
             }
         }
 
@@ -162,9 +166,9 @@ namespace Soundify
         {
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
             SongListDataContext.Instance.ScreenName = screenName;
-            SongListDataContext.Instance.OnPropertyChanged(); 
-            
+            SongListDataContext.Instance.OnPropertyChanged();
         }
+
         public void SetScreen(ScreenNames screenName, Playlist playlist)
         {
             CurrentPlayList = playlist;
@@ -180,8 +184,7 @@ namespace Soundify
         private void Volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Slider slider = sender as Slider;
-            AudioPlayer.Instance.WaveOutDevice.Volume = (float)slider.Value;
-
+            AudioPlayer.Instance.WaveOutDevice.Volume = (float) slider.Value;
         }
 
         private void Prev_Button_Click(object sender, RoutedEventArgs e)
@@ -214,10 +217,18 @@ namespace Soundify
                 var textBox = (TextBox) sender;
                 var text = textBox.Text;
 
-                SearchDataContext.Instance.SearchTerms = text.Split(" ").ToList();
-                SetScreen(ScreenNames.SearchScreen);
+                if (SongListDataContext.Instance.IsSongListScreen)
+                {
+                    SongListDataContext.Instance.SongListSearchTerms = text.Split(" ").ToList();
+                    SongListDataContext.Instance.OnPropertyChanged();
+                }
+                else
+                {
+                    SearchDataContext.Instance.SearchTerms = text.Split(" ").ToList();
+                    SetScreen(ScreenNames.SearchScreen);
+                }
                 SearchDataContext.Instance.OnPropertyChanged("");
-            }   
+            }
         }
 
         public void ShowNoRights(object sender, NoRightsEventArgs e)
