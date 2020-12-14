@@ -38,13 +38,12 @@ namespace View.DataContexts
                 .GetItem(UserController.CurrentUser.ID);
         public int? CurrentUserCoins => CurrentUser?.Coins;
         public Role CurrentUserRole => UserController.CurrentUser == null ? null : RoleController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.RoleID);
-        public bool? IsAdmin => CurrentUser?.RoleID.Equals(3);
-        public bool? IsArtist => CurrentUser?.RoleID.Equals(2);
+        public bool IsAdmin => CurrentUser == null ? CurrentUser.RoleID.Equals(3) : false;
+        public bool IsArtist => CurrentUser == null ? CurrentUser.RoleID.Equals(2) : false;
 
-        public string SongNameGiving => IsAdmin!= null ? (bool) IsAdmin ? "All Songs" : "Own Songs" : "";
+        public string SongNameGiving => IsAdmin ? "All Songs" : "Own Songs" : "";
 
-        public string DisplayName => IsArtist.GetValueOrDefault(false)
-            ? ArtistController.Create(new DatabaseContext()).GetArtistFromUserId(UserController.CurrentUser?.ID)?.ArtistName 
+        public string DisplayName => IsArtist ? ArtistController.Create(new DatabaseContext()).GetArtistFromUserId(UserController.CurrentUser?.ID)?.ArtistName 
             : UserController.CurrentUser?.Username;
 
         private Timer timerSlider;
