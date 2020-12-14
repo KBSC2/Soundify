@@ -41,10 +41,10 @@ namespace Controller.DbControllers
         }
 
        /**
-        * Check if artistname and/or artistreason are empty
+        * Check if artistName and/or artistReason are empty
         * 
-        * @param artistname User's requested artistname
-        * @param artistreason User's requested artistreason
+        * @param artistName User's requested artistName
+        * @param artistReason User's requested artistReason
         * 
         * @return RequestArtistResults : Result of the user's request to become an artist
         */
