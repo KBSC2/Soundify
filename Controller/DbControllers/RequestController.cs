@@ -40,6 +40,18 @@ namespace Controller.DbControllers
             return GetFilteredList(r => r.RequestType == RequestType.Artist);
         }
 
+
+        /**
+         * Gets a lists of all the requests to upload a song
+         *
+         * @return List<Request> A list with all the requests
+         */
+        public virtual List<Request> GetSongRequests()
+        {
+            var x = GetFilteredList(r => r.RequestType == RequestType.Song);
+            return x;
+        }
+
         /**
          * Approves a request from a user to become an artist
          *
@@ -71,6 +83,54 @@ namespace Controller.DbControllers
             userController.UpdateItem(user);
 
             DeleteItem(requestID);
+        }
+
+        /**
+        * Approves a request from a user to upload a song
+        *
+        * @param requestID The ID of the request in question
+        */
+        public void ApproveSong(int requestID)
+        {
+            var request = GetItem(requestID);
+
+            if (!request.SongID.HasValue) return;
+
+            var songController= SongController.Create(new DatabaseContext());
+
+            var song = songController.GetItem(request.SongID.Value);
+            song.Status = SongStatus.Approved;
+            songController.UpdateItem(song);
+
+            DeleteItem(requestID);
+        }
+
+        /**
+         * Declines the request from a user to upload a song
+         *
+         * @param requestID The ID of the request in question
+         */
+        public void DeclineSong(int requestID)
+        {
+            var request = GetItem(requestID);
+
+            if (!request.SongID.HasValue) return;
+
+            var songController = SongController.Create(new DatabaseContext());
+
+            DeleteItem(requestID);
+
+            songController.DeleteItem(request.SongID.Value);
+        }
+
+        /**
+         * Get the number of all the pending requests
+         *
+         * @return int The number of all the requests
+         */
+        public int GetAllRequestsCount()
+        {
+            return GetList().Count;
         }
     }
 }
