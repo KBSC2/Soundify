@@ -41,12 +41,12 @@ namespace Controller.DbControllers
         }
 
        /**
-        * Check if Artistname and/or Artistreason are empty
+        * Check if artistname and/or artistreason are empty
         * 
-        * @param ArtistName User's requested artistname
-        * @param ArtistReason User's requested artistreason
+        * @param artistname User's requested artistname
+        * @param artistreason User's requested artistreason
         * 
-        * @return RequestArtistResults Result of the user's request to become an artist
+        * @return RequestArtistResults : Result of the user's request to become an artist
         */
         public virtual RequestArtistResults RequestArtist(string ArtistName, string ArtistReason)
         {
