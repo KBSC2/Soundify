@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -29,26 +30,35 @@ namespace View.DataContexts
             }
         }
 
+
         public ScreenNames ScreenName { get; set; }
+
+        public List<string> SongListSearchTerms { get; set; } = new List<string>(){""};
+
+        public bool IsSongListScreen => Instance.ScreenName.Equals(ScreenNames.SongListScreen);
 
         public void UpdateSongInfoList()
         {
+            var artistController = ArtistController.Create(new DatabaseContext());
+            var songController = SongController.Create(new DatabaseContext());
             switch (instance.ScreenName)
             {
                 case ScreenNames.PlaylistScreen:
-                    var songlistPlaylist = PlaylistSongController.Create(new DatabaseContext())
-                        .GetSongsFromPlaylist(MainWindow.CurrentPlayList.ID);
-                    SongInfoList = SongInfo.ConvertSongListToSongInfo(MainWindow.CurrentPlayList, songlistPlaylist);
+                    SongInfoList = SongInfo.ConvertSongListToSongInfo(MainWindow.CurrentPlayList, songController.GetSongsFromPlaylist(MainWindow.CurrentPlayList.ID));
                     break;
                 case ScreenNames.SearchScreen:
-                    var songlistSearch = SongController.Create(new DatabaseContext())
-                        .SearchSongsOnString(SearchDataContext.Instance.SearchTerms.ToList());
-                    SongInfoList = SongInfo.ConvertSongListToSongInfo(songlistSearch);
+
+                    SongInfoList = SongInfo.ConvertSongListToSongInfo(songController.SearchSongsOnString(SearchDataContext.Instance.SearchTerms.ToList()));
                     break;
                 case ScreenNames.ArtistScreen:
-                    var songlistArtist = SongController.Create(new DatabaseContext()).GetList()
-                        .Where(s => s.Artist == ArtistController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.ID).ID).ToList();
-                    SongInfoList = SongInfo.ConvertSongListToSongInfo(songlistArtist);
+                    SongInfoList = SongInfo.ConvertSongListToSongInfo(songController.GetList().Where(s => s.Artist.Equals(artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID))).ToList());
+                    break;
+                case ScreenNames.SongListScreen:
+                    if(DataContext.Instance.IsAdmin)
+                        SongInfoList = SongInfo.ConvertSongListToSongInfo(songController.SearchSongsOnString(SongListSearchTerms.ToList()));
+                    else
+                        SongInfoList = SongInfo.ConvertSongListToSongInfo(songController.SearchSongsOnString(SongListSearchTerms.ToList())
+                            .Where(s => s.Artist.Equals(artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID))).ToList());
                     break;
             }
         }
