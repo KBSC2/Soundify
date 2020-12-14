@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,11 +25,21 @@ namespace View.Components
 
         private static void OnCollapseableColumnChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
-            var header = sender as GridViewColumnHeader;
+            var header = sender as GridViewColumnHeader; 
             if (header == null)
                 return;
 
-            header.IsVisibleChanged += AdjustWidth;
+            if ((bool)args.NewValue)
+            {
+                header.IsVisibleChanged += AdjustWidth;
+                Debug.WriteLine("Event er op");
+            }
+            else
+            {
+                header.IsVisibleChanged -= AdjustWidth;
+                Debug.WriteLine("Event er af");
+            }
+
         }
 
         private static void AdjustWidth(object sender, DependencyPropertyChangedEventArgs e)
