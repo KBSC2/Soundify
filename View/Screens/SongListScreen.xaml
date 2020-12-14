@@ -1,0 +1,11 @@
+﻿<ResourceDictionary
+    x:Class="View.Screens.SongListScreen"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DataTemplate x:Key="SongListScreen">
+        <Grid>
+            <ContentPresenter ContentTemplate="{DynamicResource SongList}" />
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>
