@@ -40,6 +40,14 @@ namespace Controller.DbControllers
             return GetFilteredList(r => r.RequestType == RequestType.Artist);
         }
 
+       /**
+        * Check if Artistname and/or Artistreason are empty
+        * 
+        * @param ArtistName User's requested artistname
+        * @param ArtistReason User's requested artistreason
+        * 
+        * @return RequestArtistResults Result of the user's request to become an artist
+        */
         public virtual RequestArtistResults RequestArtist(string ArtistName, string ArtistReason)
         {
             if (ArtistName == "" && ArtistReason == "")
