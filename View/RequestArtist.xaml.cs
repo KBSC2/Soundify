@@ -83,13 +83,13 @@ namespace View
 
                 case RequestArtistResults.ReasonNotFound:
                     {
-                        this.Error.Content = "please fill in your reason as to why you want to become an artist before proceeding.";
+                        this.Error.Content = "Please fill in your reason as to why you want to become an artist before proceeding.";
                         break;
                     }
 
                 case RequestArtistResults.NameAndReasonNotFound:
                 {
-                        this.Error.Content = "please fill in your Artist name and reason to become an artist before proceeding.";
+                        this.Error.Content = "Please fill in your Artist name and reason to become an artist before proceeding.";
                         break;
                 }
             }
