@@ -142,13 +142,11 @@ namespace Soundify
                 if (AudioPlayer.Instance.Queue.Count > 0)
                 {
                     AudioPlayer.Instance.WaveOutDevice.Play();
-                    Play.Content = "=";
                 }
             }
             else
             {
                 AudioPlayer.Instance.WaveOutDevice.Pause();
-                Play.Content = ">";
             }
         }
 

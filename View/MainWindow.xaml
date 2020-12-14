@@ -20,23 +20,27 @@
 
     <Grid>
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="92,54,0,74" ContentTemplate="{StaticResource HomeScreen}"/>
-        <Grid Margin="89,0,0,0" Background="{DynamicResource Background2Color}" Height="74" VerticalAlignment="Bottom" ShowGridLines="False">
+        <Grid Margin="92,0,0,0" Background="{DynamicResource Background2Color}" Height="74" VerticalAlignment="Bottom" ShowGridLines="False">
             <Image Source="{Binding PathToImage}" Height="60" Width="60" HorizontalAlignment="Left" Margin="40,0,0,0"/>
             <TextBlock Text="{Binding CurrentSong.Name}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="110,10,0,37" MaxWidth="200" Foreground="White"/>
             <TextBlock Text="{Binding CurrentSong.Artist}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="110,37,0,10" MaxWidth="200" FontStyle="Italic" Foreground="White"/>
-            <Button x:Name="Play" MaxWidth="40" MaxHeight="34"  Content=">" Margin="334,20,334,0" VerticalAlignment="Top" Click="Play_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" Grid.RowSpan="2"/>
+            <Button x:Name="Play" Margin="0,0,0,0" VerticalAlignment="Center" Click="Play_Button_Click" MaxWidth="58" BorderBrush="{x:Null}" Background="Transparent">
+                <!--Uncomment image and comment the image for preview-->
+                <Image Source="{Binding PlayImage}"/>
+                <!--<Image Source="/Assets/play.png" Height="53" Width="53"/>-->
+            </Button>
             <Label x:Name="CurrentTime" Content="{Binding CurrentTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top" Foreground="White"/>
             <Label x:Name="TotalTime" Content="{Binding TotalTimeLabel, Mode=OneWay}" Margin="0,5,0,0" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Right" />
-            <components:PermissionButton Permission="SongPrev" x:Name="Prev" MaxWidth="60" Content="Prev" Margin="254,20,394,0" VerticalAlignment="Top" Click="Prev_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" RenderTransformOrigin="0.91,0.588" Grid.RowSpan="2"/>
-            <components:PermissionButton Permission="SongNext" x:Name="Next" MaxWidth="60" Content="Next" Margin="394,20,254,0" VerticalAlignment="Top" Click="Next_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" Grid.RowSpan="2"/>
-            <components:PermissionButton Permission="SongLoop" x:Name="Loop" MaxWidth="60" Content="Loop" Margin="174,20,474,0" VerticalAlignment="Top" Click="Loop_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" Grid.RowSpan="2"/>
-            <components:PermissionButton Permission="SongShuffle" x:Name="Shuffle" MaxWidth="60" Content="Shuffle" Margin="476,20,172,0" VerticalAlignment="Top" Click="Shuffle_Button_Click" Height="34" Foreground="White" BorderBrush="{x:Null}" Background="{DynamicResource HighlighBlue}" Grid.RowSpan="2"/>
+            <components:PermissionButton Permission="SongPrev" x:Name="Prev" Content="{DynamicResource Previous}" Margin="481,0,624,0" VerticalAlignment="Center" Click="Prev_Button_Click" BorderBrush="{x:Null}" Background="Transparent" Height="40" Width="40"/>
+            <components:PermissionButton Permission="SongNext" x:Name="Next" Content="{DynamicResource Next}" Margin="636,0,496,0" VerticalAlignment="Center" Click="Next_Button_Click" BorderBrush="{x:Null}" Background="Transparent" Height="40" Width="40"/>
+            <components:PermissionButton Permission="SongLoop" x:Name="Loop" Content="{DynamicResource Loop}" Margin="427,24,717,0" VerticalAlignment="Top" Click="Loop_Button_Click" Height="30" Width="30" BorderBrush="{x:Null}" Background="Transparent"/>
+            <components:PermissionButton Permission="SongShuffle" x:Name="Shuffle" Content="{DynamicResource Shuffle}" Margin="714,24,430,0" VerticalAlignment="Top" Click="Shuffle_Button_Click" Height="30" Width="30" BorderBrush="{x:Null}" Background="Transparent"/>
             <Slider x:Name="Volume" Margin="0,28,10,0" IsMoveToPointEnabled="True" VerticalAlignment="Top" Maximum="{Binding MaxVolume, Mode=OneWay}" ValueChanged="Volume_ValueChanged" Value="{Binding Volume, Mode=OneWay}" SmallChange="0.001" LargeChange="0.01" Grid.RowSpan="2" HorizontalAlignment="Right" Width="100"/>
             <Slider x:Name="Duration" Margin="-6,-8,-4,64" IsMoveToPointEnabled="True" Foreground="White" Minimum="0.00" Maximum="{Binding TotalTime, Mode=OneWay}" Value="{Binding CurrentTime, Mode=OneWay}" ValueChanged="Duration_ValueChanged"/>
         </Grid>
         <Grid Margin="89,0,0,0" Background="{DynamicResource Background2Color}" Height="54" VerticalAlignment="Top" ShowGridLines="False">
-	        <Label Content="{Binding DisplayName}" Foreground="{Binding CurrentUserRole.ColorCode, Converter={StaticResource colorConverter}}" Margin="10,14,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Width="auto"/>
-	        <TextBox Style="{StaticResource WatermarkTextbox }" HorizontalAlignment="Center" Tag="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="192" Height="25" KeyDown="SetSearchTerms" BorderBrush="{x:Null}" Background="White"/>
+            <Label Content="{Binding DisplayName}" Foreground="{Binding CurrentUserRole.ColorCode, Converter={StaticResource colorConverter}}" Margin="10,14,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Width="auto"/>
+            <TextBox Style="{StaticResource WatermarkTextbox }" HorizontalAlignment="Center" Tag="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="192" Height="25" KeyDown="SetSearchTerms" BorderBrush="{x:Null}" Background="White"/>
             <components:MenuButton MaxHeight="34" MaxWidth="70" ScreenName="SettingScreen"         Content="Settings"        Margin="0,0,10,0" VerticalAlignment="Center" Height="30" HorizontalAlignment="Right" Width="78"/>
         </Grid>
         <Grid Background="{DynamicResource BackgroundColor}" HorizontalAlignment="Left" Width="92" ShowGridLines="False">

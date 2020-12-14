@@ -33,6 +33,8 @@ namespace View.DataContexts
         public string TotalTimeLabel => AudioPlayer.Instance.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSongFile.TotalTimeSong).ToString("m':'ss");
         public string CurrentTimeLabel => AudioPlayer.Instance.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong).ToString("m':'ss");
 
+        public string PlayImage => AudioPlayer.Instance.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing ? "/Assets/pause.png" : "/Assets/play.png";
+
         public User CurrentUser => UserController.CurrentUser == null ? null : UserController.Create(new DatabaseContext())
                 .GetItem(UserController.CurrentUser.ID);
         public int? CurrentUserCoins => CurrentUser?.Coins;
