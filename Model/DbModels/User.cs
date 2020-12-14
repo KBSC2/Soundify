@@ -21,5 +21,6 @@ namespace Model.DbModels
         public string Token { get; set; }
 
         public IList<Request> RequestsList { get; set; }
+        public IList<UserShopItems> UserShopItems { get; set; }
     }
 }

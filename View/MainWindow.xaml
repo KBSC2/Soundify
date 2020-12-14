@@ -45,7 +45,7 @@
             <components:MenuButton ScreenName="PlaylistMenuScreen" Content="Playlists"  Margin="0,110,0,294" Height="30" MaxHeight="30" VerticalAlignment="Top" />
             <components:MenuButton ScreenName="QueueScreen"    Content="Queue"          Margin="0,155,0,0"  Height="30" MaxHeight="30" VerticalAlignment="Top" />
             <components:MenuButton Permission="SongUpload" HideOnBlocked="True" ScreenName="ArtistScreen" Content="Upload"  Margin="0,200,0,0" Height="30" MaxHeight="30" VerticalAlignment="Top" />
-            <components:MenuButton ScreenName="QueueScreen"    Content="Shop"          Margin="0,0,0,81"  HorizontalAlignment="Center" Width="92" MaxHeight="30" Height="31" VerticalAlignment="Bottom" />
+            <components:MenuButton ScreenName="ShopScreen"    Content="Shop"          Margin="0,0,0,81"  HorizontalAlignment="Center" Width="92" MaxHeight="30" Height="31" VerticalAlignment="Bottom" />
             <components:MenuButton Permission="SongEditOwn"  HideOnBlocked="True" ScreenName="SongListScreen" Content="{Binding SongNameGiving}"  Margin="0,245,0,0" Height="30" MaxHeight="30" VerticalAlignment="Top" />
             <components:MenuButton Permission="AdminDashboard" HideOnBlocked="True" ScreenName="AdminScreen"    Content="Admin"          Margin="0,290,0,0"  HorizontalAlignment="Center" Width="92" MaxHeight="30" Height="30" VerticalAlignment="Top" />
             <Image Margin="6,0,66,10" Stretch="Fill" Source="Assets/soundify.png" Height="20" VerticalAlignment="Bottom"/>

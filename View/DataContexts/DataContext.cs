@@ -10,16 +10,15 @@ namespace View.DataContexts
 {
     public class DataContext : INotifyPropertyChanged
     {
-        private static DataContext _instance;
+        private static DataContext instance;
         public static DataContext Instance
         {
             get
             {
-                if (_instance == null)
-                    new DataContext();
-                return _instance;
+                if (instance == null)
+                    instance= new DataContext();
+                return instance;
             }
-            set => _instance = value;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -51,7 +50,6 @@ namespace View.DataContexts
 
         private DataContext()
         {
-            Instance = this;
             timer = new Timer {Interval = 1000};
             timer.Elapsed += OnTimedEvent;
             timer.Elapsed += CoinsController.Instance.EarnCoins;

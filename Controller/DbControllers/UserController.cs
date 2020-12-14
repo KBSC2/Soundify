@@ -19,7 +19,7 @@ namespace Controller.DbControllers
          */
         public static UserController Create(IDatabaseContext context)
         {
-            return ProxyController.AddToProxy<UserController>(new object[] {context}, context);
+            return ProxyController.AddToProxy<UserController>(new object[] { context }, context);
         }
 
         protected UserController(IDatabaseContext context) : base(context, context.Users)
@@ -116,8 +116,10 @@ namespace Controller.DbControllers
             if (!HasPermission(user, permission))
                 return false;
 
+            var sipController = ShopItemPermissionController.Create(Context);
             var rpController = RolePermissionsController.Create(Context);
-            var max = rpController.GetPermissionValueCount(user, maxValue);
+
+            var max = rpController.GetPermissionValueCount(user, maxValue) + sipController.GetPermissionValueCount(user, maxValue);
 
             Dictionary<Permissions, int> maxValues = new Dictionary<Permissions, int>()
             {
@@ -138,8 +140,9 @@ namespace Controller.DbControllers
          */
         public bool HasPermission(User user, Permissions permission)
         {
-            var controller = RolePermissionsController.Create(Context);
-            return controller.GetPermission(user, permission) != null;
+            var sipController = ShopItemPermissionController.Create(Context);
+            var rpController = RolePermissionsController.Create(Context);
+            return rpController.GetPermission(user, permission) != null || sipController.GetPermission(user, permission) != null;
         }
     }
 }

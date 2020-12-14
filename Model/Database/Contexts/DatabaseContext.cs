@@ -17,6 +17,9 @@ namespace Model.Database.Contexts
         public override DbSet<Permission> Permissions { get; set; }
         public override DbSet<RolePermissions> RolePermissions { get; set; }
         public override DbSet<Request> Requests { get; set; }
+        public override DbSet<ShopItem> ShopItems { get; set; }
+        public override DbSet<ShopItemPermissions> ShopItemPersmissions { get; set; }
+        public override DbSet<UserShopItems> UserShopItems { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

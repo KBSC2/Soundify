@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Model.Database.Contexts;
 
 namespace Model.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20201214101723_addedShopItemTabbles")]
+    partial class addedShopItemTabbles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -166,25 +168,18 @@ namespace Model.Migrations
 
             modelBuilder.Entity("Model.DbModels.RolePermissions", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("PermissionID")
+                    b.Property<int>("RoleID")
                         .HasColumnType("int");
 
-                    b.Property<int>("RoleID")
+                    b.Property<int>("PermissionID")
                         .HasColumnType("int");
 
                     b.Property<int>("Value")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("RoleID", "PermissionID");
 
                     b.HasIndex("PermissionID");
-
-                    b.HasIndex("RoleID");
 
                     b.ToTable("RolePermissions");
                 });
@@ -196,9 +191,6 @@ namespace Model.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
@@ -209,25 +201,23 @@ namespace Model.Migrations
 
             modelBuilder.Entity("Model.DbModels.ShopItemPermissions", b =>
                 {
+                    b.Property<int>("ShopItemID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PermissionID")
+                        .HasColumnType("int");
+
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("PermissionID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ShopItemID")
-                        .HasColumnType("int");
-
                     b.Property<int>("Value")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("ShopItemID", "PermissionID");
 
                     b.HasIndex("PermissionID");
-
-                    b.HasIndex("ShopItemID");
 
                     b.ToTable("ShopItemPersmissions");
                 });
@@ -313,22 +303,15 @@ namespace Model.Migrations
 
             modelBuilder.Entity("Model.DbModels.UserShopItems", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
 
                     b.Property<int>("ShopItemID")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
+                    b.HasKey("UserID", "ShopItemID");
 
                     b.HasIndex("ShopItemID");
-
-                    b.HasIndex("UserID");
 
                     b.ToTable("UserShopItems");
                 });
@@ -410,7 +393,7 @@ namespace Model.Migrations
             modelBuilder.Entity("Model.DbModels.UserShopItems", b =>
                 {
                     b.HasOne("Model.DbModels.ShopItem", "ShopItem")
-                        .WithMany()
+                        .WithMany("UserShopItems")
                         .HasForeignKey("ShopItemID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -429,6 +412,11 @@ namespace Model.Migrations
             modelBuilder.Entity("Model.DbModels.Playlist", b =>
                 {
                     b.Navigation("PlaylistSongs");
+                });
+
+            modelBuilder.Entity("Model.DbModels.ShopItem", b =>
+                {
+                    b.Navigation("UserShopItems");
                 });
 
             modelBuilder.Entity("Model.DbModels.Song", b =>

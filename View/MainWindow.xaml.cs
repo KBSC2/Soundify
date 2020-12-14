@@ -74,8 +74,8 @@ namespace Soundify
                     Directory.CreateDirectory(Path.GetTempPath() + "Soundify/" + path.ToString().ToLower());
             }
 
-            InitializeComponent();
             SSHController.Instance.OpenSSHTunnel();
+            InitializeComponent();
 
             Context = new DatabaseContext();
             PlaylistController.Create(Context).DeletePlaylistOnDateStamp();
