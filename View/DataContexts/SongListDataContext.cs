@@ -39,12 +39,13 @@ namespace View.DataContexts
 
         public void UpdateSongInfoList()
         {
-            var artistController = ArtistController.Create(new DatabaseContext());
-            var songController = SongController.Create(new DatabaseContext());
+            var context = new DatabaseContext();
+            var artistController = ArtistController.Create(context);
+            var songController = SongController.Create(context);
             switch (instance.ScreenName)
             {
                 case ScreenNames.PlaylistScreen:
-                    SongInfoList = SongInfo.ConvertSongListToSongInfo(MainWindow.CurrentPlayList, songController.GetSongsFromPlaylist(MainWindow.CurrentPlayList.ID));
+                    SongInfoList = SongInfo.ConvertSongListToSongInfo(MainWindow.CurrentPlayList, PlaylistSongController.Create(context).GetSongsFromPlaylist(MainWindow.CurrentPlayList.ID));
                     break;
                 case ScreenNames.SearchScreen:
 
