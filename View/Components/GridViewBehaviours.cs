@@ -32,12 +32,10 @@ namespace View.Components
             if ((bool)args.NewValue)
             {
                 header.IsVisibleChanged += AdjustWidth;
-                Debug.WriteLine("Event er op");
             }
             else
             {
                 header.IsVisibleChanged -= AdjustWidth;
-                Debug.WriteLine("Event er af");
             }
 
         }
