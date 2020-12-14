@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -29,10 +30,16 @@ namespace View.DataContexts
             }
         }
 
+
         public ScreenNames ScreenName { get; set; }
+
+        public List<string> SongListSearchTerms { get; set; } = new List<string>(){""};
+
+        public bool IsSongListScreen => Instance.ScreenName.Equals(ScreenNames.SongListScreen);
 
         public void UpdateSongInfoList()
         {
+            var artistController = ArtistController.Create(new DatabaseContext());
             List<Song> songlist = new List<Song>();
             switch (instance.ScreenName)
             {
@@ -46,7 +53,22 @@ namespace View.DataContexts
                     break;
                 case ScreenNames.ArtistScreen:
                     songlist = SongController.Create(new DatabaseContext()).GetList()
-                        .Where(s => s.Artist == ArtistController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.ID).ID).ToList();
+                        .Where(s => s.Artist.Equals(
+                            artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID))).ToList();
+                    break;
+                case ScreenNames.SongListScreen:
+                    if (DataContext.Instance.IsAdmin != null && (bool)DataContext.Instance.IsAdmin)
+                    {
+                        songlist = SongController.Create(new DatabaseContext())
+                            .SearchSongsOnString(SongListSearchTerms.ToList());
+                    }
+                    else if (DataContext.Instance.IsArtist != null && (bool) DataContext.Instance.IsArtist)
+                    {
+                        songlist = SongController.Create(new DatabaseContext())
+                            .SearchSongsOnString(SongListSearchTerms.ToList())
+                            .Where(s => s.Artist.Equals(
+                                artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID))).ToList();
+                    }
                     break;
             }
 
