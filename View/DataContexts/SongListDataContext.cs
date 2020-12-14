@@ -60,12 +60,12 @@ namespace View.DataContexts
                     if (DataContext.Instance.IsAdmin != null && (bool)DataContext.Instance.IsAdmin)
                     {
                         songlist = SongController.Create(new DatabaseContext())
-                            .SearchSongsOnString(Instance.SongListSearchTerms.ToList());
+                            .SearchSongsOnString(SongListSearchTerms.ToList());
                     }
                     else if (DataContext.Instance.IsArtist != null && (bool) DataContext.Instance.IsArtist)
                     {
                         songlist = SongController.Create(new DatabaseContext())
-                            .SearchSongsOnString(Instance.SongListSearchTerms.ToList())
+                            .SearchSongsOnString(SongListSearchTerms.ToList())
                             .Where(s => s.Artist.Equals(
                                 artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID))).ToList();
                     }

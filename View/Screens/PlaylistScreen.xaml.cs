@@ -29,7 +29,7 @@ namespace View.Screens
 
         public void OnNextSong(object sender, EventArgs e)
         {
-            PlaylistDataContext.Instance.OnPropertyChanged("");
+            SongListDataContext.Instance.OnPropertyChanged("");
         }
         private void Play_Playlist_Button_Click(object sender, RoutedEventArgs e)
         {
