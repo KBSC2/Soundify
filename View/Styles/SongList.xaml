@@ -14,7 +14,7 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Title" Width="200" DisplayMemberBinding="{Binding Song.Name}" />
-                    <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Song.Artist}" />
+                    <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Artist.ArtistName}" />
                     <GridViewColumn Header="Duration" Width="75" DisplayMemberBinding="{Binding Duration}" />
                     <GridViewColumn Header="Added" Width="175" DisplayMemberBinding="{Binding Added}" />
                     <GridViewColumn Width="150">
