@@ -24,6 +24,8 @@ namespace View.DataContexts
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public Song CurrentSong => AudioPlayer.Instance.CurrentSong;
+        public string PathToImage => CurrentSong == null ? "../Assets/null.png" : CurrentSong.PathToImage == null ? "../Assets/NoImage.png" : FileCache.Instance.GetFile(CurrentSong.PathToImage);
         public double Volume => AudioPlayer.Instance.WaveOutDevice.Volume;
         public double MaxVolume => AudioPlayer.Instance.MaxVolume;
         public double TotalTime => AudioPlayer.Instance.CurrentSongFile == null ? 0 : AudioPlayer.Instance.CurrentSongFile.TotalTimeSong;
@@ -37,6 +39,10 @@ namespace View.DataContexts
         public Role CurrentUserRole => UserController.CurrentUser == null ? null : RoleController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.RoleID);
         public bool? IsAdmin => CurrentUser?.RoleID.Equals(3);
         public bool? IsArtist => CurrentUser?.RoleID.Equals(2);
+
+        public string DisplayName => IsArtist.GetValueOrDefault(false)
+            ? ArtistController.Create(new DatabaseContext()).GetArtistFromUserId(UserController.CurrentUser?.ID)?.ArtistName 
+            : UserController.CurrentUser?.Username;
 
         private Timer timerSlider;
         private Timer timer;

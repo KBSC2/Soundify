@@ -1,5 +1,5 @@
 ﻿
-namespace Model
+namespace Model.Enums
 {
     public enum ScreenNames
     {

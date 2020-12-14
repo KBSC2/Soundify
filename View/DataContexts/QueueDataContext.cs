@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Controller.DbControllers;
+using Model.Database.Contexts;
 
 namespace View.DataContexts
 {
@@ -25,7 +27,9 @@ namespace View.DataContexts
 
         public List<SongInfo> NextInQueueItems => QueueGenerator(AudioPlayer.Instance.Queue, AudioPlayer.Instance.CurrentSongIndex);
         public string CurrentSongName => AudioPlayer.Instance.CurrentSong == null ? "" : AudioPlayer.Instance.CurrentSong.Name;
-        public string CurrentSongArtist => AudioPlayer.Instance.CurrentSong == null ? "" : AudioPlayer.Instance.CurrentSong.Artist;
+        public string CurrentSongArtist => AudioPlayer.Instance.CurrentSong == null
+            ? ""
+            : ArtistController.Create(new DatabaseContext()).GetItem(AudioPlayer.Instance.CurrentSong.Artist).ArtistName;
         public string CurrentSongDuration => AudioPlayer.Instance.CurrentSong == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSong.Duration).ToString("m':'ss");
 
         public List<SongInfo> QueueGenerator(List<Song> songs, int index)

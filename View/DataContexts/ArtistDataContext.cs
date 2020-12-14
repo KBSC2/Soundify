@@ -14,6 +14,7 @@ namespace View.DataContexts
     {
         private static ArtistDataContext _instance;
         public static ArtistDataContext Instance => _instance ??= new ArtistDataContext();
+        private static ArtistController artistController = ArtistController.Create(new DatabaseContext());
 
         public TagLib.File SelectedSong { get; set; }
         public BitmapImage SongImage { get; set; }
@@ -26,17 +27,14 @@ namespace View.DataContexts
             .GetList().FirstOrDefault(a => a.UserID == UserController.CurrentUser.ID)
             ?.ArtistName;
 
-        public List<SongInfo> UploadedSongs => SongInfo.ConvertSongListToSongInfo(SongController.Create(new DatabaseContext()).GetList()
-            .Where(s => s.Artist == ArtistController.Create(new DatabaseContext()).GetList()
-                .FirstOrDefault(a => a.UserID == UserController.CurrentUser.ID)?.ArtistName).ToList());
-
-
+        
         public bool ArtistHasSongPending { get; set; } 
 
         public ArtistDataContext()
         {
             ArtistHasSongPending = SongController.Create(new DatabaseContext())
-                .GetList().Where(s => s.Artist == ArtistName && s.Status == SongStatus.AwaitingApproval).ToList().Count > 0;
+                .GetList().Where(s => s.Artist == artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID) && s.Status == SongStatus.AwaitingApproval)
+                .ToList().Count > 0;
 
             StatusMessage = ArtistHasSongPending ? "Awaiting Approval" : "Waiting for song";
 

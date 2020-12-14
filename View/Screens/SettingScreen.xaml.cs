@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using Controller;
 using Controller.DbControllers;
 using Model;
+using Model.Enums;
 using Soundify;
 using View.DataContexts;
 
@@ -21,6 +22,7 @@ namespace View.Screens
 
             MainWindow.InstanceMainWindow.Hide();
             MainWindow.InstanceLoginScreen.Show();
+            MainWindow.InstanceLoginScreen.RememberData.IsChecked = false;
             MainWindow.InstanceMainWindow.SetScreen(ScreenNames.HomeScreen);
         }
 
@@ -36,18 +38,7 @@ namespace View.Screens
             ComboBox comboBox = (ComboBox)sender;
             int selectedItem = comboBox.SelectedIndex;
 
-            switch (selectedItem) 
-            {
-                case 0:
-                    AudioPlayer.Instance.MaxVolume = 0.1;
-                    break;
-                case 2:
-                    AudioPlayer.Instance.MaxVolume = 0.4;
-                    break;
-                default:
-                    AudioPlayer.Instance.MaxVolume = 0.2;
-                    break;
-            }
+            AudioPlayer.Instance.ChangeVolume(selectedItem);
         }
         
         private void Request_Button_Click(object sender, RoutedEventArgs e)

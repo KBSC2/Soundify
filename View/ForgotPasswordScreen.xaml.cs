@@ -41,6 +41,11 @@ namespace View
 
             if (token.Equals(user.Token))
             {
+                if (newPassword == "" || repeatPassword == "")
+                {
+                    this.Error.Content = "Password fields cannot be blank";
+                    return;
+                }
                 if (!newPassword.Equals(repeatPassword))
                 {
                     this.Error.Content = "Passwords don't match";
@@ -58,6 +63,10 @@ namespace View
                 this.Close();
                 MainWindow.InstanceLoginScreen.Show();
             }
+            else
+            {
+                this.Error.Content = "Token does not match";
+            }
         }
 
         private void Confirm_On_Enter_Key(object sender, KeyEventArgs e)
@@ -70,6 +79,7 @@ namespace View
 
         private void Resend_Token_Button_Click(object sender, RoutedEventArgs e)
         {
+            this.Error.Content = "New token has been sent!";
             var emailController = new EmailController();
             var mail = new ForgotPasswordTemplate(new MailAddress("info.soundify@gmail.com"), token);
 

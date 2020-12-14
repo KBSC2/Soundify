@@ -6,13 +6,17 @@ using Model.DbModels;
 using Model.EventArgs;
 using NAudio.Wave;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using Model.Enums;
 using View;
+using View.Components;
 using View.DataContexts;
 using View.Screens;
 
@@ -85,6 +89,46 @@ namespace Soundify
             
             PermissionController.NoRightsEvent += ShowNoRights;
         }
+
+        /**
+         * Find all the objects on specified window
+         *
+         * @param depObj The window you want the objects to be selected from
+         *
+         * @return IEnumerable<T> : Returns the object from type T
+         */
+        public static IEnumerable<T> FindLogicalChildren<T>(DependencyObject depObj) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                foreach (object rawChild in LogicalTreeHelper.GetChildren(depObj))
+                {
+                    if (rawChild is DependencyObject)
+                    {
+                        DependencyObject child = (DependencyObject) rawChild;
+                        if (child is T)
+                        {
+                            yield return (T) child;
+                        }
+
+                        foreach (T childOfChild in FindLogicalChildren<T>(child))
+                            yield return childOfChild;
+                    }
+                }
+            }
+        }
+
+        /**
+         * Updates all the permission buttons on MainWindow
+         *
+         * @return void
+         */
+        public void UpdateButtons()
+        {
+            foreach (PermissionButton button in FindLogicalChildren<PermissionButton>(MainWindow.InstanceMainWindow))
+                button.UpdateButton();
+        }
+
         private void Play_Button_Click(object sender, RoutedEventArgs e)
         {
             if (AudioPlayer.Instance.CurrentSongFile == null)
@@ -110,18 +154,23 @@ namespace Soundify
 
         private void Duration_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Slider slider = sender as Slider;
-            AudioPlayer.Instance.CurrentSongFile.AudioFile.Skip((int)(slider.Value - AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong));
+            if (sender is Slider slider)
+            {
+                AudioPlayer.Instance.CurrentSongFile.AudioFile.Skip((int)(slider.Value - AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong));
+            }
         }
 
         public void SetScreen(ScreenNames screenName)
         {
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
+            SongListDataContext.Instance.ScreenName = screenName;
+            SongListDataContext.Instance.OnPropertyChanged(); 
+            
         }
         public void SetScreen(ScreenNames screenName, Playlist playlist)
         {
-            MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
             CurrentPlayList = playlist;
+            SetScreen(screenName);
         }
 
         public void OnMenuItemRoutedEvent(object sender, MenuItemRoutedEventArgs args)
@@ -166,8 +215,9 @@ namespace Soundify
             {
                 var textBox = (TextBox) sender;
                 var text = textBox.Text;
-                SetScreen(ScreenNames.SearchScreen);
+
                 SearchDataContext.Instance.SearchTerms = text.Split(" ").ToList();
+                SetScreen(ScreenNames.SearchScreen);
                 SearchDataContext.Instance.OnPropertyChanged("");
             }   
         }

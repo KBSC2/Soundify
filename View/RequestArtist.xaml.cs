@@ -67,10 +67,10 @@ namespace View
                         createRequest.CreateItem(request);
                         this.Close();
 
-
                         MessageBox.Show("Request Artist is confirmed!");
                         SettingsDataContext.Instance.OnPropertyChanged("");
                     }
+
                         this.ArtistName.Text = "";
                         this.ArtistReason.Text = "";
                         break;
@@ -80,11 +80,13 @@ namespace View
                         this.Error.Content ="Your artist name is empty, please go back and fill in your artist name before proceeding.";
                         break;
                     }
+
                 case RequestArtistResults.ReasonNotFound:
                     {
                         this.Error.Content = "please fill in your reason as to why you want to become an artist before proceeding.";
                         break;
                     }
+
                 case RequestArtistResults.NameAndReasonNotFound:
                 {
                         this.Error.Content = "please fill in your Artist name and reason to become an artist before proceeding.";

@@ -34,6 +34,22 @@ namespace View
 
             switch(result)
             {
+                case RegistrationResults.NoName:
+                {
+                    this.Error.Content = "You must enter a name to sign up";
+                    this.EmailRegister.Text = "";
+                    break;
+                }
+                case RegistrationResults.NoEmail:
+                {
+                    this.Error.Content = "You must enter an email to sign up";
+                    this.EmailRegister.Text = "";
+                    break;
+                }
+                case RegistrationResults.InvalidEmail:
+                    this.Error.Content = "You must enter a valid email to sign up";
+                    this.EmailRegister.Text = "";
+                    break;
                 case RegistrationResults.Succeeded:
                 {
                     var emailVerificationScreen = new EmailVerificationScreen(token, email);
@@ -41,6 +57,12 @@ namespace View
                     this.Close();
                     break;
                 }
+                case RegistrationResults.UsernameTaken:
+                {
+                    this.Error.Content = "Username has already been taken";
+                    this.UsernameRegister.Text = "";
+                    break;
+                    }
                 case RegistrationResults.EmailTaken:
                 {
                     this.Error.Content = "Email has already been taken";
@@ -56,7 +78,9 @@ namespace View
                 }
                 case RegistrationResults.PasswordNotStrongEnough:
                 {
-                    this.Error.Content = $"Password is {PasswordController.CheckStrength(password).ToString()}";
+                    var strength = PasswordController.CheckStrength(password).ToString().ToLower();
+                    strength = (strength.Contains("very")) ? strength.Replace("very", "very ") : strength;
+                    this.Error.Content = $"Password is {strength}";
                     this.PasswordRegister.Password = "";
                     this.PasswordConfirmRegister.Password = "";
                     break;
