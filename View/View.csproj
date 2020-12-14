@@ -20,6 +20,7 @@
     <None Remove="Assets\pause.png" />
     <None Remove="Assets\play.png" />
     <None Remove="Assets\previous.png" />
+    <None Remove="Assets\settings.png" />
     <None Remove="Assets\shuffle.png" />
     <None Remove="Assets\soundify.png" />
     <None Remove="Assets\soundifyBig.png" />
@@ -27,7 +28,6 @@
     <None Remove="Assets\soundifySmall.ico" />
     <None Remove="Assets\soundifySmall.png" />
     <None Remove="Assets\tick.png" />
-    <None Remove="Assets\whitesettings.png" />
     <None Remove="Assets\whiteUpload.png" />
     <None Remove="dansenaandegracht.mp3" />
     <None Remove="dansenaandegracht2.mp3" />
@@ -54,6 +54,7 @@
     <Resource Include="Assets\pause.png" />
     <Resource Include="Assets\play.png" />
     <Resource Include="Assets\previous.png" />
+    <Resource Include="Assets\settings.png" />
     <Resource Include="Assets\shuffle.png" />
     <Resource Include="Assets\soundify.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -63,7 +64,6 @@
     <Resource Include="Assets\soundifySmall.ico" />
     <Resource Include="Assets\soundifySmall.png" />
     <Resource Include="Assets\tick.png" />
-    <Resource Include="Assets\whitesettings.png" />
     <Resource Include="Assets\whiteUpload.png" />
   </ItemGroup>
 
