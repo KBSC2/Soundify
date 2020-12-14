@@ -218,37 +218,48 @@ namespace Controller
             if (playlist != null)
             {
                 var songs = PlaylistSongController.Create(Context).GetSongsFromPlaylist(playlist.ID);
-                var queueFromCurrentSongIndex = Queue.GetRange(CurrentSongIndex + 1, Queue.Count - (CurrentSongIndex + 1));
+
+                var queueFromCurrentSongIndex = songs.Select(i => i.Song).ToList();
+
+                if (Queue.Count > 0)
+                {
+                    queueFromCurrentSongIndex = Queue.GetRange(CurrentSongIndex + 1, Queue.Count - (CurrentSongIndex + 1));
+                }
+                
                 NextInQueue.ForEach(x => queueFromCurrentSongIndex.Remove(x));
+
+                if (queueFromCurrentSongIndex.Count > songs.Count)
+                    queueFromCurrentSongIndex.RemoveRange(queueFromCurrentSongIndex.Count - songs.Count, songs.Count);
 
                 if (Looping)
                 {
                     if (Shuffling)
                     {
-                        if (queueFromCurrentSongIndex.Count >= songs.Count)
-                            queueFromCurrentSongIndex = queueFromCurrentSongIndex.GroupBy(p => p.ID).Select(g => g.First()).ToList();
-
-
-
                         queueFromCurrentSongIndex = queueFromCurrentSongIndex.OrderBy(i => Guid.NewGuid()).ToList();
-                        queueFromCurrentSongIndex.ForEach(i => AddSongToQueue(i));
-                        songs.Where(x => !queueFromCurrentSongIndex.Contains(x.Song)).Select(x => x.Song).ToList().ForEach(i => AddSongToQueue(i));
-                        queueFromCurrentSongIndex.ForEach(i => AddSongToQueue(i));
+                        var tempList = new List<Song>(queueFromCurrentSongIndex);
+                        songs.Where(x => !queueFromCurrentSongIndex.Contains(x.Song)).Select(x => x.Song).ToList().ForEach(i => queueFromCurrentSongIndex.Add(i));
+                        tempList.ForEach(i => queueFromCurrentSongIndex.Add(i));
                     }
                     else
                         songs.ForEach(i => queueFromCurrentSongIndex.Add(i.Song));
                 }
                 else
                 {
-                    queueFromCurrentSongIndex = queueFromCurrentSongIndex.GroupBy(p => p.ID).Select(g => g.First()).ToList();
-
                     if (Shuffling)
                         queueFromCurrentSongIndex = queueFromCurrentSongIndex.OrderBy(i => Guid.NewGuid()).ToList();
                     else
-                        queueFromCurrentSongIndex = songs.Where(x => queueFromCurrentSongIndex.Contains(x.Song)).Select(x => x.Song).ToList();
+                    {
+                        var tempList = new List<Song>(queueFromCurrentSongIndex);
+                        queueFromCurrentSongIndex.Clear();
+                        songs.Where(x => tempList.Contains(x.Song)).Select(x => x.Song).ToList().ForEach(i => queueFromCurrentSongIndex.Add(i));
+                    }
                 }
 
-                Queue.RemoveRange(CurrentSongIndex + 1 + NextInQueue.Count, Queue.Count - (CurrentSongIndex + 1 + NextInQueue.Count));
+                if(Queue.Count > 0)
+                {
+                    Queue.RemoveRange(CurrentSongIndex + 1 + NextInQueue.Count, Queue.Count - (CurrentSongIndex + 1 + NextInQueue.Count));
+                }
+                
                 Queue.AddRange(queueFromCurrentSongIndex);
             }
         }

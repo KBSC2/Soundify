@@ -33,24 +33,24 @@ namespace View.DataContexts
 
         public void UpdateSongInfoList()
         {
-            List<Song> songlist = new List<Song>();
             switch (instance.ScreenName)
             {
                 case ScreenNames.PlaylistScreen:
-                    songlist = PlaylistSongController.Create(new DatabaseContext())
-                        .GetSongsFromPlaylist(Soundify.MainWindow.CurrentPlayList.ID).Select(ps => ps.Song).ToList();
+                    var songlistPlaylist = PlaylistSongController.Create(new DatabaseContext())
+                        .GetSongsFromPlaylist(MainWindow.CurrentPlayList.ID);
+                    SongInfoList = SongInfo.ConvertSongListToSongInfo(MainWindow.CurrentPlayList, songlistPlaylist);
                     break;
                 case ScreenNames.SearchScreen:
-                    songlist = SongController.Create(new DatabaseContext())
+                    var songlistSearch = SongController.Create(new DatabaseContext())
                         .SearchSongsOnString(SearchDataContext.Instance.SearchTerms.ToList());
+                    SongInfoList = SongInfo.ConvertSongListToSongInfo(songlistSearch);
                     break;
                 case ScreenNames.ArtistScreen:
-                    songlist = SongController.Create(new DatabaseContext()).GetList()
+                    var songlistArtist = SongController.Create(new DatabaseContext()).GetList()
                         .Where(s => s.Artist == ArtistController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.ID).ID).ToList();
+                    SongInfoList = SongInfo.ConvertSongListToSongInfo(songlistArtist);
                     break;
             }
-
-            SongInfoList = SongInfo.ConvertSongListToSongInfo(songlist);
         }
 
         public List<SongInfo> SongInfoList { get; set; }
