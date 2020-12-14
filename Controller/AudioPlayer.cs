@@ -18,6 +18,7 @@ namespace Controller
         public IWavePlayer WaveOutDevice { get; set; }
         public SongAudioFile CurrentSongFile { get; set; }
         public Song CurrentSong { get; set; }
+        public Playlist CurrentPlaylist { get; set; }
         public double MaxVolume { get; set; }
         public event EventHandler NextSong;
 
@@ -30,7 +31,6 @@ namespace Controller
 
         public static AudioPlayer Instance { get; set; }
         public static IDatabaseContext Context { get; set; }
-
 
         public static AudioPlayer Create(IDatabaseContext context)
         {
@@ -48,7 +48,7 @@ namespace Controller
          */
         public void Initialize()
         {
-            WaveOutDevice = new WaveOut { Volume = 0.05f };
+            WaveOutDevice = new WaveOutEvent { Volume = 0.05f };
             MaxVolume = 0.2;
             CurrentSongIndex = -1;
         }
@@ -60,16 +60,10 @@ namespace Controller
          */
         public void Next()
         {
-            if(CurrentSongIndex >= 0)
-            {
-                var previousSong = Queue[CurrentSongIndex];
-
-                if (Looping && !NextInQueue.Contains(previousSong))
-                    AddSongToQueue(previousSong);
-
-                if (NextInQueue.Contains(previousSong))
-                    NextInQueue.Remove(previousSong);
-            }
+            FillQueue(CurrentPlaylist);
+            if (CurrentSongIndex >= 0 && CurrentSong != null)
+                if (NextInQueue.Contains(Queue[CurrentSongIndex]))
+                    NextInQueue.Remove(Queue[CurrentSongIndex]);
             
             if (Queue.Count == 0) return;
             CurrentSongIndex++;
@@ -109,6 +103,7 @@ namespace Controller
             }
 
             PlaySong(Queue[CurrentSongIndex]);
+            FillQueue(CurrentPlaylist);
         }
 
         /**
@@ -120,6 +115,8 @@ namespace Controller
          */
         public void PlaySong(Song song)
         {
+            if (CurrentSong != null)
+                WaveOutDevice.Stop();
             CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
             CurrentSong = song;
             WaveOutDevice.Init(CurrentSongFile.AudioFile);
@@ -179,6 +176,7 @@ namespace Controller
          */
         public void PlayPlaylist(Playlist playlist, int startIndex = -1)
         {
+            CurrentPlaylist = playlist;
             ClearQueue();
             if(NextInQueue.Count > 0)
             {
@@ -188,7 +186,6 @@ namespace Controller
             else
                 CurrentSongIndex = startIndex;
 
-            FillQueue(playlist);
             Next();
         }
 
@@ -200,20 +197,20 @@ namespace Controller
          * @return void
          */
         [HasPermission(Permission = Permissions.SongLoop)]
-        public virtual void Loop(Playlist playlist)
+        public virtual void Loop()
         {
             Looping = !Looping;
-            FillQueue(playlist);
+            FillQueue(CurrentPlaylist);
         }
 
         [HasPermission(Permission = Permissions.SongShuffle)]
-        public virtual void Shuffle(Playlist playlist)
+        public virtual void Shuffle()
         {
             Shuffling = !Shuffling;
-            FillQueue(playlist);
+            FillQueue(CurrentPlaylist);
         }
 
-        public void FillQueue(Playlist playlist)
+        private void FillQueue(Playlist playlist)
         {
             if (playlist != null)
             {
@@ -222,9 +219,7 @@ namespace Controller
                 var queueFromCurrentSongIndex = songs.Select(i => i.Song).ToList();
 
                 if (Queue.Count > 0)
-                {
                     queueFromCurrentSongIndex = Queue.GetRange(CurrentSongIndex + 1, Queue.Count - (CurrentSongIndex + 1));
-                }
                 
                 NextInQueue.ForEach(x => queueFromCurrentSongIndex.Remove(x));
 
@@ -235,7 +230,7 @@ namespace Controller
                 {
                     if (Shuffling)
                     {
-                        queueFromCurrentSongIndex = queueFromCurrentSongIndex.OrderBy(i => Guid.NewGuid()).ToList();
+                        queueFromCurrentSongIndex = ShuffleList(queueFromCurrentSongIndex);
                         var tempList = new List<Song>(queueFromCurrentSongIndex);
                         songs.Where(x => !queueFromCurrentSongIndex.Contains(x.Song)).Select(x => x.Song).ToList().ForEach(i => queueFromCurrentSongIndex.Add(i));
                         tempList.ForEach(i => queueFromCurrentSongIndex.Add(i));
@@ -246,7 +241,7 @@ namespace Controller
                 else
                 {
                     if (Shuffling)
-                        queueFromCurrentSongIndex = queueFromCurrentSongIndex.OrderBy(i => Guid.NewGuid()).ToList();
+                        queueFromCurrentSongIndex = ShuffleList(queueFromCurrentSongIndex);
                     else
                     {
                         var tempList = new List<Song>(queueFromCurrentSongIndex);
@@ -256,12 +251,26 @@ namespace Controller
                 }
 
                 if(Queue.Count > 0)
-                {
                     Queue.RemoveRange(CurrentSongIndex + 1 + NextInQueue.Count, Queue.Count - (CurrentSongIndex + 1 + NextInQueue.Count));
-                }
                 
                 Queue.AddRange(queueFromCurrentSongIndex);
             }
+        }
+
+        private List<Song> ShuffleList(List<Song> songs)
+        {
+            var shuffledList = new List<Song>(songs);
+            var random = new Random();
+
+            while (true)
+            {
+                shuffledList = songs.OrderBy(i => random.Next()).ToList();
+
+                if (!shuffledList[0].Equals(songs[0]))
+                    break;
+            }
+
+            return shuffledList;
         }
 
         public void PlayPause()

@@ -84,7 +84,7 @@ namespace Tests.Local
         public void AudioPlayer_Loop_SongQueue_ContainsSongs()
         {
             AudioPlayer.Instance.PlayPlaylist(playlist);
-            AudioPlayer.Instance.Loop(playlist);
+            AudioPlayer.Instance.Loop();
 
             Assert.IsTrue(playlistSongs.Count * 2 == AudioPlayer.Instance.Queue.Count);
         }
@@ -93,7 +93,7 @@ namespace Tests.Local
         public void AudioPlayer_Loop_ContinuePlaying()
         {
             AudioPlayer.Instance.PlayPlaylist(playlist, 0);
-            AudioPlayer.Instance.Loop(playlist);
+            AudioPlayer.Instance.Loop();
             AudioPlayer.Instance.Next();
 
             Assert.AreEqual(playlistSongs[0].SongID, AudioPlayer.Instance.CurrentSong.ID);
