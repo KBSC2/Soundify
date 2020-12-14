@@ -27,7 +27,7 @@ namespace View.Components
             var header = sender as GridViewColumnHeader;
             if (header == null)
                 return;
-            header.IsVisibleChanged -= AdjustWidth;
+
             header.IsVisibleChanged += AdjustWidth;
         }
 
