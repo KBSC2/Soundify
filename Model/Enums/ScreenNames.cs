@@ -12,6 +12,7 @@ namespace Model.Enums
         SearchScreen,
         ArtistScreen,
         AdminScreen,
-        RequestScreen
+        RequestScreen,
+        RoleAssignmentScreen
     }
 }

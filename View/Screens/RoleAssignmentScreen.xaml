@@ -1,0 +1,38 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dataContexts="clr-namespace:View.DataContexts"
+                    x:Class="View.Screens.RoleAssignmentScreen">
+    <DataTemplate x:Key="RoleAssignmentScreen">
+        <!-- Start RoleAssignmentScreen screen -->
+        <Grid DataContext="{x:Static dataContexts:RoleAssignmentDataContext.Instance}">
+            <Grid Margin="200, 0, 0, 0" HorizontalAlignment="Left" Width="250">
+                <ListView x:Name="{Binding Users}" ItemsSource="{Binding UserRoles}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding Username}" Width="auto">
+                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                    <Setter Property="Content" Value="Username"/>
+                                </Style>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Role" DisplayMemberBinding="{Binding RoleID}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+            <Button Content="Users" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" Width="226" Height="43" FontSize="26.5"  Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="SwapRole_Click"/>
+            <Grid Margin="0, 0, 200, 0" HorizontalAlignment="Right" Width="250">
+                <ListView x:Name="Roles">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Roles"/>
+                        </GridView>
+                    </ListView.View>
+                    <ListViewItem Name="RoleUser">User</ListViewItem>
+                    <ListViewItem Name="RoleArtist">Artist</ListViewItem>
+                    <ListViewItem Name="Admin">Admin</ListViewItem>
+                </ListView>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

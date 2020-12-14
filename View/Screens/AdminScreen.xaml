@@ -6,6 +6,7 @@
         <Grid Margin="0,0,0,0" Background="#FF303651" DataContext="{x:Static DataContexts:AdminDataContext.Instance}">
 	        <Label Content="{Binding NumberOfArtistRequest}" ContentStringFormat="You have {0} requests" HorizontalAlignment="Center" Margin="0,42,0,0" VerticalAlignment="Top" FontSize="26.5" Foreground="White" FontWeight="Bold" Width="auto"/>
             <Button Content="Review requests" HorizontalAlignment="Center" Margin="0,111,0,0" VerticalAlignment="Top" Width="226" Height="43" FontSize="26.5"  Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="Review_Button_Click" />
+            <Button Content="Users" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" Width="226" Height="43" FontSize="26.5"  Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="OpenRoleAssignmentScreen_Click" />
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

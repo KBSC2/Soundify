@@ -29,5 +29,10 @@ namespace View.Screens
         {
             MainWindow.InstanceMainWindow.SetScreen(ScreenNames.RequestScreen);
         }
+
+        private void OpenRoleAssignmentScreen_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.InstanceMainWindow.SetScreen(ScreenNames.RoleAssignmentScreen);
+        }
     }
 }

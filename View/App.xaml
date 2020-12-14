@@ -16,6 +16,7 @@
                 <ResourceDictionary Source="Screens/ArtistScreen.xaml"/>
                 <ResourceDictionary Source="Screens/AdminScreen.xaml"/>
                 <ResourceDictionary Source="Screens/RequestScreen.xaml"/>
+                <ResourceDictionary Source="Screens/RoleAssignmentScreen.xaml"/>
                 <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/Watermark.xaml"/>
                 <ResourceDictionary Source="Styles/SongList.xaml"/>
@@ -33,6 +34,9 @@
                     <View:ColorConverter x:Key="colorConverter"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type Window}">
+                <Setter Property="FontFamily" Value="Comic Sans" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
