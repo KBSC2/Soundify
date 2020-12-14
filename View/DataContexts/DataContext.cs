@@ -41,7 +41,7 @@ namespace View.DataContexts
         public bool IsAdmin => CurrentUser == null ? CurrentUser.RoleID.Equals(3) : false;
         public bool IsArtist => CurrentUser == null ? CurrentUser.RoleID.Equals(2) : false;
 
-        public string SongNameGiving => IsAdmin ? "All Songs" : "Own Songs" : "";
+        public string SongNameGiving => IsAdmin ? "All Songs" : "Own Songs";
 
         public string DisplayName => IsArtist ? ArtistController.Create(new DatabaseContext()).GetArtistFromUserId(UserController.CurrentUser?.ID)?.ArtistName 
             : UserController.CurrentUser?.Username;
