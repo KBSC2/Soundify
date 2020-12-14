@@ -48,13 +48,13 @@ namespace Controller.DbControllers
         * 
         * @return RequestArtistResults : Result of the user's request to become an artist
         */
-        public virtual RequestArtistResults RequestArtist(string ArtistName, string ArtistReason)
+        public virtual RequestArtistResults RequestArtist(string artistName, string artistReason)
         {
-            if (ArtistName == "" && ArtistReason == "")
+            if (artistName == "" && artistReason == "")
                 return RequestArtistResults.NameAndReasonNotFound;
-            if (ArtistName == "")
+            if (artistName == "")
                 return RequestArtistResults.ArtistNameNotFound;
-            if (ArtistReason == "")
+            if (artistReason == "")
                 return RequestArtistResults.ReasonNotFound;
             return RequestArtistResults.Success;
         }
