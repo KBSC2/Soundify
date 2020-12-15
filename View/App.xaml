@@ -34,6 +34,14 @@
                     <Brush x:Key="SGreen">#FF3EBF65</Brush>
                     <View:ColorConverter x:Key="colorConverter"/>
                 </ResourceDictionary>
+
+                <ResourceDictionary>
+                    <Image x:Key="Next" Source="/Assets/next.png"/>
+                    <Image x:Key="Shuffle" Source="/Assets/shuffle.png"/>
+                    <Image x:Key="Previous" Source="/Assets/previous.png"/>
+                    <Image x:Key="Loop" Source="/Assets/loop.png"/>
+                    <Image x:Key="Setting" Source="/Assets/settings.png"/>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="{x:Type Window}">
                 <Setter Property="FontFamily" Value="Comic Sans" />
