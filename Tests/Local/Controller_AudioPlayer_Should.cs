@@ -39,9 +39,12 @@ namespace Tests.Local
             playlist = new Playlist() { Name = "Test", ActivePlaylist = true, CreationDate = DateTime.Now };
             playlistController.CreateItem(playlist);
 
-            song = new Song() { ID = 1, Artist = 1, Duration = 11, Name = "test", Path = "songs/dansenaandegracht.mp3" };
-            song2 = new Song() { ID = 2, Artist = 2, Duration = 11, Name = "test2", Path = "songs/untrago.mp3" };
-            song3 = new Song() { ID = 3, Artist = 3, Duration = 11, Name = "test3", Path = "songs/untrago.mp3" };
+            Artist artist = new Artist();
+            ArtistController.Create(context).CreateItem(artist);
+
+            song = new Song() { ID = 1, Artist = artist.ID, Duration = 11, Name = "test", Path = "songs/dansenaandegracht.mp3" };
+            song2 = new Song() { ID = 2, Artist = artist.ID, Duration = 11, Name = "test2", Path = "songs/untrago.mp3" };
+            song3 = new Song() { ID = 3, Artist = artist.ID, Duration = 11, Name = "test3", Path = "songs/untrago.mp3" };
 
             songController.CreateItem(song);
             songController.CreateItem(song2);

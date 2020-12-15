@@ -120,7 +120,7 @@ namespace Controller
                 WaveOutDevice.Stop();
             CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
             CurrentSong = song;
-            CurrentSongArtistName = ArtistController.Create(new DatabaseContext()).GetItem(song.Artist).ArtistName;
+            CurrentSongArtistName = ArtistController.Create(Context).GetItem(song.Artist).ArtistName;
             WaveOutDevice.Init(CurrentSongFile.AudioFile);
             NextSong?.Invoke(this, new EventArgs());
             Task.Delay(500).ContinueWith(x => WaveOutDevice.Play());
@@ -205,6 +205,13 @@ namespace Controller
             FillQueue(CurrentPlaylist);
         }
 
+        /**
+         * Shuffles the playlist
+         *
+         * @param playlist Which playlist needs to be shuffled
+         *
+         * @return void
+         */
         [HasPermission(Permission = Permissions.SongShuffle)]
         public virtual void Shuffle()
         {
@@ -212,6 +219,13 @@ namespace Controller
             FillQueue(CurrentPlaylist);
         }
 
+        /**
+         * Fills the queue with the songs in the playlist
+         *
+         * @param playlist Which playlist needs to be filled
+         *
+         * @return void
+         */
         private void FillQueue(Playlist playlist)
         {
             if (playlist != null)
@@ -259,6 +273,13 @@ namespace Controller
             }
         }
 
+        /**
+         * Shuffles a list of songs
+         *
+         * @param songs Which list needs to be shuffled
+         *
+         * @return List<Song> : The shuffled list
+         */
         private List<Song> ShuffleList(List<Song> songs)
         {
             if (songs.Count == 0)

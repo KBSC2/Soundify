@@ -27,8 +27,11 @@ namespace Tests.Local
             AudioPlayer.Create(context);
             songController = SongController.Create(context);
 
-            song = new Song() { ID = 1, Artist = 1, Duration = 11, Name = "test", Path = "songs/dansenaandegracht.mp3" };
-            song2 = new Song() { ID = 2, Artist = 1, Duration = 11, Name = "test2", Path = "songs/untrago.mp3" };
+            Artist artist = new Artist();
+            ArtistController.Create(context).CreateItem(artist);
+
+            song = new Song() { ID = 1, Artist = artist.ID, Duration = 11, Name = "test", Path = "songs/dansenaandegracht.mp3" };
+            song2 = new Song() { ID = 2, Artist = artist.ID, Duration = 11, Name = "test2", Path = "songs/untrago.mp3" };
 
             songController.CreateItem(song);
             songController.CreateItem(song2);
