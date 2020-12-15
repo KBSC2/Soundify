@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 using Controller.DbControllers;
 using Model.Database.Contexts;
-using Model.DbModels;
 
 namespace View.DataContexts
 {

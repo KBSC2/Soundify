@@ -1,13 +1,23 @@
 using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Model.DbModels;
-using Model.Migrations;
 
 namespace Model.Database.Contexts
 {
     public class DatabaseContext : IDatabaseContext
     {
-        // @Deprecated, will be removed
+        private static DatabaseContext instance;
+
+        public static DatabaseContext Instance
+        {
+            get 
+            {
+                if(instance == null)
+                    instance = new DatabaseContext();
+                return instance;
+            }
+        }
+
         public override DbSet<Song> Songs { get; set; }
         public override DbSet<Playlist> Playlists { get; set; }
         public override DbSet<PlaylistSong> PlaylistSongs { get; set; }
@@ -17,6 +27,9 @@ namespace Model.Database.Contexts
         public override DbSet<Permission> Permissions { get; set; }
         public override DbSet<RolePermissions> RolePermissions { get; set; }
         public override DbSet<Request> Requests { get; set; }
+        public override DbSet<ShopItem> ShopItems { get; set; }
+        public override DbSet<ShopItemPermissions> ShopItemPersmissions { get; set; }
+        public override DbSet<UserShopItems> UserShopItems { get; set; }
         public override DbSet<Album> Albums { get; set; }
         public override DbSet<AlbumArtistSong> AlbumArtistSongs { get; set; }
 
