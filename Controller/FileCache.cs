@@ -31,7 +31,7 @@ namespace Controller
          */
         public string GetFile(string path)
         {
-            var context = new DatabaseContext();
+            var context = DatabaseContext.Instance;
             if (!File.Exists(FileTransfer.Create(context).RemotePathToLocalPath(path)))
                 FileTransfer.Create(context).DownloadFile(path);
             return FileTransfer.Create(context).RemotePathToLocalPath(path);

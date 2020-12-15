@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Controls;
 using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
@@ -20,6 +18,8 @@ namespace Tests.Users
         {
             var mock = new MockDatabaseContext();
             userController = UserController.Create(mock);
+            UserController.PermissionsCache = new List<Permission>();
+
 
             userController.CreateItem(new User() {ID = 10, Email = "boe@gmail.com", RoleID = 3});
             userController.CreateItem(new User() { ID = 11, Email = "boe2@gmail.com", RoleID = 1 });
@@ -40,6 +40,7 @@ namespace Tests.Users
         public void User_HasPermission_CreatePlaylist(int userId, Type exception = null, int amountOfPlaylists = 1)
         {
             var pc = PlaylistController.Create(new MockDatabaseContext());
+            var x=  pc.GetList();
             var startId = 98;
 
             UserController.CurrentUser = userController.GetItem(userId);

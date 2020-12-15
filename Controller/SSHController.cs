@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System;
- using System.Diagnostics;
- using System.Runtime.InteropServices.ComTypes;
  using Renci.SshNet;
 
 namespace Controller

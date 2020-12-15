@@ -16,7 +16,7 @@ namespace Tests.Local
         [Test, Category("Local")]
         public void SSHController_IsConnected()
         {
-            Assert.IsTrue(new DatabaseContext().Database.CanConnect());
+            Assert.IsTrue(DatabaseContext.Instance.Database.CanConnect());
         }
     }
 }

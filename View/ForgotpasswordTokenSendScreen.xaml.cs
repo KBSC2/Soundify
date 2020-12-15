@@ -41,7 +41,7 @@ namespace View
                 return;
             }
 
-            var controller = UserController.Create(new DatabaseContext());
+            var controller = UserController.Create(DatabaseContext.Instance);
             var user = controller.GetUserFromEmailOrUsername(email);
 
             if (user == null)

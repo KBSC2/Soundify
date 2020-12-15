@@ -3,7 +3,6 @@ using Model.Database.Contexts;
 using Model.DbModels;
 using Model.EventArgs;
 using System;
-using System.Windows;
 
 namespace Controller.DbControllers
 {

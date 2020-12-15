@@ -20,5 +20,9 @@ namespace Model.Database.Contexts
         public abstract DbSet<Request> Requests { get; set; }
         public abstract DbSet<Permission> Permissions { get; set; }
         public abstract DbSet<RolePermissions> RolePermissions { get; set; }
+        public abstract DbSet<ShopItem> ShopItems { get; set; }
+        public abstract DbSet<ShopItemPermissions> ShopItemPersmissions { get; set; }
+        public abstract DbSet<UserShopItems> UserShopItems { get; set; }
+
     }
 }
