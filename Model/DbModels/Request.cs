@@ -17,5 +17,6 @@ namespace Model.DbModels
         public RequestType RequestType { get; set; }
         public string ArtistName { get; set; }
         public string ArtistReason { get; set; }
+       
     }
 }

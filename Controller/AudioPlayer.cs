@@ -18,6 +18,7 @@ namespace Controller
         public IWavePlayer WaveOutDevice { get; set; }
         public SongAudioFile CurrentSongFile { get; set; }
         public Song CurrentSong { get; set; }
+        public string CurrentSongArtistName { get; set; }
         public double MaxVolume { get; set; }
         public event EventHandler NextSong;
 
@@ -118,6 +119,7 @@ namespace Controller
                 WaveOutDevice.Stop();
             CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
             CurrentSong = song;
+            CurrentSongArtistName = ArtistController.Create(new DatabaseContext()).GetItem(song.Artist).ArtistName;
             WaveOutDevice.Init(CurrentSongFile.AudioFile);
             NextSong?.Invoke(this, new EventArgs());
             Task.Delay(500).ContinueWith(x => WaveOutDevice.Play());
