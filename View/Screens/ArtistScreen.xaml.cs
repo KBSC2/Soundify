@@ -70,7 +70,7 @@ namespace View.Screens
 
             if (artistId == null) return;
 
-            SongController.Create(DatabaseContext.Instance).UploadSong(new Song
+            var song = new Song()
             {
                 Name = songName,
                 Artist = (int) artistId,
@@ -86,7 +86,9 @@ namespace View.Screens
                     : null,
                 WrittenBy = dataGrid.FindName("Writer") != null ? ((TextBox) dataGrid.FindName("Writer"))?.Text : null,
                 Status = SongStatus.AwaitingApproval
-            }, ArtistDataContext.Instance.SelectedSong.Name);
+            };
+
+            SongController.Create(DatabaseContext.Instance).UploadSong(song, ArtistDataContext.Instance.SelectedSong.Name);
 
             var request = new Request()
             {
