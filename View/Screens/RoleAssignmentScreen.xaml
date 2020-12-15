@@ -5,8 +5,8 @@
     <DataTemplate x:Key="RoleAssignmentScreen">
         <!-- Start RoleAssignmentScreen screen -->
         <Grid Background="#FF303651" DataContext="{x:Static dataContexts:RoleAssignmentDataContext.Instance}">
-            <Grid Margin="0, 10, 0, 0">
-                <ListView Padding="5" ItemsSource="{Binding UserRoles}" BorderThickness="0" HorizontalAlignment="Center" Background="Transparent">
+            <Grid Margin="0, 5, 0, 5">
+                <ListView ScrollViewer.VerticalScrollBarVisibility="Hidden" Padding="5" FontSize="20" ItemsSource="{Binding UserRoles}" BorderThickness="0" BorderBrush="0" HorizontalAlignment="Center" Background="Transparent">
                     <ListView.View>
                         <GridView>
                             <GridView.ColumnHeaderContainerStyle>
@@ -15,16 +15,16 @@
                                 </Style>
                             </GridView.ColumnHeaderContainerStyle>
 
-                            <GridViewColumn Width="300">
+                            <GridViewColumn Width="410">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Grid Width="300">
+                                        <Grid Width="400">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="3*"/>
                                                 <ColumnDefinition Width="2*"/>
                                             </Grid.ColumnDefinitions>
                                             <Label Grid.Column="0" HorizontalAlignment="Center" Foreground="White" Content="{Binding Username}"/>
-                                            <ComboBox Background="Transparent" Grid.Column="1" HorizontalContentAlignment="Center" Margin="0" Width="100" SelectionChanged="UserRole_SelectionChanged" SelectedIndex="{Binding RoleID}"
+                                            <ComboBox Width="150" Grid.Column="1" HorizontalContentAlignment="Center" SelectionChanged="UserRole_SelectionChanged" SelectedIndex="{Binding RoleID}"
                                                   ItemsSource="{Binding Source={x:Static dataContexts:RoleAssignmentDataContext.Instance}, Path=Roles}"/>
                                         </Grid>
                                     </DataTemplate>
@@ -32,6 +32,21 @@
                             </GridViewColumn>
                         </GridView>
                     </ListView.View>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding }" />
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Foreground" Value="Black" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#FF8390E4" />
+                                    <Setter Property="Foreground" Value="Black" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
                 </ListView>
             </Grid>
         </Grid>
