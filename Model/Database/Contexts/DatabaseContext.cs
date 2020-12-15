@@ -17,21 +17,27 @@ namespace Model.Database.Contexts
         public override DbSet<Permission> Permissions { get; set; }
         public override DbSet<RolePermissions> RolePermissions { get; set; }
         public override DbSet<Request> Requests { get; set; }
+        public override DbSet<Album> Albums { get; set; }
+        public override DbSet<AlbumArtistSong> AlbumArtistSongs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
                 // Fetch database settings from the App.Config
-                Configuration configuration = ConfigurationManager.OpenExeConfiguration(@"View.dll");
-                var connectionString = configuration.ConnectionStrings.ConnectionStrings["MSSQL"].ConnectionString;
-                optionsBuilder.UseSqlServer(connectionString);
+                //Configuration configuration = ConfigurationManager.OpenExeConfiguration(@"View.dll");
+               // var connectionString = configuration.ConnectionStrings.ConnectionStrings["MSSQL"].ConnectionString;
+                optionsBuilder
+                    .UseLazyLoadingProxies()
+                    .UseSqlServer("Data Source = 127.0.0.1; Initial Catalog = Soundify; User ID = SA; Password = Sterk_W@chtw00rd2;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PlaylistSong>().HasKey(ps => new {ps.PlaylistID, ps.SongID});
+
+            modelBuilder.Entity<AlbumArtistSong>().HasKey(aas => new {aas.AlbumId, aas.ArtistId, aas.SongId});
 
             modelBuilder.Entity<RolePermissions>().HasKey(rp => new { rp.RoleID, rp.PermissionID});
 
