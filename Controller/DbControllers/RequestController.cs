@@ -24,8 +24,9 @@ namespace Controller.DbControllers
          */
         public static RequestController Create(IDatabaseContext context)
         {
-            return ProxyController.AddToProxy<RequestController>(new object[] { context }, context);
+            return ProxyController.AddToProxy<RequestController>(new object[] {context}, context);
         }
+
         protected RequestController(IDatabaseContext context) : base(context, context.Requests)
         {
         }
@@ -52,14 +53,14 @@ namespace Controller.DbControllers
             return x;
         }
 
-       /**
-        * Check if artistName and/or artistReason are empty
-        * 
-        * @param artistName User's requested artistName
-        * @param artistReason User's requested artistReason
-        * 
-        * @return RequestArtistResults : Result of the user's request to become an artist
-        */
+        /**
+         * Check if artistName and/or artistReason are empty
+         * 
+         * @param artistName User's requested artistName
+         * @param artistReason User's requested artistReason
+         * 
+         * @return RequestArtistResults : Result of the user's request to become an artist
+         */
         public virtual RequestArtistResults RequestArtist(string artistName, string artistReason)
         {
             if (artistName == "" && artistReason == "")
@@ -70,40 +71,40 @@ namespace Controller.DbControllers
                 return RequestArtistResults.ReasonNotFound;
             return RequestArtistResults.Success;
         }
-        
-            /**
-             * Approves a request from a user to become an artist
-             *
-             * @param requestID The ID of the request in question
-             */
-            public void ApproveUser(int requestID)
-            {
-                var request = GetItem(requestID);
 
-                ArtistController.Create(Context).MakeArtist(request);
+        /**
+         * Approves a request from a user to become an artist
+         *
+         * @param requestID The ID of the request in question
+         */
+        public void ApproveUser(int requestID)
+        {
+            var request = GetItem(requestID);
 
-                DeleteItem(requestID);
-            }
+            ArtistController.Create(Context).MakeArtist(request);
 
-            /**
-             * Declines the request from a user to become an artist
-             *
-             * @param requestID The ID of the request in question
-             */
-            public void DeclineUser(int requestID)
-            {
-                var request = GetItem(requestID);
-                var userID = request.UserID;
-
-                var userController = UserController.Create(Context);
-                var user = userController.GetItem(userID);
-                user.RequestedArtist = false;
-                userController.UpdateItem(user);
-
-                DeleteItem(requestID);
-
-            }
+            DeleteItem(requestID);
         }
+
+        /**
+         * Declines the request from a user to become an artist
+         *
+         * @param requestID The ID of the request in question
+         */
+        public void DeclineUser(int requestID)
+        {
+            var request = GetItem(requestID);
+            var userID = request.UserID;
+
+            var userController = UserController.Create(Context);
+            var user = userController.GetItem(userID);
+            user.RequestedArtist = false;
+            userController.UpdateItem(user);
+
+            DeleteItem(requestID);
+
+        }
+
 
         /**
         * Approves a request from a user to upload a song
@@ -116,7 +117,7 @@ namespace Controller.DbControllers
 
             if (!request.SongID.HasValue) return;
 
-            var songController= SongController.Create(new DatabaseContext());
+            var songController = SongController.Create(new DatabaseContext());
 
             var song = songController.GetItem(request.SongID.Value);
             song.Status = SongStatus.Approved;
@@ -153,4 +154,5 @@ namespace Controller.DbControllers
             return GetList().Count;
         }
     }
+}
 
