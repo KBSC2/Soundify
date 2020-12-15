@@ -102,10 +102,10 @@ namespace View.Screens
 
             var image = AlbumUploadDataContext.Instance.AlbumImage.UriSource;
 
-            FileTransfer.Create(new DatabaseContext()).UploadFile(image?.LocalPath, "images/" +
+            FileTransfer.Create(new DatabaseContext.Instance).UploadFile(image?.LocalPath, "images/" +
                 image?.LocalPath.Split("\\").Last());
 
-            AlbumArtistSongsController.Create(new DatabaseContext()).UploadAlbum(AlbumUploadDataContext.Instance.AlbumSongInfos, image, titleTextBox.Text, description );
+            AlbumArtistSongsController.Create(new DatabaseContext.Instance).UploadAlbum(AlbumUploadDataContext.Instance.AlbumSongInfos, image, titleTextBox.Text, description );
             AlbumUploadDataContext.Instance.AlbumFiles = null;
             AlbumUploadDataContext.Instance.AlbumSongInfos = null;
             AlbumUploadDataContext.Instance.AreSongsSelected = false;
