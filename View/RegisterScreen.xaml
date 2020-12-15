@@ -6,9 +6,12 @@
         xmlns:local="clr-namespace:View"
         xmlns:DataContexts="clr-namespace:View.DataContexts" x:Class="View.RegisterScreen"
         mc:Ignorable="d"
-        ResizeMode="NoResize"
         Title="Register" Height="715" Width="617"
         WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
         Icon="Assets\soundifysmall.ico">
     <Window.Resources>
         <ResourceDictionary>
@@ -17,18 +20,58 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid Background="{DynamicResource BackgroundColor}" KeyDown="Register_On_Enter_Key">
-        <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" Height="79"/>
-        <Label Content="Register" HorizontalAlignment="Center" Margin="0,172,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
-        <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="UsernameRegister" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,259,0,0" Tag="Username" TextWrapping="NoWrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="{DynamicResource InputBackground}" Foreground="White"/>
-        <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="EmailRegister" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,335,0,0" Tag="Email" TextWrapping="NoWrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="{DynamicResource InputBackground}" Foreground="White"/>
-        <PasswordBox Style="{StaticResource WatermarkPasswordBox}" x:Name="PasswordRegister" Tag="Password" HorizontalAlignment="Center" Margin="0,411,0,0" VerticalAlignment="Top" Foreground="White" Width="355" Height="60" FontSize="40" Background="{DynamicResource InputBackground}" />
-        <PasswordBox Style="{StaticResource WatermarkPasswordBox}" x:Name="PasswordConfirmRegister"  Tag="Password"  Margin="0,487,0,0" VerticalAlignment="Top" Width="355" Height="60" Foreground="White" FontSize="40" Background="{DynamicResource InputBackground}" />
-        <Label x:Name="Error" Content="" HorizontalAlignment="Center" Margin="0,562,0,0" VerticalAlignment="Top" Width="355" Foreground="{DynamicResource Red}" FontSize="16" HorizontalContentAlignment="Center"/>
-        <Button x:Name="Join" Content="Join" Click="Register_Button_Click"  HorizontalAlignment="Left" Margin="331,598,0,0" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Width="237" Height="55" Background="{DynamicResource Orange}" Foreground="White"/>
-        <Button Content="Cancel " HorizontalAlignment="Left" Margin="39,598,0,0" VerticalAlignment="Top" Foreground="White" FontSize="40" FontWeight="Bold" Background="{DynamicResource Red}" Width="237" Height="55" BorderThickness="0,0,0,0" Click="BackToLogin_Button_Click"/>
-        <Canvas Grid.Row="1">
-            <Image Margin="263,23,263,584" Stretch="Fill" Source="Assets/soundifySmall.png" Width="91" Height="91"/>
-        </Canvas>
-    </Grid>
+    <Border BorderBrush="{DynamicResource BackgroundColor}" BorderThickness="20" CornerRadius="20">
+        <Grid Background="{DynamicResource BackgroundColor}" KeyDown="Register_On_Enter_Key" MouseDown="Window_MouseDown">
+            <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" Height="79"/>
+            <Label Content="Register" HorizontalAlignment="Center" Margin="0,172,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
+            <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="UsernameRegister" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,259,0,0" Tag="      Username" TextWrapping="NoWrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="{DynamicResource InputBackground}" Foreground="White" FontWeight="Bold">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="EmailRegister" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,335,0,0" Tag="          Email" TextWrapping="NoWrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="{DynamicResource InputBackground}" Foreground="White" FontWeight="Bold">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <PasswordBox Style="{StaticResource WatermarkPasswordBox}" x:Name="PasswordRegister" Tag="      Password" HorizontalAlignment="Center" Margin="0,411,0,0" VerticalAlignment="Top" Foreground="White" Width="355" Height="60" FontSize="40" Background="{DynamicResource InputBackground}" FontWeight="Bold">
+                <PasswordBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </PasswordBox.Resources>
+            </PasswordBox>
+            <PasswordBox Style="{StaticResource WatermarkPasswordBox}" x:Name="PasswordConfirmRegister"  Tag="      Password"  Margin="0,487,0,0" VerticalAlignment="Top" Width="355" Height="60" Foreground="White" FontSize="40" Background="{DynamicResource InputBackground}"  FontWeight="Bold">
+                <PasswordBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </PasswordBox.Resources>
+            </PasswordBox>
+            <Label x:Name="Error" Content="" HorizontalAlignment="Center" Margin="0,562,0,0" VerticalAlignment="Top" Width="355" Foreground="{DynamicResource Red}" FontSize="16" HorizontalContentAlignment="Center"/>
+            <Button x:Name="Join" Content="Join" Click="Register_Button_Click"  HorizontalAlignment="Left" Margin="298,598,0,0" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Width="237" Height="55" BorderThickness="0,0,0,0" Background="{DynamicResource Orange}" Foreground="White">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Content="Cancel " HorizontalAlignment="Left" Margin="41,598,0,0" VerticalAlignment="Top" Foreground="White" FontSize="40" FontWeight="Bold" Background="{DynamicResource Red}" Width="237" Height="55" BorderThickness="0,0,0,0" Click="BackToLogin_Button_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Canvas Grid.Row="1">
+                <Image Margin="0,0,0,0" Stretch="Fill" Source="Assets/soundifySmall.png" Width="91" Height="91" Canvas.Left="243" Canvas.Top="30"/>
+            </Canvas>
+            <Button Content="{DynamicResource Exit}" Width="33" Height="33" HorizontalAlignment="Left" Margin="544,0,0,0" VerticalAlignment="Top" BorderBrush="Transparent" Click="BackToLogin_Button_Click"/>
+            <Button Content="{DynamicResource Minimize}" Width="33" Height="33" HorizontalAlignment="Left" Margin="514,0,0,0" VerticalAlignment="Top" BorderBrush="Transparent" Click="Minimize_Button_Click"/>
+        </Grid>
+    </Border>
 </Window>

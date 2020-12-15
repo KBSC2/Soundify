@@ -63,5 +63,14 @@ namespace View
             MainWindow.InstanceLoginScreen.Show();
             this.Close();
         }
+        private void Minimize_Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
     }
 }

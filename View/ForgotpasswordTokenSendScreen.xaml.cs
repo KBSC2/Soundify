@@ -1,6 +1,7 @@
 using System;
 using System.Net.Mail;
 using System.Windows;
+using System.Windows.Input;
 using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
@@ -57,6 +58,22 @@ namespace View
             this.Close();
             forgotPasswordScreen.Show();
             forgotPasswordScreen.Focus();
+        }
+        private void Minimize_Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void Confirm_On_Enter_Key(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                Confirm_Button_Click(sender, new RoutedEventArgs());
+            }
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
         }
     }
 }
