@@ -17,8 +17,6 @@ namespace View.ListItems
         public AlbumSongInfo(string title, TimeSpan durationTimeSpan, TagLib.File file)
         {
             Title = title;
-            ProducedBy = "";
-            WrittenBy = "";
             Duration = durationTimeSpan;
             File = file;
         }
