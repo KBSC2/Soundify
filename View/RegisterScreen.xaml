@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:View"
         xmlns:DataContexts="clr-namespace:View.DataContexts" x:Class="View.RegisterScreen"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         Title="Register" Height="715" Width="617"
         WindowStartupLocation="CenterScreen"
         Icon="Assets\soundifysmall.ico">
