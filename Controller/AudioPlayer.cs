@@ -259,6 +259,9 @@ namespace Controller
 
         private List<Song> ShuffleList(List<Song> songs)
         {
+            if (songs.Count == 0)
+                return songs;
+
             var shuffledList = new List<Song>(songs);
             var random = new Random();
 

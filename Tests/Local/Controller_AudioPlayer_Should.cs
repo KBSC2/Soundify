@@ -18,6 +18,7 @@ namespace Tests.Local
         private MockDatabaseContext context;
         private Song song;
         private Song song2;
+        private Song song3;
         private Playlist playlist;
         private SongController songController;
         private PlaylistSongController playlistSongController;
@@ -40,12 +41,15 @@ namespace Tests.Local
 
             song = new Song() { ID = 1, Artist = 1, Duration = 11, Name = "test", Path = "songs/dansenaandegracht.mp3" };
             song2 = new Song() { ID = 2, Artist = 2, Duration = 11, Name = "test2", Path = "songs/untrago.mp3" };
+            song3 = new Song() { ID = 3, Artist = 3, Duration = 11, Name = "test3", Path = "songs/untrago.mp3" };
 
             songController.CreateItem(song);
             songController.CreateItem(song2);
+            songController.CreateItem(song3);
 
             playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
             playlistSongController.AddSongToPlaylist(song2.ID, playlist.ID);
+            playlistSongController.AddSongToPlaylist(song3.ID, playlist.ID);
 
             playlistSongs = PlaylistSongController.Create(context).GetSongsFromPlaylist(playlist.ID);
 
@@ -92,7 +96,7 @@ namespace Tests.Local
         [Test, Category("Local")]
         public void AudioPlayer_Loop_ContinuePlaying()
         {
-            AudioPlayer.Instance.PlayPlaylist(playlist, 0);
+            AudioPlayer.Instance.PlayPlaylist(playlist, 1);
             AudioPlayer.Instance.Loop();
             AudioPlayer.Instance.Next();
 
@@ -126,14 +130,25 @@ namespace Tests.Local
             });
         }
 
+        [Test, Category("Local")]
+        public void AudioPlayer_Shuffle_QueueShuffled()
+        {
+            AudioPlayer.Instance.PlayPlaylist(playlist);
+            AudioPlayer.Instance.Shuffle();
+
+            Assert.IsFalse(AudioPlayer.Instance.Queue[1].Equals(playlistSongController.GetSongsFromPlaylist(playlist.ID)[1].Song));
+        }
+
         [TearDown, Category("Local")]
         public void TearDown()
         {
             playlistSongController.RemoveFromPlaylist(song.ID, playlist.ID);
             playlistSongController.RemoveFromPlaylist(song2.ID, playlist.ID);
+            playlistSongController.RemoveFromPlaylist(song3.ID, playlist.ID);
             playlistController.DeleteItem(playlist.ID);
             songController.DeleteItem(song.ID);
             songController.DeleteItem(song2.ID);
+            songController.DeleteItem(song3.ID);
         }
     }
 }
