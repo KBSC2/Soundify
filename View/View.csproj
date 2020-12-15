@@ -19,9 +19,11 @@
     <None Remove="Assets\null.png" />
     <None Remove="Assets\pause.png" />
     <None Remove="Assets\play.png" />
+    <None Remove="Assets\playplaylist.png" />
     <None Remove="Assets\previous.png" />
     <None Remove="Assets\settings.png" />
     <None Remove="Assets\shuffle.png" />
+    <None Remove="Assets\Slider.png" />
     <None Remove="Assets\soundify.png" />
     <None Remove="Assets\soundifyBig.png" />
     <None Remove="Assets\soundifyMedium.png" />
@@ -53,9 +55,11 @@
     <Resource Include="Assets\null.png" />
     <Resource Include="Assets\pause.png" />
     <Resource Include="Assets\play.png" />
+    <Resource Include="Assets\playplaylist.png" />
     <Resource Include="Assets\previous.png" />
     <Resource Include="Assets\settings.png" />
     <Resource Include="Assets\shuffle.png" />
+    <Resource Include="Assets\Slider.png" />
     <Resource Include="Assets\soundify.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

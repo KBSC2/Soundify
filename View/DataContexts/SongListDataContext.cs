@@ -35,7 +35,6 @@ namespace View.DataContexts
         public List<string> SongListSearchTerms { get; set; } = new List<string>(){""};
 
         public bool IsSongListScreen => Instance.ScreenName.Equals(ScreenNames.SongListScreen);
-
         public bool IsPlaylistScreen => Instance.ScreenName.Equals(ScreenNames.PlaylistScreen);
 
         public void UpdateSongInfoList()
@@ -46,7 +45,7 @@ namespace View.DataContexts
             {
                 case ScreenNames.PlaylistScreen:
                     songlist = PlaylistSongController.Create(new DatabaseContext())
-                        .GetSongsFromPlaylist(Soundify.MainWindow.CurrentPlayList.ID).Select(ps => ps.Song).ToList();
+                        .GetSongsFromPlaylist(MainWindow.CurrentPlayList.ID).Select(ps => ps.Song).ToList();
                     break;
                 case ScreenNames.SearchScreen:
                     songlist = SongController.Create(new DatabaseContext())
