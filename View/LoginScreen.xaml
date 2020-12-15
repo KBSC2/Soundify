@@ -10,6 +10,7 @@
         WindowStartupLocation="CenterScreen"
         Closed="WindowClosing"
         Closing="WindowClosing"
+        ResizeMode="NoResize"
         Icon="Assets\soundifysmall.ico">
     <Grid Background="{DynamicResource BackgroundColor}" KeyDown="Login_On_Enter_Key">
         <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,123,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50"/>

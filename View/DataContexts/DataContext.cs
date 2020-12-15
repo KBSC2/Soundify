@@ -28,6 +28,7 @@ namespace View.DataContexts
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Song CurrentSong => AudioPlayer.Instance.CurrentSong;
+        public string CurrentSongArtistName => AudioPlayer.Instance.CurrentSongArtistName;
         public string PathToImage => CurrentSong == null ? "../Assets/null.png" : CurrentSong.PathToImage == null ? "../Assets/NoImage.png" : FileCache.Instance.GetFile(CurrentSong.PathToImage);
         public double Volume => AudioPlayer.Instance.WaveOutDevice.Volume;
         public double MaxVolume => AudioPlayer.Instance.MaxVolume;
@@ -37,6 +38,8 @@ namespace View.DataContexts
         public string CurrentTimeLabel => AudioPlayer.Instance.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong).ToString("m':'ss");
 
         public User CurrentUser => UserController.CurrentUser == null ? null : UserController.Create(DatabaseContext.Instance)
+        public string PlayImage => AudioPlayer.Instance.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing ? "/Assets/pause.png" : "/Assets/play.png";
+
                 .GetItem(UserController.CurrentUser.ID);
         public int? CurrentUserCoins => CurrentUser?.Coins;
         public Role CurrentUserRole => UserController.CurrentUser == null ? null : RoleController.Create(DatabaseContext.Instance).GetItem(UserController.CurrentUser.RoleID);

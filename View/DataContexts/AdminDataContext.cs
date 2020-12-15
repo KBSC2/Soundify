@@ -9,7 +9,7 @@ namespace View.DataContexts
     {
         private static AdminDataContext _instance;
         public static AdminDataContext Instance => _instance ??= new AdminDataContext();
-        public int NumberOfArtistRequest => RequestController.Create(DatabaseContext.Instance).GetArtistRequests().Count;
+        public int NumberOfRequests => RequestController.Create(new DatabaseContext()).GetAllRequestsCount();
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

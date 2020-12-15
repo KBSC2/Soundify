@@ -1,4 +1,4 @@
-﻿using System.Net.Mail;
+using System.Net.Mail;
 using System.Windows;
 using System.Windows.Input;
 using Controller;
@@ -8,6 +8,7 @@ using Model.DbModels;
 using Model.Enums;
 using Model.MailTemplates;
 using View.DataContexts;
+
 
 namespace View
 {
@@ -35,29 +36,60 @@ namespace View
             var artistReason = this.ArtistReason.Text;
 
             var emailController = new EmailController();
-            var email =  new MailArtistVerification(new MailAddress("info.soundify@gmail.com"), artistName, artistReason);
-            emailController.SendEmail(email, "info.soundify@gmail.com");
+            var email = new MailArtistVerification(new MailAddress("info.soundify@gmail.com"), artistName, artistReason);
 
-            var request = new Request()
+            var controller = RequestController.Create(new DatabaseContext());
+            var result = controller.RequestArtist(artistName, artistReason);
+            switch (result)
             {
-                ArtistName = artistName, 
-                ArtistReason = artistReason, 
-                UserID = UserController.CurrentUser.ID,
-                RequestType = RequestType.Artist,
-                SongID = null
-            };
+                case RequestArtistResults.Success:
+                    {
+                        emailController.SendEmail(email, "info.soundify@gmail.com");
 
-            var userController = UserController.Create(DatabaseContext.Instance);
-            var user = userController.GetItem(UserController.CurrentUser.ID);
-            user.RequestedArtist = true;
-            userController.UpdateItem(user);
+                        var request = new Request()
+                        {
+                            ArtistName = artistName,
+                            ArtistReason = artistReason,
+                            UserID = UserController.CurrentUser.ID,
+                            RequestType = RequestType.Artist,
+                            SongID = null
+                        };
 
-            var requestController = RequestController.Create(DatabaseContext.Instance);
-            requestController.CreateItem(request);
+                        var userController = UserController.Create(DatabaseContext.Instance);
+                        var user = userController.GetItem(UserController.CurrentUser.ID);
+                        user.RequestedArtist = true;
+                        userController.UpdateItem(user);
 
-            this.Close();
+                        var createRequest = RequestController.Create(DatabaseContext.Instance);
+                        createRequest.CreateItem(request);
+                        this.Close();
 
-            SettingsDataContext.Instance.OnPropertyChanged("");
+                        MessageBox.Show("Request Artist is confirmed!");
+                        SettingsDataContext.Instance.OnPropertyChanged("");
+                    }
+
+                        this.ArtistName.Text = "";
+                        this.ArtistReason.Text = "";
+                        break;
+                    
+                case RequestArtistResults.ArtistNameNotFound:
+                    {
+                        this.Error.Content ="Your artist name is empty, please go back and fill in your artist name before proceeding.";
+                        break;
+                    }
+
+                case RequestArtistResults.ReasonNotFound:
+                    {
+                        this.Error.Content = "Please fill in your reason as to why you want to become an artist before proceeding.";
+                        break;
+                    }
+
+                case RequestArtistResults.NameAndReasonNotFound:
+                {
+                        this.Error.Content = "Please fill in your Artist name and reason to become an artist before proceeding.";
+                        break;
+                }
+            }
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)

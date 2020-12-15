@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
@@ -35,12 +36,12 @@ namespace View
             Artist = ArtistController.Create(DatabaseContext.Instance).GetItem(song.Artist);
         }
 
-        public static List<SongInfo> ConvertSongListToSongInfo(Playlist playlist, List<PlaylistSong> songs)
+        public static List<SongInfo> ConvertSongListToSongInfo(Playlist playlist)
         {
             var playlistSongController = PlaylistSongController.Create(DatabaseContext.Instance);
 
-            return songs.Select(song => new SongInfo(song.Song, playlistSongController.GetPlaylistSong(playlist.ID, song.SongID)))
-                .ToList();
+            var songs = playlistSongController.GetSongsFromPlaylist(playlist.ID);
+            return songs.Select(song => new SongInfo(song.Song, song)).ToList();
         }
 
         public static List<SongInfo> ConvertSongListToSongInfo(List<Song> songs)

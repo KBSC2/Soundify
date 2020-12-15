@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Controller.DbControllers;
+using Model.Annotations;
 using Model.Database.Contexts;
 using Model.DbModels;
+using View.ListItems;
 
 namespace View.DataContexts
 {
@@ -20,11 +23,18 @@ namespace View.DataContexts
             }
         }
         public List<Request> ArtistRequests => RequestController.Create(DatabaseContext.Instance).GetArtistRequests();
+
+        public List<SongRequestInfo> SongRequests =>
+            SongRequestInfo.ConvertSongRequestToSongRequestInfo(RequestController.Create(new DatabaseContext())
+                .GetSongRequests());
+
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(""));
         }
+
     }
 }
