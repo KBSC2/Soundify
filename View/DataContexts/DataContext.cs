@@ -37,10 +37,10 @@ namespace View.DataContexts
         public string TotalTimeLabel => AudioPlayer.Instance.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSongFile.TotalTimeSong).ToString("m':'ss");
         public string CurrentTimeLabel => AudioPlayer.Instance.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong).ToString("m':'ss");
 
-        public User CurrentUser => UserController.CurrentUser == null ? null : UserController.Create(DatabaseContext.Instance)
+        public User CurrentUser => UserController.CurrentUser == null ? null : UserController.Create(DatabaseContext.Instance).GetItem(UserController.CurrentUser.ID);
         public string PlayImage => AudioPlayer.Instance.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing ? "/Assets/pause.png" : "/Assets/play.png";
 
-                .GetItem(UserController.CurrentUser.ID);
+                
         public int? CurrentUserCoins => CurrentUser?.Coins;
         public Role CurrentUserRole => UserController.CurrentUser == null ? null : RoleController.Create(DatabaseContext.Instance).GetItem(UserController.CurrentUser.RoleID);
         public bool? IsAdmin => CurrentUser?.RoleID.Equals(3);
