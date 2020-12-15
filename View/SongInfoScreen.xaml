@@ -38,7 +38,7 @@
                 <Label Grid.Row="1" Content="Song name" FontSize="25" HorizontalAlignment="Right" Foreground="White"/>
                 <Label Grid.Row="2" Content="{Binding Song.Name}" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Right" Foreground="#ACAEB9"/>
                 <Label Grid.Row="3" Content="Artist name" FontSize="25" HorizontalAlignment="Right" Foreground="White"/>
-                <Label Grid.Row="4" Content="{Binding Song.Artist}" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Right" Foreground="#ACAEB9"/>
+                <Label Grid.Row="4" Content="{Binding ArtistName}" FontSize="13" Margin="0, -25, 0, 0" HorizontalAlignment="Right" Foreground="#ACAEB9"/>
             </Grid>
             <Grid>
                 <Grid.RowDefinitions>

@@ -59,7 +59,6 @@ namespace Controller.DbControllers
                 .Where(song => (searchterms.Any(s => song.Name != null && song.Name.ToLower().Contains(s.ToLower())) ||
                                 searchterms.Any(s => artistController.GetItem(song.Artist).ArtistName.ToLower().Contains(s.ToLower()))) &&
                                song.Status != SongStatus.AwaitingApproval)
-                .Take(8)
                 .ToList();
         }
 

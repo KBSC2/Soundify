@@ -30,12 +30,13 @@ namespace View.DataContexts
             }
         }
 
-
         public ScreenNames ScreenName { get; set; }
 
         public List<string> SongListSearchTerms { get; set; } = new List<string>(){""};
 
         public bool IsSongListScreen => Instance.ScreenName.Equals(ScreenNames.SongListScreen);
+
+        public bool IsPlaylistScreen => Instance.ScreenName.Equals(ScreenNames.PlaylistScreen);
 
         public void UpdateSongInfoList()
         {
@@ -48,7 +49,6 @@ namespace View.DataContexts
                     SongInfoList = SongInfo.ConvertSongListToSongInfo(MainWindow.CurrentPlayList, PlaylistSongController.Create(context).GetSongsFromPlaylist(MainWindow.CurrentPlayList.ID));
                     break;
                 case ScreenNames.SearchScreen:
-
                     SongInfoList = SongInfo.ConvertSongListToSongInfo(songController.SearchSongsOnString(SearchDataContext.Instance.SearchTerms.ToList()));
                     break;
                 case ScreenNames.ArtistScreen:

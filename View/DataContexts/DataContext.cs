@@ -25,6 +25,7 @@ namespace View.DataContexts
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Song CurrentSong => AudioPlayer.Instance.CurrentSong;
+        public string CurrentSongArtistName => AudioPlayer.Instance.CurrentSongArtistName;
         public string PathToImage => CurrentSong == null ? "../Assets/null.png" : CurrentSong.PathToImage == null ? "../Assets/NoImage.png" : FileCache.Instance.GetFile(CurrentSong.PathToImage);
         public double Volume => AudioPlayer.Instance.WaveOutDevice.Volume;
         public double MaxVolume => AudioPlayer.Instance.MaxVolume;
@@ -33,6 +34,8 @@ namespace View.DataContexts
         public string TotalTimeLabel => AudioPlayer.Instance.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSongFile.TotalTimeSong).ToString("m':'ss");
         public string CurrentTimeLabel => AudioPlayer.Instance.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong).ToString("m':'ss");
         public string PlayContent => AudioPlayer.Instance.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing ? "=" : ">";
+
+        public string PlayImage => AudioPlayer.Instance.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing ? "/Assets/pause.png" : "/Assets/play.png";
 
         public User CurrentUser => UserController.CurrentUser == null ? null : UserController.Create(new DatabaseContext())
                 .GetItem(UserController.CurrentUser.ID);
