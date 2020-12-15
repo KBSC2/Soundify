@@ -39,7 +39,7 @@ namespace View.DataContexts
         public string StatusMessage { get; set; }
 
         
-        public string ArtistName => ArtistController.Create(new DatabaseContext.Instance)
+        public string ArtistName => ArtistController.Create(DatabaseContext.Instance)
             .GetList().FirstOrDefault(a => a.UserID == UserController.CurrentUser.ID)
             ?.ArtistName;
 
