@@ -17,7 +17,7 @@
     Closed="WindowClosing"
     Closing="WindowClosing"
     Icon="Assets\soundifysmall.ico">
-
+    
     <Window.Resources>
         <Style x:Key="SliderRepeatButton" TargetType="RepeatButton">
             <Setter Property="SnapsToDevicePixels" Value="true" />

@@ -6,11 +6,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Grid>
-                        <Border Background="Gray" BorderBrush="#FF7D8683" BorderThickness="1" />
+                        <Border Background="{DynamicResource InputBackground}" BorderThickness="0" />
                         <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Top" />
                         <Label Margin="5,0,0,0" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}"
                                VerticalAlignment="Top"
-                               Visibility="Collapsed" Foreground="White" FontFamily="Arial" />
+                               Visibility="Collapsed" Foreground="LightGray"/>
+
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
@@ -20,7 +21,7 @@
                             <Setter Property="Visibility" TargetName="WaterMarkLabel" Value="Visible" />
                         </MultiTrigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Foreground" Value="White"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -33,15 +34,15 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type PasswordBox}">
                     <Grid>
-                        <Border Background="Gray" BorderBrush="#FF7D8683" BorderThickness="1" />
+                        <Border Background="{DynamicResource InputBackground}" BorderThickness="0" />
                         <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Top" />
                         <Label Margin="5,0,0,0" x:Name="WaterMarkLabelPassword" Content="{TemplateBinding Tag}"
                                VerticalAlignment="Top"
-                               Visibility="Collapsed" Foreground="White" FontFamily="Arial" />
+                               Visibility="Collapsed" Foreground="LightGray" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="WaterMarkLabelPassword" Property="Background" Value="Gray"/>
+                            <Setter TargetName="WaterMarkLabelPassword" Property="Background" Value="{DynamicResource InputBackground}"/>
                             <Setter Property="Foreground" Value="White" />
                         </Trigger>
                         <Trigger Property="components:PasswordBoxMonitor.PasswordLength" Value="0">

@@ -8,17 +8,48 @@
         Title="Email Verification" Height="715" Width="617"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
         Icon="Assets\soundifysmall.ico">
-    <Grid Background="{DynamicResource BackgroundColor}" KeyDown="Confirm_On_Enter_Key">
-        <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" Height="79"/>
-        <Label Content="Token has been sent" HorizontalAlignment="Center" Margin="0,172,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
-        <TextBox x:Name="Token" Style="{StaticResource WatermarkTextbox}" HorizontalAlignment="Center" Margin="0,259,0,0" Tag="Token" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White"/>
-        <Label x:Name="Error" Content="" HorizontalAlignment="Center" Margin="0,433,0,0" VerticalAlignment="Top" Width="355" Height="35" Foreground="{DynamicResource Red}" FontSize="22" HorizontalContentAlignment="Center"/>
-        <Button x:Name="ResendToken" Content="Resend Token" HorizontalAlignment="Center" Margin="0,515,0,0" VerticalAlignment="Top" FontSize="40" Width="307" Height="60" Background="ForestGreen" Click="Resend_Token_Button_Click" Foreground="White" BorderBrush="{x:Null}"/>
-        <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="97,593,0,0" VerticalAlignment="Top" FontSize="40" Width="196" Height="60" Background="{DynamicResource Red}" Click="Cancel_Button_Click" Foreground="White" BorderBrush="{x:Null}"/>
-        <Button x:Name="Confirm" Content="Confirm" HorizontalAlignment="Left" Margin="328,593,0,0" VerticalAlignment="Top" FontSize="40" Width="196" Height="60" Background="{DynamicResource Orange}" Click="Confirm_Button_Click" Foreground="White" BorderBrush="{x:Null}"/>
-        <Canvas Grid.Row="1">
-            <Image Margin="263,23,263,584" Stretch="Fill" Source="Assets/soundifySmall.png" Width="91" Height="91"/>
-        </Canvas>
-    </Grid>
+    <Border BorderBrush="{DynamicResource BackgroundColor}" BorderThickness="20" CornerRadius="20">
+        <Grid Background="{DynamicResource BackgroundColor}" KeyDown="Confirm_On_Enter_Key" MouseDown="Window_MouseDown">
+            <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" Height="79"/>
+            <Label Content="Token has been sent" HorizontalAlignment="Center" Margin="0,172,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
+            <TextBox x:Name="Token" Style="{StaticResource WatermarkTextbox}" HorizontalAlignment="Center" Margin="0,259,0,0" Tag="         Token" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="#FF707070" Foreground="White" FontWeight="Bold">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <Label x:Name="Error" Content="" HorizontalAlignment="Center" Margin="0,433,0,0" VerticalAlignment="Top" Width="355" Height="35" Foreground="{DynamicResource Red}" FontSize="22" HorizontalContentAlignment="Center"/>
+            <Button x:Name="ResendToken" Content="Resend Token" HorizontalAlignment="Center" Margin="0,509,0,0" VerticalAlignment="Top" FontSize="40" Width="308" Height="60" Background="ForestGreen" Click="Resend_Token_Button_Click" Foreground="White" BorderBrush="{x:Null}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="81,590,0,0" VerticalAlignment="Top" FontSize="40" Width="196" Height="60" Background="{DynamicResource Red}" Click="Cancel_Button_Click" Foreground="White" BorderBrush="{x:Null}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="Confirm" Content="Confirm" HorizontalAlignment="Left" Margin="298,590,0,0" VerticalAlignment="Top" FontSize="40" Width="196" Height="60" Background="{DynamicResource Orange}" Click="Confirm_Button_Click" Foreground="White" BorderBrush="{x:Null}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Canvas Grid.Row="1">
+                <Image Margin="0,0,0,0" Stretch="Fill" Source="Assets/soundifySmall.png" Width="91" Height="91" Canvas.Left="243" Canvas.Top="30"/>
+            </Canvas>
+            <Button Content="{DynamicResource Exit}" Width="33" Height="33" HorizontalAlignment="Left" Margin="544,0,0,0" VerticalAlignment="Top" BorderBrush="Transparent" Click="Cancel_Button_Click"/>
+            <Button Content="{DynamicResource Minimize}" Width="33" Height="33" HorizontalAlignment="Left" Margin="514,0,0,0" VerticalAlignment="Top" BorderBrush="Transparent" Click="Minimize_Button_Click"/>
+        </Grid>
+    </Border>
 </Window>
