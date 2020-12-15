@@ -13,7 +13,9 @@
 
   <ItemGroup>
     <None Remove="Assets\cross.png" />
+    <None Remove="Assets\exit.png" />
     <None Remove="Assets\loop.png" />
+    <None Remove="Assets\minimize.png" />
     <None Remove="Assets\next.png" />
     <None Remove="Assets\NoImage.png" />
     <None Remove="Assets\null.png" />
@@ -47,7 +49,9 @@
 
   <ItemGroup>
     <Resource Include="Assets\cross.png" />
+    <Resource Include="Assets\exit.png" />
     <Resource Include="Assets\loop.png" />
+    <Resource Include="Assets\minimize.png" />
     <Resource Include="Assets\next.png" />
     <Resource Include="Assets\NoImage.png" />
     <Resource Include="Assets\null.png" />
