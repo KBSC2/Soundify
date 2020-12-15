@@ -40,6 +40,8 @@
                     <Image x:Key="Previous" Source="/Assets/previous.png"/>
                     <Image x:Key="Loop" Source="/Assets/loop.png"/>
                     <Image x:Key="Setting" Source="/Assets/settings.png"/>
+                    <Image x:Key="Minimize" Source="/Assets/minimize.png"/>
+                    <Image x:Key="Exit" Source="/Assets/exit.png"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

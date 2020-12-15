@@ -96,7 +96,7 @@ namespace View
                 Login_Button_Click(sender, new RoutedEventArgs());
             }
         }
-
+        
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
             var signupScreen = new RegisterScreen();
@@ -118,6 +118,21 @@ namespace View
             SSHController.Instance.CloseSSHTunnel();
             Application.Current.Shutdown();
             MainWindow.InstanceMainWindow?.Close();
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
+
+        private void Close_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void Minimize_Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
         }
     }
 }
