@@ -57,6 +57,8 @@ namespace Model.Database.Contexts
             });
             Artists = GetQueryableMockDbSet(new List<Artist>());
             Requests = GetQueryableMockDbSet(new List<Request>());
+            Albums = GetQueryableMockDbSet(new List<Album>());
+            AlbumArtistSongs = GetQueryableMockDbSet(new List<AlbumArtistSong>());
         }
 
         /**

@@ -44,7 +44,7 @@ namespace Controller.DbControllers
             albumController = AlbumController.Create(context);
         }
 
-        public async void UploadAlbum(ObservableCollection<AlbumSongInfo> albumSongInfos, Uri image, string title, string description)
+        public void UploadAlbum(ObservableCollection<AlbumSongInfo> albumSongInfos, Uri image, string title, string description)
         {
             var artistId = (int) artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID);
             var album = new Album {AlbumName = title, Description = description};
