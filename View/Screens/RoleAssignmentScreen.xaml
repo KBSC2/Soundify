@@ -4,33 +4,34 @@
                     x:Class="View.Screens.RoleAssignmentScreen">
     <DataTemplate x:Key="RoleAssignmentScreen">
         <!-- Start RoleAssignmentScreen screen -->
-        <Grid DataContext="{x:Static dataContexts:RoleAssignmentDataContext.Instance}">
-            <Grid Margin="200, 0, 0, 0" HorizontalAlignment="Left" Width="250">
-                <ListView x:Name="{Binding Users}" ItemsSource="{Binding UserRoles}">
+        <Grid Background="#FF303651" DataContext="{x:Static dataContexts:RoleAssignmentDataContext.Instance}">
+            <Grid Margin="0, 10, 0, 0">
+                <ListView Padding="5" ItemsSource="{Binding UserRoles}" BorderThickness="0" HorizontalAlignment="Center" Background="Transparent">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding Username}" Width="auto">
-                                <Style TargetType="{x:Type DataGridColumnHeader}">
-                                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                                    <Setter Property="Content" Value="Username"/>
+                            <GridView.ColumnHeaderContainerStyle>
+                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
                                 </Style>
+                            </GridView.ColumnHeaderContainerStyle>
+
+                            <GridViewColumn Width="300">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid Width="300">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0" HorizontalAlignment="Center" Foreground="White" Content="{Binding Username}"/>
+                                            <ComboBox Background="Transparent" Grid.Column="1" HorizontalContentAlignment="Center" Margin="0" Width="100" SelectionChanged="UserRole_SelectionChanged" SelectedIndex="{Binding RoleID}"
+                                                  ItemsSource="{Binding Source={x:Static dataContexts:RoleAssignmentDataContext.Instance}, Path=Roles}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="Role" DisplayMemberBinding="{Binding RoleID}"/>
                         </GridView>
                     </ListView.View>
-                </ListView>
-            </Grid>
-            <Button Content="Users" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" Width="226" Height="43" FontSize="26.5"  Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="SwapRole_Click"/>
-            <Grid Margin="0, 0, 200, 0" HorizontalAlignment="Right" Width="250">
-                <ListView x:Name="Roles">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Roles"/>
-                        </GridView>
-                    </ListView.View>
-                    <ListViewItem Name="RoleUser">User</ListViewItem>
-                    <ListViewItem Name="RoleArtist">Artist</ListViewItem>
-                    <ListViewItem Name="Admin">Admin</ListViewItem>
                 </ListView>
             </Grid>
         </Grid>

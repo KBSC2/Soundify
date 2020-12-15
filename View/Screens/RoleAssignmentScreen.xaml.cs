@@ -1,10 +1,14 @@
-﻿using Model.DbModels;
+﻿using Controller.DbControllers;
+using Model.Database.Contexts;
+using Model.DbModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using View.DataContexts;
+using View.ListItems;
 
 namespace View.Screens
 {
@@ -26,21 +30,17 @@ namespace View.Screens
         public RoleAssignmentScreen()
         {
             InitializeComponent();
-        }/*
-        private int SetRole(User user)
-        {
+        }
 
-        }*/
-        private void SwapRole_Click(object sender, RoutedEventArgs e)
+        private void UserRole_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var User = (ListView)this.FindName("Users");
-            var dataGridRowUser = (DataGridRow)User;
-            var selectedUser = (User)dataGridRow.Item;
+            int userID = ((UserRoles)((ContentPresenter)((ComboBox)sender).TemplatedParent).Content).UserID;
+            int userrole = ((ComboBox)sender).SelectedIndex;
 
-            var Role = (ListView)this.FindName("Roles");
-            var dataGridRowRole = (DataGridRow)Role;
-            var selectedRole = (string)dataGridRow.Item;
-            selectedUser.RoleID = selectedRole == "User" ? 1 : selectedRole == "Artist" ? 2 : 3 ;
+            userrole += 1;
+            
+            if(userID != UserController.CurrentUser.ID)
+                UserController.Create(new DatabaseContext()).UpdateUserRole(userID, userrole);
         }
     }
 }

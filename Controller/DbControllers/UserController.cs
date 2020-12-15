@@ -141,5 +141,13 @@ namespace Controller.DbControllers
             var controller = RolePermissionsController.Create(Context);
             return controller.GetPermission(user, permission) != null;
         }
+
+
+        public void UpdateUserRole(int userID, int roleID)
+        {
+            User user = GetItem(userID);
+            user.RoleID = roleID;
+            UpdateItem(user);
+        }
     }
 }
