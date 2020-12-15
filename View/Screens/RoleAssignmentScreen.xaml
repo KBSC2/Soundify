@@ -6,7 +6,7 @@
         <!-- Start RoleAssignmentScreen screen -->
         <Grid Background="#FF303651" DataContext="{x:Static dataContexts:RoleAssignmentDataContext.Instance}">
             <Grid Margin="0, 5, 0, 5">
-                <ListView ScrollViewer.VerticalScrollBarVisibility="Hidden" Padding="5" FontSize="20" ItemsSource="{Binding UserRoles}" BorderThickness="0" BorderBrush="0" HorizontalAlignment="Center" Background="Transparent">
+                <ListView ScrollViewer.VerticalScrollBarVisibility="Hidden" Padding="5" FontSize="20" ItemsSource="{Binding UserRoles}" BorderThickness="0" HorizontalAlignment="Center" Background="Transparent">
                     <ListView.View>
                         <GridView>
                             <GridView.ColumnHeaderContainerStyle>
