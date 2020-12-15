@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Controller.DbControllers;
 using Model.Database.Contexts;
+using Soundify;
 using View.DataContexts;
 
 namespace View.Screens
@@ -26,11 +23,12 @@ namespace View.Screens
             int id = (int)((Button)sender).Tag;
             var shopItem = ShopDataContext.Instance.ShopItems.FirstOrDefault(x => x.ID == id);
 
-            if (shopItem == null || shopItem.Bought)
+            if (shopItem == null || (shopItem.Bought && !shopItem.Repurchasable))
                 return;
 
-            ShopItemController.Create(new DatabaseContext()).BuyItem(UserController.CurrentUser, shopItem);
+            ShopItemController.Create(DatabaseContext.Instance).BuyItem(UserController.CurrentUser, shopItem);
             ShopDataContext.Instance.OnPropertyChanged();
+            MainWindow.InstanceMainWindow.UpdateButtons();
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Controller.DbControllers
     public class UserController : DbController<User>
     {
         public static User CurrentUser;
+        public static List<Permission> PermissionsCache { get; set; } = new List<Permission>();
 
         /**
          * This function creates a instance of this controller
@@ -116,10 +117,8 @@ namespace Controller.DbControllers
             if (!HasPermission(user, permission))
                 return false;
 
-            var sipController = ShopItemPermissionController.Create(Context);
-            var rpController = RolePermissionsController.Create(Context);
-
-            var max = rpController.GetPermissionValueCount(user, maxValue) + sipController.GetPermissionValueCount(user, maxValue);
+            var max = GetPermissionValue(user, maxValue);
+            
 
             Dictionary<Permissions, int> maxValues = new Dictionary<Permissions, int>()
             {
@@ -128,6 +127,23 @@ namespace Controller.DbControllers
             };
 
             return max > maxValues[maxValue];
+        }
+
+        /**
+         * Checks the max value for the permission
+         *
+         * @param user The user to check the permission for
+         * @param maxPermission The permission to check the max value of
+         *
+         * @return Count of max value
+         */
+        public int GetPermissionValue(User user, Permissions maxPermission)
+        {
+            var sipController = ShopItemPermissionController.Create(Context);
+            var rpController = RolePermissionsController.Create(Context);
+
+            var max = rpController.GetPermissionValueCount(user, maxPermission) + sipController.GetPermissionValueCount(user, maxPermission);
+            return max;
         }
 
         /**
@@ -140,9 +156,57 @@ namespace Controller.DbControllers
          */
         public bool HasPermission(User user, Permissions permission)
         {
+            if (user == null)
+                return false;
+
+            var cached = PermissionsCache.FirstOrDefault(x => x.Name == permission.ToString());
+            if (cached != null)
+                return true;
+
             var sipController = ShopItemPermissionController.Create(Context);
             var rpController = RolePermissionsController.Create(Context);
-            return rpController.GetPermission(user, permission) != null || sipController.GetPermission(user, permission) != null;
+
+            var rpPerm = rpController.GetPermission(user, permission);
+            var sipPerm = sipController.GetPermission(user, permission);
+
+            if (rpPerm != null || sipPerm != null)
+            {
+                var perm = rpPerm != null ? rpPerm.Permission : sipPerm.Permission;
+                PermissionsCache.Add(perm);
+                return true;
+            }
+
+            return false;
         }
+
+        /**
+         * Adds coins to the currentUser's account
+         *
+         * @param user CurrentUser
+         * @param coins Number of coins that need to be added
+         *
+         * @return void
+         */
+        public User AddCoins(User user, int coins = 1)
+        {
+            user.Coins += coins;
+            UpdateItem(user);
+            return user;
+        }
+
+        /**
+          * Removes coins to the currentUser's account
+          *
+          * @param user CurrentUser
+          * @param coins Number of coins that need to be removed
+          *
+          * @return void
+          */
+        public void RemoveCoins(User user, int coins = 1)
+        {
+            user.Coins -= coins;
+            UpdateItem(user);
+        }
+
     }
 }

@@ -3,8 +3,6 @@ using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using NUnit.Framework;
-using View;
-using View.Screens;
 
 /*It's important to notice that the database should stay unchanged after running the tests.
  At the start of the test, the database should be in the same state as at the end of the test. */

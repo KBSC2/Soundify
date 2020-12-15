@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
-using Model.Enums;
 using NUnit.Framework;
 
 namespace Tests.SearchTests

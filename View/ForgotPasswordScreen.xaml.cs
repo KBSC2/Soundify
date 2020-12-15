@@ -36,7 +36,7 @@ namespace View
             var newPassword = this.NewPassword.Password;
             var repeatPassword = this.RepeatPassword.Password;
 
-            var controller = UserController.Create(new DatabaseContext());
+            var controller = UserController.Create(DatabaseContext.Instance);
             var user = controller.GetUserFromEmailOrUsername(email);
 
             if (token.Equals(user.Token))

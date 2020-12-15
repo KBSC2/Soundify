@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Controls;
 using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;

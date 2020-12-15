@@ -1,5 +1,4 @@
-﻿using System.Collections.Specialized;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Controller.DbControllers;
 using Model.Annotations;
@@ -20,11 +19,11 @@ namespace View.DataContexts
                 return instance;
             }
         }
-        public Role Role => RoleController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.RoleID);
+        public Role Role => RoleController.Create(DatabaseContext.Instance).GetItem(UserController.CurrentUser.RoleID);
 
         public string CurrentUserName => UserController.CurrentUser.Username;
 
-        public string HasArtistRequested => UserController.Create(new DatabaseContext())
+        public string HasArtistRequested => UserController.Create(DatabaseContext.Instance)
             .GetItem(UserController.CurrentUser.ID).RequestedArtist == true
             ? "Hidden"
             : "Visible";

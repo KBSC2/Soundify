@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.DbModels
 {
@@ -9,8 +6,12 @@ namespace Model.DbModels
     {
         public int Price { get; set; }
         public string Name { get; set; }
+        public bool Repurchasable { get; set; }
+        public string ImagePath { get; set; }
 
         [NotMapped] 
         public bool Bought { get; set; }
+        [NotMapped]
+        public bool Purchasable { get; set; }
     }
 }

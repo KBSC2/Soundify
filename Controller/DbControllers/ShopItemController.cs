@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Controller.Proxy;
 using Model.Database.Contexts;
 using Model.DbModels;
@@ -29,15 +27,21 @@ namespace Controller.DbControllers
         public List<ShopItem> GetList(int userId)
         {
             var userItems = UserShopItemsController.Create(Context).GetItemsForUser(userId).Select(x => x.ShopItemID);
+            var userCoins = UserController.Create(Context).GetItem(userId).Coins;
             var items = GetList();
-            items.ForEach(x => 
-                x.Bought = userItems.Contains(x.ID)    
-            );
+            items.ForEach(x =>
+            {
+                x.Bought = userItems.Contains(x.ID);
+                x.Purchasable = userCoins >= x.Price;
+                x.ImagePath ??= "../Assets/NoImage.png";
+            });
             return items;
         }
 
         public void BuyItem(User user, ShopItem shopItem)
         {
+            if (user.Coins < shopItem.Price) return;
+
             shopItem.Bought = true;
             UpdateItem(shopItem);
 
@@ -48,6 +52,8 @@ namespace Controller.DbControllers
                 UserID = user.ID,
                 User = user
             });
+
+            UserController.Create(Context).RemoveCoins(user, shopItem.Price);
         }
     }
 }

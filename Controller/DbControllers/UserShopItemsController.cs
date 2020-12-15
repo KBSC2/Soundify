@@ -4,7 +4,6 @@ using Controller.Proxy;
 using Microsoft.EntityFrameworkCore;
 using Model.Database.Contexts;
 using Model.DbModels;
-using Model.Enums;
 
 namespace Controller.DbControllers
 {

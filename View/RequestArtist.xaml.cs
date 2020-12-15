@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Net.Mail;
-using System.Threading.Tasks;
+﻿using System.Net.Mail;
 using System.Windows;
 using System.Windows.Input;
 using Controller;
@@ -49,12 +47,12 @@ namespace View
                 SongID = null
             };
 
-            var userController = UserController.Create(new DatabaseContext());
+            var userController = UserController.Create(DatabaseContext.Instance);
             var user = userController.GetItem(UserController.CurrentUser.ID);
             user.RequestedArtist = true;
             userController.UpdateItem(user);
 
-            var requestController = RequestController.Create(new DatabaseContext());
+            var requestController = RequestController.Create(DatabaseContext.Instance);
             requestController.CreateItem(request);
 
             this.Close();

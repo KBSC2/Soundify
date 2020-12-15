@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Autofac.Core.Activators;
 using Controller.Proxy;
 using Microsoft.EntityFrameworkCore;
 using Model.Database.Contexts;
@@ -94,9 +93,14 @@ namespace Controller.DbControllers
             var shopItemIds = UserShopItemsController.Create(Context).GetItemsForUser(user.ID)
                 .Select(x => x.ShopItemID).ToArray();
 
-            return this.GetPermissionsFromShopItems(shopItemIds)
-                .Where(x => x.PermissionID == (int)permission)
-                .Sum(x => x.Value);
+            var perms = this.GetPermissionsFromShopItems(shopItemIds)
+                .Where(x => x.Permission.Name == permission.ToString()).ToList();
+
+            var count = 0;
+            foreach (var t in shopItemIds)
+                count += perms.FirstOrDefault(x => x.ShopItemID == t)?.Value ?? 0;
+
+            return count;
         }
     }
 }

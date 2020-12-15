@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
@@ -21,7 +19,7 @@ namespace View.DataContexts
                 return instance;
             }
         }
-        public List<Request> ArtistRequests => RequestController.Create(new DatabaseContext()).GetArtistRequests();
+        public List<Request> ArtistRequests => RequestController.Create(DatabaseContext.Instance).GetArtistRequests();
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)

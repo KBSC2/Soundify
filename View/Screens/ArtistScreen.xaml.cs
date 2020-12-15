@@ -61,16 +61,16 @@ namespace View.Screens
 
             var imageSource = ((BitmapImage)((Image)dataGrid.FindName("Image"))?.Source)?.UriSource;
 
-            if (imageSource != null) FileTransfer.Create(new DatabaseContext()).UploadFile(imageSource?.LocalPath, "images/" +
+            if (imageSource != null) FileTransfer.Create(DatabaseContext.Instance).UploadFile(imageSource?.LocalPath, "images/" +
                 imageSource?.LocalPath.Split("\\").Last());
 
             var artistName = ((Label)dataGrid.FindName("Artist"))?.Content.ToString();
             var songName = ((TextBox)dataGrid.FindName("Title"))?.Text;
-            var artistId = ArtistController.Create(new DatabaseContext()).GetArtistIdFromUserId(UserController.CurrentUser.ID);
+            var artistId = ArtistController.Create(DatabaseContext.Instance).GetArtistIdFromUserId(UserController.CurrentUser.ID);
 
             if (artistId == null) return;
 
-            SongController.Create(new DatabaseContext()).UploadSong(new Song
+            SongController.Create(DatabaseContext.Instance).UploadSong(new Song
             {
                 Name = songName,
                 Artist = (int)artistId,

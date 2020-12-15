@@ -32,12 +32,12 @@ namespace View
         {
             Song = song;
             Duration = TimeSpan.FromSeconds(song.Duration).ToString("m':'ss");
-            Artist = ArtistController.Create(new DatabaseContext()).GetItem(song.Artist);
+            Artist = ArtistController.Create(DatabaseContext.Instance).GetItem(song.Artist);
         }
 
         public static List<SongInfo> ConvertSongListToSongInfo(Playlist playlist, List<PlaylistSong> songs)
         {
-            var playlistSongController = PlaylistSongController.Create(new DatabaseContext());
+            var playlistSongController = PlaylistSongController.Create(DatabaseContext.Instance);
 
             return songs.Select(song => new SongInfo(song.Song, playlistSongController.GetPlaylistSong(playlist.ID, song.SongID)))
                 .ToList();
