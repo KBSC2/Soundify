@@ -1,5 +1,4 @@
 ﻿using Controller.DbControllers;
-using Model;
 using Model.Database.Contexts;
 using Model.Enums;
 using Model.EventArgs;
@@ -20,7 +19,7 @@ namespace View
             InitializeComponent();
             StartTimer();
 
-            var rpController = RolePermissionsController.Create(new DatabaseContext());
+            var userController = UserController.Create(DatabaseContext.Instance);
 
             //Decides what text should show up in the popup message
             switch (permission)
@@ -47,7 +46,7 @@ namespace View
                     }
                 case Permissions.PlaylistLimit:
                     {
-                        var max = rpController.GetPermissionValueCount(UserController.CurrentUser, permission);
+                        var max = userController.GetPermissionValue(UserController.CurrentUser, permission);
                         TypeOfRight.Text = $"You have reached the\n{max} playlists that you can make\nMore features available in the shop";
                         break;
                     }
@@ -58,7 +57,7 @@ namespace View
                     }
                 case Permissions.PlaylistSongsLimit:
                     {
-                        var max = rpController.GetPermissionValueCount(UserController.CurrentUser, permission);
+                        var max = userController.GetPermissionValue(UserController.CurrentUser, permission);
                         TypeOfRight.Text = $"You have reached the maximum of\n{max} songs that you can add to the playlist\nMore features available in the shop";
                         break;
                     }
@@ -87,7 +86,7 @@ namespace View
         }
         public void Shop_Close_Window_Click(object sender, EventArgs e)
         {
-            MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs() { ScreenName = ScreenNames.QueueScreen });
+            MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs() { ScreenName = ScreenNames.ShopScreen });
             Close();
         }
     }

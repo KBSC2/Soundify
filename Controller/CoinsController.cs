@@ -1,7 +1,6 @@
 ﻿using System;
 using Controller.DbControllers;
 using Model.Database.Contexts;
-using Model.DbModels;
 
 namespace Controller
 {
@@ -19,12 +18,9 @@ namespace Controller
         }
 
         private int counter;
-        private UserController userController;
 
         private CoinsController()
         {
-            counter = 0;
-            userController = UserController.Create(new DatabaseContext()); //TODO: if coinsController will be tested this has to be variable.
         }
 
         /**
@@ -39,37 +35,10 @@ namespace Controller
 
             if (counter == 10)
             {
+                var userController = UserController.Create(new DatabaseContext());
+                UserController.CurrentUser.Coins = userController.AddCoins(userController.GetItem(UserController.CurrentUser.ID)).Coins;
                 counter = 0;
-                AddCoins(userController.GetItem(UserController.CurrentUser.ID));
             }
-        }
-
-        /**
-         * Adds coins to the currentUser's account
-         *
-         * @param user CurrentUser
-         * @param coins Number of coins that need to be added
-         *
-         * @return void
-         */
-        public void AddCoins(User user, int coins = 1)
-        {
-            user.Coins += coins;
-            userController.UpdateItem(user);
-        }
-
-        /**
-          * Removes coins to the currentUser's account
-          *
-          * @param user CurrentUser
-          * @param coins Number of coins that need to be removed
-          *
-          * @return void
-          */
-        public void RemoveCoins(User user, int coins = 1)
-        {
-            user.Coins -= coins;
-            userController.UpdateItem(user);
         }
     }
 }

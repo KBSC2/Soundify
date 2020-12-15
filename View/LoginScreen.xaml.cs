@@ -37,7 +37,7 @@ namespace View
             var emailOrUsername = this.UsernameLogin.Text;
             var password = this.PasswordLogin.Password;
 
-            var controller = UserController.Create(new DatabaseContext());
+            var controller = UserController.Create(DatabaseContext.Instance);
             var result = controller.UserLogin(emailOrUsername, password);
             switch (result)
             {

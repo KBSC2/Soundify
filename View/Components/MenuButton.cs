@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Media;
-using Model;
 using Model.Enums;
 using Model.EventArgs;
 using Soundify;
