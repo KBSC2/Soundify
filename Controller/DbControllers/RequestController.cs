@@ -40,37 +40,57 @@ namespace Controller.DbControllers
             return GetFilteredList(r => r.RequestType == RequestType.Artist);
         }
 
-        /**
-         * Approves a request from a user to become an artist
-         *
-         * @param requestID The ID of the request in question
-         */
-        public void ApproveUser(int requestID)
+       /**
+        * Check if artistName and/or artistReason are empty
+        * 
+        * @param artistName User's requested artistName
+        * @param artistReason User's requested artistReason
+        * 
+        * @return RequestArtistResults : Result of the user's request to become an artist
+        */
+        public virtual RequestArtistResults RequestArtist(string artistName, string artistReason)
         {
-            var request = GetItem(requestID);
-
-            ArtistController.Create(Context).MakeArtist(request);
-
-            DeleteItem(requestID);
+            if (artistName == "" && artistReason == "")
+                return RequestArtistResults.NameAndReasonNotFound;
+            if (artistName == "")
+                return RequestArtistResults.ArtistNameNotFound;
+            if (artistReason == "")
+                return RequestArtistResults.ReasonNotFound;
+            return RequestArtistResults.Success;
         }
+        
+            /**
+             * Approves a request from a user to become an artist
+             *
+             * @param requestID The ID of the request in question
+             */
+            public void ApproveUser(int requestID)
+            {
+                var request = GetItem(requestID);
 
+                ArtistController.Create(Context).MakeArtist(request);
 
-        /**
-         * Declines the request from a user to become an artist
-         *
-         * @param requestID The ID of the request in question
-         */
-        public void DeclineUser(int requestID)
-        {
-            var request = GetItem(requestID);
-            var userID = request.UserID;
+                DeleteItem(requestID);
+            }
 
-            var userController = UserController.Create(Context);
-            var user = userController.GetItem(userID);
-            user.RequestedArtist = false;
-            userController.UpdateItem(user);
+            /**
+             * Declines the request from a user to become an artist
+             *
+             * @param requestID The ID of the request in question
+             */
+            public void DeclineUser(int requestID)
+            {
+                var request = GetItem(requestID);
+                var userID = request.UserID;
 
-            DeleteItem(requestID);
+                var userController = UserController.Create(Context);
+                var user = userController.GetItem(userID);
+                user.RequestedArtist = false;
+                userController.UpdateItem(user);
+
+                DeleteItem(requestID);
+
+            }
         }
     }
-}
+
