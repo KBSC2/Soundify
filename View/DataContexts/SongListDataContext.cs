@@ -46,7 +46,7 @@ namespace View.DataContexts
             switch (instance.ScreenName)
             {
                 case ScreenNames.PlaylistScreen:
-                    SongInfoList = SongInfo.ConvertSongListToSongInfo(MainWindow.CurrentPlayList, PlaylistSongController.Create(context).GetSongsFromPlaylist(MainWindow.CurrentPlayList.ID));
+                    SongInfoList = SongInfo.ConvertSongListToSongInfo(MainWindow.CurrentPlayList);
                     break;
                 case ScreenNames.SearchScreen:
                     SongInfoList = SongInfo.ConvertSongListToSongInfo(songController.SearchSongsOnString(SearchDataContext.Instance.SearchTerms.ToList()));
