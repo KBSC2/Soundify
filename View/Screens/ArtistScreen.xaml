@@ -11,7 +11,6 @@
             <Grid.Resources>
                 <Components:ID3DurationPropertyConverter x:Key="DurationConverter"/>
             </Grid.Resources>
-
             <Grid Margin="0,0,0,164">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>

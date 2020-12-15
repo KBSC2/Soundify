@@ -89,7 +89,6 @@ namespace View.Screens
                 ? ((TextBox) dataGrid.FindName("Description"))?.Text
                 : null;
 
-
             if (titleTextBox.Text == "")
             {
                 MessageBox.Show("Title must be set", "Error", MessageBoxButton.OK);

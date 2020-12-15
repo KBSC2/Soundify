@@ -25,7 +25,6 @@ namespace Controller.DbControllers
 
         protected AlbumController(IDatabaseContext context) : base(context, context.Albums)
         {
-
         }
     }
 }

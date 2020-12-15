@@ -62,9 +62,7 @@ namespace Controller.DbControllers
                     WrittenBy = albumSongInfo.WrittenBy == "" ? null : albumSongInfo.WrittenBy,
                     Status = SongStatus.AwaitingApproval
                 };
-
                 SongController.Create(new DatabaseContext()).UploadSong(song, albumSongInfo.File.Name);
-
 
                 var albumArtistSong = new AlbumArtistSong() {AlbumId = album.ID, ArtistId = artistId, SongId = song.ID};
                 set.Add(albumArtistSong);
