@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Controller.Proxy;
 using Model.Database.Contexts;
@@ -129,6 +130,16 @@ namespace Controller.DbControllers
             return max > maxValues[maxValue];
         }
 
+        public virtual NewUserInfo ChangeDetails(string newEmail, string newUsername)
+        {
+            if (newEmail == "" && newUsername == "")
+                return NewUserInfo.Empty;
+
+            var email = GetUserFromEmailOrUsername(newEmail);
+            var username = GetUserFromEmailOrUsername(newEmail);
+
+        }
+
         /**
          * Checks the max value for the permission
          *
@@ -207,6 +218,5 @@ namespace Controller.DbControllers
             user.Coins -= coins;
             UpdateItem(user);
         }
-
     }
 }
