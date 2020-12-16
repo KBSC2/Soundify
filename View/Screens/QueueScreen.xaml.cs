@@ -35,7 +35,8 @@ namespace View.Screens
 
             if (selectedSongInfo == null || listView.SelectedIndex - 1 < 0) return;
 
-            SwapSongs(listView.SelectedIndex, listView.SelectedIndex - 1, AudioPlayer.Instance.Queue);
+            QueueController.Instance.SwapSongs(listView.SelectedIndex + 1, listView.SelectedIndex, AudioPlayer.Instance.Queue);
+            QueueDataContext.Instance.OnPropertyChanged();
         }
 
         private void Queue_MoveDown_Click(object sender, RoutedEventArgs e)
@@ -46,27 +47,15 @@ namespace View.Screens
 
             if (selectedSongInfo == null || listView.SelectedIndex + 1 >= listView.Items.Count) return;
 
-            SwapSongs(listView.SelectedIndex, listView.SelectedIndex + 1, AudioPlayer.Instance.Queue);
-        }
-
-        public void SwapSongs(int indexOne, int indexTwo, List<Song> list)
-        {
-            var listitem1 = list[indexOne+1];
-            var listitem2 = list[indexTwo+1];
-
-            list[indexOne+1] = listitem2;
-            list[indexTwo+1] = listitem1;
-
+            QueueController.Instance.SwapSongs(listView.SelectedIndex + 1, listView.SelectedIndex + 2, AudioPlayer.Instance.Queue);
             QueueDataContext.Instance.OnPropertyChanged();
         }
 
+        
+
         public void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
         {
-            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
-
-            AudioPlayer.Instance.Queue.Remove(song);
-            AudioPlayer.Instance.NextInQueue.Remove(song);
-
+            QueueController.Instance.DeleteSongFromQueue(((SongInfo)((MenuItem)sender).DataContext).Song);
             QueueDataContext.Instance.OnPropertyChanged();
         }
     }

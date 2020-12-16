@@ -30,6 +30,8 @@ namespace Model.Database.Contexts
         public override DbSet<ShopItem> ShopItems { get; set; }
         public override DbSet<ShopItemPermissions> ShopItemPersmissions { get; set; }
         public override DbSet<UserShopItems> UserShopItems { get; set; }
+        public override DbSet<Album> Albums { get; set; }
+        public override DbSet<AlbumArtistSong> AlbumArtistSongs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -38,13 +40,17 @@ namespace Model.Database.Contexts
                 // Fetch database settings from the App.Config
                 Configuration configuration = ConfigurationManager.OpenExeConfiguration(@"View.dll");
                 var connectionString = configuration.ConnectionStrings.ConnectionStrings["MSSQL"].ConnectionString;
-                optionsBuilder.UseSqlServer(connectionString);
+                optionsBuilder
+                    .UseLazyLoadingProxies()
+                    .UseSqlServer(connectionString);
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PlaylistSong>().HasKey(ps => new {ps.PlaylistID, ps.SongID});
+
+            modelBuilder.Entity<AlbumArtistSong>().HasKey(aas => new {aas.AlbumId, aas.ArtistId, aas.SongId});
 
             modelBuilder.Entity<RolePermissions>().HasKey(rp => new { rp.RoleID, rp.PermissionID});
 

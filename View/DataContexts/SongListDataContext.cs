@@ -35,41 +35,27 @@ namespace View.DataContexts
         public void UpdateSongInfoList()
         {
             var artistController = ArtistController.Create(DatabaseContext.Instance);
-            List<Song> songlist = new List<Song>();
+            var songController = SongController.Create(DatabaseContext.Instance);
+            
             switch (instance.ScreenName)
             {
                 case ScreenNames.PlaylistScreen:
-                    songlist = PlaylistSongController.Create(DatabaseContext.Instance)
-                        .GetSongsFromPlaylist(Soundify.MainWindow.CurrentPlayList.ID).Select(ps => ps.Song).ToList();
+                    SongInfoList = SongInfo.ConvertSongListToSongInfo(MainWindow.CurrentPlayList);
                     break;
                 case ScreenNames.SearchScreen:
-                    songlist = SongController.Create(DatabaseContext.Instance)
-                        .SearchSongsOnString(SearchDataContext.Instance.SearchTerms.ToList());
+                    SongInfoList = SongInfo.ConvertSongListToSongInfo(songController.SearchSongsOnString(SearchDataContext.Instance.SearchTerms.ToList()));
                     break;
                 case ScreenNames.ArtistScreen:
-                    songlist = SongController.Create(DatabaseContext.Instance).GetList()
-                        .Where(s => s.Artist.Equals(
-                            artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID))).ToList();
+                    SongInfoList = SongInfo.ConvertSongListToSongInfo(songController.GetList().Where(s => s.Artist.Equals(artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID))).ToList());
                     break;
                 case ScreenNames.SongListScreen:
-                    if (DataContext.Instance.IsAdmin != null && (bool)DataContext.Instance.IsAdmin)
-                    {
-                        songlist = SongController.Create(DatabaseContext.Instance)
-                            .SearchSongsOnString(SongListSearchTerms.ToList());
-                    }
-                    else if (DataContext.Instance.IsArtist != null && (bool) DataContext.Instance.IsArtist)
-                    {
-                        songlist = SongController.Create(DatabaseContext.Instance)
-                            .SearchSongsOnString(SongListSearchTerms.ToList())
-                            .Where(s => s.Artist.Equals(
-                                artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID))).ToList();
-                    }
+                    if(DataContext.Instance.IsAdmin)
+                        SongInfoList = SongInfo.ConvertSongListToSongInfo(songController.SearchSongsOnString(SongListSearchTerms.ToList()));
+                    else
+                        SongInfoList = SongInfo.ConvertSongListToSongInfo(songController.SearchSongsOnString(SongListSearchTerms.ToList())
+                            .Where(s => s.Artist.Equals(artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID))).ToList());
                     break;
             }
-
-            SongInfoList = IsPlaylistScreen
-                ? SongInfo.ConvertSongListToSongInfo(MainWindow.CurrentPlayList)
-                : SongInfo.ConvertSongListToSongInfo(songlist);
         }
 
         public List<SongInfo> SongInfoList { get; set; }

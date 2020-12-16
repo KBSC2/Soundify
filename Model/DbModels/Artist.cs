@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Model.DbModels
 {
@@ -7,5 +8,7 @@ namespace Model.DbModels
         [Required]
         public int UserID { get; set; }
         public string ArtistName { get; set; }
+
+        public virtual IList<AlbumArtistSong> AlbumArtistSongs { get; set; }
     }
 }

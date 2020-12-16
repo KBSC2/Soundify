@@ -12,16 +12,16 @@ namespace Model.DbModels
         public string Description { get; set; }
         public string Genre { get; set; }
         public DateTime CreationDate { get; set; }
-
+        
         [Required]
         public int UserID { get; set; }
-
+        
         [Required]
         public bool ActivePlaylist { get; set; }
+        
         [Required]
         public DateTime DeleteDateTime { get; set; }
-
-
-        public IList<PlaylistSong> PlaylistSongs { get; set; }
+        
+        public virtual IList<PlaylistSong> PlaylistSongs { get; set; }
     }
 }

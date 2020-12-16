@@ -41,7 +41,7 @@ namespace View
             var emailController = new EmailController();
             var email = new MailArtistVerification(new MailAddress("info.soundify@gmail.com"), artistName, artistReason);
 
-            var controller = RequestController.Create(new DatabaseContext());
+            var controller = RequestController.Create(DatabaseContext.Instance);
             var result = controller.RequestArtist(artistName, artistReason);
             switch (result)
             {

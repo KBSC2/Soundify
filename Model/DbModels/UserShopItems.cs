@@ -5,10 +5,10 @@
 
         public int UserID { get; set; }
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         public int ShopItemID { get; set; }
 
-        public ShopItem ShopItem { get; set; }
+        public virtual ShopItem ShopItem { get; set; }
     }
 }
