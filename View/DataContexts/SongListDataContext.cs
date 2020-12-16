@@ -58,7 +58,7 @@ namespace View.DataContexts
                 case ScreenNames.AlbumSongListScreen:
                     SongInfoList = SongInfo.ConvertSongListToSongInfo(
                         AlbumSongListDataContext.Instance.Album.AlbumArtistSongs
-                            .Select(aas => aas.Song).ToList());
+                            .Select(aas => aas.Song).Where(s => s.Status.Equals(SongStatus.Approved)).ToList());
                     break;
             }
         }

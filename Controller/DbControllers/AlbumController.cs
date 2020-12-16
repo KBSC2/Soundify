@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Castle.Core.Internal;
 using Controller.Proxy;
 using Microsoft.EntityFrameworkCore;
 using Model.Database.Contexts;
@@ -33,7 +34,7 @@ namespace Controller.DbControllers
         {
             
             return GetList()
-                .Where(album => searchTerms.Any(s => album.AlbumName != null && album.AlbumName.ToLower().Contains(s.ToLower())) ||
+                .Where(album => (searchTerms.Any(s => album.AlbumName != null && album.AlbumName.ToLower().Contains(s.ToLower())) ||
                                 searchTerms.Any(s => 
                                     album.AlbumArtistSongs
                                         .Where(aas => aas.Album.Equals(album))
@@ -41,8 +42,8 @@ namespace Controller.DbControllers
                                         .OrderBy(aas => aas.Count())
                                         .Select(aas => aas.Key)
                                         .First().ArtistName.ToLower()
-                                        .Contains(s.ToLower()))
-                     
+                                        .Contains(s.ToLower())))
+                     && (!album.AlbumArtistSongs.Select(aas => aas.Song).Where(s => s.Status.Equals(SongStatus.Approved)).ToList().IsNullOrEmpty())
                                 )
                 .ToList();
         }
