@@ -60,6 +60,7 @@ namespace View
 
                     this.UsernameLogin.Text = "";
                     this.PasswordLogin.Password = "";
+                    DataContexts.DataContext.Instance.Timer.Start();
                     break;
                 }
                 case LoginResults.EmailNotFound:
