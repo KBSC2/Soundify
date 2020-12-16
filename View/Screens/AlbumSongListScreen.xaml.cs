@@ -8,6 +8,7 @@ using Model.EventArgs;
 using Soundify;
 using System;
 using Model.Enums;
+using System.Linq;
 
 namespace View.Screens
 {
@@ -21,7 +22,8 @@ namespace View.Screens
 
         private void Play_Album_Button_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: vincent dingetje
+            var songList = SongListDataContext.Instance.SongInfoList.Select(x => x.Song).ToList();
+            AudioPlayer.Instance.PlayAlbum(songList);
         }
     }
 }

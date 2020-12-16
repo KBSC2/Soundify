@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Controller;
@@ -52,7 +53,8 @@ namespace View.Resources
                         AudioPlayer.Instance.PlaySong(songInfo.Song);
                         break;
                     case ScreenNames.AlbumSongListScreen:
-                        //TODO: vincent album afspeel dingetje
+                        var songList = SongListDataContext.Instance.SongInfoList.Select(x => x.Song).ToList();
+                        AudioPlayer.Instance.PlayAlbum(songList, songList.IndexOf(songInfo.Song) - 1);
                         break;
                 }
             }
