@@ -7,6 +7,7 @@ using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
+using Model.EventArgs;
 using Soundify;
 using View.DataContexts;
 
@@ -61,6 +62,20 @@ namespace View.Resources
 
             SongListDataContext.Instance.OnPropertyChanged();
         }
+
+        private void OpenAlbum_LeftClick(object sender, RoutedEventArgs e)
+        {
+            var songInfo = ((SongInfo) ((MenuItem)sender).DataContext);
+            
+                AlbumSongListDataContext.Instance.Album = songInfo.Album;
+
+                MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs
+                {
+                    ScreenName = ScreenNames.AlbumSongListScreen,
+                });
+            
+        }
+
 
         public void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Castle.Core.Internal;
 using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
@@ -15,6 +16,9 @@ namespace View
     {
         public Song Song { get; set; }
         public Artist Artist { get; set; }
+
+        public Album Album { get; set; }
+        public bool IsPartOfAlbum { get; set; }
         public string Duration { get; set; }
         public DateTime Added { get; set; }
         public int Index { get; set; }
@@ -34,6 +38,8 @@ namespace View
             Song = song;
             Duration = TimeSpan.FromSeconds(song.Duration).ToString("m':'ss");
             Artist = ArtistController.Create(DatabaseContext.Instance).GetItem(song.Artist);
+            Album = song.AlbumArtistSongs.IsNullOrEmpty() ? null : Song.AlbumArtistSongs.First().Album;
+            IsPartOfAlbum = song.AlbumArtistSongs.IsNullOrEmpty() ? false : true;
         }
 
         public static List<SongInfo> ConvertSongListToSongInfo(Playlist playlist)
