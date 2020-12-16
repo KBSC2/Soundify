@@ -114,7 +114,7 @@ namespace Controller.DbControllers
 
             if (!request.SongID.HasValue) return;
 
-            var songController = SongController.Create(new DatabaseContext());
+            var songController = SongController.Create(DatabaseContext.Instance);
 
             var song = songController.GetItem(request.SongID.Value);
             song.Status = SongStatus.Approved;
@@ -134,7 +134,7 @@ namespace Controller.DbControllers
 
             if (!request.SongID.HasValue) return;
 
-            var songController = SongController.Create(new DatabaseContext());
+            var songController = SongController.Create(DatabaseContext.Instance);
 
             DeleteItem(requestID);
 
