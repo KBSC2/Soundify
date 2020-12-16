@@ -55,6 +55,11 @@ namespace View.DataContexts
                         SongInfoList = SongInfo.ConvertSongListToSongInfo(songController.SearchSongsOnString(SongListSearchTerms.ToList())
                             .Where(s => s.Artist.Equals(artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID))).ToList());
                     break;
+                case ScreenNames.AlbumSongListScreen:
+                    SongInfoList = SongInfo.ConvertSongListToSongInfo(
+                        AlbumSongListDataContext.Instance.Album.AlbumArtistSongs
+                            .Select(aas => aas.Song).ToList());
+                    break;
             }
         }
 

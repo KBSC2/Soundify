@@ -44,10 +44,10 @@ namespace Controller.DbControllers
             albumController = AlbumController.Create(context);
         }
 
-        public void UploadAlbum(ObservableCollection<AlbumSongInfo> albumSongInfos, Uri image, string title, string description, string artistName)
+        public void UploadAlbum(ObservableCollection<AlbumSongInfo> albumSongInfos, Uri image, string title, string description, string artistName, string genre)
         {
             var artistId = (int) artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID);
-            var album = new Album {AlbumName = title, Description = description};
+            var album = new Album {AlbumName = title, Description = description, Genre = genre};
             var requestController = RequestController.Create(DatabaseContext.Instance);
             albumController.CreateItem(album);
             foreach (var albumSongInfo in albumSongInfos)

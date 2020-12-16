@@ -15,6 +15,7 @@ namespace Model.Enums
         RequestScreen,
         SongListScreen,
         ShopScreen,
-        AlbumUploadScreen
+        AlbumUploadScreen,
+        AlbumSongListScreen
     }
 }

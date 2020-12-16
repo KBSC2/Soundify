@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Controller.Proxy;
 using Microsoft.EntityFrameworkCore;
 using Model.Database.Contexts;
 using Model.DbModels;
+using Model.Enums;
 
 namespace Controller.DbControllers
 {
@@ -25,6 +27,24 @@ namespace Controller.DbControllers
 
         protected AlbumController(IDatabaseContext context) : base(context, context.Albums)
         {
+        }
+
+        public List<Album> SearchAlbumListOnString(List<string> searchTerms)
+        {
+            
+            return GetList()
+                .Where(album => searchTerms.Any(s => album.AlbumName != null && album.AlbumName.ToLower().Contains(s.ToLower())) ||
+                                searchTerms.Any(s => 
+                                    album.AlbumArtistSongs
+                                        .Where(aas => aas.Album.Equals(album))
+                                        .GroupBy(aas => aas.Artist)
+                                        .OrderBy(aas => aas.Count())
+                                        .Select(aas => aas.Key)
+                                        .First().ArtistName.ToLower()
+                                        .Contains(s.ToLower()))
+                     
+                                )
+                .ToList();
         }
     }
 }

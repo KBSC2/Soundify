@@ -51,6 +51,9 @@ namespace View.Resources
                     case ScreenNames.SongListScreen:
                         AudioPlayer.Instance.PlaySong(songInfo.Song);
                         break;
+                    case ScreenNames.AlbumSongListScreen:
+                        //TODO: vincent album afspeel dingetje
+                        break;
                 }
             }
 

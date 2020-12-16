@@ -63,14 +63,19 @@
                     </Grid.Style>
                     <Label Content="Album Title*" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"
                            Width="98" FontSize="18" Foreground="White" />
-                    <Label Content="Artist" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top"
+                    <Label Content="Artist" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top"
+                           Width="98" FontSize="18" Foreground="White" />
+                    <Label Content="Genre" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top"
                            Width="98" FontSize="18" Foreground="White" />
                     <TextBox x:Name="Title" HorizontalAlignment="Left" FontSize="18" Margin="125,18,0,0"
                              TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" Foreground="Black"
                              BorderBrush="White" />
                     <Label x:Name="Artist" Content="{Binding ArtistName}" HorizontalAlignment="Left"
-                           Margin="125,54,0,0" VerticalAlignment="Top" Width="120" FontSize="18" Foreground="White"
+                           Margin="125,55,0,0" VerticalAlignment="Top" Width="120" FontSize="18" Foreground="White"
                            BorderBrush="Black" Background="{x:Null}" />
+                    <TextBox x:Name="Genre" HorizontalAlignment="Left" FontSize="18" Margin="125,100,0,0"
+                             TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" Foreground="Black"
+                             BorderBrush="White" />
                     <Label Content="Album Description" HorizontalAlignment="Left" Margin="267,10,0,0"
                            VerticalAlignment="Top" Width="160" FontSize="18" Foreground="White"
                            RenderTransformOrigin="0.5,0.5" />

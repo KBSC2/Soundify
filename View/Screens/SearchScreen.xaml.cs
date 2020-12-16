@@ -1,10 +1,14 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Controller.DbControllers;
+using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
 using Model.EventArgs;
 using Soundify;
+using View.DataContexts;
+using View.ListItems;
 
 namespace View.Screens
 {
@@ -27,6 +31,17 @@ namespace View.Screens
             {
                 ScreenName = ScreenNames.PlaylistScreen,
                 Playlist = selectedPlaylist
+            });
+        }
+        public void AlbumRow_Click(object sender, MouseButtonEventArgs e)
+        {
+            var listViewItem = (ListViewItem)sender;
+            var selectedAlbum = (AlbumInfo)listViewItem.Content;
+            AlbumSongListDataContext.Instance.Album = selectedAlbum.Album;
+
+            MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs
+            {
+                ScreenName = ScreenNames.AlbumSongListScreen,
             });
         }
     }

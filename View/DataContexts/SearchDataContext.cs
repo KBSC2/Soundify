@@ -5,6 +5,7 @@ using Controller.DbControllers;
 using Model.Annotations;
 using Model.Database.Contexts;
 using Model.DbModels;
+using View.ListItems;
 
 namespace View.DataContexts
 {
@@ -27,6 +28,10 @@ namespace View.DataContexts
         public List<string> SearchTerms { get; set; } = new List<string>();
         
         public List<Playlist> SearchPlaylists => PlaylistController.Create(DatabaseContext.Instance).SearchPlayListOnString(SearchTerms, UserController.CurrentUser.ID);
+
+        public List<AlbumInfo> SearchAlbumInfos =>
+            AlbumInfo.ConvertAlbumToAlbumInfo(AlbumController.Create(DatabaseContext.Instance)
+                .SearchAlbumListOnString(SearchTerms));
 
         public List<Playlist> AllPlaylists => PlaylistController.Create(DatabaseContext.Instance).GetActivePlaylists(UserController.CurrentUser.ID);
 
