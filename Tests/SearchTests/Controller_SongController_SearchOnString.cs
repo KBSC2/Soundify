@@ -11,7 +11,6 @@ namespace Tests.SearchTests
     public class Controller_Song_SearchOnString
     {
         private SongController songController;
-        private UserController userController;
         private ArtistController artistController;
 
         [SetUp]

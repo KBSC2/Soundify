@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.0" />
     <PackageReference Include="Moq" Version="4.15.1" />
     <PackageReference Include="NAudio" Version="1.10.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
@@ -26,5 +27,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NAudio" Version="1.10.0" />
+    <PackageReference Include="taglib" Version="2.1.0" />
   </ItemGroup>
 </Project>

@@ -2,14 +2,18 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Model.Database.Contexts;
 
 namespace Model.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20201214111329_AlbumAndAlbumArtistSongTables")]
+    partial class AlbumAndAlbumArtistSongTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,12 +31,9 @@ namespace Model.Migrations
                     b.Property<string>("AlbumName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("ID");
 
-                    b.ToTable("Albums");
+                    b.ToTable("Album");
                 });
 
             modelBuilder.Entity("Model.DbModels.AlbumArtistSong", b =>
@@ -52,7 +53,7 @@ namespace Model.Migrations
 
                     b.HasIndex("SongId");
 
-                    b.ToTable("AlbumArtistSongs");
+                    b.ToTable("AlbumArtistSong");
                 });
 
             modelBuilder.Entity("Model.DbModels.Artist", b =>
@@ -218,55 +219,6 @@ namespace Model.Migrations
                     b.ToTable("RolePermissions");
                 });
 
-            modelBuilder.Entity("Model.DbModels.ShopItem", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Repurchasable")
-                        .HasColumnType("bit");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("ShopItems");
-                });
-
-            modelBuilder.Entity("Model.DbModels.ShopItemPermissions", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("PermissionID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ShopItemID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("PermissionID");
-
-                    b.HasIndex("ShopItemID");
-
-                    b.ToTable("ShopItemPersmissions");
-                });
-
             modelBuilder.Entity("Model.DbModels.Song", b =>
                 {
                     b.Property<int>("ID")
@@ -373,28 +325,6 @@ namespace Model.Migrations
                     b.Navigation("Song");
                 });
 
-            modelBuilder.Entity("Model.DbModels.UserShopItems", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("ShopItemID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("ShopItemID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("UserShopItems");
-                });
-
             modelBuilder.Entity("Model.DbModels.PlaylistSong", b =>
                 {
                     b.HasOne("Model.DbModels.Playlist", "Playlist")
@@ -450,44 +380,6 @@ namespace Model.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Model.DbModels.ShopItemPermissions", b =>
-                {
-                    b.HasOne("Model.DbModels.Permission", "Permission")
-                        .WithMany()
-                        .HasForeignKey("PermissionID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Model.DbModels.ShopItem", "ShopItem")
-                        .WithMany()
-                        .HasForeignKey("ShopItemID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Permission");
-
-                    b.Navigation("ShopItem");
-                });
-
-            modelBuilder.Entity("Model.DbModels.UserShopItems", b =>
-                {
-                    b.HasOne("Model.DbModels.ShopItem", "ShopItem")
-                        .WithMany()
-                        .HasForeignKey("ShopItemID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Model.DbModels.User", "User")
-                        .WithMany("UserShopItems")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ShopItem");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Model.DbModels.Album", b =>
                 {
                     b.Navigation("AlbumArtistSongs");
@@ -513,8 +405,6 @@ namespace Model.Migrations
             modelBuilder.Entity("Model.DbModels.User", b =>
                 {
                     b.Navigation("RequestsList");
-
-                    b.Navigation("UserShopItems");
                 });
 #pragma warning restore 612, 618
         }

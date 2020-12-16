@@ -17,6 +17,7 @@
                 <ResourceDictionary Source="Screens/AdminScreen.xaml"/>
                 <ResourceDictionary Source="Screens/RequestScreen.xaml"/>
                 <ResourceDictionary Source="Screens/SongListScreen.xaml"/>
+                <ResourceDictionary Source="Screens/AlbumUploadScreen.xaml"/>
                 <ResourceDictionary Source="Screens/ShopScreen.xaml"/>
 
                 <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
