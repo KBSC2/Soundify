@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Model.DbModels
@@ -21,5 +20,6 @@ namespace Model.DbModels
         public string Token { get; set; }
 
         public IList<Request> RequestsList { get; set; }
+        public IList<UserShopItems> UserShopItems { get; set; }
     }
 }

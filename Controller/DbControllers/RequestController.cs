@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Controller.Proxy;
 using Microsoft.EntityFrameworkCore;
 using Model.Database.Contexts;
@@ -117,7 +114,7 @@ namespace Controller.DbControllers
 
             if (!request.SongID.HasValue) return;
 
-            var songController = SongController.Create(new DatabaseContext());
+            var songController = SongController.Create(DatabaseContext.Instance);
 
             var song = songController.GetItem(request.SongID.Value);
             song.Status = SongStatus.Approved;
@@ -137,7 +134,7 @@ namespace Controller.DbControllers
 
             if (!request.SongID.HasValue) return;
 
-            var songController = SongController.Create(new DatabaseContext());
+            var songController = SongController.Create(DatabaseContext.Instance);
 
             DeleteItem(requestID);
 

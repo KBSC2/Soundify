@@ -1,7 +1,4 @@
-﻿using System;
-using System.Data.OleDb;
-using System.Diagnostics;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using Controller.DbControllers;
 using Model.Database.Contexts;
@@ -27,7 +24,8 @@ namespace View.Components
         public PermissionButton()
         {
             BorderBrush = null;
-            controller = UserController.Create(new DatabaseContext());
+            controller = UserController.Create(DatabaseContext.Instance);
+            DataContexts.DataContext.PermissionButtons.Add(this);
         }
 
         public void UpdateButton()

@@ -4,8 +4,6 @@ using System.Windows.Controls;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using View.DataContexts;
-using System.Windows.Input;
-using Model;
 using Model.EventArgs;
 using Soundify;
 using System;
@@ -23,14 +21,10 @@ namespace View.Screens
         {
             this.InitializeComponent();
             Instance = this;
-            playlistController = PlaylistController.Create(new DatabaseContext());
-            playlistSongController = PlaylistSongController.Create(new DatabaseContext());
+            playlistController = PlaylistController.Create(DatabaseContext.Instance);
+            playlistSongController = PlaylistSongController.Create(DatabaseContext.Instance);
         }
 
-        public void OnNextSong(object sender, EventArgs e)
-        {
-            SongListDataContext.Instance.OnPropertyChanged("");
-        }
         private void Play_Playlist_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Instance.PlayPlaylist(MainWindow.CurrentPlayList);
@@ -62,7 +56,7 @@ namespace View.Screens
             if (selectedSongInfo == null || selectedSongInfo.Index - 1 < 0) return;
 
             playlistSongController.SwapSongs(selectedSongInfo.Index, selectedSongInfo.Index - 1, MainWindow.CurrentPlayList.ID);
-            PlaylistDataContext.Instance.OnPropertyChanged("");
+            SongListDataContext.Instance.OnPropertyChanged("");
         }
 
         private void MoveDown_Click(object sender, RoutedEventArgs e)
@@ -74,7 +68,7 @@ namespace View.Screens
             if (selectedSongInfo == null || selectedSongInfo.Index + 1 >= listView.Items.Count) return;
             
             playlistSongController.SwapSongs(selectedSongInfo.Index, selectedSongInfo.Index + 1, MainWindow.CurrentPlayList.ID);
-            PlaylistDataContext.Instance.OnPropertyChanged("");
+            SongListDataContext.Instance.OnPropertyChanged("");
         }
     }
 }

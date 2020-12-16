@@ -20,6 +20,9 @@ namespace Model.Database.Contexts
         public override DbSet<Permission> Permissions { get; set; }
         public override DbSet<RolePermissions> RolePermissions { get; set; }
         public override DbSet<Artist> Artists { get; set; }
+        public override DbSet<ShopItem> ShopItems { get; set; }
+        public override DbSet<ShopItemPermissions> ShopItemPersmissions { get; set; }
+        public override DbSet<UserShopItems> UserShopItems { get; set; }
 
         /**
          * Create a database mock, to use for all unit tests
@@ -55,6 +58,9 @@ namespace Model.Database.Contexts
             });
             Artists = GetQueryableMockDbSet(new List<Artist>());
             Requests = GetQueryableMockDbSet(new List<Request>());
+            ShopItems = GetQueryableMockDbSet(new List<ShopItem>());
+            ShopItemPersmissions = GetQueryableMockDbSet(new List<ShopItemPermissions>());
+            UserShopItems = GetQueryableMockDbSet(new List<UserShopItems>());
         }
 
         /**
