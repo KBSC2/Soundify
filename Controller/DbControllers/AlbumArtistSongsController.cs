@@ -44,10 +44,11 @@ namespace Controller.DbControllers
             albumController = AlbumController.Create(context);
         }
 
-        public void UploadAlbum(ObservableCollection<AlbumSongInfo> albumSongInfos, Uri image, string title, string description)
+        public void UploadAlbum(ObservableCollection<AlbumSongInfo> albumSongInfos, Uri image, string title, string description, string artistName)
         {
             var artistId = (int) artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID);
             var album = new Album {AlbumName = title, Description = description};
+            var requestController = RequestController.Create(DatabaseContext.Instance);
             albumController.CreateItem(album);
             foreach (var albumSongInfo in albumSongInfos)
             {
@@ -64,6 +65,16 @@ namespace Controller.DbControllers
                 };
                 songController.UploadSong(song, albumSongInfo.File.Name);
 
+                var request = new Request()
+                {
+                    ArtistName = artistName,
+                    UserID = UserController.CurrentUser.ID,
+                    RequestType = RequestType.Song,
+                    SongID = song.ID
+                };
+
+                requestController.CreateItem(request);
+
                 var albumArtistSong = new AlbumArtistSong() {AlbumId = album.ID, ArtistId = artistId, SongId = song.ID};
                 set.Add(albumArtistSong);
                 if (RealDatabase())
@@ -71,6 +82,7 @@ namespace Controller.DbControllers
                     context.Entry(albumArtistSong).State = EntityState.Added;
                 }
             }
+            
             if (!RealDatabase()) return;
             context.SaveChanges();
         }

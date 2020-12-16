@@ -12,6 +12,8 @@ using Controller;
 using Controller.DbControllers;
 using Microsoft.Win32;
 using Model.Database.Contexts;
+using Model.DbModels;
+using Model.Enums;
 using Model.MailTemplates;
 using View.DataContexts;
 using View.ListItems;
@@ -88,6 +90,7 @@ namespace View.Screens
             var description = dataGrid.FindName("Description") != null
                 ? ((TextBox) dataGrid.FindName("Description"))?.Text
                 : null;
+            var artistName = AlbumUploadDataContext.Instance.ArtistName;
 
             if (titleTextBox.Text == "")
             {
@@ -105,15 +108,15 @@ namespace View.Screens
             FileTransfer.Create(DatabaseContext.Instance).UploadFile(image?.LocalPath, "images/" +
                 image?.LocalPath.Split("\\").Last());
 
-            AlbumArtistSongsController.Create(DatabaseContext.Instance).UploadAlbum(AlbumUploadDataContext.Instance.AlbumSongInfos, image, titleTextBox.Text, description );
+            AlbumArtistSongsController.Create(DatabaseContext.Instance).UploadAlbum(AlbumUploadDataContext.Instance.AlbumSongInfos, image, titleTextBox.Text, description, artistName);
             AlbumUploadDataContext.Instance.AlbumFiles = null;
             AlbumUploadDataContext.Instance.AlbumSongInfos = null;
             AlbumUploadDataContext.Instance.AreSongsSelected = false;
             AlbumUploadDataContext.Instance.StatusMessage = "Album is succesfully uploaded";
             AlbumUploadDataContext.Instance.OnPropertyChanged("");
-
+            
             var emailController = new EmailController();
-            var email = new MailAlbumApprovalTemplate(new MailAddress("info.soundify@gmail.com"), AlbumUploadDataContext.Instance.ArtistName, titleTextBox.Text);
+            var email = new MailAlbumApprovalTemplate(new MailAddress("info.soundify@gmail.com"), artistName, titleTextBox.Text);
             emailController.SendEmail(email, "info.soundify@gmail.com");
         }
     }
