@@ -85,7 +85,6 @@ namespace Controller.DbControllers
                                             playlist.Description.ToLower().Contains(s.ToLower())) ||
                                    searchTerms.Any(s =>
                                        playlist.Genre != null && playlist.Genre.ToLower().Contains(s.ToLower())))
-                .Take(8)
                 .ToList();
         }
 

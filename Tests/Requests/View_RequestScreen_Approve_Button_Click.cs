@@ -1,10 +1,7 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using Controller.DbControllers;
+﻿using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using NUnit.Framework;
-using View.Screens;
 
 namespace Tests.Requests
 {

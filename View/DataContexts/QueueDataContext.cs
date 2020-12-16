@@ -14,22 +14,21 @@ namespace View.DataContexts
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private static QueueDataContext _instance;
+        private static QueueDataContext instance;
         public static QueueDataContext Instance
         {
             get
             {
-                if (_instance == null)
-                    _instance = new QueueDataContext();
-                return _instance;
+                if (instance == null)
+                    instance = new QueueDataContext();
+                return instance;
             }
         }
 
         public List<SongInfo> NextInQueueItems => QueueGenerator(AudioPlayer.Instance.Queue, AudioPlayer.Instance.CurrentSongIndex);
         public string CurrentSongName => AudioPlayer.Instance.CurrentSong == null ? "" : AudioPlayer.Instance.CurrentSong.Name;
-        public string CurrentSongArtist => AudioPlayer.Instance.CurrentSong == null
-            ? ""
-            : ArtistController.Create(new DatabaseContext()).GetItem(AudioPlayer.Instance.CurrentSong.Artist).ArtistName;
+        public string CurrentSongArtist => AudioPlayer.Instance.CurrentSong == null ? ""
+            : ArtistController.Create(DatabaseContext.Instance).GetItem(AudioPlayer.Instance.CurrentSong.Artist).ArtistName;
         public string CurrentSongDuration => AudioPlayer.Instance.CurrentSong == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSong.Duration).ToString("m':'ss");
 
         public List<SongInfo> QueueGenerator(List<Song> songs, int index)

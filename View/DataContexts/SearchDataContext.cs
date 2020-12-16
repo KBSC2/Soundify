@@ -26,9 +26,9 @@ namespace View.DataContexts
 
         public List<string> SearchTerms { get; set; } = new List<string>();
         
-        public List<Playlist> SearchPlaylists => PlaylistController.Create(new DatabaseContext()).SearchPlayListOnString(SearchTerms, UserController.CurrentUser.ID);
+        public List<Playlist> SearchPlaylists => PlaylistController.Create(DatabaseContext.Instance).SearchPlayListOnString(SearchTerms, UserController.CurrentUser.ID);
 
-        public List<Playlist> AllPlaylists => PlaylistController.Create(new DatabaseContext()).GetActivePlaylists(UserController.CurrentUser.ID);
+        public List<Playlist> AllPlaylists => PlaylistController.Create(DatabaseContext.Instance).GetActivePlaylists(UserController.CurrentUser.ID);
 
         [NotifyPropertyChangedInvocator]
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)

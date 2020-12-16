@@ -13,9 +13,18 @@
 
   <ItemGroup>
     <None Remove="Assets\cross.png" />
+    <None Remove="Assets\loop.png" />
+    <None Remove="Assets\next.png" />
     <None Remove="Assets\NoImage.png" />
     <None Remove="Assets\null.png" />
+    <None Remove="Assets\pause.png" />
+    <None Remove="Assets\play.png" />
+    <None Remove="Assets\previous.png" />
+    <None Remove="Assets\settings.png" />
+    <None Remove="Assets\shuffle.png" />
     <None Remove="Assets\soundify.png" />
+    <None Remove="Assets\soundifyBig.png" />
+    <None Remove="Assets\soundifyMedium.png" />
     <None Remove="Assets\soundifySmall.ico" />
     <None Remove="Assets\soundifySmall.png" />
     <None Remove="Assets\tick.png" />
@@ -38,11 +47,20 @@
 
   <ItemGroup>
     <Resource Include="Assets\cross.png" />
+    <Resource Include="Assets\loop.png" />
+    <Resource Include="Assets\next.png" />
     <Resource Include="Assets\NoImage.png" />
     <Resource Include="Assets\null.png" />
+    <Resource Include="Assets\pause.png" />
+    <Resource Include="Assets\play.png" />
+    <Resource Include="Assets\previous.png" />
+    <Resource Include="Assets\settings.png" />
+    <Resource Include="Assets\shuffle.png" />
     <Resource Include="Assets\soundify.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\soundifyBig.png" />
+    <Resource Include="Assets\soundifyMedium.png" />
     <Resource Include="Assets\soundifySmall.ico" />
     <Resource Include="Assets\soundifySmall.png" />
     <Resource Include="Assets\tick.png" />
@@ -50,6 +68,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Screens\ShopScreen.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="Screens\SettingScreen.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
@@ -59,6 +80,9 @@
     </Page>
     <Page Update="Screens\PlaylistScreen.xaml">
       <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\NoListBoxHoverBackground.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
   </ItemGroup>
 

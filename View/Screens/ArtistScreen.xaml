@@ -3,8 +3,7 @@
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:local="clr-namespace:View.Screens" 
                     xmlns:dataContexts="clr-namespace:View.DataContexts"
-                    
-					xmlns:Components="clr-namespace:View.Components"
+                    xmlns:Components="clr-namespace:View.Components"
 					x:Class="View.Screens.ArtistScreen">
     <DataTemplate x:Key="ArtistScreen">
         <!-- Start playlist screen -->
@@ -12,7 +11,6 @@
             <Grid.Resources>
                 <Components:ID3DurationPropertyConverter x:Key="DurationConverter"/>
             </Grid.Resources>
-
             <Grid Margin="0,0,0,164">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>

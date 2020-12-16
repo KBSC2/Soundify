@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +18,8 @@ namespace Controller
         public IWavePlayer WaveOutDevice { get; set; }
         public SongAudioFile CurrentSongFile { get; set; }
         public Song CurrentSong { get; set; }
+        public Playlist CurrentPlaylist { get; set; }
+        public string CurrentSongArtistName { get; set; }
         public double MaxVolume { get; set; }
         public event EventHandler NextSong;
 
@@ -26,15 +28,17 @@ namespace Controller
         public List<Song> Queue { get; set; } = new List<Song>();
         public List<Song> NextInQueue { get; set; } = new List<Song>();
         public bool Looping { get; set; } = false;
+        public bool Shuffling { get; set; } = false;
 
         public static AudioPlayer Instance { get; set; }
+        public static IDatabaseContext Context { get; set; }
 
-        
         public static AudioPlayer Create(IDatabaseContext context)
         {
             var x = ProxyController.AddToProxy<AudioPlayer>(context);
             x.Initialize();
             Instance = x;
+            Context = context;
             return x;
         }
 
@@ -55,19 +59,12 @@ namespace Controller
          *
          * @return void
          */
-        [HasPermission(Permission = Permissions.SongNext)]
-        public virtual void Next()
+        public void Next()
         {
-            if(CurrentSongIndex >= 0)
-            {
-                var previousSong = Queue[CurrentSongIndex];
-
-                if (NextInQueue.Contains(previousSong))
-                    NextInQueue.Remove(previousSong);
-
-                if (Looping)
-                    AddSongToQueue(previousSong);
-            }
+            FillQueue(CurrentPlaylist);
+            if (CurrentSongIndex >= 0 && CurrentSong != null)
+                if (NextInQueue.Contains(Queue[CurrentSongIndex]))
+                    NextInQueue.Remove(Queue[CurrentSongIndex]);
             
             if (Queue.Count == 0) return;
             CurrentSongIndex++;
@@ -76,6 +73,12 @@ namespace Controller
                 CurrentSongIndex--;
 
             PlaySong(Queue[CurrentSongIndex]);
+        }
+
+        [HasPermission(Permission = Permissions.SongNext)]
+        public virtual void NextButton()
+        {
+            Next();
         }
 
         /**
@@ -97,12 +100,11 @@ namespace Controller
                     copyQueue.ForEach(i => AddSongToQueue(i));
                 }
                 else
-                {
                     CurrentSongIndex = 0;
-                }
             }
 
             PlaySong(Queue[CurrentSongIndex]);
+            FillQueue(CurrentPlaylist);
         }
 
         /**
@@ -114,10 +116,11 @@ namespace Controller
          */
         public void PlaySong(Song song)
         {
-            if(CurrentSong != null)
+            if (CurrentSong != null)
                 WaveOutDevice.Stop();
             CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
             CurrentSong = song;
+            CurrentSongArtistName = ArtistController.Create(Context).GetItem(song.Artist).ArtistName;
             WaveOutDevice.Init(CurrentSongFile.AudioFile);
             NextSong?.Invoke(this, new EventArgs());
             Task.Delay(500).ContinueWith(x => WaveOutDevice.Play());
@@ -154,7 +157,7 @@ namespace Controller
             else
                 NextInQueue.Add(song);
         }
-
+        
         /**
          * Clears the Queue
          *
@@ -175,21 +178,17 @@ namespace Controller
          */
         public void PlayPlaylist(Playlist playlist, int startIndex = -1)
         {
-            PlayPlaylist(PlaylistSongController.Create(new DatabaseContext()).GetSongsFromPlaylist(playlist.ID), startIndex);
-        }
+            CurrentPlaylist = playlist;
 
-        public void PlayPlaylist(List<PlaylistSong> songs, int startIndex = -1)
-        {
             ClearQueue();
-            CurrentSongIndex = -1;
 
-            NextInQueue.ForEach(i => AddSongToQueue(i));
-            songs.Where(song => song.Index > startIndex).ToList().ForEach(i => AddSongToQueue(i.Song));
-
-            if (Looping)
+            if(NextInQueue.Count > 0)
             {
-                songs.ForEach(i => AddSongToQueue(i.Song));
+                NextInQueue.ForEach(i => AddSongToQueue(i));
+                CurrentSongIndex = -1;
             }
+            else
+                CurrentSongIndex = startIndex;
 
             Next();
         }
@@ -202,19 +201,112 @@ namespace Controller
          * @return void
          */
         [HasPermission(Permission = Permissions.SongLoop)]
-        public virtual void Loop(Playlist playlist)
+        public virtual void Loop()
         {
             Looping = !Looping;
+            FillQueue(CurrentPlaylist);
+        }
 
-            if (Looping && playlist != null)
+        /**
+         * Shuffles the playlist
+         *
+         * @param playlist Which playlist needs to be shuffled
+         *
+         * @return void
+         */
+        [HasPermission(Permission = Permissions.SongShuffle)]
+        public virtual void Shuffle()
+        {
+            Shuffling = !Shuffling;
+            FillQueue(CurrentPlaylist);
+        }
+
+        /**
+         * Fills the queue with the songs in the playlist
+         *
+         * @param playlist Which playlist needs to be filled
+         *
+         * @return void
+         */
+        private void FillQueue(Playlist playlist)
+        {
+            if (playlist != null)
             {
-                var songs = PlaylistSongController.Create(new DatabaseContext()).GetSongsFromPlaylist(playlist.ID);
-                songs.ForEach(i => AddSongToQueue(i.Song));
+                var songs = PlaylistSongController.Create(Context).GetSongsFromPlaylist(playlist.ID);
+
+                var queueFromCurrentSongIndex = songs.Select(i => i.Song).ToList();
+
+                if (Queue.Count > 0)
+                    queueFromCurrentSongIndex = Queue.GetRange(CurrentSongIndex + 1, Queue.Count - (CurrentSongIndex + 1));
+                
+                NextInQueue.ForEach(x => queueFromCurrentSongIndex.Remove(x));
+
+                if (queueFromCurrentSongIndex.Count > songs.Count)
+                    queueFromCurrentSongIndex.RemoveRange(queueFromCurrentSongIndex.Count - songs.Count, songs.Count);
+
+                if (Looping)
+                {
+                    if (Shuffling)
+                    {
+                        queueFromCurrentSongIndex = ShuffleList(queueFromCurrentSongIndex);
+                        var tempList = new List<Song>(queueFromCurrentSongIndex);
+                        songs.Where(x => !queueFromCurrentSongIndex.Contains(x.Song)).Select(x => x.Song).ToList().ForEach(i => queueFromCurrentSongIndex.Add(i));
+                        tempList.ForEach(i => queueFromCurrentSongIndex.Add(i));
+                    }
+                    else
+                        songs.ForEach(i => queueFromCurrentSongIndex.Add(i.Song));
+                }
+                else
+                {
+                    if (Shuffling)
+                        queueFromCurrentSongIndex = ShuffleList(queueFromCurrentSongIndex);
+                    else
+                    {
+                        var tempList = new List<Song>(queueFromCurrentSongIndex);
+                        queueFromCurrentSongIndex.Clear();
+                        songs.Where(x => tempList.Contains(x.Song)).Select(x => x.Song).ToList().ForEach(i => queueFromCurrentSongIndex.Add(i));
+                    }
+                }
+
+                if(Queue.Count > 0)
+                    Queue.RemoveRange(CurrentSongIndex + 1 + NextInQueue.Count, Queue.Count - (CurrentSongIndex + 1 + NextInQueue.Count));
+                
+                Queue.AddRange(queueFromCurrentSongIndex);
             }
-            else if(!Looping)
+        }
+
+        /**
+         * Shuffles a list of songs
+         *
+         * @param songs Which list needs to be shuffled
+         *
+         * @return List<Song> : The shuffled list
+         */
+        private List<Song> ShuffleList(List<Song> songs)
+        {
+            if (songs.Count == 0)
+                return songs;
+
+            var shuffledList = new List<Song>(songs);
+            var random = new Random();
+
+            while (true)
             {
-                Queue = Queue.GroupBy(p => p.ID).Select(g => g.First()).ToList();
+                shuffledList = songs.OrderBy(i => random.Next()).ToList();
+
+                if (!shuffledList[0].Equals(songs[0]))
+                    break;
             }
+
+            return shuffledList;
+        }
+
+        public void PlayPause()
+        {
+            if (WaveOutDevice.PlaybackState == PlaybackState.Paused || WaveOutDevice.PlaybackState == PlaybackState.Stopped)
+                WaveOutDevice.Play();
+            else
+                WaveOutDevice.Pause();
         }
 
         public void ChangeVolume(int selectedItem)

@@ -1,5 +1,7 @@
 ﻿using Model.DbModels;
 using System.Windows;
+using Controller.DbControllers;
+using Model.Database.Contexts;
 using View.DataContexts;
 
 namespace View
@@ -14,6 +16,8 @@ namespace View
         {
             InitializeComponent();
             ((SongInfoDataContext)DataContext).Song = song;
+            ((SongInfoDataContext) DataContext).ArtistName =
+                ArtistController.Create(DatabaseContext.Instance).GetItem(song.Artist).ArtistName;
             ((SongInfoDataContext)DataContext).OnPropertyChanged();
         }
     }

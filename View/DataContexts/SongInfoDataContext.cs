@@ -7,6 +7,7 @@ namespace View.DataContexts
     class SongInfoDataContext : INotifyPropertyChanged
     {
         public Song Song { get; set; }
+        public string ArtistName { get; set; }
         public string PathToImage => Song == null ? "../Assets/null.png" : Song.PathToImage == null ? "../Assets/null.png" : FileCache.Instance.GetFile(Song.PathToImage); 
 
         public event PropertyChangedEventHandler PropertyChanged;
