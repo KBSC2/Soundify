@@ -24,7 +24,7 @@ namespace Controller
          */
         public virtual void DownloadFile(string inputPath)
         {
-            if(inputPath == "") return;
+            if (inputPath == "") return;
 
             var conf = SSHController.GetSSHConfiguration();
 
@@ -69,6 +69,27 @@ namespace Controller
         }
 
         /**
+         * deletes a file from the ubuntu server
+         *
+         * @param outputPath what file needs to be removed
+         *
+         */
+        [HasPermission(Permission = Permissions.SongEditOwn)]
+        public virtual void DeleteFile(string outputPath)
+        {
+            var conf = SSHController.GetSSHConfiguration();
+            using (SftpClient client = new SftpClient(
+                conf.GetValueOrDefault("Host"),
+                conf.GetValueOrDefault("Username"),
+                conf.GetValueOrDefault("Password")))
+            {
+                client.Connect();
+
+                client.Delete("/home/student/files/" + outputPath);
+            }
+        }
+
+        /**
          * Gives the local path based on the remote path
          *
          * @param remotePath Path from where the file is stored remotely
@@ -77,7 +98,7 @@ namespace Controller
          */
         public virtual string RemotePathToLocalPath(string remotePath)
         {
-            return Path.GetTempPath() + "Soundify/" +  remotePath;
+            return Path.GetTempPath() + "Soundify/" + remotePath;
         }
     }
 }
