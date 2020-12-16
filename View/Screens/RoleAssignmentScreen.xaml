@@ -5,8 +5,16 @@
     <DataTemplate x:Key="RoleAssignmentScreen">
         <!-- Start RoleAssignmentScreen screen -->
         <Grid Background="#FF303651" DataContext="{x:Static dataContexts:RoleAssignmentDataContext.Instance}">
+            <Grid.Resources>
+                <ResourceDictionary Source="../Styles/Watermark.xaml"/>
+            </Grid.Resources>
             <Grid Margin="0, 5, 0, 5">
-                <ListView ScrollViewer.VerticalScrollBarVisibility="Hidden" Padding="5" FontSize="20" ItemsSource="{Binding UserRoles}" BorderThickness="0" HorizontalAlignment="Center" Background="Transparent">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Style="{StaticResource WatermarkTextbox }" x:Name="SearchUser" Grid.Column="0" Margin="0, 12, 0, 0" HorizontalAlignment="Center" Tag="Search user" TextWrapping="Wrap" VerticalAlignment="Top" Width="192" Height="25" KeyDown="GetUsers" BorderBrush="{x:Null}" Background="White"/>
+                <ListView ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="0, 50, 0, 0" Padding="5" FontSize="20" ItemsSource="{Binding UserRoles}" BorderThickness="0" HorizontalAlignment="Center" Background="Transparent">
                     <ListView.View>
                         <GridView>
                             <GridView.ColumnHeaderContainerStyle>
@@ -48,6 +56,7 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                 </ListView>
+                <Label Content="{Binding UpdateStatus}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="20"/>
             </Grid>
         </Grid>
     </DataTemplate>

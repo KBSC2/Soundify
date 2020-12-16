@@ -1,12 +1,10 @@
 ﻿using Controller.DbControllers;
 using Model.Database.Contexts;
-using Model.DbModels;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using View.DataContexts;
 using View.ListItems;
 
@@ -32,15 +30,32 @@ namespace View.Screens
             InitializeComponent();
         }
 
+        public void GetUsers(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                var textBox = (TextBox)sender;
+                var text = textBox.Text;
+                var Users = UserController.Create(DatabaseContext.Instance).GetList()
+                    .Where(u => u.Username.ToLower().Contains(text.ToLower()));
+                var userRoles = new List<UserRoles>();
+                Users.ToList().ForEach(u => userRoles.Add(new UserRoles(u)));
+                RoleAssignmentDataContext.Instance.UserRoles = userRoles;
+                RoleAssignmentDataContext.Instance.OnPropertyChanged();
+            }
+        }
+
         private void UserRole_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int userID = ((UserRoles)((ContentPresenter)((ComboBox)sender).TemplatedParent).Content).UserID;
-            int userrole = ((ComboBox)sender).SelectedIndex;
+            UserRoles userRole = (UserRoles)((ContentPresenter)((ComboBox)sender).TemplatedParent).Content;
+            int roleID = ((ComboBox)sender).SelectedIndex +1;
+            var role = RoleController.Create(DatabaseContext.Instance).GetItem(roleID);
 
-            userrole += 1;
-            
-            if(userID != UserController.CurrentUser.ID)
-                UserController.Create(new DatabaseContext()).UpdateUserRole(userID, userrole);
+            if (userRole.UserID != UserController.CurrentUser.ID)
+                UserController.Create(DatabaseContext.Instance).UpdateUserRole(userRole.UserID, roleID);
+
+            RoleAssignmentDataContext.Instance.UpdateStatus = $"{userRole.Username} has been made {role.Designation}";
+            RoleAssignmentDataContext.Instance.OnPropertyChanged();
         }
     }
 }

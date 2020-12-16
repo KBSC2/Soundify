@@ -13,10 +13,12 @@ namespace View.DataContexts
 {
     public class RoleAssignmentDataContext : INotifyPropertyChanged
     {
+
+        public string UpdateStatus { get; set; } = "No changes have been made";
         public string LabelContent { get; set; } = "test";
-        public List<string> Roles => RoleController.Create(new DatabaseContext()).GetList().Select(x => x.Designation).ToList();
+        public List<string> Roles => RoleController.Create(DatabaseContext.Instance).GetList().Select(x => x.Designation).ToList();
         public List<UserRoles> UserRoles { get; set; }
-        public List<User> Users => UserController.Create(new DatabaseContext()).GetList();
+        public List<User> Users => UserController.Create(DatabaseContext.Instance).GetList();
         private static RoleAssignmentDataContext instance;
         public static RoleAssignmentDataContext Instance
         {
