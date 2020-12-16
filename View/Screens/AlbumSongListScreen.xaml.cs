@@ -25,5 +25,12 @@ namespace View.Screens
             var songList = SongListDataContext.Instance.SongInfoList.Select(x => x.Song).ToList();
             AudioPlayer.Instance.PlayAlbum(songList);
         }
+
+        private void AddToQueue_Album_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var songList = SongListDataContext.Instance.SongInfoList.Select(x => x.Song).ToList();
+            songList.ForEach(s => AudioPlayer.Instance.AddSongToQueue(s));
+        }
+
     }
 }
