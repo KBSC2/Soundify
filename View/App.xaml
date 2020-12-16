@@ -48,7 +48,7 @@
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="{x:Type Window}">
-                <Setter Property="FontFamily" Value="Comic Sans" />
+                <Setter Property="FontFamily" Value="Segoe UI" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

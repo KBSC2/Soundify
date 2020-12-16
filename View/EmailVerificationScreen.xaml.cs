@@ -20,6 +20,10 @@ namespace View
         public EmailVerificationScreen(string token, string email)
         {
             InitializeComponent();
+
+            // Makes screen in universal font
+            Style = (Style)FindResource(typeof(Window));
+
             _previousToken = token;
             _email = email;
             var mailVerification = new MailVerificationTemplate(new MailAddress("info.soundify@gmail.com"), token);

@@ -18,7 +18,11 @@ namespace View
         public LoginScreen()
         {
             InitializeComponent();
-            if(File.Exists(Path.GetTempPath() + "Soundify/settings/loginInfo"))
+
+            // Makes screen in universal font
+            Style = (Style)FindResource(typeof(Window));
+
+            if (File.Exists(Path.GetTempPath() + "Soundify/settings/loginInfo"))
             {
                 string text = File.ReadAllText(Path.GetTempPath() + "Soundify/settings/loginInfo");
                 if (text != "")

@@ -15,6 +15,10 @@ namespace View
         public SongInfoScreen(Song song)
         {
             InitializeComponent();
+
+            // Makes screen in universal font
+            Style = (Style)FindResource(typeof(Window));
+
             ((SongInfoDataContext)DataContext).Song = song;
             ((SongInfoDataContext) DataContext).ArtistName =
                 ArtistController.Create(new DatabaseContext()).GetItem(song.Artist).ArtistName;
