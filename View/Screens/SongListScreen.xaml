@@ -7,5 +7,4 @@
             <ContentPresenter ContentTemplate="{DynamicResource SongList}" />
         </Grid>
     </DataTemplate>
-
 </ResourceDictionary>

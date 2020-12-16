@@ -155,7 +155,7 @@ namespace Soundify
             CurrentPlayList = playlist;
             SetScreen(screenName);
         }
-
+        
         public void OnMenuItemRoutedEvent(object sender, MenuItemRoutedEventArgs args)
         {
             if (args.ScreenName == ScreenNames.PlaylistScreen) SetScreen(args.ScreenName, args.Playlist);

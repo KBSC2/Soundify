@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using Controller.Proxy;
 using Model.Database.Contexts;
 using Model.DbModels;
@@ -45,6 +48,24 @@ namespace Controller.DbControllers
             song.Path = remotePath;
             CreateItem(song);
         }
+        
+        /**
+         * Deletes a song from the ubuntu filesystem
+         *
+         * @param song A song data object
+         *
+         * @return void
+         */
+        public void DeleteSong(Song song)
+        {
+            FileTransfer.Create(Context).DeleteFile(song.Path);
+
+            var imageUsedElsewhere = GetList().Any(s => s.PathToImage == song.PathToImage && s != song);
+
+            if(!imageUsedElsewhere) FileTransfer.Create(Context).DeleteFile(song.PathToImage);
+
+            DeleteItem(song.ID);
+        }
 
         /**
          * The playlist Gets selected on Name, Artist
@@ -61,6 +82,5 @@ namespace Controller.DbControllers
                                song.Status != SongStatus.AwaitingApproval)
                 .ToList();
         }
-
     }
 }
