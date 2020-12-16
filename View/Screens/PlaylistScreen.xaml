@@ -6,7 +6,7 @@
                     x:Class="View.Screens.PlaylistScreen">
     <DataTemplate x:Key="PlaylistScreen">
         <!-- Start playlist screen -->
-        <Grid x:Name="MainGrid" DataContext="{x:Static dataContexts:PlaylistDataContext.Instance}">
+        <Grid x:Name="MainGrid" DataContext="{x:Static dataContexts:PlaylistDataContext.Instance}" Background="#FF303651">
             <Grid Margin="0,0,0,0" Height="200" VerticalAlignment="Top">
                 <Grid.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -14,7 +14,7 @@
                         <GradientStop Color="#FC0D6D" Offset="1"/>
                     </LinearGradientBrush>
                 </Grid.Background>
-                <Label Content="{Binding Playlist.Name}" HorizontalAlignment="Center" Margin="-75,20,0,0" VerticalAlignment="Top" FontSize="40" Foreground="White" Width="181" />
+                <Label Content="{Binding Playlist.Name}" HorizontalAlignment="Center" Margin="-75,20,0,0" VerticalAlignment="Top" FontSize="40" Foreground="White" Width="181" BorderBrush="White" BorderThickness="0,0,0,4" />
                 <TextBlock HorizontalAlignment="Left" Margin="35,53,0,0" Text="{Binding Playlist.Description}" TextWrapping="Wrap" VerticalAlignment="Top" Height="67" Width="266" Background="#00000000" Foreground="White"/>
                 <Button HorizontalAlignment="Center" VerticalAlignment="Top" Height="50" Width="50" Background="Transparent" BorderBrush="{x:Null}" Margin="175,30,0,0" Click="Play_Playlist_Button_Click" >
                     <Image Source="/Assets/playplaylist.png"/>

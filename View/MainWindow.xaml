@@ -142,7 +142,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Track Grid.Row="1" x:Name="PART_Track" Height="20" >
+                <Track Grid.Row="1" x:Name="PART_Track" Height="20">
                     <Track.DecreaseRepeatButton>
                         <RepeatButton Style="{StaticResource SliderRepeatButton3}"  Command="Slider.DecreaseLarge" />
                     </Track.DecreaseRepeatButton>
@@ -177,16 +177,16 @@
                 <Image Source="{Binding PlayImage}"/>
             </Button>
             <TextBlock Text="{Binding CurrentSongArtistName}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="110,37,0,10" MaxWidth="200" FontStyle="Italic" Foreground="White"/>
-            <Label x:Name="CurrentTime" Content="{Binding CurrentTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top" Foreground="White"/>
-            <Label x:Name="TotalTime" Content="{Binding TotalTimeLabel, Mode=OneWay}" Margin="0,5,0,0" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Right" />
+            <Label x:Name="CurrentTime" Content="{Binding CurrentTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+            <Label x:Name="TotalTime" Content="{Binding TotalTimeLabel, Mode=OneWay}" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Right" />
             <components:PermissionButton Permission="SongPrev" x:Name="Prev" Content="{DynamicResource Previous}" Margin="481,0,624,0" VerticalAlignment="Center" Click="Prev_Button_Click" BorderBrush="{x:Null}" Background="Transparent" Height="40" Width="40"/>
             <components:PermissionButton Permission="SongNext" x:Name="Next" Content="{DynamicResource Next}" Margin="636,0,496,0" VerticalAlignment="Center" Click="Next_Button_Click" BorderBrush="{x:Null}" Background="Transparent" Height="40" Width="40"/>
             <components:PermissionButton Permission="SongLoop" x:Name="Loop" Content="{DynamicResource Loop}" Margin="427,24,717,0" VerticalAlignment="Top" Click="Loop_Button_Click" Height="30" Width="30" BorderBrush="{x:Null}" Background="Transparent"/>
             <components:PermissionButton Permission="SongShuffle" x:Name="Shuffle" Content="{DynamicResource Shuffle}" Margin="714,24,430,0" VerticalAlignment="Top" Click="Shuffle_Button_Click" Height="30" Width="30" BorderBrush="{x:Null}" Background="Transparent"/>
             <Slider x:Name="Volume" Style="{StaticResource Volume_Slider}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,100,0" IsMoveToPointEnabled="True" Maximum="{Binding MaxVolume, Mode=OneWay}" ValueChanged="Volume_ValueChanged" Value="{Binding Volume, Mode=OneWay}" SmallChange="0.001" LargeChange="0.01" Width="100" />
-            <Slider x:Name="Duration" Style="{StaticResource Duration_Slider}" Margin="0,-8,0,64" IsMoveToPointEnabled="True" Foreground="White" Minimum="0.00" Maximum="{Binding TotalTime, Mode=OneWay}" Value="{Binding CurrentTime, Mode=OneWay}" ValueChanged="Duration_ValueChanged"/>
-            <Button Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" VerticalAlignment="Center" Height="50" Width="50" Margin="0,0,20,0">
-                <Image Source="/Assets/sound.png" />
+            <Slider x:Name="Duration" Style="{StaticResource Duration_Slider}" Margin="0,-8,0,64" IsMoveToPointEnabled="True" Foreground="White" Minimum="0.00" Maximum="{Binding TotalTime, Mode=OneWay}" Value="{Binding CurrentTime, Mode=OneWay}" ValueChanged="Duration_ValueChanged" SmallChange="0.01" LargeChange="0.1"/>
+            <Button Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" VerticalAlignment="Center" Height="50" Width="50" Margin="0,0,30,0" Click="Volume_Button_Click">
+                <Image Source="{Binding VolumeImage}" />
             </Button>
         </Grid>
         <Grid Margin="89,0,0,0" Background="{DynamicResource Background2Color}" Height="54" VerticalAlignment="Top" ShowGridLines="False">

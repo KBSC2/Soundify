@@ -309,13 +309,10 @@ namespace Controller
 
         public void PlayPause()
         {
-            if(CurrentSong != null)
-            {
-                if (WaveOutDevice.PlaybackState == PlaybackState.Paused || WaveOutDevice.PlaybackState == PlaybackState.Stopped)
-                    WaveOutDevice.Play();
-                else
-                    WaveOutDevice.Pause();
-            }
+            if (WaveOutDevice.PlaybackState == PlaybackState.Paused || WaveOutDevice.PlaybackState == PlaybackState.Stopped)
+                WaveOutDevice.Play();
+            else
+                WaveOutDevice.Pause();
         }
 
         public void ChangeVolume(int selectedItem)

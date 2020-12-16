@@ -39,7 +39,8 @@ namespace View.DataContexts
 
         public User CurrentUser => UserController.CurrentUser == null ? null : UserController.Create(DatabaseContext.Instance).GetItem(UserController.CurrentUser.ID);
         public string PlayImage => AudioPlayer.Instance.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing ? "/Assets/pause.png" : "/Assets/play.png";
-                
+        public string VolumeImage => Volume == 0.0 ? "/Assets/SoundMuted.png" : "/Assets/Sound.png";
+
         public int CurrentUserCoins => CurrentUser == null ? 0 : CurrentUser.Coins;
 
         public Role CurrentUserRole => CurrentUser == null ? null : RoleController.Create(DatabaseContext.Instance).GetItem(CurrentUser.RoleID);
@@ -55,7 +56,7 @@ namespace View.DataContexts
 
         private DataContext()
         {
-            Timer = new Timer {Interval = 1000};
+            Timer = new Timer {Interval = 100};
             Timer.Elapsed += CoinsController.Instance.EarnCoins;
             Timer.Elapsed += OnTimedEvent;
             Timer.Start();
@@ -72,7 +73,7 @@ namespace View.DataContexts
 
         public void OnTimedEventSlider(object sender, EventArgs e)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentTime"));
+            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentTime"));
         }
     }
 }
