@@ -2,11 +2,9 @@
 using Model.Annotations;
 using Model.Database.Contexts;
 using Model.DbModels;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using View.ListItems;
 
 namespace View.DataContexts
@@ -15,7 +13,6 @@ namespace View.DataContexts
     {
 
         public string UpdateStatus { get; set; } = "No changes have been made";
-        public string LabelContent { get; set; } = "test";
         public List<string> Roles => RoleController.Create(DatabaseContext.Instance).GetList().Select(x => x.Designation).ToList();
         public List<UserRoles> UserRoles { get; set; }
         public List<User> Users => UserController.Create(DatabaseContext.Instance).GetList();
