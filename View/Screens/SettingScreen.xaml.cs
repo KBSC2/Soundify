@@ -17,6 +17,7 @@ namespace View.Screens
         private void Logout_Button_Click(object sender, RoutedEventArgs e)
         {
             UserController.CurrentUser = null;
+            UserController.PermissionsCache.Clear();
 
             MainWindow.InstanceMainWindow.Hide();
             MainWindow.InstanceLoginScreen.Show();

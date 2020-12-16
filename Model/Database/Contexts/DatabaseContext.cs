@@ -38,11 +38,11 @@ namespace Model.Database.Contexts
             if (!optionsBuilder.IsConfigured)
             {
                 // Fetch database settings from the App.Config
-                Configuration configuration = ConfigurationManager.OpenExeConfiguration(@"View.dll");
-                var connectionString = configuration.ConnectionStrings.ConnectionStrings["MSSQL"].ConnectionString;
+                //Configuration configuration = ConfigurationManager.OpenExeConfiguration(@"View.dll");
+                //var connectionString = configuration.ConnectionStrings.ConnectionStrings["MSSQL"].ConnectionString;
                 optionsBuilder
                     .UseLazyLoadingProxies()
-                    .UseSqlServer(connectionString);
+                    .UseSqlServer("Data Source=127.0.0.1; Initial Catalog=Soundify; User ID=SA; Password=Sterk_W@chtw00rd2;");
             }
         }
 

@@ -47,7 +47,8 @@ namespace Controller.DbControllers
         public void UploadAlbum(ObservableCollection<AlbumSongInfo> albumSongInfos, Uri image, string title, string description, string artistName, string genre)
         {
             var artistId = (int) artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID);
-            var album = new Album {AlbumName = title, Description = description, Genre = genre};
+            var pathToImage = image != null ? "images/" + image.LocalPath.Split("\\").Last() : null;
+            var album = new Album {AlbumName = title, Description = description, Genre = genre, PathToImage = pathToImage };
             var requestController = RequestController.Create(DatabaseContext.Instance);
             albumController.CreateItem(album);
             foreach (var albumSongInfo in albumSongInfos)
@@ -58,7 +59,7 @@ namespace Controller.DbControllers
                     Artist = (int) artistId,
                     Duration = albumSongInfo.Duration.TotalSeconds,
                     Path = albumSongInfo.File.Name,
-                    PathToImage = image != null ? "images/" + image.LocalPath.Split("\\").Last() : null,
+                    PathToImage = pathToImage,
                     ProducedBy = albumSongInfo.ProducedBy == "" ? null : albumSongInfo.ProducedBy,
                     WrittenBy = albumSongInfo.WrittenBy == "" ? null : albumSongInfo.WrittenBy,
                     Status = SongStatus.AwaitingApproval

@@ -9,6 +9,7 @@ namespace Model.DbModels
         public string AlbumName { get; set; }
         public string Description { get; set; }
         public string Genre { get; set; }
+        public string PathToImage { get; set; }
         public virtual IList<AlbumArtistSong> AlbumArtistSongs { get; set; }
     }
 }
