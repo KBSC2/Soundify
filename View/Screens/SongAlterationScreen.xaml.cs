@@ -59,7 +59,7 @@ namespace View.Screens
                 : null;
             song.WrittenBy = dataGrid.FindName("Writer") != null ? ((TextBox)dataGrid.FindName("Writer"))?.Text : null;
 
-            SongController.Create(new DatabaseContext()).UpdateItem(song);//UpdateSong(song, dataGrid);
+            SongController.Create(new DatabaseContext()).UpdateItem(song);
 
             SongAlterationDataContext.Instance.OnPropertyChanged("");
 
