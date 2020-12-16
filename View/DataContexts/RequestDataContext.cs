@@ -25,7 +25,7 @@ namespace View.DataContexts
         public List<Request> ArtistRequests => RequestController.Create(DatabaseContext.Instance).GetArtistRequests();
 
         public List<SongRequestInfo> SongRequests =>
-            SongRequestInfo.ConvertSongRequestToSongRequestInfo(RequestController.Create(new DatabaseContext())
+            SongRequestInfo.ConvertSongRequestToSongRequestInfo(RequestController.Create(DatabaseContext.Instance)
                 .GetSongRequests());
 
 
