@@ -12,6 +12,7 @@ using Model.DbModels;
 using Model.Enums;
 using Soundify;
 using View.DataContexts;
+using View.Screens;
 
 namespace View.Resources
 {
@@ -19,7 +20,7 @@ namespace View.Resources
     {
         public void ListViewItem_RightClickAddQueue(object sender, RoutedEventArgs e)
         {
-            var song = ((SongInfo) ((MenuItem) sender).DataContext).Song;
+            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
 
             AudioPlayer.Instance.AddSongToSongQueue(song);
 
@@ -28,7 +29,7 @@ namespace View.Resources
 
         private void ListViewItem_RightClickSongInfo(object sender, RoutedEventArgs e)
         {
-            var song = ((SongInfo) ((MenuItem) sender).DataContext).Song;
+            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
 
             SongInfoScreen songInfoScreen = new SongInfoScreen(song);
             songInfoScreen.Show();
@@ -38,7 +39,7 @@ namespace View.Resources
 
         private void SongRow_Click(object sender, MouseButtonEventArgs e)
         {
-            var listViewItem = (ListViewItem) sender;
+            var listViewItem = (ListViewItem)sender;
             if (listViewItem.Content is SongInfo songInfo)
             {
                 switch (SongListDataContext.Instance.ScreenName)
@@ -63,7 +64,7 @@ namespace View.Resources
 
         public void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
         {
-            var song = ((SongInfo) ((MenuItem) sender).DataContext).Song;
+            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
             var playlist = MainWindow.CurrentPlayList;
             PlaylistSongController.Create(new DatabaseContext()).RemoveFromPlaylist(song.ID, playlist.ID);
 
@@ -73,8 +74,8 @@ namespace View.Resources
 
         private void MenuItem_LeftClick(object sender, MouseButtonEventArgs e)
         {
-            var playlist = ((Playlist) ((MenuItem) sender).DataContext);
-            var song = ((SongInfo) ((MenuItem) ((MenuItem) sender).Tag).DataContext).Song;
+            var playlist = ((Playlist)((MenuItem)sender).DataContext);
+            var song = ((SongInfo)((MenuItem)((MenuItem)sender).Tag).DataContext).Song;
 
             var playlistSongController = PlaylistSongController.Create(new DatabaseContext());
             playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
@@ -84,9 +85,10 @@ namespace View.Resources
 
         public void ListViewItem_ButtonClick_EditSong(object sender, RoutedEventArgs e)
         {
-            var button = (sender as Button);
-            var song = button.DataContext as SongInfo;
-            //TODO: Open the songalteration screen from here PROJ 55-56
+            if (!(sender is Button button) || !(button.DataContext is SongInfo songInfo)) return;
+            
+            SongAlterationDataContext.Instance.SetSong(songInfo.Song);
+            MainWindow.InstanceMainWindow.SetScreen(ScreenNames.SongAlterationScreen);
         }
     }
 }

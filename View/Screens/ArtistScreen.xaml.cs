@@ -50,10 +50,10 @@ namespace View.Screens
 
         private void ConfirmUpload_Click(object sender, RoutedEventArgs e)
         {
-            var dataGrid = (Grid)((Button)sender).CommandParameter;
-            var titleTextBox = (TextBox)((Button)sender).Tag;
+            var dataGrid = (Grid)((Button)sender).Parent;
+            var songName = ((TextBox)dataGrid.FindName("Title"))?.Text;
 
-            if (titleTextBox.Text == "")
+            if (songName == "")
             {
                 MessageBox.Show("Title must be set", "Error", MessageBoxButton.OK);
                 return;
@@ -65,7 +65,6 @@ namespace View.Screens
                 imageSource.LocalPath.Split("\\").Last());
 
             var artistName = ((Label)dataGrid.FindName("Artist"))?.Content.ToString();
-            var songName = ((TextBox)dataGrid.FindName("Title"))?.Text;
             var artistId = ArtistController.Create(new DatabaseContext()).GetArtistIdFromUserId(UserController.CurrentUser.ID);
 
             if (artistId == null) return;
