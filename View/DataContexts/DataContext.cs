@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Timers;
+using System.Windows.Documents;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
@@ -49,6 +50,9 @@ namespace View.DataContexts
         public string SongNameGiving => IsAdmin ? "All Songs" : "Own Songs";
 
         public string DisplayName => IsArtist ? ArtistController.Create(DatabaseContext.Instance).GetArtistFromUserId(CurrentUser.ID).ArtistName : CurrentUser?.Username;
+
+        public bool IsLooping => AudioPlayer.Instance.Looping;
+        public bool IsShuffling => AudioPlayer.Instance.Shuffling;
 
         private Timer timerSlider;
         public Timer Timer { get; set; }
