@@ -12,9 +12,6 @@ namespace Controller.DbControllers
     {
         private IDatabaseContext Context { get; set; }
         private DbSet<RolePermissions> Set { get; set; }
-        
-        private RoleController RoleController { get; set; }
-        private PermissionController PermissionController { get; set; }
 
         /**
          * Creates a instance of this controller
@@ -33,9 +30,6 @@ namespace Controller.DbControllers
         {
             this.Context = context;
             Set = Context.RolePermissions;
-
-            RoleController = RoleController.Create(Context);
-            PermissionController = PermissionController.Create(Context);
         }
 
         /**
@@ -47,11 +41,14 @@ namespace Controller.DbControllers
          */
         public List<RolePermissions> GetPermissionsFromRoles(int[] roleIDs)
         {
+            var roleController = RoleController.Create(Context);
+            var permissionController = PermissionController.Create(Context);
+
             var result = Set.Where(x => roleIDs.Contains(x.RoleID)).ToList();
             result.ForEach(x =>
             {
-                x.Permission = PermissionController.GetItem(x.PermissionID);
-                x.Role = RoleController.GetItem(x.RoleID);
+                x.Permission = permissionController.GetItem(x.PermissionID);
+                x.Role = roleController.GetItem(x.RoleID);
             });
             return result;
         }

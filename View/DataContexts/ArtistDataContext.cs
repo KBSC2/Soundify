@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Imaging;
@@ -14,7 +13,7 @@ namespace View.DataContexts
     {
         private static ArtistDataContext _instance;
         public static ArtistDataContext Instance => _instance ??= new ArtistDataContext();
-        private static ArtistController artistController = ArtistController.Create(new DatabaseContext());
+        private static ArtistController artistController = ArtistController.Create(DatabaseContext.Instance);
 
         public TagLib.File SelectedSong { get; set; }
         public BitmapImage SongImage { get; set; }
@@ -23,7 +22,7 @@ namespace View.DataContexts
 
         public bool IsSongSelected { get; set; }
 
-        public string ArtistName => ArtistController.Create(new DatabaseContext())
+        public string ArtistName => ArtistController.Create(DatabaseContext.Instance)
             .GetList().FirstOrDefault(a => a.UserID == UserController.CurrentUser.ID)
             ?.ArtistName;
 
@@ -32,7 +31,7 @@ namespace View.DataContexts
 
         public ArtistDataContext()
         {
-            ArtistHasSongPending = SongController.Create(new DatabaseContext())
+            ArtistHasSongPending = SongController.Create(DatabaseContext.Instance)
                 .GetList().Where(s => s.Artist == artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID) && s.Status == SongStatus.AwaitingApproval)
                 .ToList().Count > 0;
 

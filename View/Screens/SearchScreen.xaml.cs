@@ -1,14 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Controller;
-using Controller.DbControllers;
-using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
 using Model.EventArgs;
 using Soundify;
-using View.DataContexts;
 
 namespace View.Screens
 {

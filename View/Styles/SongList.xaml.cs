@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Controller;
@@ -66,7 +62,7 @@ namespace View.Resources
         {
             var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
             var playlist = MainWindow.CurrentPlayList;
-            PlaylistSongController.Create(new DatabaseContext()).RemoveFromPlaylist(song.ID, playlist.ID);
+            PlaylistSongController.Create(DatabaseContext.Instance).RemoveFromPlaylist(song.ID, playlist.ID);
 
             SongListDataContext.Instance.OnPropertyChanged("");
             PlaylistDataContext.Instance.OnPropertyChanged("");
@@ -77,7 +73,7 @@ namespace View.Resources
             var playlist = ((Playlist)((MenuItem)sender).DataContext);
             var song = ((SongInfo)((MenuItem)((MenuItem)sender).Tag).DataContext).Song;
 
-            var playlistSongController = PlaylistSongController.Create(new DatabaseContext());
+            var playlistSongController = PlaylistSongController.Create(DatabaseContext.Instance);
             playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
 
             SongListDataContext.Instance.OnPropertyChanged();

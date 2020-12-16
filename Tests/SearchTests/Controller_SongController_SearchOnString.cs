@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
-using Model.Enums;
 using NUnit.Framework;
 
 namespace Tests.SearchTests
@@ -13,7 +11,6 @@ namespace Tests.SearchTests
     public class Controller_Song_SearchOnString
     {
         private SongController songController;
-        private UserController userController;
         private ArtistController artistController;
 
         [SetUp]

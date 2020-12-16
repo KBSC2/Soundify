@@ -1,25 +1,28 @@
 ﻿using Controller;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Timers;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
+using View.Components;
 
 namespace View.DataContexts
 {
     public class DataContext : INotifyPropertyChanged
     {
-        private static DataContext _instance;
+        public static List<PermissionButton> PermissionButtons { get; set; } = new List<PermissionButton>();
+
+        private static DataContext instance;
         public static DataContext Instance
         {
             get
             {
-                if (_instance == null)
-                    new DataContext();
-                return _instance;
+                if (instance == null)
+                    instance= new DataContext();
+                return instance;
             }
-            set => _instance = value;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -34,31 +37,28 @@ namespace View.DataContexts
         public string TotalTimeLabel => AudioPlayer.Instance.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSongFile.TotalTimeSong).ToString("m':'ss");
         public string CurrentTimeLabel => AudioPlayer.Instance.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong).ToString("m':'ss");
 
+        public User CurrentUser => UserController.CurrentUser == null ? null : UserController.Create(DatabaseContext.Instance).GetItem(UserController.CurrentUser.ID);
         public string PlayImage => AudioPlayer.Instance.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing ? "/Assets/pause.png" : "/Assets/play.png";
+                
+        public int CurrentUserCoins => CurrentUser == null ? 0 : CurrentUser.Coins;
 
-        public User CurrentUser => UserController.CurrentUser == null ? null : UserController.Create(new DatabaseContext())
-                .GetItem(UserController.CurrentUser.ID);
-        public int? CurrentUserCoins => CurrentUser?.Coins;
-        public Role CurrentUserRole => UserController.CurrentUser == null ? null : RoleController.Create(new DatabaseContext()).GetItem(UserController.CurrentUser.RoleID);
-        public bool? IsAdmin => CurrentUser?.RoleID.Equals(3);
-        public bool? IsArtist => CurrentUser?.RoleID.Equals(2);
+        public Role CurrentUserRole => CurrentUser == null ? null : RoleController.Create(DatabaseContext.Instance).GetItem(CurrentUser.RoleID);
+        public bool IsAdmin => CurrentUser == null ? false : CurrentUser.RoleID.Equals(3);
+        public bool IsArtist => CurrentUser == null ? false : CurrentUser.RoleID.Equals(2);
 
-        public string SongNameGiving => IsAdmin!= null ? (bool) IsAdmin ? "All Songs" : "Own Songs" : "";
+        public string SongNameGiving => IsAdmin ? "All Songs" : "Own Songs";
 
-        public string DisplayName => IsArtist.GetValueOrDefault(false)
-            ? ArtistController.Create(new DatabaseContext()).GetArtistFromUserId(UserController.CurrentUser?.ID)?.ArtistName 
-            : UserController.CurrentUser?.Username;
+        public string DisplayName => IsArtist ? ArtistController.Create(DatabaseContext.Instance).GetArtistFromUserId(CurrentUser.ID).ArtistName : CurrentUser?.Username;
 
         private Timer timerSlider;
-        private Timer timer;
+        public Timer Timer { get; set; }
 
         private DataContext()
         {
-            Instance = this;
-            timer = new Timer {Interval = 1000};
-            timer.Elapsed += OnTimedEvent;
-            timer.Elapsed += CoinsController.Instance.EarnCoins;
-            timer.Start();
+            Timer = new Timer {Interval = 1000};
+            Timer.Elapsed += CoinsController.Instance.EarnCoins;
+            Timer.Elapsed += OnTimedEvent;
+            Timer.Start();
 
             timerSlider = new Timer { Interval = 10 };
             timerSlider.Elapsed += OnTimedEventSlider;

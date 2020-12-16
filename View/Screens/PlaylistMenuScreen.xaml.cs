@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Controller.DbControllers;
-using Model;
 using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
@@ -23,7 +21,7 @@ namespace View.Screens
 
         private void CreatePlaylist_Click(object sender, RoutedEventArgs e)
         {
-            var playlistController = PlaylistController.Create(new DatabaseContext());
+            var playlistController = PlaylistController.Create(DatabaseContext.Instance);
 
             var playlist = new Playlist
             {
