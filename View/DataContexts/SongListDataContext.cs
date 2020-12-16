@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Windows;
 using Controller.DbControllers;
-using Model;
-using Model.Annotations;
 using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
@@ -40,9 +34,9 @@ namespace View.DataContexts
 
         public void UpdateSongInfoList()
         {
-            var context = new DatabaseContext();
-            var artistController = ArtistController.Create(context);
-            var songController = SongController.Create(context);
+            var artistController = ArtistController.Create(DatabaseContext.Instance);
+            var songController = SongController.Create(DatabaseContext.Instance);
+            
             switch (instance.ScreenName)
             {
                 case ScreenNames.PlaylistScreen:
@@ -66,7 +60,7 @@ namespace View.DataContexts
 
         public List<SongInfo> SongInfoList { get; set; }
 
-        public List<Playlist> AllPlaylists => PlaylistController.Create(new DatabaseContext())
+        public List<Playlist> AllPlaylists => PlaylistController.Create(DatabaseContext.Instance)
             .GetActivePlaylists(UserController.CurrentUser.ID);
 
         public event PropertyChangedEventHandler PropertyChanged;

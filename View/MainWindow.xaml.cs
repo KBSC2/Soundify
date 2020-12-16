@@ -1,19 +1,17 @@
 using Controller;
 using Controller.DbControllers;
-using Model;
 using Model.Database.Contexts;
 using Model.DbModels;
 using Model.EventArgs;
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using Model.Enums;
 using View;
 using View.Components;
@@ -60,7 +58,7 @@ namespace Soundify
 
         public MainWindow()
         {
-            AudioPlayer.Create(new DatabaseContext());
+            AudioPlayer.Create(DatabaseContext.Instance);
 
             instanceMainWindow = this;
 
@@ -73,10 +71,10 @@ namespace Soundify
                     Directory.CreateDirectory(Path.GetTempPath() + "Soundify/" + path.ToString().ToLower());
             }
 
-            InitializeComponent();
             SSHController.Instance.OpenSSHTunnel();
+            InitializeComponent();
 
-            Context = new DatabaseContext();
+            Context = DatabaseContext.Instance;
             PlaylistController.Create(Context).DeletePlaylistOnDateStamp();
 
             SetScreen(ScreenNames.HomeScreen);
@@ -100,21 +98,14 @@ namespace Soundify
          */
         public static IEnumerable<T> FindLogicalChildren<T>(DependencyObject depObj) where T : DependencyObject
         {
-            if (depObj != null)
+            foreach (object c in LogicalTreeHelper.GetChildren(depObj))
             {
-                foreach (object rawChild in LogicalTreeHelper.GetChildren(depObj))
-                {
-                    if (rawChild is DependencyObject)
-                    {
-                        DependencyObject child = (DependencyObject) rawChild;
-                        if (child is T)
-                        {
-                            yield return (T) child;
-                        }
+                if (c is DependencyObject child) {
+                    if (child is T)
+                        yield return (T) child;
 
-                        foreach (T childOfChild in FindLogicalChildren<T>(child))
-                            yield return childOfChild;
-                    }
+                    foreach (T childChild in FindLogicalChildren<T>(child))
+                        yield return childChild;
                 }
             }
         }
@@ -126,8 +117,10 @@ namespace Soundify
          */
         public void UpdateButtons()
         {
-            foreach (PermissionButton button in FindLogicalChildren<PermissionButton>(MainWindow.InstanceMainWindow))
-                button.UpdateButton();
+            SynchronizationContext.Current.Post(o =>
+            {
+                ((List<PermissionButton>)o).ForEach(x => x.UpdateButton());
+            }, View.DataContexts.DataContext.PermissionButtons);
         }
 
         private void Play_Button_Click(object sender, RoutedEventArgs e)

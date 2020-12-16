@@ -4,8 +4,6 @@ using System.Windows.Controls;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using View.DataContexts;
-using System.Windows.Input;
-using Model;
 using Model.EventArgs;
 using Soundify;
 using System;
@@ -23,8 +21,8 @@ namespace View.Screens
         {
             this.InitializeComponent();
             Instance = this;
-            playlistController = PlaylistController.Create(new DatabaseContext());
-            playlistSongController = PlaylistSongController.Create(new DatabaseContext());
+            playlistController = PlaylistController.Create(DatabaseContext.Instance);
+            playlistSongController = PlaylistSongController.Create(DatabaseContext.Instance);
         }
 
         private void Play_Playlist_Button_Click(object sender, RoutedEventArgs e)

@@ -179,6 +179,11 @@ namespace Controller
         public void PlayPlaylist(Playlist playlist, int startIndex = -1)
         {
             CurrentPlaylist = playlist;
+            PlayPlaylist(PlaylistSongController.Create(DatabaseContext.Instance).GetSongsFromPlaylist(playlist.ID), startIndex);
+        }
+
+        public void PlayPlaylist(List<PlaylistSong> songs, int startIndex = -1)
+        {
             ClearQueue();
             if(NextInQueue.Count > 0)
             {
