@@ -16,6 +16,7 @@ namespace View.Screens
 
         private void Logout_Button_Click(object sender, RoutedEventArgs e)
         {
+            DataContexts.DataContext.Instance.Timer.Stop();
             UserController.CurrentUser = null;
 
             MainWindow.InstanceMainWindow.Hide();
