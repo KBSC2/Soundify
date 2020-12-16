@@ -16,6 +16,7 @@ namespace Model.Enums
         RoleAssignmentScreen,
         SongListScreen,
         ShopScreen,
-        AlbumUploadScreen
+        AlbumUploadScreen,
+        SongAlterationScreen
     }
 }

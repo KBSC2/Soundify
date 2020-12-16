@@ -18,6 +18,7 @@
                 <ResourceDictionary Source="Screens/RequestScreen.xaml"/>
                 <ResourceDictionary Source="Screens/RoleAssignmentScreen.xaml"/>
                 <ResourceDictionary Source="Screens/SongListScreen.xaml"/>
+                <ResourceDictionary Source="Screens/SongAlterationScreen.xaml"/>
                 <ResourceDictionary Source="Screens/AlbumUploadScreen.xaml"/>
                 <ResourceDictionary Source="Screens/ShopScreen.xaml"/>
 

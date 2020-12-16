@@ -86,7 +86,7 @@
                     </Button>
                     <Image x:Name="Image" Source="{Binding SongImage}" HorizontalAlignment="Right" Height="100" Margin="0,67,22,0" VerticalAlignment="Top" Width="100"/>
                 </Grid>
-                <Button Content="Confirm upload" Grid.Column="1" HorizontalAlignment="Center" Margin="0,220,0,0" VerticalAlignment="Top" Height="34" Width="156" Background="#FFF78D0E" BorderBrush="{x:Null}" Foreground="White" FontSize="18" Click="ConfirmUpload_Click" Tag="{Binding ElementName=Title}" CommandParameter="{Binding ElementName=Datagrid}">
+                <Button Content="Confirm upload" Grid.Column="1" HorizontalAlignment="Center" Margin="0,220,0,0" VerticalAlignment="Top" Height="34" Width="156" Background="#FFF78D0E" BorderBrush="{x:Null}" Foreground="White" FontSize="18" Click="ConfirmUpload_Click">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Visibility" Value="Hidden"/>
