@@ -24,9 +24,7 @@
             <Image Source="{Binding PathToImage}" Height="60" Width="60" HorizontalAlignment="Left" Margin="40,0,0,0"/>
             <TextBlock Text="{Binding CurrentSong.Name}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="110,10,0,37" MaxWidth="200" Foreground="White"/>
             <Button x:Name="Play" Margin="0,0,0,0" VerticalAlignment="Center" Click="Play_Button_Click" MaxWidth="58" BorderBrush="{x:Null}" Background="Transparent">
-                <!--Uncomment image and comment the image for preview-->
                 <Image Source="{Binding PlayImage}"/>
-                <!--<Image Source="/Assets/play.png" Height="53" Width="53"/>-->
             </Button>
             <TextBlock Text="{Binding CurrentSongArtistName}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="110,37,0,10" MaxWidth="200" FontStyle="Italic" Foreground="White"/>
             <Label x:Name="CurrentTime" Content="{Binding CurrentTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top" Foreground="White"/>

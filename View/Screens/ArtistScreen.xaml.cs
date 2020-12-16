@@ -98,7 +98,7 @@ namespace View.Screens
                 SongID = song.ID
             };
 
-            var requestController = RequestController.Create(new DatabaseContext());
+            var requestController = RequestController.Create(DatabaseContext.Instance);
             requestController.CreateItem(request);
 
             ArtistDataContext.Instance.SelectedSong = null;

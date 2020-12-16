@@ -39,18 +39,16 @@ namespace View.DataContexts
 
         public User CurrentUser => UserController.CurrentUser == null ? null : UserController.Create(DatabaseContext.Instance).GetItem(UserController.CurrentUser.ID);
         public string PlayImage => AudioPlayer.Instance.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing ? "/Assets/pause.png" : "/Assets/play.png";
-
                 
-        public int? CurrentUserCoins => CurrentUser?.Coins;
-        public Role CurrentUserRole => UserController.CurrentUser == null ? null : RoleController.Create(DatabaseContext.Instance).GetItem(UserController.CurrentUser.RoleID);
-        public bool? IsAdmin => CurrentUser?.RoleID.Equals(3);
-        public bool? IsArtist => CurrentUser?.RoleID.Equals(2);
+        public int CurrentUserCoins => CurrentUser == null ? 0 : CurrentUser.Coins;
 
-        public string SongNameGiving => IsAdmin!= null ? (bool) IsAdmin ? "All Songs" : "Own Songs" : "";
+        public Role CurrentUserRole => CurrentUser == null ? null : RoleController.Create(DatabaseContext.Instance).GetItem(CurrentUser.RoleID);
+        public bool IsAdmin => CurrentUser == null ? false : CurrentUser.RoleID.Equals(3);
+        public bool IsArtist => CurrentUser == null ? false : CurrentUser.RoleID.Equals(2);
 
-        public string DisplayName => IsArtist.GetValueOrDefault(false)
-            ? ArtistController.Create(DatabaseContext.Instance).GetArtistFromUserId(UserController.CurrentUser?.ID)?.ArtistName 
-            : UserController.CurrentUser?.Username;
+        public string SongNameGiving => IsAdmin ? "All Songs" : "Own Songs";
+
+        public string DisplayName => IsArtist ? ArtistController.Create(DatabaseContext.Instance).GetArtistFromUserId(CurrentUser.ID).ArtistName : CurrentUser?.Username;
 
         private Timer timerSlider;
         public Timer Timer { get; set; }
