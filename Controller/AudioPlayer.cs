@@ -54,6 +54,12 @@ namespace Controller
             CurrentSongIndex = -1;
         }
 
+        public void ResetAudioPlayer()
+        {
+            WaveOutDevice.Stop();
+            Create(DatabaseContext.Instance);
+        }
+
         /**
          * Skips to the next song
          *
@@ -303,10 +309,13 @@ namespace Controller
 
         public void PlayPause()
         {
-            if (WaveOutDevice.PlaybackState == PlaybackState.Paused || WaveOutDevice.PlaybackState == PlaybackState.Stopped)
-                WaveOutDevice.Play();
-            else
-                WaveOutDevice.Pause();
+            if(CurrentSong != null)
+            {
+                if (WaveOutDevice.PlaybackState == PlaybackState.Paused || WaveOutDevice.PlaybackState == PlaybackState.Stopped)
+                    WaveOutDevice.Play();
+                else
+                    WaveOutDevice.Pause();
+            }
         }
 
         public void ChangeVolume(int selectedItem)

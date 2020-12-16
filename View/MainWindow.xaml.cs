@@ -136,7 +136,7 @@ namespace Soundify
 
         private void Duration_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (sender is Slider slider)
+            if (sender is Slider slider && AudioPlayer.Instance.CurrentSongFile != null)
             {
                 AudioPlayer.Instance.CurrentSongFile.AudioFile.Skip(
                     (int) (slider.Value - AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong));

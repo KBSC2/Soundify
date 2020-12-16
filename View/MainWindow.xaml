@@ -17,7 +17,7 @@
     Closed="WindowClosing"
     Closing="WindowClosing"
     Icon="Assets\soundifysmall.ico">
-    
+
     <Window.Resources>
         <Style x:Key="SliderRepeatButton" TargetType="RepeatButton">
             <Setter Property="SnapsToDevicePixels" Value="true" />
@@ -65,7 +65,7 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Track Grid.Row="1" x:Name="PART_Track"   >
@@ -88,9 +88,81 @@
             <Setter Property="OverridesDefaultStyle" Value="true" />
             <Style.Triggers>
                 <Trigger Property="Orientation" Value="Horizontal">
-                    <Setter Property="MinHeight" Value="21" />
-                    <Setter Property="MinWidth" Value="104" />
                     <Setter Property="Template" Value="{StaticResource Slider}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SliderRepeatButton2" TargetType="RepeatButton">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="IsTabStop" Value="false" />
+            <Setter Property="Focusable" Value="false" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Border  BorderThickness="1" BorderBrush="{DynamicResource InputBackground}" Background="{DynamicResource InputBackground}" Height="6"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SliderRepeatButton3" TargetType="RepeatButton">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RepeatButton">
+                        <Border SnapsToDevicePixels="True" Background="White"  BorderThickness="1" BorderBrush="White" Height="6"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SliderThumb2" TargetType="Thumb">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Ellipse>
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="/Assets/slider.png"></ImageBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ControlTemplate x:Key="Slider2"  TargetType="Slider">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Track Grid.Row="1" x:Name="PART_Track" Height="20" >
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource SliderRepeatButton3}"  Command="Slider.DecreaseLarge" />
+                    </Track.DecreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb Style="{StaticResource SliderThumb2}" />
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource SliderRepeatButton2}" Command="Slider.IncreaseLarge" />
+                    </Track.IncreaseRepeatButton>
+                </Track>
+            </Grid>
+        </ControlTemplate>
+
+        <Style x:Key="Volume_Slider" TargetType="Slider">
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Horizontal">
+                    <Setter Property="Template" Value="{StaticResource Slider2}" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -111,8 +183,11 @@
             <components:PermissionButton Permission="SongNext" x:Name="Next" Content="{DynamicResource Next}" Margin="636,0,496,0" VerticalAlignment="Center" Click="Next_Button_Click" BorderBrush="{x:Null}" Background="Transparent" Height="40" Width="40"/>
             <components:PermissionButton Permission="SongLoop" x:Name="Loop" Content="{DynamicResource Loop}" Margin="427,24,717,0" VerticalAlignment="Top" Click="Loop_Button_Click" Height="30" Width="30" BorderBrush="{x:Null}" Background="Transparent"/>
             <components:PermissionButton Permission="SongShuffle" x:Name="Shuffle" Content="{DynamicResource Shuffle}" Margin="714,24,430,0" VerticalAlignment="Top" Click="Shuffle_Button_Click" Height="30" Width="30" BorderBrush="{x:Null}" Background="Transparent"/>
-            <Slider x:Name="Volume" Margin="0,28,10,0" IsMoveToPointEnabled="True" VerticalAlignment="Top" Maximum="{Binding MaxVolume, Mode=OneWay}" ValueChanged="Volume_ValueChanged" Value="{Binding Volume, Mode=OneWay}" SmallChange="0.001" LargeChange="0.01" Grid.RowSpan="2" HorizontalAlignment="Right" Width="100"/>
-            <Slider x:Name="Duration" Style="{StaticResource Duration_Slider}" Margin="-6,-8,-4,64" IsMoveToPointEnabled="True" Foreground="White" Minimum="0.00" Maximum="{Binding TotalTime, Mode=OneWay}" Value="{Binding CurrentTime, Mode=OneWay}" ValueChanged="Duration_ValueChanged"/>
+            <Slider x:Name="Volume" Style="{StaticResource Volume_Slider}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,100,0" IsMoveToPointEnabled="True" Maximum="{Binding MaxVolume, Mode=OneWay}" ValueChanged="Volume_ValueChanged" Value="{Binding Volume, Mode=OneWay}" SmallChange="0.001" LargeChange="0.01" Width="100" />
+            <Slider x:Name="Duration" Style="{StaticResource Duration_Slider}" Margin="0,-8,0,64" IsMoveToPointEnabled="True" Foreground="White" Minimum="0.00" Maximum="{Binding TotalTime, Mode=OneWay}" Value="{Binding CurrentTime, Mode=OneWay}" ValueChanged="Duration_ValueChanged"/>
+            <Button Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" VerticalAlignment="Center" Height="50" Width="50" Margin="0,0,20,0">
+                <Image Source="/Assets/sound.png" />
+            </Button>
         </Grid>
         <Grid Margin="89,0,0,0" Background="{DynamicResource Background2Color}" Height="54" VerticalAlignment="Top" ShowGridLines="False">
             <Label Content="{Binding DisplayName}" Foreground="{Binding CurrentUserRole.ColorCode, Converter={StaticResource colorConverter}}" Margin="10,14,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Width="auto"/>

@@ -17,6 +17,7 @@ namespace View.Screens
         private void Logout_Button_Click(object sender, RoutedEventArgs e)
         {
             UserController.CurrentUser = null;
+            AudioPlayer.Instance.ResetAudioPlayer();
 
             MainWindow.InstanceMainWindow.Hide();
             MainWindow.InstanceLoginScreen.Show();

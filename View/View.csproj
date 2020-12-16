@@ -26,6 +26,7 @@
     <None Remove="Assets\settings.png" />
     <None Remove="Assets\shuffle.png" />
     <None Remove="Assets\Slider.png" />
+    <None Remove="Assets\Sound.png" />
     <None Remove="Assets\soundify.png" />
     <None Remove="Assets\soundifyBig.png" />
     <None Remove="Assets\soundifyMedium.png" />
@@ -64,6 +65,7 @@
     <Resource Include="Assets\settings.png" />
     <Resource Include="Assets\shuffle.png" />
     <Resource Include="Assets\Slider.png" />
+    <Resource Include="Assets\Sound.png" />
     <Resource Include="Assets\soundify.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
