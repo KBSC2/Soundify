@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Controller.Proxy;
 using Model.Database.Contexts;
@@ -64,7 +65,7 @@ namespace Controller.DbControllers
         }
 
         /**
-         * Attempt to create an user account
+         * Attempt to create a user account
          * Do a few checks on the user's credentials
          *
          * @param user The user database object to insert
@@ -127,6 +128,47 @@ namespace Controller.DbControllers
             };
 
             return max > maxValues[maxValue];
+        }
+
+        /**
+         * Changes the details of a user
+         *
+         * @param user The user database object to insert
+         * @param newEmail New given email to check 
+         * @param newUsername New given username to check
+         *
+         * @return NewUserInfo, if it's valid the respective strings have been updated within the function.
+         */
+
+        public virtual NewUserInfo ChangeDetails(User user, string newEmail, string newUsername)
+        {
+            if (newEmail == "" && newUsername == "")
+                return NewUserInfo.Empty;
+            
+            var email = GetUserFromEmailOrUsername(newEmail);
+            var username = GetUserFromEmailOrUsername(newUsername);
+            var updatedEmail = false;
+
+            if (newEmail != "")
+            {
+                if (email != null)
+                    return NewUserInfo.EmailTaken;
+                if (!newEmail.Contains("@"))
+                    return NewUserInfo.InvalidEmail;
+                user.Email = newEmail;
+                updatedEmail = true;
+                UpdateItem(user);
+            }
+            if (newUsername != "")
+            {
+                if (username != null && updatedEmail == true)
+                    return NewUserInfo.UsernameTakenEmailUpdated;
+                if (username != null)
+                    return NewUserInfo.UsernameTaken;
+                user.Username = newUsername;
+                UpdateItem(user);
+            }
+            return NewUserInfo.Valid;
         }
 
         /**
