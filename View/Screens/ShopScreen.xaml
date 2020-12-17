@@ -24,7 +24,6 @@
                                             <Setter Property="Content" Value="{Binding Price}"/>
                                             <Setter Property="Background" Value="#F7590E"/>
                                             <Setter Property="IsEnabled" Value="True"/>
-
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Purchasable}" Value="False">
                                                     <Setter Property="Background" Value="#676767"/>

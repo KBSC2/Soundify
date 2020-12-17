@@ -20,7 +20,7 @@ namespace View.DataContexts
             ShopItems = ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser.ID);
             DataContext.Instance.Timer.Elapsed += OnTimedEvent;
         }
-
+        
         public void OnTimedEvent(object sender, EventArgs e)
         {
             var items = new List<ShopItem>(ShopItems);
