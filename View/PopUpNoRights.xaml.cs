@@ -17,6 +17,10 @@ namespace View
         public PopUpNoRights(Permissions permission)
         {
             InitializeComponent();
+
+            // Makes screen in universal font
+            Style = (Style)FindResource(typeof(Window));
+
             StartTimer();
 
             var userController = UserController.Create(DatabaseContext.Instance);

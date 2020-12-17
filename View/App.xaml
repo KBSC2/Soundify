@@ -16,6 +16,7 @@
                 <ResourceDictionary Source="Screens/ArtistScreen.xaml"/>
                 <ResourceDictionary Source="Screens/AdminScreen.xaml"/>
                 <ResourceDictionary Source="Screens/RequestScreen.xaml"/>
+                <ResourceDictionary Source="Screens/RoleAssignmentScreen.xaml"/>
                 <ResourceDictionary Source="Screens/SongListScreen.xaml"/>
                 <ResourceDictionary Source="Screens/SongAlterationScreen.xaml"/>
                 <ResourceDictionary Source="Screens/AlbumUploadScreen.xaml"/>
@@ -51,6 +52,9 @@
                     <Image x:Key="Setting" Source="/Assets/settings.png"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type Window}">
+                <Setter Property="FontFamily" Value="Segoe UI" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

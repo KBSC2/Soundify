@@ -44,6 +44,22 @@ namespace Tests.Users
             Assert.AreEqual(user.RoleID, 1);
         }
 
+        [Test]
+        public void UserController_ChangeUserRole()
+        {
+            //Get user
+            var result = userController.GetItem(user.ID);
+            Assert.AreEqual(result.RoleID, 1);
+
+            //Update user to artist
+            userController.UpdateUserRole(user.ID, 2);
+            Assert.AreEqual(result.RoleID, 2);
+
+            //Update user to admin
+            userController.UpdateUserRole(user.ID, 3);
+            Assert.AreEqual(result.RoleID, 3);
+        }
+
         [TearDown]
         public void TearDown()
         {

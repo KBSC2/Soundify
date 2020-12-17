@@ -56,9 +56,8 @@ namespace Controller.DbControllers
 
         {
             var user = userController.GetItem(request.UserID);
-
-            user.RoleID = 2;
-            userController.UpdateItem(user);
+            int makeArtist = 2;
+            userController.UpdateUserRole(user.ID, makeArtist);
             CreateItem(new Artist { ArtistName = request.ArtistName, UserID = user.ID});
         }
 
@@ -71,8 +70,8 @@ namespace Controller.DbControllers
          */
         public void RevokeArtist(User user)
         {
-            user.RoleID = 1;
-            userController.UpdateItem(user);
+            int revokeArtist = 1;
+            userController.UpdateUserRole(user.ID, revokeArtist);
 
             var artistId = GetArtistIdFromUserId(user.ID);
             if (artistId != null) DeleteItem((int)artistId);
