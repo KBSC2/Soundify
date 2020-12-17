@@ -33,7 +33,7 @@ namespace View
         {
             Song = song;
             Duration = TimeSpan.FromSeconds(song.Duration).ToString("m':'ss");
-            Artist = ArtistController.Create(DatabaseContext.Instance).GetItem(song.Artist);
+            Artist = ArtistController.Create(DatabaseContext.Instance).GetItem(song.ArtistID);
         }
 
         public static List<SongInfo> ConvertSongListToSongInfo(Playlist playlist)
