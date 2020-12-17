@@ -12,6 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\activeloop.png" />
+    <None Remove="Assets\activeshuffle.png" />
     <None Remove="Assets\cross.png" />
     <None Remove="Assets\loop.png" />
     <None Remove="Assets\next.png" />
@@ -46,6 +48,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\activeloop.png" />
+    <Resource Include="Assets\activeshuffle.png" />
     <Resource Include="Assets\cross.png" />
     <Resource Include="Assets\loop.png" />
     <Resource Include="Assets\next.png" />
