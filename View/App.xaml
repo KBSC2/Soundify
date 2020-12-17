@@ -44,8 +44,10 @@
                 <ResourceDictionary>
                     <Image x:Key="Next" Source="/Assets/next.png"/>
                     <Image x:Key="Shuffle" Source="/Assets/shuffle.png"/>
+                    <Image x:Key="ActiveShuffle" Source="/Assets/activeshuffle.png"/>
                     <Image x:Key="Previous" Source="/Assets/previous.png"/>
                     <Image x:Key="Loop" Source="/Assets/loop.png"/>
+                    <Image x:Key="ActiveLoop" Source="/Assets/activeloop.png"/>
                     <Image x:Key="Setting" Source="/Assets/settings.png"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
