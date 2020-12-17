@@ -9,7 +9,6 @@
             <Button Content="Review requests" HorizontalAlignment="Center" Margin="0,111,0,0" VerticalAlignment="Top" Width="226" Height="43" FontSize="26.5"  Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="Review_Button_Click" />
             <Button Content="Permission assignment" HorizontalAlignment="Center" Margin="0,300,0,0" VerticalAlignment="top" Width="300" Height="43" FontSize="26.5" Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="Permission_Button_Click" />
             <Button Content="Users" HorizontalAlignment="Center" Margin="0,180,0,0" VerticalAlignment="Top" Width="226" Height="43" FontSize="26.5"  Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="OpenRoleAssignmentScreen_Click" />
-
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

@@ -38,8 +38,6 @@ namespace Controller.DbControllers
             return GetFilteredList(r => r.RequestType == RequestType.Artist);
         }
 
-
-
         /**
          * Gets a lists of all the requests to upload a song
          *
@@ -50,7 +48,6 @@ namespace Controller.DbControllers
             var x = GetFilteredList(r => r.RequestType == RequestType.Song);
             return x;
         }
-
 
         /**
          * Check if artistName and/or artistReason are empty
@@ -103,7 +100,6 @@ namespace Controller.DbControllers
             DeleteItem(requestID);
 
         }
-
 
         /**
         * Approves a request from a user to upload a song

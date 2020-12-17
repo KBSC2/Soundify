@@ -99,7 +99,6 @@ namespace Controller.DbControllers
             if (!RealDatabase()) return;
             Context.Entry(rolePermission).State = EntityState.Added;
             Context.SaveChanges();
-
         }
 
         /**
@@ -117,7 +116,6 @@ namespace Controller.DbControllers
             if (!RealDatabase()) return;
             Context.Entry(rolePermission).State = EntityState.Deleted;
             Context.SaveChanges();
-            
         }
 
         /**

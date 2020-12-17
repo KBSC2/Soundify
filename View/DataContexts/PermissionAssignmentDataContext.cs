@@ -1,5 +1,4 @@
-﻿
-using Controller.DbControllers;
+﻿using Controller.DbControllers;
 using Model.Annotations;
 using Model.Database.Contexts;
 using Model.DbModels;
@@ -9,7 +8,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-
 
 namespace View.DataContexts
 {
@@ -38,13 +36,11 @@ namespace View.DataContexts
                 if (PermissionsDict.ContainsKey(rolePermission.Permission))
                 {
                     PermissionsDict[rolePermission.Permission][rolePermission.RoleID - 1] = true;
-                    
                 }
                 else
                 {
                     PermissionsDict.Add(rolePermission.Permission, new bool[3] { false, false, false });
                     PermissionsDict[rolePermission.Permission][rolePermission.RoleID - 1] = true;
-                   
                 }
             }
         }
