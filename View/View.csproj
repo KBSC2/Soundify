@@ -13,6 +13,8 @@
 
   <ItemGroup>
     <None Remove="Assets\Coins.png" />
+    <None Remove="Assets\activeloop.png" />
+    <None Remove="Assets\activeshuffle.png" />
     <None Remove="Assets\cross.png" />
     <None Remove="Assets\down.png" />
     <None Remove="Assets\exit.png" />
@@ -56,6 +58,8 @@
 
   <ItemGroup>
     <Resource Include="Assets\Coins.png" />
+    <Resource Include="Assets\activeloop.png" />
+    <Resource Include="Assets\activeshuffle.png" />
     <Resource Include="Assets\cross.png" />
     <Resource Include="Assets\down.png" />
     <Resource Include="Assets\exit.png" />

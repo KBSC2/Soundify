@@ -24,5 +24,7 @@ namespace Model.Database.Contexts
         public abstract DbSet<ShopItemPermissions> ShopItemPersmissions { get; set; }
         public abstract DbSet<UserShopItems> UserShopItems { get; set; }
 
+        public abstract DbSet<Album> Albums { get; set; }
+        public abstract DbSet<AlbumArtistSong> AlbumArtistSongs{ get; set; }
     }
 }

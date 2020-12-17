@@ -3,8 +3,7 @@
 					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:local="clr-namespace:View.Screens" 
                     xmlns:dataContexts="clr-namespace:View.DataContexts"
-                    
-					xmlns:Components="clr-namespace:View.Components"
+                    xmlns:Components="clr-namespace:View.Components"
 					x:Class="View.Screens.ArtistScreen">
     <DataTemplate x:Key="ArtistScreen">
         <!-- Start playlist screen -->
@@ -12,7 +11,6 @@
             <Grid.Resources>
                 <Components:ID3DurationPropertyConverter x:Key="DurationConverter"/>
             </Grid.Resources>
-
             <Grid Margin="0,0,0,164">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -88,7 +86,7 @@
                     </Button>
                     <Image x:Name="Image" Source="{Binding SongImage}" HorizontalAlignment="Right" Height="100" Margin="0,67,22,0" VerticalAlignment="Top" Width="100"/>
                 </Grid>
-                <Button Content="Confirm upload" Grid.Column="1" HorizontalAlignment="Center" Margin="0,220,0,0" VerticalAlignment="Top" Height="34" Width="156" Background="#FFF78D0E" BorderBrush="{x:Null}" Foreground="White" FontSize="18" Click="ConfirmUpload_Click" Tag="{Binding ElementName=Title}" CommandParameter="{Binding ElementName=Datagrid}">
+                <Button Content="Confirm upload" Grid.Column="1" HorizontalAlignment="Center" Margin="0,220,0,0" VerticalAlignment="Top" Height="34" Width="156" Background="#FFF78D0E" BorderBrush="{x:Null}" Foreground="White" FontSize="18" Click="ConfirmUpload_Click">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Visibility" Value="Hidden"/>

@@ -28,6 +28,8 @@ namespace Model.DbModels
 
         public SongStatus Status { get; set; }
 
-        public IList<PlaylistSong> PlaylistSongs { get; set; }
+        public virtual IList<PlaylistSong> PlaylistSongs { get; set; }
+
+        public virtual IList<AlbumArtistSong> AlbumArtistSongs { get; set; }
     }
 }

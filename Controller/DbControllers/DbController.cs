@@ -55,6 +55,17 @@ namespace Controller
             // If the database is a mock one, do not use the context (not required)
             if (!RealDatabase()) return;
 
+            // Prevent error from occuring when another instance of the same item is already being tracked
+            var local = Context.Set<T>()
+                .Local
+                .FirstOrDefault(entry => entry.ID.Equals(dbItem.ID));
+            
+            if (local != null)
+            {
+                // detach
+                Context.Entry(local).State = EntityState.Detached;
+            }
+
             Context.Entry(dbItem).State = EntityState.Modified;
             Context.SaveChanges();
         }

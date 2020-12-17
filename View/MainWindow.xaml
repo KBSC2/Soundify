@@ -183,8 +183,30 @@
             <Label x:Name="TotalTime" Content="{Binding TotalTimeLabel, Mode=OneWay}" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Right" />
             <components:PermissionButton Permission="SongPrev" x:Name="Prev" Content="{DynamicResource Previous}" Margin="481,0,624,0" VerticalAlignment="Center" Click="Prev_Button_Click" BorderBrush="{x:Null}" Background="Transparent" Height="40" Width="40"/>
             <components:PermissionButton Permission="SongNext" x:Name="Next" Content="{DynamicResource Next}" Margin="636,0,496,0" VerticalAlignment="Center" Click="Next_Button_Click" BorderBrush="{x:Null}" Background="Transparent" Height="40" Width="40"/>
-            <components:PermissionButton Permission="SongLoop" x:Name="Loop" Content="{DynamicResource Loop}" Margin="427,24,717,0" VerticalAlignment="Top" Click="Loop_Button_Click" Height="30" Width="30" BorderBrush="{x:Null}" Background="Transparent"/>
-            <components:PermissionButton Permission="SongShuffle" x:Name="Shuffle" Content="{DynamicResource Shuffle}" Margin="714,24,430,0" VerticalAlignment="Top" Click="Shuffle_Button_Click" Height="30" Width="30" BorderBrush="{x:Null}" Background="Transparent"/>
+            <components:PermissionButton Permission="SongLoop" x:Name="Loop" Margin="427,24,717,0" VerticalAlignment="Top" Click="Loop_Button_Click" Height="30" Width="30" BorderBrush="{x:Null}" Background="Transparent">
+	            <components:PermissionButton.Style>
+		            <Style TargetType="{x:Type components:PermissionButton}">
+                        <Setter Property="Content" Value="{DynamicResource Loop}"/>
+			            <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLooping}" Value="True">
+                                <Setter Property="Content" Value="{DynamicResource ActiveLoop}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+	            </components:PermissionButton.Style>
+            </components:PermissionButton>
+            <components:PermissionButton Permission="SongShuffle" x:Name="Shuffle" Margin="714,24,430,0" VerticalAlignment="Top" Click="Shuffle_Button_Click" Height="30" Width="30" BorderBrush="{x:Null}" Background="Transparent">
+	            <components:PermissionButton.Style>
+		            <Style TargetType="{x:Type components:PermissionButton}">
+			            <Setter Property="Content" Value="{DynamicResource Shuffle}"/>
+			            <Style.Triggers>
+				            <DataTrigger Binding="{Binding IsShuffling}" Value="True">
+					            <Setter Property="Content" Value="{DynamicResource ActiveShuffle}"/>
+				            </DataTrigger>
+			            </Style.Triggers>
+		            </Style>
+	            </components:PermissionButton.Style>
+            </components:PermissionButton>
             <Slider x:Name="Volume" Style="{StaticResource Volume_Slider}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,100,0" IsMoveToPointEnabled="True" Maximum="{Binding MaxVolume, Mode=OneWay}" ValueChanged="Volume_ValueChanged" Value="{Binding Volume, Mode=OneWay}" SmallChange="0.001" LargeChange="0.01" Width="100" />
             <Slider x:Name="Duration" Style="{StaticResource Duration_Slider}" Margin="0,-8,0,64" IsMoveToPointEnabled="True" Foreground="White" Minimum="0.00" Maximum="{Binding TotalTime, Mode=OneWay}" Value="{Binding CurrentTime, Mode=OneWay}" ValueChanged="Duration_ValueChanged" SmallChange="0.01" LargeChange="0.1"/>
             <Button Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" VerticalAlignment="Center" Height="50" Width="50" Margin="0,0,30,0" Click="Volume_Button_Click">
@@ -207,10 +229,11 @@
             <components:MenuButton ScreenName="HomeScreen"     Content="Home"           Margin="0,65,0,339" HorizontalAlignment="Center" Width="92" Height="30" MaxHeight="30" VerticalAlignment="Top"/>
             <components:MenuButton ScreenName="PlaylistMenuScreen" Content="Playlists"  Margin="0,110,0,294" Height="30" MaxHeight="30" VerticalAlignment="Top" />
             <components:MenuButton ScreenName="QueueScreen"    Content="Queue"          Margin="0,155,0,0"  Height="30" MaxHeight="30" VerticalAlignment="Top" />
-            <components:MenuButton Permission="SongUpload" HideOnBlocked="True" ScreenName="ArtistScreen" Content="Upload"  Margin="0,200,0,0" Height="30" MaxHeight="30" VerticalAlignment="Top" />
+            <components:MenuButton Permission="SongUpload" HideOnBlocked="True" ScreenName="ArtistScreen" Content="Song Upload"  Margin="0,200,0,0" Height="30" MaxHeight="30" VerticalAlignment="Top" />
+            <components:MenuButton Permission="SongUpload" HideOnBlocked="True" ScreenName="AlbumUploadScreen" Content="Album Upload"  Margin="0,245,0,0" Height="30" MaxHeight="30" VerticalAlignment="Top" />
+            <components:MenuButton Permission="SongEditOwn"  HideOnBlocked="True" ScreenName="SongListScreen" Content="{Binding SongNameGiving}"  Margin="0,290,0,0" Height="30" MaxHeight="30" VerticalAlignment="Top" />
+            <components:MenuButton Permission="AdminDashboard" HideOnBlocked="True" ScreenName="AdminScreen"    Content="Admin"          Margin="0,335,0,0"  HorizontalAlignment="Center" Width="92" MaxHeight="30" Height="30" VerticalAlignment="Top" />
             <components:MenuButton ScreenName="ShopScreen"    Content="Shop"          Margin="0,0,0,81"  HorizontalAlignment="Center" Width="92" MaxHeight="30" Height="31" VerticalAlignment="Bottom" />
-            <components:MenuButton Permission="SongEditOwn"  HideOnBlocked="True" ScreenName="SongListScreen" Content="{Binding SongNameGiving}"  Margin="0,245,0,0" Height="30" MaxHeight="30" VerticalAlignment="Top" />
-            <components:MenuButton Permission="AdminDashboard" HideOnBlocked="True" ScreenName="AdminScreen"    Content="Admin"          Margin="0,290,0,0"  HorizontalAlignment="Center" Width="92" MaxHeight="30" Height="30" VerticalAlignment="Top" />
             <Image Margin="6,0,66,10" Stretch="Fill" Source="/Assets/Coins.png" Height="20" VerticalAlignment="Bottom"/>
             <!-- <Label x:Name="MoneyAdded" Content="+1" HorizontalAlignment="Center" Margin="0,0,0,52" Foreground="White" FontSize="14" Opacity="0.5" Height="29" VerticalAlignment="Bottom"/> -->
             <Label x:Name="Money" Content="{Binding CurrentUserCoins}" HorizontalAlignment="Left" Margin="26,0,0,5" Width="67" Foreground="White" FontSize="16" Height="30" VerticalAlignment="Bottom"/>

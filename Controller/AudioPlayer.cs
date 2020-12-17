@@ -290,7 +290,7 @@ namespace Controller
          */
         private List<Song> ShuffleList(List<Song> songs)
         {
-            if (songs.Count == 0)
+            if (songs.Count <= 1)
                 return songs;
 
             var shuffledList = new List<Song>(songs);
@@ -309,6 +309,8 @@ namespace Controller
 
         public void PlayPause()
         {
+            if(CurrentSong == null) return;
+            
             if (WaveOutDevice.PlaybackState == PlaybackState.Paused || WaveOutDevice.PlaybackState == PlaybackState.Stopped)
                 WaveOutDevice.Play();
             else
