@@ -16,10 +16,8 @@
             <ListView ItemsSource="{Binding PermissionsDict}">
                 <ListView.View>
                     <GridView>
-                        
                         <GridViewColumn Header="Permissions" Width="200" DisplayMemberBinding="{Binding Key.Name}">
                         </GridViewColumn>
-                        
                         <GridViewColumn Header="User" Width="200">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
@@ -28,7 +26,6 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        
                         <GridViewColumn Header="Artist" Width="200">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
@@ -37,7 +34,6 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-
                         <GridViewColumn Header="Admin" Width="200">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
@@ -46,7 +42,6 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                                      
                     </GridView>
                 </ListView.View>
             </ListView>

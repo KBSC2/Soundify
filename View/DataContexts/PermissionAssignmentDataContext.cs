@@ -13,7 +13,6 @@ namespace View.DataContexts
 {
     public class PermissionAssignmentDataContext : INotifyPropertyChanged
     {
-
         public List<string> Roles => RoleController.Create(DatabaseContext.Instance).GetList().Select(x => x.Designation).ToList();
         public List<Permission> Permissions => PermissionController.Create(DatabaseContext.Instance).GetList();
         public Dictionary<Permission, bool[]> PermissionsDict { get; set; }

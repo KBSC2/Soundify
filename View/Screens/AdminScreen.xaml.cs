@@ -13,7 +13,6 @@ namespace View.Screens
         {
             InitializeComponent();
         }
-
         private void Review_Button_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.InstanceMainWindow.SetScreen(ScreenNames.RequestScreen);
@@ -27,7 +26,6 @@ namespace View.Screens
         private void OpenRoleAssignmentScreen_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.InstanceMainWindow.SetScreen(ScreenNames.RoleAssignmentScreen);
-
         }
     }
 }

@@ -98,7 +98,6 @@ namespace Controller.DbControllers
             userController.UpdateItem(user);
 
             DeleteItem(requestID);
-
         }
 
         /**

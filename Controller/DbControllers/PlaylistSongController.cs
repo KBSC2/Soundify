@@ -139,7 +139,6 @@ namespace Controller.DbControllers
                 .Any(s => s.SongID == songId);
         }
 
-
         /**
          * Gets the songs from the playlist given in the parameter
          *
