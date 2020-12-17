@@ -12,6 +12,9 @@ using View.DataContexts;
 
 namespace View.Screens
 {
+    /// <summary>
+    /// Interaction logic for PlaylistMenuScreen.xaml
+    /// </summary>
     partial class PlaylistMenuScreen : ResourceDictionary
     {
         public PlaylistMenuScreen()

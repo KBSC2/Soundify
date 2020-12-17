@@ -215,6 +215,14 @@ namespace Controller.DbControllers
             return context is DatabaseContext;
         }
 
+        /** 
+         * Swaps the 2 selected songs
+         * 
+         * @param indexOne The indexID from the first selected song
+         * @param indexTwo The indexID from the second selected song
+         * @param playlistID The playlistID from the selected playlist
+         * 
+         */
         public void SwapSongs(int indexOne, int indexTwo, int playlistID)
         {
             var songOne = GetPlaylistSongFromIndex(playlistID, indexOne);
