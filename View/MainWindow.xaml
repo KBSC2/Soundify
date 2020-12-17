@@ -215,7 +215,7 @@
         </Grid>
         <Grid Margin="120,0,0,0" Height="54" VerticalAlignment="Top" ShowGridLines="False">
             <Label Content="{Binding DisplayName}" Foreground="{Binding CurrentUserRole.ColorCode, Converter={StaticResource colorConverter}}" Margin="10,14,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Width="auto"/>
-            <TextBox Style="{StaticResource SearchTextbox }" Foreground="{DynamicResource Orange}" HorizontalAlignment="Center" Tag="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="322" Height="34" KeyDown="SetSearchTerms" FontSize="20" FontWeight="Bold">
+            <TextBox Style="{StaticResource SearchTextbox }" Foreground="{DynamicResource MainBackgroundColor}" HorizontalAlignment="Center" Tag="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="322" Height="34" KeyDown="SetSearchTerms" FontSize="20" FontWeight="Bold">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="12"/>
