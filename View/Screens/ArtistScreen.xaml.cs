@@ -72,7 +72,7 @@ namespace View.Screens
             var song = new Song()
             {
                 Name = songName,
-                Artist = (int) artistId,
+                ArtistID = (int) artistId,
                 Description = dataGrid.FindName("Description") != null
                     ? ((TextBox) dataGrid.FindName("Description"))?.Text
                     : null,
