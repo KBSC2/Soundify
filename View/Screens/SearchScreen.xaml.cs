@@ -36,8 +36,8 @@ namespace View.Screens
         public void AlbumRow_Click(object sender, MouseButtonEventArgs e)
         {
             var listViewItem = (ListViewItem)sender;
-            var selectedAlbum = (AlbumInfo)listViewItem.Content;
-            AlbumSongListDataContext.Instance.Album = selectedAlbum.Album;
+            var selectedAlbum = (Album)listViewItem.Content;
+            AlbumSongListDataContext.Instance.Album = selectedAlbum;
 
             MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs
             {

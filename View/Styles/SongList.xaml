@@ -14,8 +14,8 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Title" Width="200" DisplayMemberBinding="{Binding Song.Name}" />
-                    <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Artist.ArtistName}" />
-                    <GridViewColumn Header="Album" Width="200" DisplayMemberBinding="{Binding Album.AlbumName}"></GridViewColumn>
+                    <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Song.Artist.ArtistName}" />
+                    <GridViewColumn Header="Album" Width="200" DisplayMemberBinding="{Binding Song.Album.AlbumName}"></GridViewColumn>
                     <GridViewColumn Header="Duration" Width="75" DisplayMemberBinding="{Binding Duration}" />
                     <GridViewColumn Width="150" DisplayMemberBinding="{Binding Added}">
 	                    <GridViewColumnHeader Content="Added" Visibility="{Binding IsPlaylistScreen, Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -41,7 +41,7 @@
                               CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
                     <MenuItem Header="Open Album" Click="OpenAlbum_LeftClick"
                               CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
-                              Visibility="{Binding IsPartOfAlbum, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                              Visibility="{Binding ShowVisibillity, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <MenuItem Name="DeleteSongFromPlaylist" Header="Remove song"
                               CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
                               Click="ListViewItem_RightClick_DeleteSong"

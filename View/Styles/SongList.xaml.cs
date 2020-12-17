@@ -68,7 +68,7 @@ namespace View.Resources
         {
             var songInfo = ((SongInfo) ((MenuItem)sender).DataContext);
             
-                AlbumSongListDataContext.Instance.Album = songInfo.Album;
+                AlbumSongListDataContext.Instance.Album = songInfo.Song.Album;
 
                 MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs
                 {

@@ -111,7 +111,7 @@ namespace View.Screens
             FileTransfer.Create(DatabaseContext.Instance).UploadFile(image?.LocalPath, "images/" +
                 image?.LocalPath.Split("\\").Last());
 
-            AlbumController.Create(DatabaseContext.Instance).UploadAlbum(AlbumUploadDataContext.Instance.AlbumSongInfos, image, titleTextBox.Text, description, artistName);
+            AlbumController.Create(DatabaseContext.Instance).UploadAlbum(AlbumUploadDataContext.Instance.AlbumSongInfos, image, titleTextBox.Text, description, artistName,genre);
             AlbumUploadDataContext.Instance.AlbumFiles = null;
             AlbumUploadDataContext.Instance.AlbumSongInfos = null;
             AlbumUploadDataContext.Instance.AreSongsSelected = false;

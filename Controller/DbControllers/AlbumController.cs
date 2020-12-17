@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq;
-using System.Text;
 using Castle.Core.Internal;
 using Controller.Proxy;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +9,6 @@ using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
 using View.ListItems;
-using Model.Enums;
 
 namespace Controller.DbControllers
 {
@@ -27,14 +24,15 @@ namespace Controller.DbControllers
          */
         public static AlbumController Create(IDatabaseContext context)
         {
-            return ProxyController.AddToProxy<AlbumController>(new object[] { context }, context);
+            return ProxyController.AddToProxy<AlbumController>(new object[] {context}, context);
         }
 
         protected AlbumController(IDatabaseContext context) : base(context, context.Albums)
         {
         }
 
-        public void UploadAlbum(ObservableCollection<AlbumSongInfo> albumSongInfos, Uri image, string title, string description, string artistName)
+        public void UploadAlbum(ObservableCollection<AlbumSongInfo> albumSongInfos, Uri image, string title,
+            string description, string artistName, string genre)
         {
             var artistId = ArtistController.Create(Context).GetArtistIdFromUserId(UserController.CurrentUser.ID);
 
@@ -42,7 +40,7 @@ namespace Controller.DbControllers
                 return;
 
 
-            var album = new Album { AlbumName = title, Description = description, ArtistID = artistId.Value};
+            var album = new Album {AlbumName = title, Description = description, ArtistID = artistId.Value, Genre = genre};
             var requestController = RequestController.Create(DatabaseContext.Instance);
 
             CreateItem(album);
@@ -51,7 +49,7 @@ namespace Controller.DbControllers
                 var song = new Song
                 {
                     Name = albumSongInfo.Title,
-                    ArtistID = (int)artistId,
+                    ArtistID = (int) artistId,
                     Duration = albumSongInfo.Duration.TotalSeconds,
                     Path = albumSongInfo.File.Name,
                     PathToImage = image != null ? "images/" + image.LocalPath.Split("\\").Last() : null,
@@ -78,19 +76,12 @@ namespace Controller.DbControllers
 
         public List<Album> SearchAlbumListOnString(List<string> searchTerms)
         {
-            
             return GetList()
-                .Where(album => (searchTerms.Any(s => album.AlbumName != null && album.AlbumName.ToLower().Contains(s.ToLower())) ||
-                                searchTerms.Any(s => 
-                                    album.AlbumArtistSongs
-                                        .Where(aas => aas.Album.Equals(album))
-                                        .GroupBy(aas => aas.Artist)
-                                        .OrderBy(aas => aas.Count())
-                                        .Select(aas => aas.Key)
-                                        .First().ArtistName.ToLower()
-                                        .Contains(s.ToLower())))
-                     && (!album.AlbumArtistSongs.Select(aas => aas.Song).Where(s => s.Status.Equals(SongStatus.Approved)).ToList().IsNullOrEmpty())
-                                )
+                .Where(album =>
+                    (searchTerms.Any(s => album.AlbumName != null && album.AlbumName.ToLower().Contains(s.ToLower())) ||
+                     searchTerms.Any(s =>
+                         album.Artist.ArtistName.Contains(s.ToLower())))
+                    && (!album.Songs.Where(s => s.Status.Equals(SongStatus.Approved)).ToList().IsNullOrEmpty()))
                 .ToList();
         }
     }

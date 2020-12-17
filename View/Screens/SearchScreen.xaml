@@ -14,12 +14,12 @@
                 <StackPanel>
                     <ContentPresenter Height="500" ContentTemplate="{DynamicResource SongList}" />
                     <ListView Height="500" Name="SearchAlbums" Background="#FF303651" BorderBrush="{x:Null}"
-                              Foreground="White" ItemsSource="{Binding SearchAlbumInfos}">
+                              Foreground="White" ItemsSource="{Binding SearchAlbums}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding AlbumName}" />
                                 <GridViewColumn Header="Artist name" Width="150"
-                                                DisplayMemberBinding="{Binding ArtistName}" />
+                                                DisplayMemberBinding="{Binding Artist.ArtistName}" />
                                 <GridViewColumn Header="Genre" Width="150" DisplayMemberBinding="{Binding Genre}" />
                             </GridView>
                         </ListView.View>

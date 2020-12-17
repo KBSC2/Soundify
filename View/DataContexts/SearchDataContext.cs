@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Controller.DbControllers;
 using Model.Annotations;
@@ -29,9 +30,8 @@ namespace View.DataContexts
         
         public List<Playlist> SearchPlaylists => PlaylistController.Create(DatabaseContext.Instance).SearchPlayListOnString(SearchTerms, UserController.CurrentUser.ID);
 
-        public List<AlbumInfo> SearchAlbumInfos =>
-            AlbumInfo.ConvertAlbumToAlbumInfo(AlbumController.Create(DatabaseContext.Instance)
-                .SearchAlbumListOnString(SearchTerms));
+        public List<Album> SearchAlbums => AlbumController.Create(DatabaseContext.Instance)
+                .SearchAlbumListOnString(SearchTerms).ToList();
 
         public List<Playlist> AllPlaylists => PlaylistController.Create(DatabaseContext.Instance).GetActivePlaylists(UserController.CurrentUser.ID);
 
