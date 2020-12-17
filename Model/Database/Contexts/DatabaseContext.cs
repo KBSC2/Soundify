@@ -31,8 +31,10 @@ namespace Model.Database.Contexts
         public override DbSet<ShopItemPermissions> ShopItemPersmissions { get; set; }
         public override DbSet<UserShopItems> UserShopItems { get; set; }
         public override DbSet<Album> Albums { get; set; }
-        public override DbSet<AlbumArtistSong> AlbumArtistSongs { get; set; }
+
+
         
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -50,8 +52,6 @@ namespace Model.Database.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PlaylistSong>().HasKey(ps => new {ps.PlaylistID, ps.SongID});
-
-            modelBuilder.Entity<AlbumArtistSong>().HasKey(aas => new {aas.AlbumId, aas.ArtistId, aas.SongId});
 
             modelBuilder.Entity<RolePermissions>().HasKey(rp => new { rp.RoleID, rp.PermissionID});
 

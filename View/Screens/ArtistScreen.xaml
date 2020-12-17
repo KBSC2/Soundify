@@ -6,7 +6,7 @@
                     xmlns:Components="clr-namespace:View.Components"
 					x:Class="View.Screens.ArtistScreen">
     <DataTemplate x:Key="ArtistScreen">
-        <!-- Start playlist screen -->
+        <!-- Start artist screen -->
         <Grid x:Name="MainGrid"  Background="#FF303651" DataContext="{x:Static dataContexts:ArtistDataContext.Instance}">
             <Grid.Resources>
                 <Components:ID3DurationPropertyConverter x:Key="DurationConverter"/>

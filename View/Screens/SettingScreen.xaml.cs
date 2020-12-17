@@ -45,5 +45,12 @@ namespace View.Screens
             request.Show();
             request.Focus();
         }
+
+        private void ChangeDetails_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var changeDetailsScreen = new NewUserInformationScreen();
+            changeDetailsScreen.Show();
+            changeDetailsScreen.Focus();
+        }
     }
 }

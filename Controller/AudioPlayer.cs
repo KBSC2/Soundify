@@ -120,7 +120,7 @@ namespace Controller
                 WaveOutDevice.Stop();
             CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
             CurrentSong = song;
-            CurrentSongArtistName = ArtistController.Create(Context).GetItem(song.Artist).ArtistName;
+            CurrentSongArtistName = ArtistController.Create(Context).GetItem(song.ArtistID).ArtistName;
             WaveOutDevice.Init(CurrentSongFile.AudioFile);
             NextSong?.Invoke(this, new EventArgs());
             Task.Delay(500).ContinueWith(x => WaveOutDevice.Play());
@@ -284,7 +284,7 @@ namespace Controller
          */
         private List<Song> ShuffleList(List<Song> songs)
         {
-            if (songs.Count == 0)
+            if (songs.Count <= 1)
                 return songs;
 
             var shuffledList = new List<Song>(songs);
@@ -303,6 +303,8 @@ namespace Controller
 
         public void PlayPause()
         {
+            if(CurrentSong == null) return;
+            
             if (WaveOutDevice.PlaybackState == PlaybackState.Paused || WaveOutDevice.PlaybackState == PlaybackState.Stopped)
                 WaveOutDevice.Play();
             else
