@@ -171,41 +171,41 @@
     </Window.Resources>
 
     <Grid Background="{DynamicResource MainBackgroundColor}">
-        <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="92,54,0,74" ContentTemplate="{StaticResource HomeScreen}" />
-        <Grid Margin="92,0,0,0" Background="{DynamicResource UnderBackgroundColor}" Height="74" VerticalAlignment="Bottom" ShowGridLines="False">
+        <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="120,54,0,0" ContentTemplate="{StaticResource HomeScreen}" />
+        <Grid Margin="120,0,0,0" Background="{DynamicResource UnderBackgroundColor}" Height="74" VerticalAlignment="Bottom" ShowGridLines="False">
             <Image Source="{Binding PathToImage}" Height="60" Width="60" HorizontalAlignment="Left" Margin="40,5,0,0"/>
             <TextBlock Text="{Binding CurrentSong.Name}" TextTrimming="CharacterEllipsis" FontSize="18" HorizontalAlignment="Left" Margin="110,10,0,37" MaxWidth="200" Foreground="White" FontWeight="Bold"/>
-            <Button x:Name="Play" Margin="0,0,0,0" VerticalAlignment="Center" Click="Play_Button_Click" MaxWidth="58" BorderBrush="{x:Null}" Background="Transparent">
+            <Button x:Name="Play" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Play_Button_Click" Width="60" BorderBrush="{x:Null}" Background="Transparent" Height="60">
                 <Image Source="{Binding PlayImage}"/>
             </Button>
             <TextBlock Text="{Binding CurrentSongArtistName}" FontSize="15" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="110,37,0,10" MaxWidth="200" FontStyle="Italic" Foreground="White"/>
             <Label x:Name="CurrentTime" Content="{Binding CurrentTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White"/>
             <Label x:Name="TotalTime" Content="{Binding TotalTimeLabel, Mode=OneWay}" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Right" />
-            <components:PermissionButton Permission="SongPrev" x:Name="Prev" Content="{DynamicResource Previous}" Margin="481,0,624,0" VerticalAlignment="Center" Click="Prev_Button_Click" BorderBrush="{x:Null}" Background="Transparent" Height="40" Width="40"/>
-            <components:PermissionButton Permission="SongNext" x:Name="Next" Content="{DynamicResource Next}" Margin="636,0,496,0" VerticalAlignment="Center" Click="Next_Button_Click" BorderBrush="{x:Null}" Background="Transparent" Height="40" Width="40"/>
-            <components:PermissionButton Permission="SongLoop" x:Name="Loop" Margin="427,24,717,0" VerticalAlignment="Top" Click="Loop_Button_Click" Height="30" Width="30" BorderBrush="{x:Null}" Background="Transparent">
-	            <components:PermissionButton.Style>
-		            <Style TargetType="{x:Type components:PermissionButton}">
+            <components:PermissionButton Permission="SongPrev" x:Name="Prev" Content="{DynamicResource Previous}" Margin="0,0,140,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Prev_Button_Click" BorderBrush="{x:Null}" Background="Transparent" Height="45" Width="45"/>
+            <components:PermissionButton Permission="SongNext" x:Name="Next" Content="{DynamicResource Next}" Margin="140,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Next_Button_Click" BorderBrush="{x:Null}" Background="Transparent" Height="45" Width="45"/>
+            <components:PermissionButton Permission="SongLoop" x:Name="Loop" Margin="0,0,280,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Loop_Button_Click" Height="40" Width="40" BorderBrush="{x:Null}" Background="Transparent">
+                <components:PermissionButton.Style>
+                    <Style TargetType="{x:Type components:PermissionButton}">
                         <Setter Property="Content" Value="{DynamicResource Loop}"/>
-			            <Style.Triggers>
+                        <Style.Triggers>
                             <DataTrigger Binding="{Binding IsLooping}" Value="True">
                                 <Setter Property="Content" Value="{DynamicResource ActiveLoop}"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-	            </components:PermissionButton.Style>
+                </components:PermissionButton.Style>
             </components:PermissionButton>
-            <components:PermissionButton Permission="SongShuffle" x:Name="Shuffle" Margin="714,24,430,0" VerticalAlignment="Top" Click="Shuffle_Button_Click" Height="30" Width="30" BorderBrush="{x:Null}" Background="Transparent">
-	            <components:PermissionButton.Style>
-		            <Style TargetType="{x:Type components:PermissionButton}">
-			            <Setter Property="Content" Value="{DynamicResource Shuffle}"/>
-			            <Style.Triggers>
-				            <DataTrigger Binding="{Binding IsShuffling}" Value="True">
-					            <Setter Property="Content" Value="{DynamicResource ActiveShuffle}"/>
-				            </DataTrigger>
-			            </Style.Triggers>
-		            </Style>
-	            </components:PermissionButton.Style>
+            <components:PermissionButton Permission="SongShuffle" x:Name="Shuffle" Margin="280,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Shuffle_Button_Click" Height="40" Width="40" BorderBrush="{x:Null}" Background="Transparent">
+                <components:PermissionButton.Style>
+                    <Style TargetType="{x:Type components:PermissionButton}">
+                        <Setter Property="Content" Value="{DynamicResource Shuffle}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsShuffling}" Value="True">
+                                <Setter Property="Content" Value="{DynamicResource ActiveShuffle}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </components:PermissionButton.Style>
             </components:PermissionButton>
             <Slider x:Name="Volume" Style="{StaticResource Volume_Slider}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,100,0" IsMoveToPointEnabled="True" Maximum="{Binding MaxVolume, Mode=OneWay}" ValueChanged="Volume_ValueChanged" Value="{Binding Volume, Mode=OneWay}" SmallChange="0.001" LargeChange="0.01" Width="100" />
             <Slider x:Name="Duration" Style="{StaticResource Duration_Slider}" Margin="0,-8,0,64" IsMoveToPointEnabled="True" Foreground="White" Minimum="0.00" Maximum="{Binding TotalTime, Mode=OneWay}" Value="{Binding CurrentTime, Mode=OneWay}" ValueChanged="Duration_ValueChanged" SmallChange="0.01" LargeChange="0.1"/>
@@ -213,9 +213,9 @@
                 <Image Source="{Binding VolumeImage}" />
             </Button>
         </Grid>
-        <Grid Margin="89,0,0,0" Height="54" VerticalAlignment="Top" ShowGridLines="False">
+        <Grid Margin="120,0,0,0" Height="54" VerticalAlignment="Top" ShowGridLines="False">
             <Label Content="{Binding DisplayName}" Foreground="{Binding CurrentUserRole.ColorCode, Converter={StaticResource colorConverter}}" Margin="10,14,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Width="auto"/>
-            <TextBox Style="{StaticResource SearchTextbox }" HorizontalAlignment="Center" Tag="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="322" Height="34" KeyDown="SetSearchTerms">
+            <TextBox Style="{StaticResource SearchTextbox }" HorizontalAlignment="Center" Tag="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="322" Height="34" KeyDown="SetSearchTerms" FontSize="20" FontWeight="Bold">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="12"/>
@@ -224,7 +224,7 @@
             </TextBox>
             <components:MenuButton Height="34" Width="34" ScreenName="SettingScreen" Content="{DynamicResource Setting}" Margin="0,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Right" Background="Transparent"/>
         </Grid>
-        <Grid Background="{DynamicResource LeftBackgroundColor}" HorizontalAlignment="Left" Width="92" ShowGridLines="False">
+        <Grid Background="{DynamicResource LeftBackgroundColor}" HorizontalAlignment="Left" Width="120" ShowGridLines="False">
             <Image Margin="26,6,26,0" Stretch="Fill" Source="Assets/soundifySmall.png" Width="40" Height="40" MaxHeight="40" VerticalAlignment="Top"/>
             <components:MenuButton ScreenName="HomeScreen"     Content="Home"           Margin="0,65,0,339" HorizontalAlignment="Center" Width="92" Height="30" MaxHeight="30" VerticalAlignment="Top"/>
             <components:MenuButton ScreenName="PlaylistMenuScreen" Content="Playlists"  Margin="0,110,0,294" Height="30" MaxHeight="30" VerticalAlignment="Top" />
@@ -236,7 +236,7 @@
             <components:MenuButton ScreenName="ShopScreen"    Content="Shop"          Margin="0,0,0,81"  HorizontalAlignment="Center" Width="92" MaxHeight="30" Height="31" VerticalAlignment="Bottom" />
             <Image Margin="6,0,66,10" Stretch="Fill" Source="/Assets/Coins.png" Height="20" VerticalAlignment="Bottom"/>
             <!-- <Label x:Name="MoneyAdded" Content="+1" HorizontalAlignment="Center" Margin="0,0,0,52" Foreground="White" FontSize="14" Opacity="0.5" Height="29" VerticalAlignment="Bottom"/> -->
-            <Label x:Name="Money" Content="{Binding CurrentUserCoins}" HorizontalAlignment="Left" Margin="26,0,0,5" Width="67" Foreground="White" FontSize="16" Height="30" VerticalAlignment="Bottom"/>
+            <Label x:Name="Money" Content="{Binding CurrentUserCoins}" HorizontalAlignment="Left" Margin="60,0,0,5" Width="62" Foreground="White" FontSize="20" VerticalAlignment="Bottom" FontWeight="Bold"/>
         </Grid>
     </Grid>
 </Window>
