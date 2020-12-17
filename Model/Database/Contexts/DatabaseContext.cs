@@ -32,6 +32,7 @@ namespace Model.Database.Contexts
         public override DbSet<UserShopItems> UserShopItems { get; set; }
         public override DbSet<Album> Albums { get; set; }
         public override DbSet<AlbumArtistSong> AlbumArtistSongs { get; set; }
+        
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
