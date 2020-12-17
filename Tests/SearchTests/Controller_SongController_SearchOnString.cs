@@ -16,12 +16,12 @@ namespace Tests.SearchTests
         [SetUp]
         public void SetUp()
         {
-            var mockdatabaseContext = new MockDatabaseContext();
+            var mockDatabaseContext = new MockDatabaseContext();
 
-            artistController = ArtistController.Create(mockdatabaseContext);
+            artistController = ArtistController.Create(mockDatabaseContext);
             artistController.CreateItem(new Artist() { ID = 11, ArtistName = "Tester", UserID = 1 });
 
-            songController = SongController.Create(mockdatabaseContext);
+            songController = SongController.Create(mockDatabaseContext);
             songController.CreateItem(new Song() { ID = 1, Name = "SongNameTest", ArtistID = 11, Duration = 10, Path = "../path" });
             songController.CreateItem(new Song() { ID = 2, Name = "Ik WIl Testen, liefst ieder kwartier", ArtistID = 11, Duration = 10, Path = "../path" });
         }
