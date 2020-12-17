@@ -18,9 +18,16 @@ namespace View.Screens
         {
             MainWindow.InstanceMainWindow.SetScreen(ScreenNames.RequestScreen);
         }
+
         private void Permission_Button_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.InstanceMainWindow.SetScreen(ScreenNames.PermissionAssignmentScreen);
+        }
+
+        private void OpenRoleAssignmentScreen_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.InstanceMainWindow.SetScreen(ScreenNames.RoleAssignmentScreen);
+
         }
     }
 }

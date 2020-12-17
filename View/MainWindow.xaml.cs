@@ -74,6 +74,9 @@ namespace Soundify
             SSHController.Instance.OpenSSHTunnel();
             InitializeComponent();
 
+            // Makes all screen in the universal font (exept for popup screens)
+            Style = (Style)FindResource(typeof(Window));
+
             Context = DatabaseContext.Instance;
             PlaylistController.Create(Context).DeletePlaylistOnDateStamp();
 

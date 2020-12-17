@@ -20,6 +20,9 @@ namespace View
         public RequestArtist()
         {
             InitializeComponent();
+
+            // Makes screen in universal font
+            Style = (Style)FindResource(typeof(Window));
         }
 
         private void Confirm_On_Enter_Key(object sender, KeyEventArgs e)
