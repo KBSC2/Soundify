@@ -25,7 +25,7 @@
                     </Style>
                 </PasswordBox.Resources>
             </PasswordBox>
-            <TextBox Style="{StaticResource WatermarkTextbox}"  x:Name="PasswordLogin" HorizontalAlignment="Center" Margin="0,364,0,0" Tag="      New Email" VerticalAlignment="Top" Width="356" Height="60" FontSize="40" Foreground="White" FontWeight="Bold">
+            <TextBox Style="{StaticResource WatermarkTextbox}"  x:Name="NewEmail" HorizontalAlignment="Center" Margin="0,364,0,0" Tag="      New Email" VerticalAlignment="Top" Width="356" Height="60" FontSize="40" Foreground="White" FontWeight="Bold">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="12"/>
@@ -39,7 +39,7 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Label x:Name="Error" Content="" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,526,0,0" VerticalAlignment="Top" Foreground="{DynamicResource Red}" FontSize="15" Height="30" Width="252"/>
+            <Label x:Name="Error" Content="" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,526,0,0" VerticalAlignment="Top" Foreground="{DynamicResource Red}" FontSize="15" Height="30" Width="518"/>
             <Canvas Grid.Row="0">
                 <Image Margin="0,0,0,0" Stretch="Fill" Source="Assets/soundifySmall.png" Width="91" Height="91" Canvas.Left="243" Canvas.Top="30"/>
             </Canvas>
@@ -52,7 +52,7 @@
                     </Style>
                 </TextBox.Resources>
             </TextBox>
-            <Button Content="Cancel" HorizontalAlignment="Left" Margin="81,577,0,0" VerticalAlignment="Top" FontSize="40" Width="198" Height="60" Background="{DynamicResource Red}" Foreground="White" BorderBrush="Transparent" FontWeight="Bold">
+            <Button Content="Cancel" HorizontalAlignment="Left" Margin="81,577,0,0" VerticalAlignment="Top" FontSize="40" Width="198" Height="60" Background="{DynamicResource Red}" Click="Close_Button_Click" Foreground="White" BorderBrush="Transparent" FontWeight="Bold">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="12"/>

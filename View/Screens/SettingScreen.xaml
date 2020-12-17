@@ -2,23 +2,48 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:DataContexts="clr-namespace:View.DataContexts"
                     x:Class="View.Screens.SettingScreen">
     <DataTemplate x:Key="SettingScreen">
-        <!-- Start homescreen screen -->
+        <!-- Start setting screen -->
         <Grid Margin="0,0,0,0" Background="#FF303651"  DataContext="{x:Static DataContexts:SettingsDataContext.Instance}">
             <Grid Margin="0,0,640,0">
-                <Button Content="Change Password" HorizontalAlignment="Center" Margin="0,112,0,0" VerticalAlignment="Top" Width="300" Height="44" FontSize="26.5"  Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="ChangePassword_Button_Click"/>
+                <Button Content="Change Password" HorizontalAlignment="Center" Margin="0,112,0,0" VerticalAlignment="Top" Width="256" Height="44" FontSize="26.5"  Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="ChangePassword_Button_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
                 <ComboBox HorizontalAlignment="Center" Margin="0,178,0,0" VerticalAlignment="Top" Width="164" Height="43" Background="#FF707070" FontSize="26.5" FontWeight="Bold" SelectionChanged="VolumeComboBox_SelectedChanged">
                     <ComboBoxItem>Quiet</ComboBoxItem >
                     <ComboBoxItem IsSelected="True">Normal</ComboBoxItem>
                     <ComboBoxItem>Loud</ComboBoxItem>
                 </ComboBox>
                 <Image Margin="152,187,1006,364" Stretch="Fill" Source="../Assets/Sound.png" Width="30" Height="25"/>
-                <Button Content="Logout" HorizontalAlignment="Center" Margin="0,483,0,0" VerticalAlignment="Top" Width="130" Height="40" Background="#FFF70E0E" Foreground="White" BorderThickness="0" FontSize="26.6" FontWeight="Bold" Click="Logout_Button_Click"/>
+                <Button Content="Logout" HorizontalAlignment="Center" Margin="0,483,0,0" VerticalAlignment="Top" Width="130" Height="40" Background="#FFF70E0E" Foreground="White" BorderThickness="0" FontSize="26.6" FontWeight="Bold" Click="Logout_Button_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
                 <Label Content="You are" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,14,0,0" VerticalAlignment="Top" FontSize="26.5" Foreground="White" FontWeight="Bold"/>
                 <Label Content="{Binding Role.Designation}" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" FontSize="26.5" Foreground="{Binding Role.ColorCode}" FontWeight="Bold" Height="auto" Width="163"/>
-                <Button Visibility="{Binding HasArtistRequested}" Content="Request to be artist" HorizontalAlignment="Center" Margin="0,410,0,0" VerticalAlignment="Top" Width="368" Height="40" Background="#FF3EBF65" Foreground="White" BorderThickness="0" FontSize="26.6" FontWeight="Bold" Click="Request_Button_Click" />
+                <Button Visibility="{Binding HasArtistRequested}" Content="Request to be artist" HorizontalAlignment="Center" Margin="0,410,0,0" VerticalAlignment="Top" Width="304" Height="40" Background="#FF3EBF65" Foreground="White" BorderThickness="0" FontSize="26.6" FontWeight="Bold" Click="Request_Button_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
             </Grid>
             <Grid Margin="640,0,0,0">
-                <Label Content="{Binding CurrentUserName}" ContentStringFormat="Welcome {0}!" HorizontalAlignment="Center" Margin="0,25,50,0" VerticalAlignment="Top" FontSize="26.5" Foreground="White" FontWeight="Bold" Width="auto" Height="auto"/>
+                <Label Content="{Binding CurrentUserName}" ContentStringFormat="Welcome {0}!" HorizontalAlignment="Center" Margin="0,35,0,0" VerticalAlignment="Top" FontSize="26.5" Foreground="White" FontWeight="Bold" Width="auto" Height="auto"/>
+                <Button Content="Change details" HorizontalAlignment="Center" Margin="0,112,0,0" VerticalAlignment="Top" Width="256" Height="44" FontSize="26.5"  Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="ChangeDetails_Button_Click">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
             </Grid>
         </Grid>
     </DataTemplate>

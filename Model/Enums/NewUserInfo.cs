@@ -6,12 +6,11 @@ namespace Model.Enums
 {
     public enum NewUserInfo
     {
-        EmailChanged,
-        UsernameChanged,
-        BothChanged,
-        EmailExists,
-        UsernameExists,
-        BothExists,
+        UsernameTakenEmailUpdated,
+        EmailTaken,
+        InvalidEmail,
+        UsernameTaken,
+        Valid,
         Empty
     }
 }
