@@ -187,7 +187,6 @@ namespace Soundify
         {
             AudioPlayer.Instance.Loop();
             QueueDataContext.Instance.OnPropertyChanged();
-
         }
 
         private void Shuffle_Button_Click(object sender, RoutedEventArgs e)

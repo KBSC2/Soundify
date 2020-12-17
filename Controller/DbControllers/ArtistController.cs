@@ -34,16 +34,16 @@ namespace Controller.DbControllers
          *
          * @return int : the artistId
          */
-        public int? GetArtistIdFromUserId(int userId)
+        /*public int? GetArtistIdFromUserId(int userId)
         {
             return GetList().FirstOrDefault(a => a.UserID == userId)?.ID;
+        }*/
+
+        public Artist GetArtistFromUser(User user)
+        {
+            return GetList().FirstOrDefault(a => a.UserID == user.ID);
         }
 
-        public Artist GetArtistFromUserId(int? userId)
-        {
-            return GetList().FirstOrDefault(a => a.UserID == userId);
-        }
-        
         /**
          * Grants the role of artist to a user
          *
@@ -52,13 +52,12 @@ namespace Controller.DbControllers
          *  @return void
          */
         // Can't this be a little bit more generic. Like update role or something??
-        public void MakeArtist(Request request)
+        public Artist MakeArtist(Request request)
 
         {
             var user = userController.GetItem(request.UserID);
-            int makeArtist = 2;
-            userController.UpdateUserRole(user.ID, makeArtist);
-            CreateItem(new Artist { ArtistName = request.ArtistName, UserID = user.ID});
+            userController.UpdateUserRole(user, 2);
+            return CreateItem(new Artist { ArtistName = request.ArtistName, UserID = user.ID});
         }
 
         /**
@@ -68,13 +67,10 @@ namespace Controller.DbControllers
          *
          *  @return void
          */
-        public void RevokeArtist(User user)
+        public void RevokeArtist(Artist artist)
         {
-            int revokeArtist = 1;
-            userController.UpdateUserRole(user.ID, revokeArtist);
-
-            var artistId = GetArtistIdFromUserId(user.ID);
-            if (artistId != null) DeleteItem((int)artistId);
+            userController.UpdateUserRole(artist.User, 1);
+            DeleteItem(artist.ID);
         }
     }
 }

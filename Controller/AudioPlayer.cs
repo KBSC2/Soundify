@@ -98,7 +98,7 @@ namespace Controller
                 {
                     CurrentSongIndex = Queue.Count - 1;
                     List<Song> copyQueue = new List<Song>(Queue);
-                    copyQueue.ForEach(i => AddSongToQueue(i));
+                    copyQueue.ForEach(AddSongToQueue);
                 }
                 else
                     CurrentSongIndex = 0;
@@ -246,13 +246,11 @@ namespace Controller
         private void FillQueue()
         {
             var songs = new List<Song>();
-
-            if(CurrentPlaylist != null)
-                songs = PlaylistSongController.Create(Context).GetSongsFromPlaylist(CurrentPlaylist.ID).Select(x => x.Song).ToList();
+            if (CurrentPlaylist != null)
+                songs = CurrentPlaylist.PlaylistSongs.Select(x => x.Song).ToList();
 
             if (CurrentAlbumSongs.Count > 0)
                 songs = CurrentAlbumSongs;
-
 
             if (songs.Count > 0)
             {

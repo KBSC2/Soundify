@@ -25,7 +25,7 @@ namespace View.Screens
 
             var playlist = new Playlist
             {
-                Name = $"Playlist {playlistController.GetActivePlaylists(UserController.CurrentUser.ID).Count + 1}",
+                Name = $"Playlist {playlistController.GetActivePlaylists(UserController.CurrentUser).Count + 1}",
                 CreationDate = DateTime.Now,
                 UserID = UserController.CurrentUser.ID
             };

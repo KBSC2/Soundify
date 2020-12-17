@@ -123,7 +123,7 @@ namespace Controller.DbControllers
 
             Dictionary<Permissions, int> maxValues = new Dictionary<Permissions, int>()
             {
-                { Permissions.PlaylistLimit, PlaylistController.Create(Context).GetActivePlaylists(user.ID).Count },
+                { Permissions.PlaylistLimit, PlaylistController.Create(Context).GetActivePlaylists(user).Count },
                 { Permissions.PlaylistSongsLimit, 3} //implement current playlist max songs
             };
 
@@ -258,9 +258,8 @@ namespace Controller.DbControllers
           *
           * @return void
           */
-        public void UpdateUserRole(int userID, int roleID)
+        public void UpdateUserRole(User user, int roleID)
         {
-            User user = GetItem(userID);
             user.RoleID = roleID;
             UpdateItem(user);
         }

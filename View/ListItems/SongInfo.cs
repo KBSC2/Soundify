@@ -43,10 +43,10 @@ namespace View
 
         public static List<SongInfo> ConvertSongListToSongInfo(Playlist playlist)
         {
-            var playlistSongController = PlaylistSongController.Create(DatabaseContext.Instance);
+            /*var playlistSongController = PlaylistSongController.Create(DatabaseContext.Instance);*/
 
-            var songs = playlistSongController.GetSongsFromPlaylist(playlist.ID);
-            return songs.Select(song => new SongInfo(song.Song, song)).ToList();
+            /*var songs = playlistSongController.GetSongsFromPlaylist(playlist.ID);*/
+            return playlist.PlaylistSongs.Select(song => new SongInfo(song.Song, song)).ToList();
         }
 
         public static List<SongInfo> ConvertSongListToSongInfo(List<Song> songs)

@@ -14,51 +14,47 @@ namespace Tests.Local
     [TestFixture]
     public class Controller_AudioPlayerShould
     {
-
-        private MockDatabaseContext context;
-        private Artist artist;
-        private Song song;
-        private Song song2;
-        private Song song3;
-        private Playlist playlist;
+        
         private ArtistController artistController;
         private SongController songController;
         private PlaylistSongController playlistSongController;
         private PlaylistController playlistController;
-        private List<PlaylistSong> playlistSongs;
+
+        private Playlist playlist;
+        private Song song;
+        private Song song2;
+        private Song song3;
 
         [SetUp]
         public void SetUp()
         {
             SSHController.Instance.OpenSSHTunnel();
 
-            context = new MockDatabaseContext();
+            var context = new MockDatabaseContext();
             AudioPlayer.Create(context);
             songController = SongController.Create(context);
             playlistSongController = PlaylistSongController.Create(context);
             playlistController = PlaylistController.Create(context);
             artistController = ArtistController.Create(context);
 
-            playlist = new Playlist() { Name = "Test", ActivePlaylist = true, CreationDate = DateTime.Now };
+            playlist = new Playlist() { ID = 10, Name = "Test", ActivePlaylist = true, CreationDate = DateTime.Now, PlaylistSongs = new List<PlaylistSong>()};
             playlistController.CreateItem(playlist);
 
-            artist = new Artist();
-            artistController.CreateItem(artist);
+            var artist = new Artist() { ID = 1, UserID = 1, User = UserController.Create(context).GetItem(1)};
+            ArtistController.Create(context).CreateItem(artist);
 
-            song = new Song() { ID = 1, ArtistID = artist.ID, Duration = 11, Name = "test", Path = "songs/dansenaandegracht.mp3" };
-            song2 = new Song() { ID = 2, ArtistID = artist.ID, Duration = 11, Name = "test2", Path = "songs/untrago.mp3" };
-            song3 = new Song() { ID = 3, ArtistID = artist.ID, Duration = 11, Name = "test3", Path = "songs/untrago.mp3" };
+            song = new Song()  { ID = 1, ArtistID = artist.ID, Artist = artist, Duration = 11, Name = "test", Path = "songs/dansenaandegracht.mp3" };
+            song2 = new Song() { ID = 2, ArtistID = artist.ID, Artist = artist, Duration = 11, Name = "test2", Path = "songs/untrago.mp3" };
+            song3 = new Song() { ID = 3, ArtistID = artist.ID, Artist = artist, Duration = 11, Name = "test3", Path = "songs/untrago.mp3" };
 
             songController.CreateItem(song);
             songController.CreateItem(song2);
             songController.CreateItem(song3);
 
-            playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
-            playlistSongController.AddSongToPlaylist(song2.ID, playlist.ID);
-            playlistSongController.AddSongToPlaylist(song3.ID, playlist.ID);
-
-            playlistSongs = PlaylistSongController.Create(context).GetSongsFromPlaylist(playlist.ID);
-
+            playlist.PlaylistSongs.Add(playlistSongController.AddSongToPlaylist(playlist, song.ID ));
+            playlist.PlaylistSongs.Add(playlistSongController.AddSongToPlaylist(playlist, song2.ID));
+            playlist.PlaylistSongs.Add(playlistSongController.AddSongToPlaylist(playlist, song3.ID));
+            
             AudioPlayer.Instance.ClearQueue();
         }
 
@@ -75,8 +71,8 @@ namespace Tests.Local
             AudioPlayer.Instance.PlayPlaylist(playlist);
 
             bool areEqual = true;
-            for (int i = 0; i < playlistSongs.Count; i++)
-                if (playlistSongs[i].Song.ID != AudioPlayer.Instance.Queue[i].ID) areEqual = false;
+            for (int i = 0; i < playlist.PlaylistSongs.Count; i++)
+                if (playlist.PlaylistSongs[i].Song.ID != AudioPlayer.Instance.Queue[i].ID) areEqual = false;
 
             Assert.IsTrue(areEqual);
         }
@@ -87,7 +83,7 @@ namespace Tests.Local
             AudioPlayer.Instance.PlayPlaylist(playlist);
             AudioPlayer.Instance.Next();
 
-            Assert.AreEqual(playlistSongs[1].SongID, AudioPlayer.Instance.CurrentSong.ID);
+            Assert.AreEqual(playlist.PlaylistSongs[1].SongID, AudioPlayer.Instance.CurrentSong.ID);
         }
 
         [Test, Category("Local")]
@@ -96,7 +92,7 @@ namespace Tests.Local
             AudioPlayer.Instance.PlayPlaylist(playlist);
             AudioPlayer.Instance.Loop();
 
-            Assert.IsTrue(playlistSongs.Count * 2 == AudioPlayer.Instance.Queue.Count);
+            Assert.IsTrue(playlist.PlaylistSongs.Count * 2 == AudioPlayer.Instance.Queue.Count);
         }
 
         [Test, Category("Local")]
@@ -106,7 +102,7 @@ namespace Tests.Local
             AudioPlayer.Instance.Loop();
             AudioPlayer.Instance.Next();
 
-            Assert.AreEqual(playlistSongs[0].SongID, AudioPlayer.Instance.CurrentSong.ID);
+            Assert.AreEqual(playlist.PlaylistSongs[0].SongID, AudioPlayer.Instance.CurrentSong.ID);
         }
 
         [Test, Category("Local")]
@@ -115,7 +111,7 @@ namespace Tests.Local
             AudioPlayer.Instance.PlayPlaylist(playlist, 0);
             AudioPlayer.Instance.Prev();
             
-            Assert.AreEqual(playlistSongs[0].SongID, AudioPlayer.Instance.CurrentSong.ID);
+            Assert.AreEqual(playlist.PlaylistSongs[0].SongID, AudioPlayer.Instance.CurrentSong.ID);
 
         }
 
@@ -142,20 +138,20 @@ namespace Tests.Local
             AudioPlayer.Instance.PlayPlaylist(playlist);
             AudioPlayer.Instance.Shuffle();
 
-            Assert.IsFalse(AudioPlayer.Instance.Queue[1].Equals(playlistSongController.GetSongsFromPlaylist(playlist.ID)[1].Song));
+            Assert.IsFalse(AudioPlayer.Instance.Queue[1].Equals(playlist.PlaylistSongs[1].Song));
         }
 
         [TearDown, Category("Local")]
         public void TearDown()
         {
-            playlistSongController.RemoveFromPlaylist(song.ID, playlist.ID);
-            playlistSongController.RemoveFromPlaylist(song2.ID, playlist.ID);
-            playlistSongController.RemoveFromPlaylist(song3.ID, playlist.ID);
+            playlistSongController.RemoveFromPlaylist(playlist, song.ID);
+            playlistSongController.RemoveFromPlaylist(playlist, song2.ID);
+            playlistSongController.RemoveFromPlaylist(playlist, song3.ID);
             playlistController.DeleteItem(playlist.ID);
             songController.DeleteItem(song.ID);
             songController.DeleteItem(song2.ID);
             songController.DeleteItem(song3.ID);
-            artistController.DeleteItem(artist.ID);
+            artistController.DeleteItem(song.Artist.ID);
         }
     }
 }

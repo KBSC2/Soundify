@@ -23,7 +23,7 @@ namespace View.DataContexts
             }
         }
 
-        public List<Playlist> PlaylistsSource => PlaylistController.Create(DatabaseContext.Instance).GetActivePlaylists(UserController.CurrentUser.ID);
+        public List<Playlist> PlaylistsSource => PlaylistController.Create(DatabaseContext.Instance).GetActivePlaylists(UserController.CurrentUser);
 
         [NotifyPropertyChangedInvocator]
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)

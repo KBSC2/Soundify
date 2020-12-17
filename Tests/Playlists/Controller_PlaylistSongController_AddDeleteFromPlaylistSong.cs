@@ -40,21 +40,54 @@ namespace Tests.Playlists
         [Test]
         public void PlaylistSongController_AddToPlayList()
         {
-            playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
+            playlistSongController.AddSongToPlaylist(playlist, song.ID);
 
+<<<<<<< HEAD
             Assert.IsTrue(playlistSongController.RowExists(song.ID, playlist.ID));
 
             //Teardown
             playlistSongController.RemoveFromPlaylist(song.ID, playlist.ID);
+=======
+            var existsInPlaylist = playlistSongController.RowExists(playlist, song.ID);
+            Assert.IsTrue(existsInPlaylist);
+
+            //After adding, remove it.
+            playlistSongController.RemoveFromPlaylist(playlist, song.ID);
+
+            //Remove the added song to the playlist at the end of the test.
+            //Extra check to see whether the playlist is removed at the end.
+            existsInPlaylist = playlistSongController.RowExists(playlist, song.ID);
+            Assert.IsFalse(existsInPlaylist);
+>>>>>>> First batch of FK fixes
         }
 
         [Test]
         public void PlaylistSongController_DeleteFromPlayList()
         {
+<<<<<<< HEAD
             playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
             playlistSongController.RemoveFromPlaylist(song.ID, playlist.ID);
 
             Assert.IsFalse(playlistSongController.RowExists(song.ID, playlist.ID));
+=======
+            //Same Concept as in AddToPlaylist, but it's more explicit for deleting from the playlist.
+
+            //Before adding
+            var existsInPlaylist = playlistSongController.RowExists(playlist, song.ID);
+            Assert.IsFalse(existsInPlaylist);
+
+            playlistSongController.AddSongToPlaylist(playlist, song.ID);
+
+            //After adding
+            existsInPlaylist = playlistSongController.RowExists(playlist, song.ID);
+            Assert.IsTrue(existsInPlaylist);
+
+            playlistSongController.RemoveFromPlaylist(playlist, song.ID);
+
+            //After removing
+            existsInPlaylist = playlistSongController.RowExists(playlist, song.ID);
+            Assert.IsFalse(existsInPlaylist);
+>>>>>>> First batch of FK fixes
         }
 
         [Test]
@@ -68,15 +101,16 @@ namespace Tests.Playlists
         [Test]
         public void PlaylistSongController_MoveSongUpDownInPlaylist()
         {
-            playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
-            playlistSongController.AddSongToPlaylist(song2.ID, playlist.ID);
-            int indexSong1 = playlistSongController.GetPlaylistSong(playlist.ID, song.ID).Index;
-            int indexSong2 = playlistSongController.GetPlaylistSong(playlist.ID, song2.ID).Index;
+            playlistSongController.AddSongToPlaylist(playlist, song.ID);
+            playlistSongController.AddSongToPlaylist(playlist, song2.ID);
 
-            playlistSongController.SwapSongs(indexSong1, indexSong2, playlist.ID);
+            int indexSong1 = playlistSongController.GetPlaylistSong(playlist, song.ID).Index;
+            int indexSong2 = playlistSongController.GetPlaylistSong(playlist, song2.ID).Index;
 
-            Assert.AreEqual(playlistSongController.GetPlaylistSong(playlist.ID, song.ID).Index, indexSong2);
-            Assert.AreEqual(playlistSongController.GetPlaylistSong(playlist.ID, song2.ID).Index, indexSong1);
+            playlistSongController.SwapSongs(playlist, indexSong1, indexSong2);
+
+            Assert.AreEqual(playlistSongController.GetPlaylistSong(playlist, song.ID).Index, indexSong2);
+            Assert.AreEqual(playlistSongController.GetPlaylistSong(playlist, song2.ID).Index, indexSong1);
         }
 
         //Everytime you test, remove the added items out of the database.

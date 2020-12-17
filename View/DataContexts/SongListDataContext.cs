@@ -46,14 +46,14 @@ namespace View.DataContexts
                     SongInfoList = SongInfo.ConvertSongListToSongInfo(songController.SearchSongsOnString(SearchDataContext.Instance.SearchTerms.ToList()));
                     break;
                 case ScreenNames.ArtistScreen:
-                    SongInfoList = SongInfo.ConvertSongListToSongInfo(songController.GetList().Where(s => s.Artist.Equals(artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID))).ToList());
+                    SongInfoList = SongInfo.ConvertSongListToSongInfo(songController.GetList().Where(s => s.Artist.Equals(artistController.GetArtistFromUser(UserController.CurrentUser))).ToList());
                     break;
                 case ScreenNames.SongListScreen:
                     if(DataContext.Instance.IsAdmin)
                         SongInfoList = SongInfo.ConvertSongListToSongInfo(songController.SearchSongsOnString(SongListSearchTerms.ToList()));
                     else
                         SongInfoList = SongInfo.ConvertSongListToSongInfo(songController.SearchSongsOnString(SongListSearchTerms.ToList())
-                            .Where(s => s.Artist.Equals(artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID))).ToList());
+                            .Where(s => s.Artist.Equals(artistController.GetArtistFromUser(UserController.CurrentUser))).ToList());
                     break;
                 case ScreenNames.AlbumSongListScreen:
                     SongInfoList = SongInfo.ConvertSongListToSongInfo(
@@ -65,14 +65,14 @@ namespace View.DataContexts
         public List<SongInfo> SongInfoList { get; set; }
 
         public List<Playlist> AllPlaylists => PlaylistController.Create(DatabaseContext.Instance)
-            .GetActivePlaylists(UserController.CurrentUser.ID);
+            .GetActivePlaylists(UserController.CurrentUser);
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             UpdateSongInfoList();
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(""));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

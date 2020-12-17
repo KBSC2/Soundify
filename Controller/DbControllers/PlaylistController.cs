@@ -37,9 +37,9 @@ namespace Controller.DbControllers
          *  @return void
          */
         [HasPermission(Permission = Permissions.PlaylistCreate, MaxValue = Permissions.PlaylistLimit)]
-        public override void CreateItem(Playlist item)
+        public override Playlist CreateItem(Playlist item)
         {
-            base.CreateItem(item);
+            return base.CreateItem(item);
         }
 
         /**
@@ -48,10 +48,10 @@ namespace Controller.DbControllers
          *
          * @return void
          */
-        public virtual void DeactivatePlaylist(int playlistId)
+        public virtual void DeactivatePlaylist(Playlist playlist)
         {
             DateTime dateTime = DateTime.Now;
-            var playlist = GetItem(playlistId);
+            /*var playlist = GetItem(playlistId);*/
             playlist.DeleteDateTime = dateTime.AddDays(1);
             playlist.ActivePlaylist = false;
             UpdateItem(playlist);
@@ -65,8 +65,8 @@ namespace Controller.DbControllers
          */
         public virtual void DeletePlaylistOnDateStamp()
         {
-            GetList().Where(p => p.ActivePlaylist == false && p.DeleteDateTime < DateTime.Now).
-                ToList().ForEach(p => DeleteItem(p.ID));
+            GetFilteredList(p => p.ActivePlaylist == false && p.DeleteDateTime < DateTime.Now)
+                .ToList().ForEach(p => DeleteItem(p.ID));
         }
 
         /**
@@ -76,9 +76,9 @@ namespace Controller.DbControllers
          *
          * @returns List<Playlist> : a list of maximum 8 playlist based on the searchTerms
          */
-        public virtual List<Playlist> SearchPlayListOnString(List<string> searchTerms, int userId)
+        public virtual List<Playlist> SearchPlayListOnString(List<string> searchTerms, User user)
         {
-            return GetActivePlaylists()
+            return GetActivePlaylists(user)
                 .Where(playlist => searchTerms.Any(s => playlist.Name != null && playlist.Name.Contains(s)) ||
                                    searchTerms.Any(
                                        s => playlist.Description != null &&
@@ -89,10 +89,10 @@ namespace Controller.DbControllers
         }
 
        
-        public virtual List<Playlist> GetList(int userId)
+        /*public virtual List<Playlist> GetList(int userId)
         {
             return base.GetFilteredList(x => x.UserID == userId);
-        }
+        }*/
 
         /**
          * Gets a list of active playlists
@@ -101,9 +101,13 @@ namespace Controller.DbControllers
          *
          * @return A list of active playlist
          */
-        public virtual List<Playlist> GetActivePlaylists(int userId)
+        public virtual List<Playlist> GetActivePlaylists(User user)
         {
-            return GetList(userId).Where(x => x.ActivePlaylist).ToList();
+            if (user == null)
+                return GetActivePlaylists();
+
+            return user.Playlists.Where(x => x.ActivePlaylist).ToList();
+            /*return GetList(userId).Where(x => x.ActivePlaylist).ToList();*/
         }
 
         /**

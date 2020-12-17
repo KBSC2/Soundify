@@ -49,7 +49,7 @@ namespace View.DataContexts
 
         public string SongNameGiving => IsAdmin ? "All Songs" : "Own Songs";
 
-        public string DisplayName => IsArtist ? ArtistController.Create(DatabaseContext.Instance).GetArtistFromUserId(CurrentUser.ID).ArtistName : CurrentUser?.Username;
+        public string DisplayName => IsArtist ? ArtistController.Create(DatabaseContext.Instance).GetArtistFromUser(CurrentUser).ArtistName : CurrentUser?.Username;
 
         public bool IsLooping => AudioPlayer.Instance.Looping;
         public bool IsShuffling => AudioPlayer.Instance.Shuffling;

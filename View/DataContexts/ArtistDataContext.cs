@@ -31,9 +31,12 @@ namespace View.DataContexts
 
         public ArtistDataContext()
         {
-            ArtistHasSongPending = SongController.Create(DatabaseContext.Instance)
+            ArtistHasSongPending = artistController.GetArtistFromUser(UserController.CurrentUser).Singles
+                .Count(x => x.Status == SongStatus.AwaitingApproval) > 0;
+
+            /*ArtistHasSongPending = SongController.Create(DatabaseContext.Instance)
                 .GetList().Where(s => s.ArtistID == artistController.GetArtistIdFromUserId(UserController.CurrentUser.ID) && s.Status == SongStatus.AwaitingApproval)
-                .ToList().Count > 0;
+                .ToList().Count > 0;*/
 
             StatusMessage = ArtistHasSongPending ? "Awaiting Approval" : "Waiting for song";
 

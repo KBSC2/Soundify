@@ -25,7 +25,7 @@ namespace Tests.Requests
         [Test]
         public void DeclineUserAsArtist()
         {
-            requestController.DeclineUser(testRequest.ID);
+            requestController.DeclineUser(testRequest);
 
             Assert.False(requestController.GetList().Contains(testRequest));
             Assert.False(UserController.Create(context).GetItem(testRequest.UserID).RequestedArtist);

@@ -17,7 +17,7 @@ namespace View.DataContexts
 
         public ShopDataContext()
         {
-            ShopItems = ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser.ID);
+            ShopItems = ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser);
             DataContext.Instance.Timer.Elapsed += OnTimedEvent;
         }
         

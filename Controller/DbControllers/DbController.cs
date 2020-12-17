@@ -34,16 +34,19 @@ namespace Controller
         }
 
         // CREATE
-        public virtual void CreateItem(T item)
+        public virtual T CreateItem(T item)
         {
             Set.Add(item);
 
             // If the database is a mock one, do not use the context (not required)
-            if (!RealDatabase()) return;
+            if (RealDatabase())
+            {
+                Context.Add(item);
+                Context.Entry(item).State = EntityState.Added;
+                Context.SaveChanges();
+            }
 
-            Context.Add(item);
-            Context.Entry(item).State = EntityState.Added;
-            Context.SaveChanges();
+            return item;
         }
 
         // UPDATE

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -34,13 +34,13 @@ namespace Controller.DbControllers
         public void UploadAlbum(ObservableCollection<AlbumSongInfo> albumSongInfos, Uri image, string title,
             string description, string artistName, string genre)
         {
-            var artistId = ArtistController.Create(Context).GetArtistIdFromUserId(UserController.CurrentUser.ID);
+            var artist = ArtistController.Create(Context).GetArtistFromUser(UserController.CurrentUser);
 
-            if (artistId == null)
+            if (artist == null)
                 return;
 
 
-            var album = new Album {AlbumName = title, Description = description, ArtistID = artistId.Value, Genre = genre};
+            var album = new Album {AlbumName = title, Description = description, ArtistID = artist.ID, Genre = genre};
             var requestController = RequestController.Create(DatabaseContext.Instance);
 
             CreateItem(album);
@@ -49,7 +49,7 @@ namespace Controller.DbControllers
                 var song = new Song
                 {
                     Name = albumSongInfo.Title,
-                    ArtistID = (int) artistId,
+                    ArtistID = artist.ID,
                     Duration = albumSongInfo.Duration.TotalSeconds,
                     Path = albumSongInfo.File.Name,
                     PathToImage = image != null ? "images/" + image.LocalPath.Split("\\").Last() : null,

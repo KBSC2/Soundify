@@ -11,8 +11,6 @@ namespace Controller.DbControllers
     public class PlaylistSongController
     {
         private IDatabaseContext context;
-        private SongController songController;
-        private PlaylistController playlistController;
 
         private DbSet<PlaylistSong> set;
 
@@ -37,8 +35,6 @@ namespace Controller.DbControllers
         {
             this.context = context;
             set = context.PlaylistSongs;
-            songController = SongController.Create(context); 
-            playlistController = PlaylistController.Create(context);
         }
 
         /**
@@ -50,29 +46,30 @@ namespace Controller.DbControllers
          *
          * @return void
          */
-        public void AddSongToPlaylist(int songID, int playlistID)
+        public PlaylistSong AddSongToPlaylist(Playlist playlist, int songId)
         {
-            ReorderSongIndexes(playlistID);
+            ReorderSongIndexes(playlist);
 
-            if (GetSongsFromPlaylist(playlistID).Any(x => x.SongID == songID))
-                return;
+            if (RowExists(playlist, songId))
+                return null;
 
             var playlistSong = new PlaylistSong()
             {
-                PlaylistID = playlistID, 
-                SongID = songID, 
+                PlaylistID = playlist.ID, 
+                SongID = songId, 
                 Index = set.Count(), 
-                Song = songController.GetItem(songID), 
-                Playlist = playlistController.GetItem(playlistID), 
                 Added = DateTime.Now
             };
 
             set.Add(playlistSong);
 
-            if (!RealDatabase()) return;
+            if (RealDatabase())
+            {
+                context.Entry(playlistSong).State = EntityState.Added;
+                context.SaveChanges();
+            }
 
-            context.Entry(playlistSong).State = EntityState.Added;
-            context.SaveChanges();
+            return playlistSong;
         }
 
         /**
@@ -82,10 +79,9 @@ namespace Controller.DbControllers
          *
          * @return void
          */
-        public void ReorderSongIndexes(int playlistId)
+        public void ReorderSongIndexes(Playlist playlist)
         {
-            set.AsEnumerable()
-                .Where(x => x.PlaylistID == playlistId)
+            playlist.PlaylistSongs?.AsEnumerable()
                 .OrderBy(x => x.Index)
                 .Select((p,i) => new {song = p, index = i})
                 .Where(p => p.song.Index != p.index).ToList()
@@ -106,12 +102,12 @@ namespace Controller.DbControllers
          *
          * @return void
          */
-        public void RemoveFromPlaylist(int songId, int playlistId)
+        public void RemoveFromPlaylist(Playlist playlist, int songId)
         {
-            if (!RowExists(songId, playlistId))
+            if (!RowExists(playlist, songId))
                 throw new ArgumentOutOfRangeException();
 
-            var playlistSong = GetPlaylistSong(playlistId, songId);
+            var playlistSong = GetPlaylistSong(playlist, songId);
 
             set.Remove(playlistSong);
 
@@ -121,7 +117,7 @@ namespace Controller.DbControllers
                 context.SaveChanges();
             }
 
-            ReorderSongIndexes(playlistId);
+            ReorderSongIndexes(playlist);
         }
 
         /**
@@ -132,11 +128,13 @@ namespace Controller.DbControllers
          *
          * @return bool : Returns if the row exists or not
          */
-        public bool RowExists(int songId, int playlistId)
+        public bool RowExists(Playlist playlist, int songId)
         {
-            return set
+            return playlist.PlaylistSongs.Any(s => s.SongID == songId);
+
+            /*return set
                 .Where(p => p.PlaylistID == playlistId)
-                .Any(s => s.SongID == songId);
+                .Any(s => s.SongID == songId);*/
         }
 
 
@@ -147,7 +145,7 @@ namespace Controller.DbControllers
          *
          * @return A list of songs contained in the designated playlist
          */
-        public List<PlaylistSong> GetSongsFromPlaylist(int playlistId)
+        /*public List<PlaylistSong> GetSongsFromPlaylist(int playlistId)
         {
             ReorderSongIndexes(playlistId);
             var songs = set.Where(ps => ps.PlaylistID == playlistId).OrderBy(ps => ps.Index).ToList();
@@ -158,7 +156,7 @@ namespace Controller.DbControllers
             });
 
             return songs;
-        }
+        }*/
 
         /**
          * gets a specific song from a given playlist
@@ -168,10 +166,11 @@ namespace Controller.DbControllers
          *
          * @return playlistSong : a single song from a the designated playlist
          */
-        public PlaylistSong GetPlaylistSong(int playlistId, int songId)
+        public PlaylistSong GetPlaylistSong(Playlist playlist, int songId)
         {
-            return GetSongsFromPlaylist(playlistId)
-                .First(s => s.SongID == songId);
+            return playlist.PlaylistSongs.First(x => x.SongID == songId);
+            /*return GetSongsFromPlaylist(playlistId)
+                .First(s => s.SongID == songId);*/
         }
 
         /**
@@ -182,10 +181,11 @@ namespace Controller.DbControllers
          *
          * @return A single song based on index from a the designated playlist
          */
-        public PlaylistSong GetPlaylistSongFromIndex(int playlistId, int index)
+        public PlaylistSong GetPlaylistSongFromIndex(Playlist playlist, int index)
         {
-            return GetSongsFromPlaylist(playlistId)
-                .First(s => s.Index == index);
+            return playlist.PlaylistSongs.First(x => x.Index == index);
+            /*return GetSongsFromPlaylist(playlistId)
+                .First(s => s.Index == index);*/
         }
 
         /**
@@ -215,10 +215,10 @@ namespace Controller.DbControllers
             return context is DatabaseContext;
         }
 
-        public void SwapSongs(int indexOne, int indexTwo, int playlistID)
+        public void SwapSongs(Playlist playlist, int indexOne, int indexTwo)
         {
-            var songOne = GetPlaylistSongFromIndex(playlistID, indexOne);
-            var songTwo = GetPlaylistSongFromIndex(playlistID, indexTwo);
+            var songOne = GetPlaylistSongFromIndex(playlist, indexOne);
+            var songTwo = GetPlaylistSongFromIndex(playlist, indexTwo);
 
             songOne.Index = indexTwo;
             songTwo.Index = indexOne;

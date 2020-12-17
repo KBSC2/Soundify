@@ -9,8 +9,6 @@ namespace Controller.DbControllers
 {
     public class UserShopItemsController
     {
-        private static UserShopItemsController instance;
-
         private IDatabaseContext Context { get; set; }
         private DbSet<UserShopItems> Set { get; set; }
 
@@ -25,9 +23,7 @@ namespace Controller.DbControllers
          */
         public static UserShopItemsController Create(IDatabaseContext context)
         {
-            if (instance == null)
-                instance = ProxyController.AddToProxy<UserShopItemsController>(new object[] {context}, context);
-            return instance;
+            return ProxyController.AddToProxy<UserShopItemsController>(new object[] {context}, context);
         }
 
         protected UserShopItemsController(IDatabaseContext context)
@@ -36,20 +32,20 @@ namespace Controller.DbControllers
             Set = Context.UserShopItems;
         }
 
-        public List<UserShopItems> GetList()
+        /*public List<UserShopItems> GetList()
         {
-            var userController = UserController.Create(Context);
-            var shopItemController = ShopItemController.Create(Context);
+            *//*var userController = UserController.Create(Context);
+            var shopItemController = ShopItemController.Create(Context);*/
 
-          /*  var result = Set.ToList();
+            /*var result = Set.ToList();
             result.ForEach(x =>
             {
                 x.User = userController.GetItem(x.UserID);
                 x.ShopItem = shopItemController.GetItem(x.ShopItemID);
             });
-            return result;*/
-          return Set.ToList();
-        }
+            return result;*//*
+            return Set.ToList();
+        }*/
 
         public void CreateItem(UserShopItems item)
         {
