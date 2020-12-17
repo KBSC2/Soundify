@@ -26,11 +26,10 @@
 
 
                 <ResourceDictionary>
-                    <Brush x:Key="BackgroundColor">#FF09132E</Brush>
-                    <Brush x:Key="Background2Color">#FF112355</Brush>
-                    <Brush x:Key="Background3Color">#FF254DBB</Brush>
-                    <Brush x:Key="Background4Color">#FF445399</Brush>
-                    <Brush x:Key="HighlighBlue">#FF2D7AC8</Brush>
+                    <Brush x:Key="MainBackgroundColor">#FF09132E</Brush>
+                    <Brush x:Key="UnderBackgroundColor">#FF19203B</Brush>
+                    <Brush x:Key="LeftBackgroundColor">#FF2F406D</Brush>
+                    <Brush x:Key="ButtonBackgroundColor">#4C707070</Brush>
                     <Brush x:Key="Orange">#FFF78D0E</Brush>
                     <Brush x:Key="Red">#FFFF0000</Brush>
                     <Brush x:Key="InputBackground">#FF464A55</Brush>

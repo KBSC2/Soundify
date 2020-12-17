@@ -20,8 +20,8 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Border BorderBrush="{DynamicResource BackgroundColor}" BorderThickness="20" CornerRadius="20">
-        <Grid Background="{DynamicResource BackgroundColor}" KeyDown="Register_On_Enter_Key" MouseDown="Window_MouseDown">
+    <Border BorderBrush="{DynamicResource MainBackgroundColor}" BorderThickness="20" CornerRadius="20">
+        <Grid Background="{DynamicResource MainBackgroundColor}" KeyDown="Register_On_Enter_Key" MouseDown="Window_MouseDown">
             <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,105,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" Height="79"/>
             <Label Content="Register" HorizontalAlignment="Center" Margin="0,172,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
             <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="UsernameRegister" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,259,0,0" Tag="      Username" TextWrapping="NoWrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="{DynamicResource InputBackground}" Foreground="White" FontWeight="Bold">

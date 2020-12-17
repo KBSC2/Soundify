@@ -12,7 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Coins.png" />
     <None Remove="Assets\cross.png" />
+    <None Remove="Assets\down.png" />
     <None Remove="Assets\exit.png" />
     <None Remove="Assets\loop.png" />
     <None Remove="Assets\minimize.png" />
@@ -34,6 +36,7 @@
     <None Remove="Assets\soundifySmall.png" />
     <None Remove="Assets\SoundMuted.png" />
     <None Remove="Assets\tick.png" />
+    <None Remove="Assets\up.png" />
     <None Remove="Assets\whiteUpload.png" />
     <None Remove="dansenaandegracht.mp3" />
     <None Remove="dansenaandegracht2.mp3" />
@@ -52,7 +55,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Coins.png" />
     <Resource Include="Assets\cross.png" />
+    <Resource Include="Assets\down.png" />
     <Resource Include="Assets\exit.png" />
     <Resource Include="Assets\loop.png" />
     <Resource Include="Assets\minimize.png" />
@@ -76,6 +81,7 @@
     <Resource Include="Assets\soundifySmall.png" />
     <Resource Include="Assets\SoundMuted.png" />
     <Resource Include="Assets\tick.png" />
+    <Resource Include="Assets\up.png" />
     <Resource Include="Assets\whiteUpload.png" />
   </ItemGroup>
 

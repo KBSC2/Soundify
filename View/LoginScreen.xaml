@@ -15,9 +15,8 @@
         AllowsTransparency="True"
         Background="Transparent"
         Icon="Assets\soundifysmall.ico">
-    <Border BorderBrush="{DynamicResource BackgroundColor}" BorderThickness="20" CornerRadius="20">
-        <Grid Background="{DynamicResource BackgroundColor}" KeyDown="Login_On_Enter_Key" MouseDown="Window_MouseDown">
-
+    <Border BorderBrush="{DynamicResource MainBackgroundColor}" BorderThickness="20" CornerRadius="20">
+        <Grid Background="{DynamicResource MainBackgroundColor}" KeyDown="Login_On_Enter_Key" MouseDown="Window_MouseDown">
             <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,123,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50"/>
             <Label Content="Welcome" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
             <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="UsernameLogin" HorizontalAlignment="Center" Margin="0,290,0,0" Tag="Email" TextWrapping="NoWrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="{DynamicResource InputBackground}" Foreground="White" FontWeight="Bold">

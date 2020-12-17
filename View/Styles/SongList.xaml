@@ -9,9 +9,14 @@
             <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="BorderBrush" Value="Transparent" />
-                <Setter Property="Foreground" Value="White" />
                 <Setter Property="FontWeight" Value="Bold" />
-                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                            <Label Content="{TemplateBinding Content}" Padding="5" Width="{TemplateBinding Width}" BorderBrush="{DynamicResource InputBackground}" BorderThickness="0,0,0,4" Foreground="White" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style>
         </DataTemplate.Resources>
         <ListView x:Name="SongListView"

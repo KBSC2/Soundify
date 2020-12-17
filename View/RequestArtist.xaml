@@ -16,8 +16,8 @@
     <Window.Resources>
         <ResourceDictionary Source="Styles/Watermark.xaml"/>
     </Window.Resources>
-    <Border BorderBrush="{DynamicResource BackgroundColor}" BorderThickness="20" CornerRadius="20">
-        <Grid Background="{DynamicResource BackgroundColor}" KeyDown="Confirm_On_Enter_Key">
+    <Border BorderBrush="{DynamicResource MainBackgroundColor}" BorderThickness="20" CornerRadius="20">
+        <Grid Background="{DynamicResource MainBackgroundColor}" KeyDown="Confirm_On_Enter_Key">
             <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,97,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" Height="79"/>
             <Label Content="Fill in your information" HorizontalAlignment="Center" Margin="0,164,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
             <Label x:Name="Error" Content="" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,525,0,0" VerticalAlignment="Top" Foreground="{DynamicResource Red}" FontSize="15" Height="57" Width="597" RenderTransformOrigin="0.497,0.508"/>
