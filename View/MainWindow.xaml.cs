@@ -80,11 +80,13 @@ namespace Soundify
             SetScreen(ScreenNames.HomeScreen);
             MenuItemRoutedEvent += OnMenuItemRoutedEvent;
 
-            /*if (UserController.CurrentUser == null)
+            PlaylistController.Create(DatabaseContext.Instance).DeleteItem(144);
+
+            if (UserController.CurrentUser == null)
             {
                 InstanceLoginScreen.Show();
                 InstanceMainWindow.Hide();
-            }*/
+            }
 
             PermissionController.NoRightsEvent += ShowNoRights;
         }

@@ -59,7 +59,7 @@ namespace Model.Migrations
                 column: "ArtistID",
                 principalTable: "Artists",
                 principalColumn: "ID",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Users_Roles_RoleID",
@@ -67,7 +67,7 @@ namespace Model.Migrations
                 column: "RoleID",
                 principalTable: "Roles",
                 principalColumn: "ID",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
