@@ -208,7 +208,14 @@ namespace Controller.DbControllers
             UpdateItem(user);
         }
 
-
+        /**
+          * Updates the role of the given user's account to the give role
+          *
+          * @param userID The ID of the user whichof the role needs to be changed
+          * @param roleID The ID of what role the user needs to be
+          *
+          * @return void
+          */
         public void UpdateUserRole(int userID, int roleID)
         {
             User user = GetItem(userID);
