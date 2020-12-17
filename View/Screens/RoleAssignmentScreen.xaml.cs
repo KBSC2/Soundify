@@ -39,6 +39,7 @@ namespace View.Screens
                 var Users = UserController.Create(DatabaseContext.Instance).GetList()
                     .Where(u => u.Username.ToLower().Contains(textBox.Text.ToLower()));
                 RoleAssignmentDataContext.Instance.Users = new List<User>(Users);
+                RoleAssignmentDataContext.Instance.Users.Remove(UserController.CurrentUser);
                 RoleAssignmentDataContext.Instance.OnPropertyChanged();
             }
         }
