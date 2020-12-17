@@ -23,7 +23,7 @@ namespace View.Screens
 
             var index = AudioPlayer.Instance.Queue.IndexOf(songInfo.Song);
 
-            AudioPlayer.Instance.PlayPlaylist(MainWindow.CurrentPlayList, index-1);
+            AudioPlayer.Instance.PlayQueue(index-1);
             QueueDataContext.Instance.OnPropertyChanged();
         }
 

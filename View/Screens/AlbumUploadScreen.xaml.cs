@@ -87,6 +87,9 @@ namespace View.Screens
         {
             var titleTextBox = (TextBox)((Button)sender).Tag;
             var dataGrid = (Grid)((Button)sender).CommandParameter;
+            var genre = dataGrid.FindName("Genre") != null
+                ? ((TextBox)dataGrid.FindName("Genre"))?.Text
+                : null;
             var description = dataGrid.FindName("Description") != null
                 ? ((TextBox) dataGrid.FindName("Description"))?.Text
                 : null;
@@ -108,7 +111,7 @@ namespace View.Screens
             FileTransfer.Create(DatabaseContext.Instance).UploadFile(image?.LocalPath, "images/" +
                 image?.LocalPath.Split("\\").Last());
 
-            AlbumController.Create(DatabaseContext.Instance).UploadAlbum(AlbumUploadDataContext.Instance.AlbumSongInfos, image, titleTextBox.Text, description, artistName);
+            AlbumController.Create(DatabaseContext.Instance).UploadAlbum(AlbumUploadDataContext.Instance.AlbumSongInfos, image, titleTextBox.Text, description, artistName,genre);
             AlbumUploadDataContext.Instance.AlbumFiles = null;
             AlbumUploadDataContext.Instance.AlbumSongInfos = null;
             AlbumUploadDataContext.Instance.AreSongsSelected = false;
