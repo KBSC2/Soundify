@@ -11,11 +11,13 @@ namespace Tests.Requests
         private MockDatabaseContext context;
         private RequestController requestController;
         private Request testRequest;
+        private ArtistController artistController;
 
         [SetUp]
         public void SetUp()
         {
             context = new MockDatabaseContext();
+            artistController = ArtistController.Create(context);
             requestController = RequestController.Create(context);
             testRequest = new Request()
                 {ID = 1, UserID = 1, ArtistName = "TestArtist", ArtistReason = "Just because I'm testing"};
@@ -28,10 +30,7 @@ namespace Tests.Requests
             requestController.ApproveUser(testRequest.ID);
 
             Assert.False(requestController.GetList().Contains(testRequest));
-
-            var artistId = ArtistController.Create(context).GetArtistIdFromUserId(testRequest.UserID);
-
-            Assert.True(artistId.HasValue);
+            Assert.True(artistController.GetArtistIdFromUserId(testRequest.UserID).HasValue);
         }
 
         [TearDown]
@@ -39,9 +38,9 @@ namespace Tests.Requests
         {
             requestController.DeleteItem(testRequest.ID);
 
-            var artistId = ArtistController.Create(context).GetArtistIdFromUserId(testRequest.UserID);
+            var artistId = artistController.GetArtistIdFromUserId(testRequest.UserID);
             if(artistId != null)
-                ArtistController.Create(context).DeleteItem((int)artistId);
+                artistController.DeleteItem((int)artistId);
         }
     }
 }

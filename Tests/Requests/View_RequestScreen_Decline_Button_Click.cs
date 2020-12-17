@@ -27,7 +27,7 @@ namespace Tests.Requests
         {
             requestController.DeclineUser(testRequest.ID);
 
-            Assert.False(RequestController.Create(context).GetList().Contains(testRequest));
+            Assert.False(requestController.GetList().Contains(testRequest));
             Assert.False(UserController.Create(context).GetItem(testRequest.UserID).RequestedArtist);
         }
 

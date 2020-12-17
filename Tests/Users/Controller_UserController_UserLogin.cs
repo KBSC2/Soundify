@@ -28,16 +28,14 @@ namespace Tests.Users
         [TestCase("test2", "Sterk_W@chtw00rd2", ExpectedResult = LoginResults.UserNotActive)]           // Account from username
         public LoginResults UserController_SignupResults(string emailOrUsername, string password)
         {
-            var result = controller.UserLogin(emailOrUsername, password);
-            return result;
+            return controller.UserLogin(emailOrUsername, password);
         }
 
         [Test]
         public void UserController_CurrentUser_LoggedIn()
         {
             var email = "test@gmail.com";
-            var result = controller.UserLogin(email, "Sterk_W@chtw00rd2");
-            if (result == LoginResults.Success) 
+            if (controller.UserLogin(email, "Sterk_W@chtw00rd2") == LoginResults.Success) 
                 UserController.CurrentUser = controller.GetUserFromEmailOrUsername(email);
             Assert.AreEqual(UserController.CurrentUser, controller.GetUserFromEmailOrUsername(email));
         }

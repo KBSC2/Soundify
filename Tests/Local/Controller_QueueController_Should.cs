@@ -13,10 +13,12 @@ namespace Tests.Local
     public class Controller_QueueController_Should
     {
         private MockDatabaseContext context;
+        private Artist artist;
         private Song song;
         private Song song2;
         private SongController songController;
         private List<Song> queue;
+        private ArtistController artistController;
 
         [SetUp]
         public void SetUp()
@@ -26,9 +28,10 @@ namespace Tests.Local
             context = new MockDatabaseContext();
             AudioPlayer.Create(context);
             songController = SongController.Create(context);
+            artistController = ArtistController.Create(context);
 
-            Artist artist = new Artist();
-            ArtistController.Create(context).CreateItem(artist);
+            artist = new Artist();
+            artistController.CreateItem(artist);
 
             song = new Song() { ID = 1, ArtistID = artist.ID, Duration = 11, Name = "test", Path = "songs/dansenaandegracht.mp3" };
             song2 = new Song() { ID = 2, ArtistID = artist.ID, Duration = 11, Name = "test2", Path = "songs/untrago.mp3" };
@@ -69,6 +72,7 @@ namespace Tests.Local
         {
             songController.DeleteItem(song.ID);
             songController.DeleteItem(song2.ID);
+            artistController.DeleteItem(artist.ID);
         }
     }
 }

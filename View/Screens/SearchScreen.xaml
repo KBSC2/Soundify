@@ -6,6 +6,7 @@
     xmlns:View="clr-namespace:View"
     xmlns:local="clr-namespace:View.Screens">
     <DataTemplate x:Key="SearchScreen">
+        <!-- Start search screen -->
         <Grid DataContext="{x:Static DataContexts:SearchDataContext.Instance}" ShowGridLines="False">
             <Grid.Resources>
                 <CollectionViewSource x:Key="AllPlaylists" Source="{Binding AllPlaylists}"></CollectionViewSource>

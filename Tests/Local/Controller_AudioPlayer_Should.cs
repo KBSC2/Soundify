@@ -16,10 +16,12 @@ namespace Tests.Local
     {
 
         private MockDatabaseContext context;
+        private Artist artist;
         private Song song;
         private Song song2;
         private Song song3;
         private Playlist playlist;
+        private ArtistController artistController;
         private SongController songController;
         private PlaylistSongController playlistSongController;
         private PlaylistController playlistController;
@@ -35,12 +37,13 @@ namespace Tests.Local
             songController = SongController.Create(context);
             playlistSongController = PlaylistSongController.Create(context);
             playlistController = PlaylistController.Create(context);
+            artistController = ArtistController.Create(context);
 
             playlist = new Playlist() { Name = "Test", ActivePlaylist = true, CreationDate = DateTime.Now };
             playlistController.CreateItem(playlist);
 
-            Artist artist = new Artist();
-            ArtistController.Create(context).CreateItem(artist);
+            artist = new Artist();
+            artistController.CreateItem(artist);
 
             song = new Song() { ID = 1, ArtistID = artist.ID, Duration = 11, Name = "test", Path = "songs/dansenaandegracht.mp3" };
             song2 = new Song() { ID = 2, ArtistID = artist.ID, Duration = 11, Name = "test2", Path = "songs/untrago.mp3" };
@@ -152,6 +155,7 @@ namespace Tests.Local
             songController.DeleteItem(song.ID);
             songController.DeleteItem(song2.ID);
             songController.DeleteItem(song3.ID);
+            artistController.DeleteItem(artist.ID);
         }
     }
 }
