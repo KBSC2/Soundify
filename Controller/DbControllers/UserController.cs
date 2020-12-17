@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Controller.Proxy;
 using Model.Database.Contexts;
@@ -35,7 +34,7 @@ namespace Controller.DbControllers
          *
          * @return User object if found, otherwise null
          */
-        public virtual User GetUserFromEmailOrUsername(string emailOrUsername)
+        public User GetUserFromEmailOrUsername(string emailOrUsername)
         {
             return this.GetList().FirstOrDefault(x => x.Email == emailOrUsername || x.Username == emailOrUsername);
         }
@@ -48,7 +47,7 @@ namespace Controller.DbControllers
          *
          * @return LoginResult : Result of the user login
          */
-        public virtual LoginResults UserLogin(string emailOrUsername, string password)
+        public LoginResults UserLogin(string emailOrUsername, string password)
         {
             var user = GetUserFromEmailOrUsername(emailOrUsername);
             if (user == null)
@@ -74,7 +73,7 @@ namespace Controller.DbControllers
          *
          * @return RegistrationResult : Result of the user account creation
          */
-        public virtual RegistrationResults CreateAccount(User user, string password, string passwordRepeat)
+        public RegistrationResults CreateAccount(User user, string password, string passwordRepeat)
         {
             if (user.Username == "")
                 return RegistrationResults.NoName;
@@ -121,10 +120,10 @@ namespace Controller.DbControllers
             var max = GetPermissionValue(user, maxValue);
             
 
-            Dictionary<Permissions, int> maxValues = new Dictionary<Permissions, int>()
+            var maxValues = new Dictionary<Permissions, int>()
             {
                 { Permissions.PlaylistLimit, PlaylistController.Create(Context).GetActivePlaylists(user).Count },
-                { Permissions.PlaylistSongsLimit, 3} //implement current playlist max songs
+                { Permissions.PlaylistSongsLimit, 3} //TODO: implement current playlist max songs
             };
 
             return max > maxValues[maxValue];

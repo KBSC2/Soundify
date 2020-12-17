@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows.Media.Imaging;
 using Controller.DbControllers;
 using Model.Annotations;
 using Model.Database.Contexts;
-using Model.DbModels;
 using TagLib;
 using View.ListItems;
 
@@ -20,15 +16,7 @@ namespace View.DataContexts
 
         private static AlbumUploadDataContext instance;
 
-        public static AlbumUploadDataContext Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new AlbumUploadDataContext();
-                return instance;
-            }
-        }
+        public static AlbumUploadDataContext Instance => instance ??= new AlbumUploadDataContext();
 
         public List<TagLib.File> AlbumFiles { get; set; } = new List<File>();
 
@@ -39,9 +27,7 @@ namespace View.DataContexts
         public string StatusMessage { get; set; }
 
         
-        public string ArtistName => ArtistController.Create(DatabaseContext.Instance)
-            .GetList().FirstOrDefault(a => a.UserID == UserController.CurrentUser.ID)
-            ?.ArtistName;
+        public string ArtistName => ArtistController.Create(DatabaseContext.Instance).GetArtistFromUser(UserController.CurrentUser)?.ArtistName;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

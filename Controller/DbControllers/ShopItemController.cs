@@ -17,18 +17,31 @@ namespace Controller.DbControllers
         {
         }
 
+        /**
+         * Get all shopitems from the user, and set all variables specific for the user
+         *
+         * @param user The user to get the shopitems from
+         *
+         * @return List<ShopItem> : All user's shopitems
+         */
         public List<ShopItem> GetList(User user)
         {
             var items = GetList();
             items.ForEach(x =>
             {
-                x.Bought = user.UserShopItems.Select(x => x.ShopItem).ToArray().Contains(x);
+                x.Bought = user.UserShopItems.Select(y => y.ShopItem).ToArray().Contains(x);
                 x.Purchasable = user.Coins >= x.Price;
                 x.ImagePath ??= "../Assets/NoImage.png";
             });
             return items;
         }
 
+        /**
+         * Buy a shopitem for the user
+         *
+         * @param user The user to buy the item for
+         * @param shopItem The shopitem to buy
+         */
         public void BuyItem(User user, ShopItem shopItem)
         {
             if (user.Coins < shopItem.Price) return;

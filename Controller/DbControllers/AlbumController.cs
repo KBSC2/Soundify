@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Castle.Core.Internal;
 using Controller.Proxy;
-using Microsoft.EntityFrameworkCore;
 using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
@@ -31,6 +30,7 @@ namespace Controller.DbControllers
         {
         }
 
+        //TODO: Documenteer deze functie @Sander
         public void UploadAlbum(ObservableCollection<AlbumSongInfo> albumSongInfos, Uri image, string title,
             string description, string artistName, string genre)
         {
@@ -39,11 +39,9 @@ namespace Controller.DbControllers
             if (artist == null)
                 return;
 
+            CreateItem(new Album 
+                { AlbumName = title, Description = description, ArtistID = artist.ID, Genre = genre });
 
-            var album = new Album {AlbumName = title, Description = description, ArtistID = artist.ID, Genre = genre};
-            var requestController = RequestController.Create(DatabaseContext.Instance);
-
-            CreateItem(album);
             foreach (var albumSongInfo in albumSongInfos)
             {
                 var song = new Song
@@ -67,13 +65,14 @@ namespace Controller.DbControllers
                     SongID = song.ID
                 };
 
-                requestController.CreateItem(request);
+                RequestController.Create(DatabaseContext.Instance).CreateItem(request);
             }
 
             if (!RealDatabase()) return;
             Context.SaveChanges();
         }
 
+        //TODO: @Sander, deze moet ook nog documentatie
         public List<Album> SearchAlbumListOnString(List<string> searchTerms)
         {
             return GetList()

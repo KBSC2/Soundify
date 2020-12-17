@@ -29,7 +29,17 @@ namespace Controller.DbControllers
         protected RolePermissionsController(IDatabaseContext context)
         {
             this.Context = context;
-            Set = Context.RolePermissions;
+            this.Set = Context.RolePermissions;
+        }
+
+        /**
+         * Get all RolePermissions from the table
+         *
+         * @return List<RolePermission> : All RolePermissions from the table
+         */
+        public List<RolePermissions> GetList()
+        {
+            return Set.ToList();
         }
 
         /**
@@ -53,16 +63,6 @@ namespace Controller.DbControllers
             });
 
             return result;
-           /* var roleController = RoleController.Create(Context);
-            var permissionController = PermissionController.Create(Context);
-
-            var result = Set.Where(x => roleIDs.Contains(x.RoleID)).ToList();
-            result.ForEach(x =>
-            {
-                x.Permission = permissionController.GetItem(x.PermissionID);
-                x.Role = roleController.GetItem(x.RoleID);
-            });
-            return result;*/
         }
 
         /**
@@ -100,6 +100,13 @@ namespace Controller.DbControllers
                 .Max(x => x.Value);
         }
 
+        /**
+         * Get all the user roles, add role 1 by default
+         *
+         * @param user The user to get the roles from
+         *
+         * @return List<Role> List of the user's roles
+         */
         private List<Role> GetUserRoles(User user)
         {
             List<Role> roles = new List<Role>();

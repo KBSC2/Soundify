@@ -32,32 +32,36 @@ namespace Controller.DbControllers
             Set = Context.UserShopItems;
         }
 
-        /*public List<UserShopItems> GetList()
+        /**
+         * Get all usershopitems from the tabel
+         *
+         * @return List<UserShopItems> : All the UserShopItems from the table
+         */
+        public List<UserShopItems> GetList()
         {
-            *//*var userController = UserController.Create(Context);
-            var shopItemController = ShopItemController.Create(Context);*/
-
-            /*var result = Set.ToList();
-            result.ForEach(x =>
-            {
-                x.User = userController.GetItem(x.UserID);
-                x.ShopItem = shopItemController.GetItem(x.ShopItemID);
-            });
-            return result;*//*
             return Set.ToList();
-        }*/
+        }
 
-        public void CreateItem(UserShopItems item)
+        /**
+         * Insert an item into the table
+         *
+         * @param item The item to insert
+         *
+         * @return UserShopItems The created item
+         */
+        public UserShopItems CreateItem(UserShopItems item)
         {
             item.User = null;
             item.ShopItem = null;
 
             Set.Add(item);
 
-            if (!RealDatabase()) return;
+            if (RealDatabase()) {
+                Context.Entry(item).State = EntityState.Added;
+                Context.SaveChanges();
+            }
 
-            Context.Entry(item).State = EntityState.Added;
-            Context.SaveChanges();
+            return item;
         }
 
         /**
@@ -69,17 +73,5 @@ namespace Controller.DbControllers
         {
             return Context is DatabaseContext;
         }
-/*
-        /***//*
-        * Gets all the shopItems for a user
-        *
-        * @param userId the id of the user
-        *
-        * @return List<UserShopItems> : list of items
-        *//*
-        public List<UserShopItems> GetItemsForUser(int userId)
-        {
-            return GetList().Where(x => x.UserID == userId).ToList();
-        }*/
     }
 }

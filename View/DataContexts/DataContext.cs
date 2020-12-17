@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Timers;
-using System.Windows.Documents;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
@@ -16,15 +15,7 @@ namespace View.DataContexts
         public static List<PermissionButton> PermissionButtons { get; set; } = new List<PermissionButton>();
 
         private static DataContext instance;
-        public static DataContext Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance= new DataContext();
-                return instance;
-            }
-        }
+        public static DataContext Instance => instance ??= new DataContext();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -33,19 +24,19 @@ namespace View.DataContexts
         public string PathToImage => CurrentSong == null ? "../Assets/null.png" : CurrentSong.PathToImage == null ? "../Assets/NoImage.png" : FileCache.Instance.GetFile(CurrentSong.PathToImage);
         public double Volume => AudioPlayer.Instance.WaveOutDevice.Volume;
         public double MaxVolume => AudioPlayer.Instance.MaxVolume;
-        public double TotalTime => AudioPlayer.Instance.CurrentSongFile == null ? 0 : AudioPlayer.Instance.CurrentSongFile.TotalTimeSong;
-        public double CurrentTime => AudioPlayer.Instance.CurrentSongFile == null ? 0 : AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong;
+        public double TotalTime => AudioPlayer.Instance.CurrentSongFile?.TotalTimeSong ?? 0;
+        public double CurrentTime => AudioPlayer.Instance.CurrentSongFile?.CurrentTimeSong ?? 0;
         public string TotalTimeLabel => AudioPlayer.Instance.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSongFile.TotalTimeSong).ToString("m':'ss");
         public string CurrentTimeLabel => AudioPlayer.Instance.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong).ToString("m':'ss");
 
-        public User CurrentUser => UserController.CurrentUser == null ? null : UserController.Create(DatabaseContext.Instance).GetItem(UserController.CurrentUser.ID);
+        public User CurrentUser => UserController.CurrentUser;
         public string PlayImage => AudioPlayer.Instance.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing ? "/Assets/pause.png" : "/Assets/play.png";
                 
-        public int CurrentUserCoins => CurrentUser == null ? 0 : CurrentUser.Coins;
+        public int CurrentUserCoins => CurrentUser?.Coins ?? 0;
 
         public Role CurrentUserRole => CurrentUser == null ? null : RoleController.Create(DatabaseContext.Instance).GetItem(CurrentUser.RoleID);
-        public bool IsAdmin => CurrentUser == null ? false : CurrentUser.RoleID.Equals(3);
-        public bool IsArtist => CurrentUser == null ? false : CurrentUser.RoleID.Equals(2);
+        public bool IsAdmin => CurrentUser?.RoleID.Equals(3) ?? false;
+        public bool IsArtist => CurrentUser != null && CurrentUser.RoleID.Equals(2);
 
         public string SongNameGiving => IsAdmin ? "All Songs" : "Own Songs";
 

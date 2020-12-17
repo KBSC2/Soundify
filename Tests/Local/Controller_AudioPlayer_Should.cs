@@ -5,8 +5,8 @@ using Model.DbModels;
 using Model.Database.Contexts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using NAudio.Wave;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Tests.Local
@@ -54,6 +54,11 @@ namespace Tests.Local
             playlist.PlaylistSongs.Add(playlistSongController.AddSongToPlaylist(playlist, song.ID ));
             playlist.PlaylistSongs.Add(playlistSongController.AddSongToPlaylist(playlist, song2.ID));
             playlist.PlaylistSongs.Add(playlistSongController.AddSongToPlaylist(playlist, song3.ID));
+
+            playlist.PlaylistSongs.ToList().ForEach(x =>
+            {
+                x.Song = songController.GetItem(x.SongID);
+            });
             
             AudioPlayer.Instance.ClearQueue();
         }

@@ -23,14 +23,12 @@ namespace View.Screens
         {
             var playlistController = PlaylistController.Create(DatabaseContext.Instance);
 
-            var playlist = new Playlist
+            playlistController.CreateItem(new Playlist
             {
                 Name = $"Playlist {playlistController.GetActivePlaylists(UserController.CurrentUser).Count + 1}",
                 CreationDate = DateTime.Now,
                 UserID = UserController.CurrentUser.ID
-            };
-
-            playlistController.CreateItem(playlist);
+            });
             PlaylistMenuDataContext.Instance.OnPropertyChanged("");
         }
 
@@ -38,7 +36,6 @@ namespace View.Screens
         {
             var dataGridRow = (DataGridRow)sender;
             var selectedPlaylist = (Playlist)dataGridRow.Item;
-            
 
             MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs
             {

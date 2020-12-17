@@ -12,18 +12,11 @@ namespace View.DataContexts
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private static PlaylistMenuDataContext _instance;
-        public static PlaylistMenuDataContext Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new PlaylistMenuDataContext();
-                return _instance;
-            }
-        }
+        private static PlaylistMenuDataContext instance;
+        public static PlaylistMenuDataContext Instance => instance ??= new PlaylistMenuDataContext();
 
-        public List<Playlist> PlaylistsSource => PlaylistController.Create(DatabaseContext.Instance).GetActivePlaylists(UserController.CurrentUser);
+        public List<Playlist> PlaylistsSource => PlaylistController.Create(DatabaseContext.Instance)
+            .GetActivePlaylists(UserController.CurrentUser);
 
         [NotifyPropertyChangedInvocator]
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)

@@ -34,14 +34,24 @@ namespace Controller.DbControllers
         protected PlaylistSongController(IDatabaseContext context)
         {
             this.context = context;
-            set = context.PlaylistSongs;
+            this.set = context.PlaylistSongs;
+        }
+
+        /**
+         * Get all PlaylistSongs from the database
+         *
+         * @return List<PlaylistSong> All playlist songs in the table
+         */
+        public List<PlaylistSong> GetList()
+        {
+            return set.ToList();
         }
 
         /**
          * Adds a song to the designated playlist.
          * If the song is already added then immediately returns
          *
-         * @param playlistId The id of the designated playlist
+         * @param playlist The Playlist to add the song to
          * @param songId The id of the song
          *
          * @return void
@@ -75,7 +85,7 @@ namespace Controller.DbControllers
         /**
          * Reorders the indexes of the playlist from 0 to the amount of songs in a playlist
          *
-         * @param PlaylistId The id of the designated playlist
+         * @param Playlist The Playlist to reorder
          *
          * @return void
          */
@@ -95,7 +105,7 @@ namespace Controller.DbControllers
         /**
          * Adds a song to the designated playlist
          *
-         * @param playlistId the id of the designated playlist
+         * @param playlist The playlist to remove the song from
          * @param songId the id of the song
          *
          * @throws ArgumentOutOfRangeException if the song is does not consist in the playlist
@@ -123,7 +133,7 @@ namespace Controller.DbControllers
         /**
          * Determines if the PlaylistSong exist in the table
          *
-         * @param playlistId The id of the designated playlist
+         * @param playlist The playlist to check
          * @param songId The id of the song
          *
          * @return bool : Returns if the row exists or not
@@ -131,37 +141,12 @@ namespace Controller.DbControllers
         public bool RowExists(Playlist playlist, int songId)
         {
             return playlist.PlaylistSongs.Any(s => s.SongID == songId);
-
-            /*return set
-                .Where(p => p.PlaylistID == playlistId)
-                .Any(s => s.SongID == songId);*/
         }
-
-
-        /**
-         * Gets the songs from the playlist given in the parameter
-         *
-         * @param playlistId The id of the designated playlist
-         *
-         * @return A list of songs contained in the designated playlist
-         */
-        /*public List<PlaylistSong> GetSongsFromPlaylist(int playlistId)
-        {
-            ReorderSongIndexes(playlistId);
-            var songs = set.Where(ps => ps.PlaylistID == playlistId).OrderBy(ps => ps.Index).ToList();
-            songs.ForEach(s =>
-            {
-                s.Song = songController.GetItem(s.SongID);
-                s.Playlist = playlistController.GetItem(s.PlaylistID);
-            });
-
-            return songs;
-        }*/
 
         /**
          * gets a specific song from a given playlist
          *
-         * @param playlistId the id of the designated playlist
+         * @param playlist The playlist to get the song from
          * @param songId the id of the song
          *
          * @return playlistSong : a single song from a the designated playlist
@@ -169,14 +154,12 @@ namespace Controller.DbControllers
         public PlaylistSong GetPlaylistSong(Playlist playlist, int songId)
         {
             return playlist.PlaylistSongs.First(x => x.SongID == songId);
-            /*return GetSongsFromPlaylist(playlistId)
-                .First(s => s.SongID == songId);*/
         }
 
         /**
          * Gets the song from a specific index
          *
-         * @param playlistId The id of the designated playlist
+         * @param playlist The playlist to get the song from
          * @param songId The id of the song
          *
          * @return A single song based on index from a the designated playlist
@@ -184,8 +167,6 @@ namespace Controller.DbControllers
         public PlaylistSong GetPlaylistSongFromIndex(Playlist playlist, int index)
         {
             return playlist.PlaylistSongs.First(x => x.Index == index);
-            /*return GetSongsFromPlaylist(playlistId)
-                .First(s => s.Index == index);*/
         }
 
         /**
@@ -215,6 +196,13 @@ namespace Controller.DbControllers
             return context is DatabaseContext;
         }
 
+        /**
+         * Swap two songs in the playlist
+         *
+         * @param playlist The playlist to swap songs in
+         * @param indexOne Index of the first song
+         * @param indexTwo Index of the second song
+         */
         public void SwapSongs(Playlist playlist, int indexOne, int indexTwo)
         {
             var songOne = GetPlaylistSongFromIndex(playlist, indexOne);

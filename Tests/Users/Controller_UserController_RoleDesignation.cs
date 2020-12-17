@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Controller.DbControllers;
+﻿using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using NUnit.Framework;
@@ -35,13 +34,6 @@ namespace Tests.Users
         {
             artistController.MakeArtist(new Request { UserID = user.ID, User = user, ArtistName = "test artiest" });
             Assert.AreEqual(user.RoleID, 2);
-        }
-
-        [Test]
-        public void UserController_RevokeArtist_UserRoleIDShouldBeUser()
-        {
-            artistController.RevokeArtist(artistController.GetArtistFromUser(user));
-            Assert.AreEqual(user.RoleID, 1);
         }
 
         [Test]

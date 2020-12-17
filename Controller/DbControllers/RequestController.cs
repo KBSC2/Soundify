@@ -30,7 +30,7 @@ namespace Controller.DbControllers
          *
          * @return List<Request> A list with all the requests
          */
-        public virtual List<Request> GetArtistRequests()
+        public List<Request> GetArtistRequests()
         {
             return GetFilteredList(r => r.RequestType == RequestType.Artist);
         }
@@ -41,10 +41,9 @@ namespace Controller.DbControllers
          *
          * @return List<Request> A list with all the requests
          */
-        public virtual List<Request> GetSongRequests()
+        public List<Request> GetSongRequests()
         {
-            var x = GetFilteredList(r => r.RequestType == RequestType.Song);
-            return x;
+            return GetFilteredList(r => r.RequestType == RequestType.Song);
         }
 
         /**
@@ -55,7 +54,7 @@ namespace Controller.DbControllers
          * 
          * @return RequestArtistResults : Result of the user's request to become an artist
          */
-        public virtual RequestArtistResults RequestArtist(string artistName, string artistReason)
+        public RequestArtistResults RequestArtist(string artistName, string artistReason)
         {
             if (artistName == "" && artistReason == "")
                 return RequestArtistResults.NameAndReasonNotFound;
@@ -119,16 +118,5 @@ namespace Controller.DbControllers
 
             SongController.Create(DatabaseContext.Instance).DeleteItem(request.Song.ID);
         }
-
-        /**
-         * Get the number of all the pending requests
-         *
-         * @return int The number of all the requests
-         */
-        public int GetAllRequestsCount()
-        {
-            return GetList().Count;
-        }
     }
 }
-

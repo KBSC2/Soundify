@@ -18,7 +18,7 @@ namespace Tests.Requests
             context = new MockDatabaseContext();
             requestController = RequestController.Create(context);
             testRequest = new Request()
-                { ID = 1, UserID = 1, ArtistName = "TestArtist", ArtistReason = "Just because I'm testing" };
+                { ID = 1, UserID = 1, User = UserController.Create(context).GetItem(1), ArtistName = "TestArtist", ArtistReason = "Just because I'm testing" };
             requestController.CreateItem(testRequest);
         }
 

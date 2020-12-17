@@ -14,19 +14,11 @@ namespace View.DataContexts
     {
         private static SongListDataContext instance;
 
-        public static SongListDataContext Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new SongListDataContext();
-                return instance;
-            }
-        }
+        public static SongListDataContext Instance => instance ??= new SongListDataContext();
 
         public ScreenNames ScreenName { get; set; }
 
-        public List<string> SongListSearchTerms { get; set; } = new List<string>(){""};
+        public List<string> SongListSearchTerms { get; set; } = new List<string> {""};
 
         public bool IsSongListScreen => Instance.ScreenName.Equals(ScreenNames.SongListScreen);
 

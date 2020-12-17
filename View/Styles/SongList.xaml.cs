@@ -10,7 +10,6 @@ using Model.Enums;
 using Model.EventArgs;
 using Soundify;
 using View.DataContexts;
-using View.Screens;
 
 namespace View.Resources
 {
