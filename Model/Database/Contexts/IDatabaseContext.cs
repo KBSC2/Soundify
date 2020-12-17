@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using Model.DbModels;
 
 namespace Model.Database.Contexts
@@ -23,8 +24,6 @@ namespace Model.Database.Contexts
         public abstract DbSet<ShopItem> ShopItems { get; set; }
         public abstract DbSet<ShopItemPermissions> ShopItemPersmissions { get; set; }
         public abstract DbSet<UserShopItems> UserShopItems { get; set; }
-
         public abstract DbSet<Album> Albums { get; set; }
-        public abstract DbSet<AlbumArtistSong> AlbumArtistSongs{ get; set; }
     }
 }
