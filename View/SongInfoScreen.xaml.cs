@@ -17,7 +17,7 @@ namespace View
             InitializeComponent();
             ((SongInfoDataContext)DataContext).Song = song;
             ((SongInfoDataContext) DataContext).ArtistName =
-                ArtistController.Create(DatabaseContext.Instance).GetItem(song.Artist).ArtistName;
+                ArtistController.Create(DatabaseContext.Instance).GetItem(song.ArtistID).ArtistName;
             ((SongInfoDataContext)DataContext).OnPropertyChanged();
         }
     }

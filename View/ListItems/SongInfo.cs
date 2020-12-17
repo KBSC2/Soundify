@@ -37,8 +37,7 @@ namespace View
         {
             Song = song;
             Duration = TimeSpan.FromSeconds(song.Duration).ToString("m':'ss");
-            Artist = ArtistController.Create(DatabaseContext.Instance).GetItem(song.Artist);
-            Album = song.AlbumArtistSongs.IsNullOrEmpty() ? null : Song.AlbumArtistSongs.First().Album;
+            Artist = ArtistController.Create(DatabaseContext.Instance).GetItem(song.ArtistID);
             IsPartOfAlbum = song.AlbumArtistSongs.IsNullOrEmpty() ? false : true;
         }
 
