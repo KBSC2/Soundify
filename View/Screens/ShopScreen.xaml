@@ -3,7 +3,7 @@
                     xmlns:components="clr-namespace:View.Components"
                     x:Class="View.Screens.ShopScreen">
     <DataTemplate x:Key="ShopScreen">
-        <!-- Start ShopScreen screen -->
+        <!-- Start shop screen -->
         <Grid Margin="0,0,0,0" Background="#FF303651" 
               DataContext="{x:Static dataContexts:ShopDataContext.Instance}">
             <Label Content="Soundify Shop" Margin="0,0,0,0" HorizontalAlignment="Center" FontSize="30" Foreground="White" FontWeight="DemiBold"/>

@@ -6,6 +6,7 @@
                     xmlns:Components="clr-namespace:View.Components"
                     x:Class="View.Screens.SongAlterationScreen">
     <DataTemplate x:Key="SongAlterationScreen">
+        <!-- Start song alteration screen -->
         <Grid x:Name="Datagrid" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,0" MinWidth="577" Background="#FF303651" DataContext="{x:Static DataContexts:SongAlterationDataContext.Instance}">
 	        <Grid.Resources>
 		        <Components:ID3DurationPropertyConverter x:Key="DurationConverter"/>

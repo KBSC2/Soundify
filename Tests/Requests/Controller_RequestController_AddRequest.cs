@@ -24,9 +24,7 @@ namespace Tests.Requests
         {
             requestController.CreateItem(testRequest);
 
-            var requestItem = requestController.GetItem(1);
-
-            Assert.AreEqual(requestItem, testRequest);
+            Assert.AreEqual(requestController.GetItem(1), testRequest);
         }
     }
 }
