@@ -40,11 +40,10 @@ namespace Tests.Users
         public void User_HasPermission_CreatePlaylist(int userId, Type exception = null, int amountOfPlaylists = 1)
         {
             var pc = PlaylistController.Create(new MockDatabaseContext());
-            var x=  pc.GetList();
             var startId = 98;
 
             UserController.CurrentUser = userController.GetItem(userId);
-            for (int i = 0; i < amountOfPlaylists; i++)
+            for (var i = 0; i < amountOfPlaylists; i++)
             {
                 pc.CreateItem(new Playlist
                 {

@@ -5,7 +5,7 @@
                     xmlns:components="clr-namespace:View.Components"
                     x:Class="View.Screens.AlbumUploadScreen">
     <DataTemplate x:Key="AlbumUploadScreen">
-        <!-- Start playlist screen -->
+        <!-- Start adminupload screen -->
         <Grid x:Name="MainGrid" Background="#FF303651"
               DataContext="{x:Static dataContexts:AlbumUploadDataContext.Instance}">
             <Grid.Resources>

@@ -40,8 +40,7 @@ namespace Tests.Users
         [TestCase("test1", "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2", "uniek@gmail.com", ExpectedResult = RegistrationResults.UsernameTaken)]    // username taken
         public RegistrationResults UserController_SignupResults(string username, string password, string repeatPassword, string email)
         {
-            var result = controller.CreateAccount(new User() {ID = 11, Email = email, Username = username}, password, repeatPassword);
-            return result;
+            return controller.CreateAccount(new User() { ID = 11, Email = email, Username = username }, password, repeatPassword);
         }
 
         [TestCase("testindb@gmail.com", "SterkWachtw00rd@", ExpectedResult = true)]
@@ -50,8 +49,7 @@ namespace Tests.Users
             var result = controller.CreateAccount(new User() { ID = 12, Email = email, Username = "test2" }, password, password);
             if (result != RegistrationResults.Succeeded)
                 return false;
-            var user = controller.GetUserFromEmailOrUsername(email);
-            return user != null;
+            return controller.GetUserFromEmailOrUsername(email) != null;
         }
 
         [TearDown]
