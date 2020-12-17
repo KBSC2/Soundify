@@ -14,5 +14,7 @@ namespace Model.DbModels
         public string Description { get; set; }
 
         [ForeignKey("AlbumID")] public virtual ICollection<Song> Songs { get; set; }
+        public string Genre { get; set; }
+        public string PathToImage { get; set; }
     }
 }
