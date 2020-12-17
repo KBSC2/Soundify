@@ -174,13 +174,13 @@
         <ContentPresenter x:Name="MainContent" Grid.Row="0" Margin="120,54,0,0" ContentTemplate="{StaticResource HomeScreen}" />
         <Grid Margin="120,0,0,0" Background="{DynamicResource UnderBackgroundColor}" Height="74" VerticalAlignment="Bottom" ShowGridLines="False">
             <Image Source="{Binding PathToImage}" Height="60" Width="60" HorizontalAlignment="Left" Margin="40,5,0,0"/>
-            <TextBlock Text="{Binding CurrentSong.Name}" TextTrimming="CharacterEllipsis" FontSize="18" HorizontalAlignment="Left" Margin="110,10,0,37" MaxWidth="200" Foreground="White" FontWeight="Bold"/>
+            <TextBlock Text="{Binding CurrentSong.Name}" TextTrimming="CharacterEllipsis" FontSize="18" HorizontalAlignment="Left" Margin="110,10,0,37" MaxWidth="300" Foreground="White" FontWeight="Bold"/>
             <Button x:Name="Play" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Play_Button_Click" Width="60" BorderBrush="{x:Null}" Background="Transparent" Height="60">
                 <Image Source="{Binding PlayImage}"/>
             </Button>
             <TextBlock Text="{Binding CurrentSongArtistName}" FontSize="15" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="110,37,0,10" MaxWidth="200" FontStyle="Italic" Foreground="White"/>
-            <Label x:Name="CurrentTime" Content="{Binding CurrentTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White"/>
-            <Label x:Name="TotalTime" Content="{Binding TotalTimeLabel, Mode=OneWay}" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Right" />
+            <Label x:Name="CurrentTime" Content="{Binding CurrentTimeLabel, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" />
+            <Label x:Name="TotalTime" Content="{Binding TotalTimeLabel, Mode=OneWay}" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Right" FontWeight="Bold" />
             <components:PermissionButton Permission="SongPrev" x:Name="Prev" Content="{DynamicResource Previous}" Margin="0,0,140,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Prev_Button_Click" BorderBrush="{x:Null}" Background="Transparent" Height="45" Width="45"/>
             <components:PermissionButton Permission="SongNext" x:Name="Next" Content="{DynamicResource Next}" Margin="140,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Next_Button_Click" BorderBrush="{x:Null}" Background="Transparent" Height="45" Width="45"/>
             <components:PermissionButton Permission="SongLoop" x:Name="Loop" Margin="0,0,280,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Loop_Button_Click" Height="40" Width="40" BorderBrush="{x:Null}" Background="Transparent">
@@ -209,13 +209,13 @@
             </components:PermissionButton>
             <Slider x:Name="Volume" Style="{StaticResource Volume_Slider}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,100,0" IsMoveToPointEnabled="True" Maximum="{Binding MaxVolume, Mode=OneWay}" ValueChanged="Volume_ValueChanged" Value="{Binding Volume, Mode=OneWay}" SmallChange="0.001" LargeChange="0.01" Width="100" />
             <Slider x:Name="Duration" Style="{StaticResource Duration_Slider}" Margin="0,-8,0,64" IsMoveToPointEnabled="True" Foreground="White" Minimum="0.00" Maximum="{Binding TotalTime, Mode=OneWay}" Value="{Binding CurrentTime, Mode=OneWay}" ValueChanged="Duration_ValueChanged" SmallChange="0.01" LargeChange="0.1"/>
-            <Button Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" VerticalAlignment="Center" Height="50" Width="50" Margin="0,0,30,0" Click="Volume_Button_Click">
+            <Button Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" VerticalAlignment="Center" Height="45" Width="45" Margin="0,0,35,0" Click="Volume_Button_Click">
                 <Image Source="{Binding VolumeImage}" />
             </Button>
         </Grid>
         <Grid Margin="120,0,0,0" Height="54" VerticalAlignment="Top" ShowGridLines="False">
             <Label Content="{Binding DisplayName}" Foreground="{Binding CurrentUserRole.ColorCode, Converter={StaticResource colorConverter}}" Margin="10,14,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Width="auto"/>
-            <TextBox Style="{StaticResource SearchTextbox }" HorizontalAlignment="Center" Tag="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="322" Height="34" KeyDown="SetSearchTerms" FontSize="20" FontWeight="Bold">
+            <TextBox Style="{StaticResource SearchTextbox }" Foreground="{DynamicResource Orange}" HorizontalAlignment="Center" Tag="Search..." TextWrapping="Wrap" VerticalAlignment="Center" Width="322" Height="34" KeyDown="SetSearchTerms" FontSize="20" FontWeight="Bold">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="12"/>
@@ -225,18 +225,18 @@
             <components:MenuButton Height="34" Width="34" ScreenName="SettingScreen" Content="{DynamicResource Setting}" Margin="0,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Right" Background="Transparent"/>
         </Grid>
         <Grid Background="{DynamicResource LeftBackgroundColor}" HorizontalAlignment="Left" Width="120" ShowGridLines="False">
-            <Image Margin="26,6,26,0" Stretch="Fill" Source="Assets/soundifySmall.png" Width="40" Height="40" MaxHeight="40" VerticalAlignment="Top"/>
-            <components:MenuButton ScreenName="HomeScreen"     Content="Home"           Margin="0,65,0,339" HorizontalAlignment="Center" Width="92" Height="30" MaxHeight="30" VerticalAlignment="Top"/>
-            <components:MenuButton ScreenName="PlaylistMenuScreen" Content="Playlists"  Margin="0,110,0,294" Height="30" MaxHeight="30" VerticalAlignment="Top" />
-            <components:MenuButton ScreenName="QueueScreen"    Content="Queue"          Margin="0,155,0,0"  Height="30" MaxHeight="30" VerticalAlignment="Top" />
-            <components:MenuButton Permission="SongUpload" HideOnBlocked="True" ScreenName="ArtistScreen" Content="Song Upload"  Margin="0,200,0,0" Height="30" MaxHeight="30" VerticalAlignment="Top" />
-            <components:MenuButton Permission="SongUpload" HideOnBlocked="True" ScreenName="AlbumUploadScreen" Content="Album Upload"  Margin="0,245,0,0" Height="30" MaxHeight="30" VerticalAlignment="Top" />
-            <components:MenuButton Permission="SongEditOwn"  HideOnBlocked="True" ScreenName="SongListScreen" Content="{Binding SongNameGiving}"  Margin="0,290,0,0" Height="30" MaxHeight="30" VerticalAlignment="Top" />
-            <components:MenuButton Permission="AdminDashboard" HideOnBlocked="True" ScreenName="AdminScreen"    Content="Admin"          Margin="0,335,0,0"  HorizontalAlignment="Center" Width="92" MaxHeight="30" Height="30" VerticalAlignment="Top" />
-            <components:MenuButton ScreenName="ShopScreen"    Content="Shop"          Margin="0,0,0,81"  HorizontalAlignment="Center" Width="92" MaxHeight="30" Height="31" VerticalAlignment="Bottom" />
-            <Image Margin="6,0,66,10" Stretch="Fill" Source="/Assets/Coins.png" Height="20" VerticalAlignment="Bottom"/>
+            <Image Margin="26,6,26,0" Stretch="Fill" Source="Assets/soundifySmall.png" Width="40" Height="40" VerticalAlignment="Top"/>
+            <components:MenuButton ScreenName="HomeScreen" Content="Home" Margin="0,65,0,0" Height="30" VerticalAlignment="Top"/>
+            <components:MenuButton ScreenName="PlaylistMenuScreen" Content="Playlists" Margin="0,110,0,0" Height="30" VerticalAlignment="Top" />
+            <components:MenuButton ScreenName="QueueScreen" Content="Queue" Margin="0,155,0,0" Height="30" VerticalAlignment="Top" />
+            <components:MenuButton Permission="SongUpload" HideOnBlocked="True" ScreenName="ArtistScreen" Content="Song Upload"  Margin="0,200,0,0" Height="30" VerticalAlignment="Top" />
+            <components:MenuButton Permission="SongUpload" HideOnBlocked="True" ScreenName="AlbumUploadScreen" Content="Album Upload"  Margin="0,245,0,0" Height="30" VerticalAlignment="Top" />
+            <components:MenuButton Permission="SongEditOwn" HideOnBlocked="True" ScreenName="SongListScreen" Content="{Binding SongNameGiving}"  Margin="0,290,0,0" Height="30" VerticalAlignment="Top" />
+            <components:MenuButton Permission="AdminDashboard" HideOnBlocked="True" ScreenName="AdminScreen" Content="Admin" Margin="0,335,0,0" Height="30" VerticalAlignment="Top" />
+            <components:MenuButton ScreenName="ShopScreen" Content="Shop" Margin="0,0,0,72" Height="30" VerticalAlignment="Bottom" />
+            <Image Margin="20,0,0,10" Source="/Assets/Coins.png" Height="25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
             <!-- <Label x:Name="MoneyAdded" Content="+1" HorizontalAlignment="Center" Margin="0,0,0,52" Foreground="White" FontSize="14" Opacity="0.5" Height="29" VerticalAlignment="Bottom"/> -->
-            <Label x:Name="Money" Content="{Binding CurrentUserCoins}" HorizontalAlignment="Left" Margin="60,0,0,5" Width="62" Foreground="White" FontSize="20" VerticalAlignment="Bottom" FontWeight="Bold"/>
+            <Label x:Name="Money" Content="{Binding CurrentUserCoins}" HorizontalAlignment="Left" Margin="60,0,0,6" Width="62" Foreground="White" FontSize="20" VerticalAlignment="Bottom" FontWeight="Bold"/>
         </Grid>
     </Grid>
 </Window>

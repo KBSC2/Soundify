@@ -21,14 +21,14 @@
         </DataTemplate.Resources>
         <ListView x:Name="SongListView"
                   Background="Transparent" BorderThickness="0" BorderBrush="{x:Null}"
-                  ItemsSource="{Binding SongInfoList}" FontSize="16"
+                  ItemsSource="{Binding SongInfoList}" FontSize="25"
                   DataContext="{x:Static dataContext:SongListDataContext.Instance}">
             <ListView.View>
                 <GridView  ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
-                    <GridViewColumn Header="Title" Width="300" DisplayMemberBinding="{Binding Song.Name}" />
+                    <GridViewColumn Header="Title" Width="400" DisplayMemberBinding="{Binding Song.Name}" />
                     <GridViewColumn Header="Artist" Width="300" DisplayMemberBinding="{Binding Artist.ArtistName}" />
                     <GridViewColumn Header="Duration" Width="150" DisplayMemberBinding="{Binding Duration}" />
-                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Added}">
+                    <GridViewColumn Width="300" DisplayMemberBinding="{Binding Added}">
 	                    <GridViewColumnHeader Content="Added" Visibility="{Binding IsPlaylistScreen, Converter={StaticResource BooleanToVisibilityConverter}}"
 	                                          components:GridViewBehaviours.CollapseableColumn="True"/>
                     </GridViewColumn>
