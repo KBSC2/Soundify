@@ -126,7 +126,7 @@ namespace Controller
                 WaveOutDevice.Stop();
             CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
             CurrentSong = song;
-            CurrentSongArtistName = ArtistController.Create(Context).GetItem(song.Artist).ArtistName;
+            CurrentSongArtistName = ArtistController.Create(Context).GetItem(song.ArtistID).ArtistName;
             WaveOutDevice.Init(CurrentSongFile.AudioFile);
             NextSong?.Invoke(this, new EventArgs());
             Task.Delay(500).ContinueWith(x => WaveOutDevice.Play());
