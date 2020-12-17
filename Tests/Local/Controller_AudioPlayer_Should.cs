@@ -77,7 +77,7 @@ namespace Tests.Local
 
             bool areEqual = true;
             for (int i = 0; i < playlist.PlaylistSongs.Count; i++)
-                if (playlist.PlaylistSongs[i].Song.ID != AudioPlayer.Instance.Queue[i].ID) areEqual = false;
+                if (playlist.PlaylistSongs.ToList()[i].Song.ID != AudioPlayer.Instance.Queue[i].ID) areEqual = false;
 
             Assert.IsTrue(areEqual);
         }
@@ -88,7 +88,7 @@ namespace Tests.Local
             AudioPlayer.Instance.PlayPlaylist(playlist);
             AudioPlayer.Instance.Next();
 
-            Assert.AreEqual(playlist.PlaylistSongs[1].SongID, AudioPlayer.Instance.CurrentSong.ID);
+            Assert.AreEqual(playlist.PlaylistSongs.ToList()[1].SongID, AudioPlayer.Instance.CurrentSong.ID);
         }
 
         [Test, Category("Local")]
@@ -107,7 +107,7 @@ namespace Tests.Local
             AudioPlayer.Instance.Loop();
             AudioPlayer.Instance.Next();
 
-            Assert.AreEqual(playlist.PlaylistSongs[0].SongID, AudioPlayer.Instance.CurrentSong.ID);
+            Assert.AreEqual(playlist.PlaylistSongs.ToList()[0].SongID, AudioPlayer.Instance.CurrentSong.ID);
         }
 
         [Test, Category("Local")]
@@ -116,7 +116,7 @@ namespace Tests.Local
             AudioPlayer.Instance.PlayPlaylist(playlist, 0);
             AudioPlayer.Instance.Prev();
             
-            Assert.AreEqual(playlist.PlaylistSongs[0].SongID, AudioPlayer.Instance.CurrentSong.ID);
+            Assert.AreEqual(playlist.PlaylistSongs.ToList()[0].SongID, AudioPlayer.Instance.CurrentSong.ID);
 
         }
 
@@ -143,7 +143,7 @@ namespace Tests.Local
             AudioPlayer.Instance.PlayPlaylist(playlist);
             AudioPlayer.Instance.Shuffle();
 
-            Assert.IsFalse(AudioPlayer.Instance.Queue[1].Equals(playlist.PlaylistSongs[1].Song));
+            Assert.IsFalse(AudioPlayer.Instance.Queue[1].Equals(playlist.PlaylistSongs.ToList()[1].Song));
         }
 
         [TearDown, Category("Local")]
