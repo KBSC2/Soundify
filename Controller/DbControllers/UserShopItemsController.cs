@@ -41,13 +41,14 @@ namespace Controller.DbControllers
             var userController = UserController.Create(Context);
             var shopItemController = ShopItemController.Create(Context);
 
-            var result = Set.ToList();
+          /*  var result = Set.ToList();
             result.ForEach(x =>
             {
                 x.User = userController.GetItem(x.UserID);
                 x.ShopItem = shopItemController.GetItem(x.ShopItemID);
             });
-            return result;
+            return result;*/
+          return Set.ToList();
         }
 
         public void CreateItem(UserShopItems item)
@@ -72,17 +73,17 @@ namespace Controller.DbControllers
         {
             return Context is DatabaseContext;
         }
-
-        /**
+/*
+        /***//*
         * Gets all the shopItems for a user
         *
         * @param userId the id of the user
         *
         * @return List<UserShopItems> : list of items
-        */
+        *//*
         public List<UserShopItems> GetItemsForUser(int userId)
         {
             return GetList().Where(x => x.UserID == userId).ToList();
-        }
+        }*/
     }
 }

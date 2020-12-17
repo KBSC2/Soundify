@@ -35,7 +35,8 @@ namespace Controller.DbControllers
             Set = Context.ShopItemPersmissions;
         }
 
-        public List<ShopItemPermissions> GetList()
+        //dit kan korter geen idee hoe :)
+        /*public List<ShopItemPermissions> GetList()
         {
             var permissionController = PermissionController.Create(Context);
             var shopItemController = ShopItemController.Create(Context);
@@ -47,7 +48,7 @@ namespace Controller.DbControllers
                 x.ShopItem = shopItemController.GetItem(x.ShopItemID);
             });
             return result;
-        }
+        }*/
 
         /**
          * Get all permissions assigned to the role id's

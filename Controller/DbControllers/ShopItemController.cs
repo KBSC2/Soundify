@@ -52,7 +52,6 @@ namespace Controller.DbControllers
                 UserID = user.ID,
                 User = user
             });
-
             UserController.Create(Context).RemoveCoins(user, shopItem.Price);
         }
     }
