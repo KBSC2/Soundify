@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
@@ -13,15 +15,19 @@ namespace Tests.Playlists
         private PlaylistController playlistController;
         private Playlist testPlaylist1;
         private Playlist testPlaylist2;
+        private User user;
 
         [SetUp]
         public void SetUp()
         {
-            playlistController = PlaylistController.Create(new MockDatabaseContext());
+            var mock = new MockDatabaseContext();
+            playlistController = PlaylistController.Create(mock);
+            user = UserController.Create(mock).GetItem(1);
+            user.Playlists = new List<Playlist>();
             testPlaylist1 = new Playlist()
-                { ID = 1, Name = "TestPlaylist1", ActivePlaylist = true, CreationDate = DateTime.Now, UserID = 1};
+                { ID = 1, Name = "TestPlaylist1", ActivePlaylist = true, CreationDate = DateTime.Now, UserID = 1, User = user};
             testPlaylist2 = new Playlist()
-                { ID = 2, Name = "TestPlaylist2", ActivePlaylist = false, CreationDate = DateTime.Now, UserID = 1};
+                { ID = 2, Name = "TestPlaylist2", ActivePlaylist = false, CreationDate = DateTime.Now, UserID = 1, User = user};
         }
 
         [Test]
@@ -29,6 +35,8 @@ namespace Tests.Playlists
         {
             playlistController.CreateItem(testPlaylist1);
             playlistController.CreateItem(testPlaylist2);
+            user.Playlists.Add(testPlaylist1);
+            user.Playlists.Add(testPlaylist2);
 
             testPlaylist2.ActivePlaylist = false;
             playlistController.UpdateItem(testPlaylist2);

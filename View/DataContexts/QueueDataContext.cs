@@ -28,7 +28,7 @@ namespace View.DataContexts
         public List<SongInfo> NextInQueueItems => QueueGenerator(AudioPlayer.Instance.Queue, AudioPlayer.Instance.CurrentSongIndex);
         public string CurrentSongName => AudioPlayer.Instance.CurrentSong == null ? "" : AudioPlayer.Instance.CurrentSong.Name;
         public string CurrentSongArtist => AudioPlayer.Instance.CurrentSong == null ? ""
-            : ArtistController.Create(DatabaseContext.Instance).GetItem(AudioPlayer.Instance.CurrentSong.Artist).ArtistName;
+            : ArtistController.Create(DatabaseContext.Instance).GetItem(AudioPlayer.Instance.CurrentSong.ArtistID).ArtistName;
         public string CurrentSongDuration => AudioPlayer.Instance.CurrentSong == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSong.Duration).ToString("m':'ss");
 
         public List<SongInfo> QueueGenerator(List<Song> songs, int index)

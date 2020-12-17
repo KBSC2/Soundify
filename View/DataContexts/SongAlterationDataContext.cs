@@ -36,7 +36,7 @@ namespace View.DataContexts
             Song = song;
 
             var artistConroller = ArtistController.Create(new DatabaseContext());
-            var artist = artistConroller.GetItem(Song.Artist);
+            var artist = artistConroller.GetItem(Song.ArtistID);
             ArtistName = artist.ArtistName;
             Duration = TimeSpan.FromSeconds(Song.Duration);
             ImageSource = new BitmapImage(new Uri(FileCache.Instance.GetFile(song.PathToImage)));
