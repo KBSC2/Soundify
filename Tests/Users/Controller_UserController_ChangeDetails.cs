@@ -32,8 +32,7 @@ namespace Tests.Users
         [TestCase("", "Haiii", ExpectedResult = NewUserInfo.Valid)]                                                         // Different username
         public NewUserInfo UserController_ChangeDetailsResults(string newEmail, string newUsername)
         {
-            var result = controller.ChangeDetails(new User() { ID = 11, Email = "testemail@gmail.com", Username = "testUsername" }, newEmail, newUsername);
-            return result;
+            return controller.ChangeDetails(new User() { ID = 11, Email = "testemail@gmail.com", Username = "testUsername" }, newEmail, newUsername);
         }
     }
 }

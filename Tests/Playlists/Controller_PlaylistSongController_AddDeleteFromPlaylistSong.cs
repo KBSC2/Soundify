@@ -42,44 +42,19 @@ namespace Tests.Playlists
         {
             playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
 
-            var lastSongId = song.ID;
-            var playlistId = playlist.ID;
+            Assert.IsTrue(playlistSongController.RowExists(song.ID, playlist.ID));
 
-            var existsInPlaylist = playlistSongController.RowExists(lastSongId, playlistId);
-            Assert.IsTrue(existsInPlaylist);
-
-            //After adding, remove it.
+            //Teardown
             playlistSongController.RemoveFromPlaylist(song.ID, playlist.ID);
-
-            //Remove the added song to the playlist at the end of the test.
-            //Extra check to see whether the playlist is removed at the end.
-            existsInPlaylist = playlistSongController.RowExists(lastSongId, playlistId);
-            Assert.IsFalse(existsInPlaylist);
         }
 
         [Test]
         public void PlaylistSongController_DeleteFromPlayList()
         {
-            //Same Concept as in AddToPlaylist, but it's more explicit for deleting from the playlist.
-            //Just use a songID that exists.
-            var songId = song.ID;
-            var playlistId = playlist.ID;
+            playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
+            playlistSongController.RemoveFromPlaylist(song.ID, playlist.ID);
 
-            //Before adding
-            var existsInPlaylist = playlistSongController.RowExists(songId, playlistId);
-            Assert.IsFalse(existsInPlaylist);
-
-            playlistSongController.AddSongToPlaylist(songId, playlistId);
-
-            //After adding
-            existsInPlaylist = playlistSongController.RowExists(songId, playlistId);
-            Assert.IsTrue(existsInPlaylist);
-
-            playlistSongController.RemoveFromPlaylist(songId, playlistId);
-
-            //After removing
-            existsInPlaylist = playlistSongController.RowExists(songId, playlistId);
-            Assert.IsFalse(existsInPlaylist);
+            Assert.IsFalse(playlistSongController.RowExists(song.ID, playlist.ID));
         }
 
         [Test]
