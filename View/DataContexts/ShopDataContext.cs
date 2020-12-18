@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
@@ -18,18 +20,20 @@ namespace View.DataContexts
         public ShopDataContext()
         {
             ShopItems = ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser);
-            DataContext.Instance.Timer.Elapsed += OnTimedEvent;
+            CoinsController.Instance.UserCoinsEarned += Update;
         }
         
-        public void OnTimedEvent(object sender, EventArgs e)
+        public void Update(object sender, EventArgs e)
         {
             var items = new List<ShopItem>(ShopItems);
             items.ForEach(x =>
-                x.Purchasable = UserController.CurrentUser.Coins >= x.Price
-            );
+            {
+                x.Bought = UserController.CurrentUser.UserShopItems.Select(y => y.ShopItem).ToArray().Contains(x);
+                x.Purchasable = UserController.CurrentUser.Coins >= x.Price;
+            });
 
             ShopItems = items;
-            OnPropertyChanged();
+            OnPropertyChanged("ShopItems");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
