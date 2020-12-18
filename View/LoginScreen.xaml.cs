@@ -49,6 +49,7 @@ namespace View
                 {
                     UserController.CurrentUser = controller.GetUserFromEmailOrUsername(emailOrUsername);
                     var main = MainWindow.InstanceMainWindow;
+                    main.WindowState = WindowState.Minimized;
                     main.Show();
                     main.Focus();
                     this.Hide();
@@ -64,6 +65,7 @@ namespace View
 
                     this.UsernameLogin.Text = "";
                     this.PasswordLogin.Password = "";
+                    DataContexts.DataContext.Instance.Timer.Start();
                     break;
                 }
                 case LoginResults.EmailNotFound:
@@ -100,7 +102,7 @@ namespace View
                 Login_Button_Click(sender, new RoutedEventArgs());
             }
         }
-
+        
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
             var signupScreen = new RegisterScreen();
@@ -122,6 +124,21 @@ namespace View
             SSHController.Instance.CloseSSHTunnel();
             Application.Current.Shutdown();
             MainWindow.InstanceMainWindow?.Close();
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
+
+        private void Close_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void Minimize_Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
         }
     }
 }

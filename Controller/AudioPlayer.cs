@@ -54,6 +54,12 @@ namespace Controller
             CurrentSongIndex = -1;
         }
 
+        public void ResetAudioPlayer()
+        {
+            WaveOutDevice.Stop();
+            Create(DatabaseContext.Instance);
+        }
+
         /**
          * Skips to the next song
          *

@@ -14,8 +14,10 @@ namespace View.Components
         public MenuButton()
         {
             VerticalAlignment = VerticalAlignment.Top;
-            Background = (Brush) new BrushConverter().ConvertFrom("#FF2D7AC8");
+            Background = (Brush) new BrushConverter().ConvertFrom("#FF2F406D");
             Foreground = (Brush) new BrushConverter().ConvertFrom("#FFFFFF");
+            FontWeight = FontWeights.Bold;
+            FontSize = 15;
             BorderBrush = null;
 
             Permission = Permissions.PlaylistCreate;

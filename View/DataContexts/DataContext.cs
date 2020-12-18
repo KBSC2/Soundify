@@ -24,13 +24,14 @@ namespace View.DataContexts
         public string PathToImage => CurrentSong == null ? "../Assets/null.png" : CurrentSong.PathToImage == null ? "../Assets/NoImage.png" : FileCache.Instance.GetFile(CurrentSong.PathToImage);
         public double Volume => AudioPlayer.Instance.WaveOutDevice.Volume;
         public double MaxVolume => AudioPlayer.Instance.MaxVolume;
-        public double TotalTime => AudioPlayer.Instance.CurrentSongFile?.TotalTimeSong ?? 0;
-        public double CurrentTime => AudioPlayer.Instance.CurrentSongFile?.CurrentTimeSong ?? 0;
-        public string TotalTimeLabel => AudioPlayer.Instance.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSongFile.TotalTimeSong).ToString("m':'ss");
-        public string CurrentTimeLabel => AudioPlayer.Instance.CurrentSongFile == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong).ToString("m':'ss");
+        public double TotalTime => AudioPlayer.Instance.CurrentSongFile == null ? 0 : AudioPlayer.Instance.CurrentSong.Duration;
+        public double CurrentTime => AudioPlayer.Instance.CurrentSongFile == null ? 0 : AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong;
+        public string TotalTimeLabel => TimeSpan.FromSeconds(TotalTime).ToString("m':'ss");
+        public string CurrentTimeLabel => TimeSpan.FromSeconds(CurrentTime).ToString("m':'ss");
 
         public User CurrentUser => UserController.CurrentUser;
         public string PlayImage => AudioPlayer.Instance.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing ? "/Assets/pause.png" : "/Assets/play.png";
+        public string VolumeImage => Volume == 0.0 ? "/Assets/SoundMuted.png" : "/Assets/Sound.png";
                 
         public int CurrentUserCoins => CurrentUser?.Coins ?? 0;
 
@@ -45,29 +46,20 @@ namespace View.DataContexts
         public bool IsLooping => AudioPlayer.Instance.Looping;
         public bool IsShuffling => AudioPlayer.Instance.Shuffling;
 
-        private Timer timerSlider;
         public Timer Timer { get; set; }
 
         private DataContext()
         {
-            Timer = new Timer {Interval = 1000};
+            Timer = new Timer {Interval = 100};
             Timer.Elapsed += CoinsController.Instance.EarnCoins;
             Timer.Elapsed += OnTimedEvent;
             Timer.Start();
 
-            timerSlider = new Timer { Interval = 10 };
-            timerSlider.Elapsed += OnTimedEventSlider;
-            timerSlider.Start();
         }
 
         public void OnTimedEvent(object sender, EventArgs e)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(""));
-        }
-
-        public void OnTimedEventSlider(object sender, EventArgs e)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentTime"));
         }
     }
 }

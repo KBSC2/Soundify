@@ -8,7 +8,7 @@ using Model.Enums;
 
 namespace Controller.DbControllers
 {
-    public class RolePermissionsController
+    public class RolePermissionsController 
     {
         private IDatabaseContext Context { get; set; }
         private DbSet<RolePermissions> Set { get; set; }
@@ -96,11 +96,69 @@ namespace Controller.DbControllers
                 return 0;
 
             return this.GetPermissionsFromRoles(GetUserRoles(user))
-                .Where(x => x.PermissionID == (int) permission)
+                .Where(x => x.PermissionID == (int)permission)
                 .Max(x => x.Value);
         }
 
         /**
+        * Adds the permission to a role
+        * 
+        * @param permissionID The permission to fetch
+        * @param roleID The roleID to fetch
+        * 
+        * @return void
+        */
+        public void AddPermissionToRole(Permission permission, Role role)
+        {
+            var rolePermission = new RolePermissions() { Permission = permission, Role = role };
+            Set.Add(rolePermission);
+            if (!RealDatabase()) return;
+            Context.Entry(rolePermission).State = EntityState.Added;
+            Context.SaveChanges();
+        }
+
+        /**
+         * Removes the permission from a role
+         * 
+         * @param permissionID The permission to fetch
+         * @param roleID The roleID to fetch
+         * 
+         * @return void
+         */
+        public void RemovePermissionFromRole( Permission permission, Role role)
+        {
+            var rolePermission = GetPermission(role, permission);
+            Set.Remove(rolePermission);
+            if (!RealDatabase()) return;
+            Context.Entry(rolePermission).State = EntityState.Deleted;
+            Context.SaveChanges();
+        }
+
+        /**
+         * Get the role permissions for a user, by finding a permission from the enum
+         *
+         * @param user The user to get the permission for
+         * @param permission The permission to fetch
+         *
+         * @return RolePermissions Get a rolePermission object, for the user
+         */
+        public RolePermissions GetPermission(Role role, Permission permission)
+        {
+            return this.GetPermissionsFromRoles(new List<Role> { role })
+                .FirstOrDefault(x => x.Permission == permission);
+        }
+
+        /**
+         * Determine if the database is a real database, or a mock database
+         *
+         * @return bool : Checks if it is a real database or not
+         */
+        public bool RealDatabase()
+        {
+            return Context is DatabaseContext;
+        }
+
+         /**
          * Get all the user roles, add role 1 by default
          *
          * @param user The user to get the roles from
