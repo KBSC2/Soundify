@@ -18,6 +18,9 @@ namespace View
         public RegisterScreen()
         {
             InitializeComponent();
+
+            // Makes screen in universal font
+            Style = (Style)FindResource(typeof(Window));
         }
 
         private void Register_Button_Click(object sender, RoutedEventArgs e)

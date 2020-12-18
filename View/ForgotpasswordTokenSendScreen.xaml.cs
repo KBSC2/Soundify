@@ -18,6 +18,9 @@ namespace View
         public ForgotpasswordTokenSendScreen()
         {
             InitializeComponent();
+
+            // Makes screen in universal font
+            Style = (Style)FindResource(typeof(Window));
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)

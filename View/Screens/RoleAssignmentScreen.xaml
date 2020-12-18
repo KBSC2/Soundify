@@ -1,0 +1,67 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dataContexts="clr-namespace:View.DataContexts" xmlns:components="clr-namespace:View.Components"
+                    x:Class="View.Screens.RoleAssignmentScreen">
+    <DataTemplate x:Key="RoleAssignmentScreen">
+        <!-- Start RoleAssignmentScreen screen -->
+        <Grid Background="#FF303651" DataContext="{x:Static dataContexts:RoleAssignmentDataContext.Instance}">
+            <Grid.Resources>
+                <ResourceDictionary Source="../Styles/Watermark.xaml"/>
+            </Grid.Resources>
+            <Grid Margin="0, 5, 0, 5">
+                <Grid.Resources>
+                    <components:RoleIDConverter x:Key="converter"/>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Style="{StaticResource WatermarkTextbox }" x:Name="SearchUser" Grid.Column="0" Margin="0, 12, 0, 0" HorizontalAlignment="Center" Tag="Search user" TextWrapping="Wrap" VerticalAlignment="Top" Width="192" Height="25" KeyDown="GetUsers" BorderBrush="{x:Null}" Background="White"/>
+                <ListView ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="0, 50, 0, 0" Padding="5" FontSize="20" ItemsSource="{Binding Users}" BorderThickness="0" HorizontalAlignment="Center" Background="Transparent">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.ColumnHeaderContainerStyle>
+                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </Style>
+                            </GridView.ColumnHeaderContainerStyle>
+
+                            <GridViewColumn Width="410">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid Width="400">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0" HorizontalAlignment="Center" Foreground="White" Content="{Binding Username}"/>
+                                            <ComboBox Width="150" Grid.Column="1" HorizontalContentAlignment="Center" SelectionChanged="UserRole_SelectionChanged" 
+                                                      SelectedIndex="{Binding RoleID, Converter={StaticResource converter}, Mode=OneWay}"
+                                                      ItemsSource="{Binding Source={x:Static dataContexts:RoleAssignmentDataContext.Instance}, Path=Roles}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding }" />
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Foreground" Value="Black" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#FF8390E4" />
+                                    <Setter Property="Foreground" Value="Black" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+                <Label Content="{Binding UpdateStatus}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="20"/>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

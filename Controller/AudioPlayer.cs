@@ -19,6 +19,7 @@ namespace Controller
         public SongAudioFile CurrentSongFile { get; set; }
         public Song CurrentSong { get; set; }
         public Playlist CurrentPlaylist { get; set; }
+        public List<Song> CurrentAlbumSongs { get; set; } = new List<Song>();
         public string CurrentSongArtistName { get; set; }
         public double MaxVolume { get; set; }
         public event EventHandler NextSong;
@@ -67,7 +68,7 @@ namespace Controller
          */
         public void Next()
         {
-            FillQueue(CurrentPlaylist);
+            FillQueue();
             if (CurrentSongIndex >= 0 && CurrentSong != null)
                 if (NextInQueue.Contains(Queue[CurrentSongIndex]))
                     NextInQueue.Remove(Queue[CurrentSongIndex]);
@@ -110,7 +111,7 @@ namespace Controller
             }
 
             PlaySong(Queue[CurrentSongIndex]);
-            FillQueue(CurrentPlaylist);
+            FillQueue();
         }
 
         /**
@@ -185,10 +186,24 @@ namespace Controller
         public void PlayPlaylist(Playlist playlist, int startIndex = -1)
         {
             CurrentPlaylist = playlist;
+            CurrentAlbumSongs.Clear();
 
+            PlayQueue(startIndex);
+        }
+
+        public void PlayAlbum(List<Song> albumSongs, int startIndex = -1)
+        {
+            CurrentPlaylist = null;
+            CurrentAlbumSongs = albumSongs;
+
+            PlayQueue(startIndex);
+        }
+
+        public void PlayQueue(int startIndex = -1)
+        {
             ClearQueue();
 
-            if(NextInQueue.Count > 0)
+            if (NextInQueue.Count > 0)
             {
                 NextInQueue.ForEach(i => AddSongToQueue(i));
                 CurrentSongIndex = -1;
@@ -210,7 +225,7 @@ namespace Controller
         public virtual void Loop()
         {
             Looping = !Looping;
-            FillQueue(CurrentPlaylist);
+            FillQueue();
         }
 
         /**
@@ -224,7 +239,7 @@ namespace Controller
         public virtual void Shuffle()
         {
             Shuffling = !Shuffling;
-            FillQueue(CurrentPlaylist);
+            FillQueue();
         }
 
         /**
@@ -234,13 +249,20 @@ namespace Controller
          *
          * @return void
          */
-        private void FillQueue(Playlist playlist)
+        private void FillQueue()
         {
-            if (playlist != null)
-            {
-                var songs = PlaylistSongController.Create(Context).GetSongsFromPlaylist(playlist.ID);
+            var songs = new List<Song>();
 
-                var queueFromCurrentSongIndex = songs.Select(i => i.Song).ToList();
+            if(CurrentPlaylist != null)
+                songs = PlaylistSongController.Create(Context).GetSongsFromPlaylist(CurrentPlaylist.ID).Select(x => x.Song).ToList();
+
+            if (CurrentAlbumSongs.Count > 0)
+                songs = CurrentAlbumSongs;
+
+
+            if (songs.Count > 0)
+            {
+                var queueFromCurrentSongIndex = new List<Song>(songs);
 
                 if (Queue.Count > 0)
                     queueFromCurrentSongIndex = Queue.GetRange(CurrentSongIndex + 1, Queue.Count - (CurrentSongIndex + 1));
@@ -256,11 +278,11 @@ namespace Controller
                     {
                         queueFromCurrentSongIndex = ShuffleList(queueFromCurrentSongIndex);
                         var tempList = new List<Song>(queueFromCurrentSongIndex);
-                        songs.Where(x => !queueFromCurrentSongIndex.Contains(x.Song)).Select(x => x.Song).ToList().ForEach(i => queueFromCurrentSongIndex.Add(i));
+                        songs.Where(x => !queueFromCurrentSongIndex.Contains(x)).ToList().ForEach(i => queueFromCurrentSongIndex.Add(i));
                         tempList.ForEach(i => queueFromCurrentSongIndex.Add(i));
                     }
                     else
-                        songs.ForEach(i => queueFromCurrentSongIndex.Add(i.Song));
+                        songs.ForEach(i => queueFromCurrentSongIndex.Add(i));
                 }
                 else
                 {
@@ -270,7 +292,7 @@ namespace Controller
                     {
                         var tempList = new List<Song>(queueFromCurrentSongIndex);
                         queueFromCurrentSongIndex.Clear();
-                        songs.Where(x => tempList.Contains(x.Song)).Select(x => x.Song).ToList().ForEach(i => queueFromCurrentSongIndex.Add(i));
+                        songs.Where(x => tempList.Contains(x)).ToList().ForEach(i => queueFromCurrentSongIndex.Add(i));
                     }
                 }
 

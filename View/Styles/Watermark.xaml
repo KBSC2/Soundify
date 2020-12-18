@@ -10,8 +10,7 @@
                         <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Top" />
                         <Label Margin="5,0,0,0" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}"
                                VerticalAlignment="Top"
-                               Visibility="Collapsed" Foreground="LightGray"/>
-
+                               Visibility="Collapsed" Foreground="White" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
@@ -38,7 +37,7 @@
                         <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Top" />
                         <Label Margin="5,0,0,0" x:Name="WaterMarkLabelPassword" Content="{TemplateBinding Tag}"
                                VerticalAlignment="Top"
-                               Visibility="Collapsed" Foreground="LightGray" />
+                               Visibility="Collapsed" Foreground="White" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">

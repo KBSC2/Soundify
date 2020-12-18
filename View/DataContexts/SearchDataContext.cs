@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Controller.DbControllers;
 using Model.Annotations;
 using Model.Database.Contexts;
 using Model.DbModels;
+using View.ListItems;
 
 namespace View.DataContexts
 {
@@ -27,6 +29,9 @@ namespace View.DataContexts
         public List<string> SearchTerms { get; set; } = new List<string>();
         
         public List<Playlist> SearchPlaylists => PlaylistController.Create(DatabaseContext.Instance).SearchPlayListOnString(SearchTerms, UserController.CurrentUser.ID);
+
+        public List<Album> SearchAlbums => AlbumController.Create(DatabaseContext.Instance)
+                .SearchAlbumListOnString(SearchTerms).ToList();
 
         public List<Playlist> AllPlaylists => PlaylistController.Create(DatabaseContext.Instance).GetActivePlaylists(UserController.CurrentUser.ID);
 

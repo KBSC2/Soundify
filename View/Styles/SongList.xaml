@@ -28,6 +28,7 @@
                     <GridViewColumn Header="Title" Width="400" DisplayMemberBinding="{Binding Song.Name}" />
                     <GridViewColumn Header="Artist" Width="300" DisplayMemberBinding="{Binding Artist.ArtistName}" />
                     <GridViewColumn Header="Duration" Width="150" DisplayMemberBinding="{Binding Duration}" />
+                    <GridViewColumn Header="Album" Width="200" DisplayMemberBinding="{Binding Song.Album.AlbumName}" />
                     <GridViewColumn Width="300" DisplayMemberBinding="{Binding Added}">
 	                    <GridViewColumnHeader Content="Added" Visibility="{Binding IsPlaylistScreen, Converter={StaticResource BooleanToVisibilityConverter}}"
 	                                          components:GridViewBehaviours.CollapseableColumn="True"/>
@@ -50,6 +51,9 @@
                               CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
                     <MenuItem Header="Song information" Click="ListViewItem_RightClickSongInfo"
                               CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
+                    <MenuItem Header="Open Album" Click="OpenAlbum_LeftClick"
+                              CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
+                              Visibility="{Binding ShowVisibillity, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <MenuItem Name="DeleteSongFromPlaylist" Header="Remove song"
                               CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"
                               Click="ListViewItem_RightClick_DeleteSong"

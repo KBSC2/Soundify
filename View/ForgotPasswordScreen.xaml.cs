@@ -21,6 +21,10 @@ namespace View
         public ForgotPasswordScreen(string text)
         {
             InitializeComponent();
+
+            // Makes screen in universal font
+            Style = (Style)FindResource(typeof(Window));
+
             email = text;
         }
 

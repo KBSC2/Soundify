@@ -19,6 +19,7 @@ namespace View.Screens
             DataContexts.DataContext.Instance.Timer.Stop();
             UserController.CurrentUser = null;
             AudioPlayer.Instance.ResetAudioPlayer();
+            UserController.PermissionsCache.Clear();
 
             MainWindow.InstanceMainWindow.Hide();
             MainWindow.InstanceLoginScreen.Show();
