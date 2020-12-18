@@ -80,9 +80,7 @@ namespace Controller
             if (!RealDatabase()) return;
 
             if (IsDetached(item))
-            {
                 Set.Attach(item);
-            }
 
             Context.Entry(item).State = EntityState.Modified;
             Context.SaveChanges();

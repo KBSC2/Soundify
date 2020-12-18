@@ -3,7 +3,7 @@
                     x:Class="View.Screens.SettingScreen">
     <DataTemplate x:Key="SettingScreen">
         <!-- Start setting screen -->
-        <Grid Margin="0,0,0,0" Background="#FF303651"  DataContext="{x:Static DataContexts:SettingsDataContext.Instance}">
+        <Grid Margin="0,0,0,0" Background="{DynamicResource MainBackgroundColor}"  DataContext="{x:Static DataContexts:SettingsDataContext.Instance}">
             <Grid Margin="0,0,640,0">
                 <Button Content="Change Password" HorizontalAlignment="Center" Margin="0,112,0,0" VerticalAlignment="Top" Width="256" Height="44" FontSize="26.5"  Foreground="White" Background="#FFF78D0E" FontWeight="Bold" BorderThickness="0" Click="ChangePassword_Button_Click">
                     <Button.Resources>
@@ -12,12 +12,12 @@
                         </Style>
                     </Button.Resources>
                 </Button>
-                <ComboBox HorizontalAlignment="Center" Margin="0,178,0,0" VerticalAlignment="Top" Width="164" Height="43" Background="#FF707070" FontSize="26.5" FontWeight="Bold" SelectionChanged="VolumeComboBox_SelectedChanged">
+                <Image Source="/Assets/sound.png" Height="43" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,178,260,0" />
+                <ComboBox HorizontalAlignment="Center" Margin="0,178,0,0" VerticalAlignment="Top" Width="164" Height="43" Background="White" FontSize="26.5" FontWeight="Bold" SelectionChanged="VolumeComboBox_SelectedChanged">
                     <ComboBoxItem>Quiet</ComboBoxItem >
                     <ComboBoxItem IsSelected="True">Normal</ComboBoxItem>
                     <ComboBoxItem>Loud</ComboBoxItem>
                 </ComboBox>
-                <Image Margin="152,187,1006,364" Stretch="Fill" Source="../Assets/Sound.png" Width="30" Height="25"/>
                 <Button Content="Logout" HorizontalAlignment="Center" Margin="0,483,0,0" VerticalAlignment="Top" Width="130" Height="40" Background="#FFF70E0E" Foreground="White" BorderThickness="0" FontSize="26.6" FontWeight="Bold" Click="Logout_Button_Click">
                     <Button.Resources>
                         <Style TargetType="Border">

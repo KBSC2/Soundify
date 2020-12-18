@@ -25,7 +25,7 @@ namespace Controller
             if (AudioPlayer.Instance.WaveOutDevice.PlaybackState == NAudio.Wave.PlaybackState.Playing)
                 counter++;
 
-            if (counter == 10)
+            if (counter == 100)
             {
                 var userController = UserController.Create(new DatabaseContext());
                 userController.AddCoins(UserController.CurrentUser);

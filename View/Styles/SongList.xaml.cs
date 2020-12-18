@@ -60,7 +60,7 @@ namespace View.Resources
                 }
             }
 
-            SongListDataContext.Instance.OnPropertyChanged();
+            SongListDataContext.Instance.OnPropertyChanged("SongInfoList");
         }
 
         private void OpenAlbum_LeftClick(object sender, RoutedEventArgs e)
@@ -73,7 +73,6 @@ namespace View.Resources
                 {
                     ScreenName = ScreenNames.AlbumSongListScreen,
                 });
-            
         }
 
 

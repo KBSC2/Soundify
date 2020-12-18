@@ -21,8 +21,12 @@ namespace View.DataContexts
         public List<string> SongListSearchTerms { get; set; } = new List<string> {""};
 
         public bool IsSongListScreen => Instance.ScreenName.Equals(ScreenNames.SongListScreen);
-
         public bool IsPlaylistScreen => Instance.ScreenName.Equals(ScreenNames.PlaylistScreen);
+
+        public List<SongInfo> SongInfoList { get; set; }
+
+        public List<Playlist> AllPlaylists => PlaylistController.Create(DatabaseContext.Instance)
+            .GetActivePlaylists(UserController.CurrentUser);
 
         public void UpdateSongInfoList()
         {
@@ -53,11 +57,6 @@ namespace View.DataContexts
                     break;
             }
         }
-
-        public List<SongInfo> SongInfoList { get; set; }
-
-        public List<Playlist> AllPlaylists => PlaylistController.Create(DatabaseContext.Instance)
-            .GetActivePlaylists(UserController.CurrentUser);
 
         public event PropertyChangedEventHandler PropertyChanged;
 

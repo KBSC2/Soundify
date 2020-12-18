@@ -67,7 +67,7 @@ namespace Controller.DbControllers
             {
                 PlaylistID = playlist.ID, 
                 SongID = songId, 
-                Index = set.Count(), 
+                Index = playlist.PlaylistSongs.Count, 
                 Added = DateTime.Now
             };
 
@@ -181,6 +181,9 @@ namespace Controller.DbControllers
 
             if (!RealDatabase()) return;
 
+            if (IsDetached(playlistSong))
+                set.Attach(playlistSong);
+
             context.Entry(playlistSong).State = EntityState.Modified;
             context.SaveChanges();
         } 
@@ -212,6 +215,15 @@ namespace Controller.DbControllers
 
             UpdatePlaylistSong(songOne);
             UpdatePlaylistSong(songTwo);
+        }
+
+        private bool IsDetached(PlaylistSong entity)
+        {
+            var localEntity = set.Local?.FirstOrDefault(x => Equals(x.PlaylistID, entity.PlaylistID) && Equals(x.SongID, entity.SongID));
+            if (localEntity != null) // entity stored in local
+                return false;
+
+            return context.Entry(entity).State == EntityState.Detached;
         }
     }
 }

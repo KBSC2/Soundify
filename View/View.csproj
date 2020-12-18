@@ -19,24 +19,33 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Coins.png" />
     <None Remove="Assets\activeloop.png" />
     <None Remove="Assets\activeshuffle.png" />
     <None Remove="Assets\cross.png" />
+    <None Remove="Assets\down.png" />
+    <None Remove="Assets\exit.png" />
     <None Remove="Assets\loop.png" />
+    <None Remove="Assets\minimize.png" />
     <None Remove="Assets\next.png" />
     <None Remove="Assets\NoImage.png" />
     <None Remove="Assets\null.png" />
     <None Remove="Assets\pause.png" />
     <None Remove="Assets\play.png" />
+    <None Remove="Assets\playplaylist.png" />
     <None Remove="Assets\previous.png" />
     <None Remove="Assets\settings.png" />
     <None Remove="Assets\shuffle.png" />
+    <None Remove="Assets\Slider.png" />
+    <None Remove="Assets\Sound.png" />
     <None Remove="Assets\soundify.png" />
     <None Remove="Assets\soundifyBig.png" />
     <None Remove="Assets\soundifyMedium.png" />
     <None Remove="Assets\soundifySmall.ico" />
     <None Remove="Assets\soundifySmall.png" />
+    <None Remove="Assets\SoundMuted.png" />
     <None Remove="Assets\tick.png" />
+    <None Remove="Assets\up.png" />
     <None Remove="Assets\whiteUpload.png" />
     <None Remove="dansenaandegracht.mp3" />
     <None Remove="dansenaandegracht2.mp3" />
@@ -55,18 +64,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Coins.png" />
     <Resource Include="Assets\activeloop.png" />
     <Resource Include="Assets\activeshuffle.png" />
     <Resource Include="Assets\cross.png" />
+    <Resource Include="Assets\down.png" />
+    <Resource Include="Assets\exit.png" />
     <Resource Include="Assets\loop.png" />
+    <Resource Include="Assets\minimize.png" />
     <Resource Include="Assets\next.png" />
     <Resource Include="Assets\NoImage.png" />
     <Resource Include="Assets\null.png" />
     <Resource Include="Assets\pause.png" />
     <Resource Include="Assets\play.png" />
+    <Resource Include="Assets\playplaylist.png" />
     <Resource Include="Assets\previous.png" />
     <Resource Include="Assets\settings.png" />
     <Resource Include="Assets\shuffle.png" />
+    <Resource Include="Assets\Slider.png" />
+    <Resource Include="Assets\Sound.png" />
     <Resource Include="Assets\soundify.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -74,7 +90,9 @@
     <Resource Include="Assets\soundifyMedium.png" />
     <Resource Include="Assets\soundifySmall.ico" />
     <Resource Include="Assets\soundifySmall.png" />
+    <Resource Include="Assets\SoundMuted.png" />
     <Resource Include="Assets\tick.png" />
+    <Resource Include="Assets\up.png" />
     <Resource Include="Assets\whiteUpload.png" />
   </ItemGroup>
 

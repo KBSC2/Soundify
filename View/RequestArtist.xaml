@@ -6,23 +6,54 @@
         xmlns:local="clr-namespace:View"
         xmlns:DataContexts="clr-namespace:View.DataContexts" x:Class="View.RequestArtist"
         mc:Ignorable="d"
-        ResizeMode="NoResize"
         Title="Request to be an artist" Height="715" Width="617"
         WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
         Icon="Assets\soundifysmall.ico">
     <Window.Resources>
         <ResourceDictionary Source="Styles/Watermark.xaml"/>
     </Window.Resources>
-    <Grid Background="{DynamicResource BackgroundColor}" KeyDown="Confirm_On_Enter_Key">
-        <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,97,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" Height="79"/>
-        <Label Content="Fill in your information" HorizontalAlignment="Center" Margin="0,164,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
-        <Label x:Name="Error" Content="" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,525,0,0" VerticalAlignment="Top" Foreground="{DynamicResource Red}" FontSize="15" Height="57" Width="597" RenderTransformOrigin="0.497,0.508"/>
-        <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="ArtistName" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,264,0,0" Tag="Artist name" TextWrapping="NoWrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="{DynamicResource InputBackground}" Foreground="White"/>
-        <Button x:Name="Confirm" Content="Request" Click="Confirm_Button_Click"  HorizontalAlignment="Left" Margin="333,589,0,0" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Width="196" Height="60" Background="{DynamicResource Orange}" Foreground="White"/>
-        <Button Content="Cancel" HorizontalAlignment="Left" Margin="87,589,0,0" VerticalAlignment="Top" Foreground="White" FontSize="40" FontWeight="Bold" Background="{DynamicResource Red}" Width="196" Height="60" BorderThickness="0,0,0,0" Click="Cancel_Button_Click"/>
-        <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="ArtistReason" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,350,0,0" Tag="What is your reason?" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="152" FontSize="20" Background="{DynamicResource InputBackground}" Foreground="White" VerticalContentAlignment="Top"/>
-        <Canvas Grid.Row="1">
-            <Image Margin="263,23,263,584" Stretch="Fill" Source="Assets/soundifySmall.png" Width="91" Height="91"/>
-        </Canvas>
-    </Grid>
+    <Border BorderBrush="{DynamicResource MainBackgroundColor}" BorderThickness="20" CornerRadius="20">
+        <Grid Background="{DynamicResource MainBackgroundColor}" KeyDown="Confirm_On_Enter_Key">
+            <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,97,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" Height="79"/>
+            <Label Content="Fill in your information" HorizontalAlignment="Center" Margin="0,164,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50" FontWeight="Bold" />
+            <Label x:Name="Error" Content="" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,525,0,0" VerticalAlignment="Top" Foreground="{DynamicResource Red}" FontSize="15" Height="57" Width="597" RenderTransformOrigin="0.497,0.508"/>
+            <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="ArtistName" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,264,0,0" Tag="      Artist name" TextWrapping="NoWrap" VerticalAlignment="Top" Width="355" Height="60" FontSize="40" Background="{DynamicResource InputBackground}" Foreground="White" FontWeight="Bold">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <Button x:Name="Confirm" Content="Request" Click="Confirm_Button_Click"  HorizontalAlignment="Left" Margin="313,587,0,0" VerticalAlignment="Top" FontSize="40" FontWeight="Bold" Width="196" Height="60" BorderThickness="0,0,0,0" Background="{DynamicResource Orange}" Foreground="White">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Content="Cancel" HorizontalAlignment="Left" Margin="67,587,0,0" VerticalAlignment="Top" Foreground="White" FontSize="40" FontWeight="Bold" Background="{DynamicResource Red}" Width="196" Height="60" BorderThickness="0,0,0,0" Click="Cancel_Button_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <TextBox Style="{StaticResource WatermarkTextbox}" x:Name="ArtistReason" HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Center" Margin="0,350,0,0" Tag="            What is your reason?" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="152" FontSize="20" VerticalContentAlignment="Top" FontWeight="Bold">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <Canvas Grid.Row="0">
+                <Image Margin="0,0,0,0" Stretch="Fill" Source="Assets/soundifySmall.png" Width="91" Height="91" Canvas.Left="243" Canvas.Top="30"/>
+            </Canvas>
+            <Button Content="{DynamicResource Exit}" Width="33" Height="33" HorizontalAlignment="Left" Margin="544,0,0,0" VerticalAlignment="Top" BorderBrush="Transparent" Click="Cancel_Button_Click"/>
+            <Button Content="{DynamicResource Minimize}" Width="33" Height="33" HorizontalAlignment="Left" Margin="514,0,0,0" VerticalAlignment="Top" BorderBrush="Transparent" Click="Minimize_Button_Click"/>
+        </Grid>
+    </Border>
 </Window>
