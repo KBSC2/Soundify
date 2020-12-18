@@ -5,28 +5,29 @@
                     xmlns:dataContexts="clr-namespace:View.DataContexts">
     <DataTemplate x:Key="QueueScreen">
         <!-- Start queue screen -->
-        <Grid x:Name="MainGrid" DataContext="{x:Static dataContexts:QueueDataContext.Instance}">
+        <Grid x:Name="MainGrid" DataContext="{x:Static dataContexts:QueueDataContext.Instance}" Background="{DynamicResource MainBackgroundColor}">
             <Grid.Resources>
                 <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
                     <Setter Property="Visibility" Value="Collapsed" />
                 </Style>
             </Grid.Resources>
-            <Grid Margin="0,0,0,0" Background="#FF303651">
-                <Label Content="Title" HorizontalAlignment="Left" Margin="300,20,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" FontWeight="Bold"/>
-                <Label Content="Artist" HorizontalAlignment="Left" Margin="550,20,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" FontWeight="Bold"/>
-                <Label Content="Duration" HorizontalAlignment="Left" Margin="800,20,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" FontWeight="Bold"/>
-                <Label Content="Now playing" HorizontalAlignment="Left" Margin="35,50,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
-                <Label Content="Next in queue" HorizontalAlignment="Left" Margin="35,110,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
-                <Label Content="{Binding CurrentSongName}" HorizontalAlignment="Left" Margin="303,60,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" />
-                <Label Content="{Binding CurrentSongArtist}" HorizontalAlignment="Left" Margin="550,60,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" />
-                <Label Content="{Binding CurrentSongDuration}" HorizontalAlignment="Left" Margin="800,60,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" />
+            <Grid>
+                <Label Content="Title" HorizontalAlignment="Center" Margin="-550,20,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
+                <Label Content="Artist" HorizontalAlignment="Center" Margin="70,20,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
+                <Label Content="Duration" HorizontalAlignment="Center" Margin="510,20,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
+                <Label Content="Now playing" HorizontalAlignment="Center" Margin="-950,50,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
+                <Image Source="/Assets/sound.png" HorizontalAlignment="Center" Margin="-720,67,0,0" VerticalAlignment="Top" Height="25" />
+                <Label Content="In queue" HorizontalAlignment="Center" Margin="-1000,120,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
+                <Label Content="{Binding CurrentSongName}" HorizontalAlignment="Center" Margin="-370,60,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" />
+                <Label Content="{Binding CurrentSongArtist}" HorizontalAlignment="Center" Margin="70,60,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" />
+                <Label Content="{Binding CurrentSongDuration}" HorizontalAlignment="Center" Margin="440,60,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" />
             </Grid>
-            <ListView Margin="300,120,0,0" x:Name="Queue" DataContext="{Binding}" Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding NextInQueueItems}" FontSize="20">
+            <ListView HorizontalAlignment="Center" VerticalAlignment="Top" Margin="-55,130,0,0" x:Name="Queue" DataContext="{Binding}" Background="{DynamicResource MainBackgroundColor}" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding NextInQueueItems}" FontSize="25">
                 <ListView.View>
                     <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
-                        <GridViewColumn Header="Title" Width="250" DisplayMemberBinding="{Binding Song.Name}"/>
-                        <GridViewColumn Header="Artist" Width="250" DisplayMemberBinding="{Binding Artist.ArtistName}"/>
-                        <GridViewColumn Header="Duration" Width="150" DisplayMemberBinding="{Binding Duration}"/>
+                        <GridViewColumn Header="Title" Width="300" DisplayMemberBinding="{Binding Song.Name}"/>
+                        <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Artist.ArtistName}"/>
+                        <GridViewColumn Header="Duration" Width="60" DisplayMemberBinding="{Binding Duration}"/>
                     </GridView>
                 </ListView.View>
                 <ListView.Resources>
@@ -52,9 +53,13 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
-            <Grid Margin="0,500,0,0" Background="#FF303651" Height="47" VerticalAlignment="Top">
-                <Button Content=" /\ " Tag="{Binding ElementName=MainGrid}"  HorizontalAlignment="Left" Margin="152,0,0,0" VerticalAlignment="Center" Background="{DynamicResource HighlighBlue}" Foreground="White" Click="Queue_MoveUp_Click" Height="25" Width="25" BorderBrush="{x:Null}"/>
-                <Button Content=" \/ " Tag="{Binding ElementName=MainGrid}" HorizontalAlignment="Left" Margin="185,0,0,0" VerticalAlignment="Center" Background="{DynamicResource HighlighBlue}" Foreground="White" Click="Queue_MoveDown_Click" Height="25" Width="25" BorderBrush="{x:Null}"/>
+            <Grid Margin="-1220,170,0,0" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Button Tag="{Binding ElementName=MainGrid}"  HorizontalAlignment="Left" Margin="152,0,0,0" VerticalAlignment="Center" Background="{DynamicResource ButtonBackgroundColor}" Click="Queue_MoveUp_Click" Height="30" BorderBrush="{x:Null}">
+                    <Image Source="/Assets/up.png"/>
+                </Button>
+                <Button Tag="{Binding ElementName=MainGrid}" HorizontalAlignment="Left" Margin="185,0,0,0" VerticalAlignment="Center" Background="{DynamicResource ButtonBackgroundColor}" Click="Queue_MoveDown_Click" Height="30" BorderBrush="{x:Null}">
+                    <Image Source="/Assets/down.png"/>
+                </Button>
             </Grid>
         </Grid>
     </DataTemplate>
