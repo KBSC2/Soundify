@@ -12,17 +12,17 @@
                 </Style>
             </Grid.Resources>
             <Grid>
-                <Label Content="Title" HorizontalAlignment="Center" Margin="-550,20,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
-                <Label Content="Artist" HorizontalAlignment="Center" Margin="70,20,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
-                <Label Content="Duration" HorizontalAlignment="Center" Margin="510,20,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
-                <Label Content="Now playing" HorizontalAlignment="Center" Margin="-950,50,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
-                <Image Source="/Assets/sound.png" HorizontalAlignment="Center" Margin="-720,67,0,0" VerticalAlignment="Top" Height="25" />
-                <Label Content="In queue" HorizontalAlignment="Center" Margin="-1000,120,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
-                <Label Content="{Binding CurrentSongName}" HorizontalAlignment="Center" Margin="-370,60,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" />
-                <Label Content="{Binding CurrentSongArtist}" HorizontalAlignment="Center" Margin="70,60,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" />
-                <Label Content="{Binding CurrentSongDuration}" HorizontalAlignment="Center" Margin="440,60,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" />
+                <Label Content="Title" HorizontalAlignment="Left" Margin="270,20,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
+                <Label Content="Artist" HorizontalAlignment="Left" Margin="570,20,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
+                <Label Content="Duration" HorizontalAlignment="Left" Margin="770,20,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
+                <Label Content="Now playing" HorizontalAlignment="Left" Margin="5,50,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
+                <Image Source="/Assets/sound.png" HorizontalAlignment="Left" Margin="200,67,0,0" VerticalAlignment="Top" Height="25" />
+                <Label Content="In queue" HorizontalAlignment="Left" Margin="5,120,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
+                <TextBlock Text="{Binding CurrentSongName}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="275,65,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" MaxWidth="300"  />
+                <TextBlock Text="{Binding CurrentSongArtist}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="575,65,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" MaxWidth="200" />
+                <Label Content="{Binding CurrentSongDuration}" HorizontalAlignment="Left" Margin="770,60,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" />
             </Grid>
-            <ListView HorizontalAlignment="Center" VerticalAlignment="Top" Margin="-55,130,0,0" x:Name="Queue" DataContext="{Binding}" Background="{DynamicResource MainBackgroundColor}" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding NextInQueueItems}" FontSize="25">
+            <ListView HorizontalAlignment="Left" VerticalAlignment="Top" Margin="270,130,0,0" x:Name="Queue" DataContext="{Binding}" Background="{DynamicResource MainBackgroundColor}" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding NextInQueueItems}" FontSize="25">
                 <ListView.View>
                     <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
                         <GridViewColumn Header="Title" Width="300" DisplayMemberBinding="{Binding Song.Name}"/>
@@ -53,11 +53,11 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
-            <Grid Margin="-1220,170,0,0" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <Button Tag="{Binding ElementName=MainGrid}"  HorizontalAlignment="Left" Margin="152,0,0,0" VerticalAlignment="Center" Background="{DynamicResource ButtonBackgroundColor}" Click="Queue_MoveUp_Click" Height="30" BorderBrush="{x:Null}">
+            <Grid Margin="0,170,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button Tag="{Binding ElementName=MainGrid}"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Background="{DynamicResource ButtonBackgroundColor}" Click="Queue_MoveUp_Click" Height="30" BorderBrush="{x:Null}">
                     <Image Source="/Assets/up.png"/>
                 </Button>
-                <Button Tag="{Binding ElementName=MainGrid}" HorizontalAlignment="Left" Margin="185,0,0,0" VerticalAlignment="Center" Background="{DynamicResource ButtonBackgroundColor}" Click="Queue_MoveDown_Click" Height="30" BorderBrush="{x:Null}">
+                <Button Tag="{Binding ElementName=MainGrid}" HorizontalAlignment="Left" Margin="45,0,0,0" VerticalAlignment="Center" Background="{DynamicResource ButtonBackgroundColor}" Click="Queue_MoveDown_Click" Height="30" BorderBrush="{x:Null}">
                     <Image Source="/Assets/down.png"/>
                 </Button>
             </Grid>

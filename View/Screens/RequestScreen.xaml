@@ -43,7 +43,7 @@
             </Grid>
             <Grid Margin="0,0,0,0" Grid.Column="1">
                 <Label Content="Song request queue" HorizontalAlignment="Center" Margin="0,62,20,0" VerticalAlignment="Top" Foreground="White" FontSize="33.3" FontWeight="Bold" />
-                <ListView x:Name="Songlist" Margin="0,178,0,0" BorderThickness="0" Background="{DynamicResource MainBackgroundColor}" BorderBrush="{x:Null}" ItemsSource="{Binding SongRequests}" FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Disabled" >
+                <ListView x:Name="Songlist" Margin="0,178,0,0" Width="550" BorderThickness="0" Background="{DynamicResource MainBackgroundColor}" BorderBrush="{x:Null}" ItemsSource="{Binding SongRequests}" FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Disabled" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Expander HorizontalContentAlignment="Right" Foreground="White" Header="{Binding Song.Name}" FontSize="20" HorizontalAlignment="Center" Height="auto" Margin="0,10,0,0" VerticalAlignment="Top" Width="auto" RenderTransformOrigin="0.5,0.5" >
@@ -56,9 +56,9 @@
                                         <ColumnDefinition></ColumnDefinition>
                                         <ColumnDefinition></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                    <Grid x:Name="Datagrid" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,10" MinWidth="577" Width="auto">
+                                    <Grid x:Name="Datagrid" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,10">
 
-                                        <Label Content="Title*" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="98" FontSize="18" Foreground="White"/>
+                                        <Label Content="Title" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="98" FontSize="18" Foreground="White"/>
                                         <Label Content="Artist" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Width="98" FontSize="18" Foreground="White"/>
                                         <Label Content="Written by" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" Width="98" FontSize="18" Foreground="White"/>
                                         <Label Content="Produced by" HorizontalAlignment="Left" Margin="10,124,0,0" VerticalAlignment="Top" Width="111" FontSize="18" Foreground="White"/>
@@ -70,10 +70,10 @@
                                         <Label x:Name="Producer" Content="{Binding Song.ProducedBy}" HorizontalAlignment="Left" Margin="125,128,0,0" VerticalAlignment="Top" Width="250" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}"/>
                                         <Label x:Name="Duration" Content="{Binding Duration, Mode=OneWay, Converter={StaticResource DurationConverter}}" HorizontalAlignment="Left" Margin="125,163,0,0" VerticalAlignment="Top" Width="250" FontSize="18" Foreground="White"/>
 
-                                        <Label Content="Description" HorizontalAlignment="Left" Margin="417,10,0,0" VerticalAlignment="Top" Width="113" FontSize="18" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
-                                        <TextBox x:Name="Description" Text="{Binding Song.Description}" Margin="417,54,145,0" IsReadOnly="True" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}" MinWidth="200" MaxWidth="200" Height="143"/>
-                                        <Label Content="Image" HorizontalAlignment="Left" Margin="650,10,0,0" VerticalAlignment="Top" Width="113" FontSize="18" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
-                                        <Image x:Name="Image" Source="{Binding ImageSource}" HorizontalAlignment="Right" Height="100" Margin="0,67,22,0" VerticalAlignment="Top" Width="100"/>
+                                        <Label Content="Description" HorizontalAlignment="Left" Margin="350,10,0,0" VerticalAlignment="Top" Width="113" FontSize="18" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
+                                        <TextBox x:Name="Description" Text="{Binding Song.Description}" Margin="350,54,0,0" IsReadOnly="True" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Foreground="White" BorderThickness="0" Background="{x:Null}" Width="150" Height="143"/>
+                                        <Label Content="Image" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="240,90,0,0" Width="113" FontSize="18" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
+                                        <Image x:Name="Image" Source="{Binding ImageSource}" VerticalAlignment="Top" HorizontalAlignment="Left" Height="75" Margin="225,120,0,0" Width="75"/>
                                     </Grid>
 
                                     <Button Click="Song_Approve_Button_Click" Tag="{Binding Request.ID}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Background="Transparent" Width="auto" BorderBrush="Transparent">

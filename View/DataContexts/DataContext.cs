@@ -7,6 +7,7 @@ using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using View.Components;
+using Soundify;
 
 namespace View.DataContexts
 {
@@ -53,8 +54,8 @@ namespace View.DataContexts
             Timer = new Timer {Interval = 100};
             Timer.Elapsed += CoinsController.Instance.EarnCoins;
             Timer.Elapsed += OnTimedEvent;
+            Timer.Elapsed += MainWindow.InstanceMainWindow.CheckSongFinished;
             Timer.Start();
-
         }
 
         public void OnTimedEvent(object sender, EventArgs e)

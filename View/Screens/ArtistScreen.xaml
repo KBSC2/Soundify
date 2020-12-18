@@ -7,7 +7,7 @@
 					x:Class="View.Screens.ArtistScreen">
     <DataTemplate x:Key="ArtistScreen">
         <!-- Start artist screen -->
-        <Grid x:Name="MainGrid"  Background="#FF303651" DataContext="{x:Static dataContexts:ArtistDataContext.Instance}">
+        <Grid x:Name="MainGrid"  Background="{DynamicResource MainBackgroundColor}" DataContext="{x:Static dataContexts:ArtistDataContext.Instance}">
             <Grid.Resources>
                 <Components:ID3DurationPropertyConverter x:Key="DurationConverter"/>
             </Grid.Resources>
@@ -70,14 +70,14 @@
                     <Label Content="Produced by" HorizontalAlignment="Left" Margin="10,124,0,0" VerticalAlignment="Top" Width="111" FontSize="18" Foreground="White"/>
                     <Label Content="Duration" HorizontalAlignment="Left" Margin="10,163,0,0" VerticalAlignment="Top" Width="98" FontSize="18" Foreground="White"/>
 
-                    <TextBox x:Name="Title" Text="{Binding SelectedSong.Tag.Title, Mode=OneWay}" HorizontalAlignment="Left" Margin="125,18,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}"/>
-                    <Label x:Name="Artist" Content="{Binding ArtistName}" HorizontalAlignment="Left" Margin="125,54,0,0" VerticalAlignment="Top" Width="120" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}"/>
-                    <TextBox x:Name="Writer" HorizontalAlignment="Left" Margin="125,93,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}"/>
-                    <TextBox x:Name="Producer" HorizontalAlignment="Left" Margin="125,128,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}"/>
+                    <TextBox x:Name="Title" Text="{Binding SelectedSong.Tag.Title, Mode=OneWay}" HorizontalAlignment="Left" Margin="125,18,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" FontSize="18" Foreground="White" BorderBrush="White" Background="{x:Null}"/>
+                    <Label x:Name="Artist" Content="{Binding ArtistName}" HorizontalAlignment="Left" Margin="125,54,0,0" VerticalAlignment="Top" Width="120" FontSize="18" Foreground="White" BorderBrush="White" Background="{x:Null}"/>
+                    <TextBox x:Name="Writer" HorizontalAlignment="Left" Margin="125,93,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" FontSize="18" Foreground="White" BorderBrush="White" Background="{x:Null}"/>
+                    <TextBox x:Name="Producer" HorizontalAlignment="Left" Margin="125,128,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" FontSize="18" Foreground="White" BorderBrush="White" Background="{x:Null}"/>
                     <Label x:Name="Duration" Content="{Binding SelectedSong.Properties.Duration, Mode=OneWay, Converter={StaticResource DurationConverter}}" HorizontalAlignment="Left" Margin="125,163,0,0" VerticalAlignment="Top" Width="98" FontSize="18" Foreground="White"/>
 
                     <Label Content="Description" HorizontalAlignment="Left" Margin="267,10,0,0" VerticalAlignment="Top" Width="113" FontSize="18" Foreground="White" RenderTransformOrigin="0.5,0.5"/>
-                    <TextBox x:Name="Description" Margin="267,54,145,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}" MinWidth="165" Height="143"/>
+                    <TextBox x:Name="Description" Margin="267,54,145,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="18" Foreground="White" BorderBrush="White" Background="{x:Null}" MinWidth="165" Height="143"/>
                     <Button Click="UploadSongImageButton_Click" HorizontalAlignment="Right" Margin="440,18,10,0" VerticalAlignment="Top" Height="29" Width="119" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/assets/whiteUpload.png" Width="25" Height="25" RenderTransformOrigin="1.12,0.508"/>

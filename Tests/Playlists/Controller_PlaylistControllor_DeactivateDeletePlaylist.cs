@@ -40,11 +40,9 @@ namespace Tests.Playlists
             playlistController.CreateItem(playlistDelete);
             playlistController.DeactivatePlaylist(playlistDelete);
             var testVariable = playlistController.GetItem(playlistDelete.ID);
-            testVariable.DeleteDateTime = DateTime.Now.AddMilliseconds(1500);
+            testVariable.DeleteDateTime = DateTime.Now.AddMilliseconds(-1500);
             playlistController.UpdateItem(testVariable);
-            Thread.Sleep(2000);
             playlistController.DeletePlaylistOnDateStamp();
-            Thread.Sleep(3000);
             Assert.Throws<ArgumentOutOfRangeException>((() => playlistController.GetItem(playlistDelete.ID)));
         }
     }

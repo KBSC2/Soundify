@@ -19,14 +19,14 @@ namespace View.Resources
         {
             AudioPlayer.Instance.AddSongToSongQueue(((SongInfo)((MenuItem)sender).DataContext).Song);
 
-            SongListDataContext.Instance.OnPropertyChanged();
+            SongListDataContext.Instance.OnPropertyChanged("");
         }
 
         private void ListViewItem_RightClickSongInfo(object sender, RoutedEventArgs e)
         {
             new SongInfoScreen(((SongInfo)((MenuItem)sender).DataContext).Song).Show();
 
-            SongListDataContext.Instance.OnPropertyChanged();
+            SongListDataContext.Instance.OnPropertyChanged("");
         }
 
         private void SongRow_Click(object sender, MouseButtonEventArgs e)
@@ -54,7 +54,7 @@ namespace View.Resources
                 }
             }
 
-            SongListDataContext.Instance.OnPropertyChanged("SongInfoList");
+            SongListDataContext.Instance.OnPropertyChanged("");
         }
 
         private void OpenAlbum_LeftClick(object sender, RoutedEventArgs e)
@@ -81,7 +81,7 @@ namespace View.Resources
             var playlistSongController = PlaylistSongController.Create(DatabaseContext.Instance);
             playlistSongController.AddSongToPlaylist((Playlist)((MenuItem)sender).DataContext, ((SongInfo)((MenuItem)((MenuItem)sender).Tag).DataContext).Song.ID);
 
-            SongListDataContext.Instance.OnPropertyChanged();
+            SongListDataContext.Instance.OnPropertyChanged("");
         }
 
         private void ListViewItem_ButtonClick_EditSong(object sender, RoutedEventArgs e)
