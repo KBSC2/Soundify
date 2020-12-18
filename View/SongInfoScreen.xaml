@@ -15,7 +15,7 @@
     <Window.DataContext>
         <DataContexts:SongInfoDataContext/>
     </Window.DataContext>
-    <Grid Background="#FF303651" >
+    <Grid Background="{DynamicResource MainBackgroundColor}" >
         <Grid VerticalAlignment="Center">
             <Image Source="{Binding PathToImage}" Margin="0 -200 0 0 " Height="950" Stretch="UniformToFill" VerticalAlignment="Top">
                 <Image.OpacityMask>

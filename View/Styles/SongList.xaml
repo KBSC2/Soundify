@@ -6,18 +6,30 @@
     <DataTemplate x:Key="SongList">
         <DataTemplate.Resources>
             <components:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderBrush" Value="Transparent" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                            <Label Content="{TemplateBinding Content}" Padding="5" Width="{TemplateBinding Width}" BorderBrush="{DynamicResource InputBackground}" BorderThickness="0,0,0,4" Foreground="White" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </DataTemplate.Resources>
-        <ListView x:Name="songlistview"
-                  Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}"
-                  ItemsSource="{Binding SongInfoList}" FontSize="16"
+        <ListView x:Name="SongListView"
+                  Background="Transparent" BorderThickness="0" BorderBrush="{x:Null}"
+                  ItemsSource="{Binding SongInfoList}" FontSize="25"
                   DataContext="{x:Static dataContext:SongListDataContext.Instance}">
             <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Title" Width="200" DisplayMemberBinding="{Binding Song.Name}" />
-                    <GridViewColumn Header="Artist" Width="200" DisplayMemberBinding="{Binding Song.Artist.ArtistName}" />
-                    <GridViewColumn Header="Album" Width="200" DisplayMemberBinding="{Binding Song.Album.AlbumName}"></GridViewColumn>
-                    <GridViewColumn Header="Duration" Width="75" DisplayMemberBinding="{Binding Duration}" />
-                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Added}">
+                <GridView  ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
+                    <GridViewColumn Header="Title" Width="350" DisplayMemberBinding="{Binding Song.Name}" />
+                    <GridViewColumn Header="Artist" Width="240" DisplayMemberBinding="{Binding Artist.ArtistName}" />
+                    <GridViewColumn Header="Duration" Width="130" DisplayMemberBinding="{Binding Duration}" />
+                    <GridViewColumn Header="Album" Width="160" DisplayMemberBinding="{Binding Song.Album.AlbumName}" />
+                    <GridViewColumn Width="270" DisplayMemberBinding="{Binding Added}">
 	                    <GridViewColumnHeader Content="Added" Visibility="{Binding IsPlaylistScreen, Converter={StaticResource BooleanToVisibilityConverter}}"
 	                                          components:GridViewBehaviours.CollapseableColumn="True"/>
                     </GridViewColumn>
@@ -67,12 +79,11 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <EventSetter Event="MouseDoubleClick" Handler="SongRow_Click" />
-                    <Setter Property="Background" Value="#FF445399" />
+                    <Setter Property="Background" Value="Transparent" />
                     <Setter Property="Foreground" Value="{Binding Playing}" />
                     <Setter Property="ContextMenu" Value="{DynamicResource ItemContextMenu}" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding }" />
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="White" />
                             <Setter Property="Foreground" Value="Black" />

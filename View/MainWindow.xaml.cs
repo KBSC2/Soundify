@@ -137,7 +137,7 @@ namespace Soundify
 
         private void Duration_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (sender is Slider slider)
+            if (sender is Slider slider && AudioPlayer.Instance.CurrentSongFile != null)
             {
                 AudioPlayer.Instance.CurrentSongFile.AudioFile.Skip(
                     (int) (slider.Value - AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong));
@@ -225,6 +225,15 @@ namespace Soundify
             SSHController.Instance.CloseSSHTunnel();
             Application.Current.Shutdown();
         }
+
+        private void Volume_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (AudioPlayer.Instance.WaveOutDevice.Volume == 0.0)
+                AudioPlayer.Instance.WaveOutDevice.Volume = (float)(AudioPlayer.Instance.MaxVolume / 2);
+            else
+                AudioPlayer.Instance.WaveOutDevice.Volume = 0.0f;
+        }   
+            
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             // Start the app minimized, then show it here to avoid a white flash on startup
