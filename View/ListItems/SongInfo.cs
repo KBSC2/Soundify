@@ -19,8 +19,8 @@ namespace View
         public string Playing => AudioPlayer.Instance.CurrentSong == null ? "White" : Song.ID == AudioPlayer.Instance.CurrentSong.ID ? "#FFF78D0E" : "White";
 
         //Says is not used, but is used in songlist
-        public static bool IsPlaylistScreen => SongListDataContext.Instance.ScreenName.Equals(ScreenNames.PlaylistScreen); // TODO: kan dit weg?
-        public static bool IsAlbumSonglistScreen => SongListDataContext.Instance.ScreenName.Equals(ScreenNames.AlbumSongListScreen); // TODO: kan dit weg?
+        public static bool IsPlaylistScreen => SongListDataContext.Instance.ScreenName.Equals(ScreenNames.PlaylistScreen);
+        public static bool IsAlbumSonglistScreen => SongListDataContext.Instance.ScreenName.Equals(ScreenNames.AlbumSongListScreen); 
 
 
         public SongInfo(Song song, PlaylistSong playlistSong) : this(song)
