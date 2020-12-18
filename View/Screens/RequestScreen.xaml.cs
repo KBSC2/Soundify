@@ -23,14 +23,14 @@ namespace View.Screens
         {
             requestController.ApproveUser(requestController.GetItem((int)((Button)sender).Tag));
 
-            RequestDatacontext.Instance.OnPropertyChanged();
+            RequestDatacontext.Instance.OnPropertyChanged("");
         }
 
         private void Artist_Decline_Button_Click(object sender, RoutedEventArgs e)
         {
             requestController.DeclineUser(requestController.GetItem((int)((Button)sender).Tag));
 
-            RequestDatacontext.Instance.OnPropertyChanged();
+            RequestDatacontext.Instance.OnPropertyChanged("");
         }
 
 
@@ -38,14 +38,14 @@ namespace View.Screens
         {
             requestController.ApproveSong(requestController.GetItem((int)((Button)sender).Tag));
 
-            RequestDatacontext.Instance.OnPropertyChanged();
+            RequestDatacontext.Instance.OnPropertyChanged("");
         }
 
         private void Song_Decline_Button_Click(object sender, RoutedEventArgs e)
         {
             requestController.DeclineSong(requestController.GetItem((int)((Button)sender).Tag));
 
-            RequestDatacontext.Instance.OnPropertyChanged();
+            RequestDatacontext.Instance.OnPropertyChanged("");
         }
     }
 }
