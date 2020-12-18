@@ -20,7 +20,7 @@ namespace View.DataContexts
         public List<string> SearchTerms { get; set; } = new List<string>();
         
         public List<Playlist> SearchPlaylists => PlaylistController.Create(DatabaseContext.Instance)
-            .SearchPlayListOnString(SearchTerms, UserController.CurrentUser);
+            .SearchPlayListOnString(SearchTerms);
         
         public List<Album> SearchAlbums => AlbumController.Create(DatabaseContext.Instance)
                 .SearchAlbumListOnString(SearchTerms).ToList();
