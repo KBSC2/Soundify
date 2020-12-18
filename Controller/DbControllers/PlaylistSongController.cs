@@ -126,7 +126,6 @@ namespace Controller.DbControllers
                 context.Entry(playlistSong).State = EntityState.Deleted;
                 context.SaveChanges();
             }
-
             ReorderSongIndexes(playlist);
         }
 
@@ -140,9 +139,7 @@ namespace Controller.DbControllers
          */
         public bool RowExists(Playlist playlist, int songId)
         {
-            return set
-                .Where(p => p.Playlist == playlist)
-                .Any(s => s.SongID == songId);
+            return playlist.PlaylistSongs.Any(s => s.SongID == songId);
         }
 
         /**
@@ -187,7 +184,7 @@ namespace Controller.DbControllers
             context.Entry(playlistSong).State = EntityState.Modified;
             context.SaveChanges();
         } 
-        
+
         /**
          * Determine if the database is a real database, or a mock database
          *
@@ -206,7 +203,6 @@ namespace Controller.DbControllers
          * @param indexTwo Index of the second song
          */
         public void SwapSongs(Playlist playlist, int indexOne, int indexTwo)
-
         {
             var songOne = GetPlaylistSongFromIndex(playlist, indexOne);
             var songTwo = GetPlaylistSongFromIndex(playlist, indexTwo);
