@@ -54,7 +54,6 @@ namespace View.Screens
 
             playlistSongController.SwapSongs(MainWindow.CurrentPlayList, selectedSongInfo.Index, selectedSongInfo.Index - 1);
             SongListDataContext.Instance.OnPropertyChanged("");
-            
         }
 
         private void MoveDown_Click(object sender, RoutedEventArgs e)
