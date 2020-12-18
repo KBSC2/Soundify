@@ -30,17 +30,28 @@ namespace Controller.DbControllers
         {
         }
 
-        //TODO: Documenteer deze functie @Sander
+        /**
+         * Upload an whole album in one fuction
+         *
+         * @AlbumSongInfos contains the singles that are part of the album
+         * @image is a Uri containing the path to the image on the filesystem
+         * @title is a album title
+         * @description is album discription
+         * @genre is the albums genre
+         *
+         * Creates a request for each song added
+         */
         public void UploadAlbum(ObservableCollection<AlbumSongInfo> albumSongInfos, Uri image, string title,
-            string description, string artistName, string genre)
+            string description, string genre)
         {
             var artist = ArtistController.Create(Context).GetArtistFromUser(UserController.CurrentUser);
+            var pathToImage = image != null ? "images/" + image.LocalPath.Split("\\").Last() : null;
 
             if (artist == null)
                 return;
 
             CreateItem(new Album 
-                { AlbumName = title, Description = description, ArtistID = artist.ID, Genre = genre });
+                { AlbumName = title, Description = description, ArtistID = artist.ID, PathToImage = pathToImage ,Genre = genre });
 
             foreach (var albumSongInfo in albumSongInfos)
             {
@@ -50,7 +61,7 @@ namespace Controller.DbControllers
                     ArtistID = artist.ID,
                     Duration = albumSongInfo.Duration.TotalSeconds,
                     Path = albumSongInfo.File.Name,
-                    PathToImage = image != null ? "images/" + image.LocalPath.Split("\\").Last() : null,
+                    PathToImage = pathToImage,
                     ProducedBy = albumSongInfo.ProducedBy == "" ? null : albumSongInfo.ProducedBy,
                     WrittenBy = albumSongInfo.WrittenBy == "" ? null : albumSongInfo.WrittenBy,
                     Status = SongStatus.AwaitingApproval
@@ -59,7 +70,7 @@ namespace Controller.DbControllers
 
                 var request = new Request()
                 {
-                    ArtistName = artistName,
+                    ArtistName = artist.ArtistName,
                     UserID = UserController.CurrentUser.ID,
                     RequestType = RequestType.Song,
                     SongID = song.ID
@@ -72,7 +83,13 @@ namespace Controller.DbControllers
             Context.SaveChanges();
         }
 
-        //TODO: @Sander, deze moet ook nog documentatie
+        /**
+         * The playlist gets selected on Name, Artist
+         * filters out if a album has no songs that are approved
+         * @param searchTerms A list of strings containing searchTerms
+         *
+         * @returns List<Song> : A list of albums based on the searchTerms
+         */
         public List<Album> SearchAlbumListOnString(List<string> searchTerms)
         {
             return GetList()
