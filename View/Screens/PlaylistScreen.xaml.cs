@@ -61,7 +61,7 @@ namespace View.Screens
         {
             var selectedSongInfo = SongListDataContext.Instance.SelectedSongInfo;
 
-            if (selectedSongInfo == null || selectedSongInfo.Index + 1 >= selectedSongInfo.Song.PlaylistSongs.Count) return;
+            if (selectedSongInfo == null || selectedSongInfo.Index + 1 >= MainWindow.CurrentPlayList.PlaylistSongs.Count) return;
             
             playlistSongController.SwapSongs(MainWindow.CurrentPlayList, selectedSongInfo.Index, selectedSongInfo.Index + 1);
             SongListDataContext.Instance.OnPropertyChanged("");

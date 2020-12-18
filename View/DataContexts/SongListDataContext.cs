@@ -35,9 +35,8 @@ namespace View.DataContexts
             var artistController = ArtistController.Create(DatabaseContext.Instance);
             var songController = SongController.Create(DatabaseContext.Instance);
             if (!IsPlaylistScreen)
-            {
                 SelectedSongInfo = null;
-            }
+            
 
             switch (instance.ScreenName)
             {

@@ -28,6 +28,5 @@ namespace Model.DbModels
 
         public SongStatus Status { get; set; }
 
-        public virtual ICollection<PlaylistSong> PlaylistSongs { get; set; }
     }
 }
