@@ -41,11 +41,11 @@ namespace Tests.Local
             playlistController.CreateItem(playlist);
 
             var artist = new Artist() { ID = 1, UserID = 1, User = UserController.Create(context).GetItem(1)};
-            ArtistController.Create(context).CreateItem(artist);
+            artistController.CreateItem(artist);
 
-            song = new Song()  { ID = 1, ArtistID = artist.ID, Artist = artist, Duration = 11, Name = "test", Path = "songs/dansenaandegracht.mp3" };
-            song2 = new Song() { ID = 2, ArtistID = artist.ID, Artist = artist, Duration = 11, Name = "test2", Path = "songs/untrago.mp3" };
-            song3 = new Song() { ID = 3, ArtistID = artist.ID, Artist = artist, Duration = 11, Name = "test3", Path = "songs/untrago.mp3" };
+            song = new Song()  { ID = 1, Artist = artist, Duration = 11, Name = "test", Path = "songs/dansenaandegracht.mp3" };
+            song2 = new Song() { ID = 2, Artist = artist, Duration = 11, Name = "test2", Path = "songs/untrago.mp3" };
+            song3 = new Song() { ID = 3, Artist = artist, Duration = 11, Name = "test3", Path = "songs/untrago.mp3" };
 
             songController.CreateItem(song);
             songController.CreateItem(song2);
