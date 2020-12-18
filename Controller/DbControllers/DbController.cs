@@ -76,15 +76,14 @@ namespace Controller
          */
         public virtual void UpdateItem(T item)
         {
+            // If the database is a mock one, do not use the context (not required)
+            if (!RealDatabase()) return;
+
             if (IsDetached(item))
             {
                 Set.Attach(item);
             }
 
-
-            // If the database is a mock one, do not use the context (not required)
-            if (!RealDatabase()) return;
-            
             Context.Entry(item).State = EntityState.Modified;
             Context.SaveChanges();
         }
