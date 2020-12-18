@@ -39,7 +39,7 @@ namespace View
 
         public static List<SongInfo> ConvertSongListToSongInfo(Playlist playlist)
         {
-            return playlist.PlaylistSongs.Select(song => new SongInfo(song.Song, song)).ToList();
+            return playlist.PlaylistSongs.Select(song => new SongInfo(song.Song, song)).OrderBy(s => s.Index).ToList();
         }
 
         public static List<SongInfo> ConvertSongListToSongInfo(List<Song> songs)

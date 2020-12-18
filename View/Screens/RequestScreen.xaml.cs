@@ -21,18 +21,14 @@ namespace View.Screens
 
         private void Artist_Approve_Button_Click(object sender, RoutedEventArgs e)
         {
-            var requestId = (int)((Button) sender).Tag;
-
-            requestController.ApproveUser(requestController.GetItem(requestId));
+            requestController.ApproveUser(requestController.GetItem((int)((Button)sender).Tag));
 
             RequestDatacontext.Instance.OnPropertyChanged("");
         }
 
         private void Artist_Decline_Button_Click(object sender, RoutedEventArgs e)
         {
-            var requestId = (int)((Button)sender).Tag;
-            
-            requestController.DeclineUser(requestController.GetItem(requestId));
+            requestController.DeclineUser(requestController.GetItem((int)((Button)sender).Tag));
 
             RequestDatacontext.Instance.OnPropertyChanged("");
         }
@@ -40,18 +36,14 @@ namespace View.Screens
 
         private void Song_Approve_Button_Click(object sender, RoutedEventArgs e)
         {
-            var requestId = (int)((Button)sender).Tag;
-
-            requestController.ApproveSong(requestController.GetItem(requestId));
+            requestController.ApproveSong(requestController.GetItem((int)((Button)sender).Tag));
 
             RequestDatacontext.Instance.OnPropertyChanged("");
         }
 
         private void Song_Decline_Button_Click(object sender, RoutedEventArgs e)
         {
-            var requestId = (int)((Button)sender).Tag;
-
-            requestController.DeclineSong(requestController.GetItem(requestId));
+            requestController.DeclineSong(requestController.GetItem((int)((Button)sender).Tag));
 
             RequestDatacontext.Instance.OnPropertyChanged("");
         }

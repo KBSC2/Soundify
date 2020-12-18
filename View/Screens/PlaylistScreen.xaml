@@ -29,7 +29,7 @@
                     <Image Source="/Assets/down.png"/>
                 </Button>
             </Grid>
-            <ContentPresenter Margin="0,240,0,0" ContentTemplate="{DynamicResource SongList}"/>
+            <ContentPresenter x:Name="ContentPresenter" Margin="0,240,0,0" ContentTemplate="{DynamicResource SongList}"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

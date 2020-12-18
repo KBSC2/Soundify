@@ -197,8 +197,7 @@ namespace Soundify
         {
             if (e.Key == Key.Return)
             {
-                var textBox = (TextBox) sender;
-                var text = textBox.Text;
+                var text = ((TextBox)sender).Text;
 
                 if (SongListDataContext.Instance.IsSongListScreen)
                 {
