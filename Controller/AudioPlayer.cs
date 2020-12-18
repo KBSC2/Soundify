@@ -129,7 +129,7 @@ namespace Controller
         /**
          * Adds a song to the Queue
          *
-         * @param song The song that has to be played
+         * @param song The song that has to be played in the song queue
          *
          * @return void
          */
@@ -141,7 +141,7 @@ namespace Controller
         /**
          * Adds a song to the songQueue
          *
-         * @param song The song that has to be played
+         * @param song The song that has to be added to the song queue
          *
          * @return void
          */
@@ -172,7 +172,7 @@ namespace Controller
          * Plays a playlist
          *
          * @param playlist Gets the playlist 
-         * @param index Gets the corresponding index
+         * @param startIndex Gets the corresponding starting index
          *
          * @return void
          */
@@ -184,6 +184,14 @@ namespace Controller
             PlayQueue(startIndex);
         }
 
+        /**
+         * Plays an album
+         *
+         * @param albumSongs Which album needs to be played
+         * @param startIndex Gets the corresponding starting index
+         *
+         * @return void
+         */
         public void PlayAlbum(List<Song> albumSongs, int startIndex = -1)
         {
             CurrentPlaylist = null;
@@ -192,6 +200,13 @@ namespace Controller
             PlayQueue(startIndex);
         }
 
+        /**
+         * Plays the songs in the queue
+         *
+         * @param index Gets the corresponding starting index
+         *
+         * @return void
+         */
         public void PlayQueue(int startIndex = -1)
         {
             ClearQueue();
@@ -210,8 +225,6 @@ namespace Controller
         /**
          * Keeps playing the playlists over and over again
          *
-         * @param playlist Which playlist needs to be looped over
-         *
          * @return void
          */
         [HasPermission(Permission = Permissions.SongLoop)]
@@ -224,8 +237,6 @@ namespace Controller
         /**
          * Shuffles the playlist
          *
-         * @param playlist Which playlist needs to be shuffled
-         *
          * @return void
          */
         [HasPermission(Permission = Permissions.SongShuffle)]
@@ -237,8 +248,6 @@ namespace Controller
 
         /**
          * Fills the queue with the songs in the playlist
-         *
-         * @param playlist Which playlist needs to be filled
          *
          * @return void
          */
@@ -320,7 +329,11 @@ namespace Controller
             return shuffledList;
         }
 
-        //TODO: documentatie
+        /**
+         * Plays and pauses a song
+         *
+         * @return void
+         */
         public void PlayPause()
         {
             if(CurrentSong == null) return;
@@ -331,7 +344,13 @@ namespace Controller
                 WaveOutDevice.Pause();
         }
 
-        //TODO: documentatie
+        /**
+         * Changes the maximum volume
+         *
+         * @param selectedItem Gets loudness option
+         *
+         * @return void
+         */
         public void ChangeVolume(int selectedItem)
         {
             MaxVolume = selectedItem switch

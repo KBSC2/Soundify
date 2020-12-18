@@ -34,13 +34,10 @@ namespace View.Screens
 
         private void PlaylistsRow_Click(object sender, MouseButtonEventArgs e)
         {
-            var dataGridRow = (DataGridRow)sender;
-            var selectedPlaylist = (Playlist)dataGridRow.Item;
-
             MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs
             {
                 ScreenName = ScreenNames.PlaylistScreen,
-                Playlist = selectedPlaylist
+                Playlist = (Playlist)((DataGridRow)sender).Item
             });
         }
     }
