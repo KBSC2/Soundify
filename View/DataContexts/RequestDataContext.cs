@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using Controller.DbControllers;
-using Model.Annotations;
 using Model.Database.Contexts;
 using Model.DbModels;
 using View.ListItems;
@@ -13,15 +11,7 @@ namespace View.DataContexts
     public class RequestDatacontext : INotifyPropertyChanged
     {
         private static RequestDatacontext instance;
-        public static RequestDatacontext Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new RequestDatacontext();
-                return instance;
-            }
-        }
+        public static RequestDatacontext Instance => instance ??= new RequestDatacontext();
         public List<Request> ArtistRequests => RequestController.Create(DatabaseContext.Instance).GetArtistRequests();
 
         public List<SongRequestInfo> SongRequests =>
@@ -31,10 +21,9 @@ namespace View.DataContexts
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(""));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
 }

@@ -7,16 +7,7 @@ namespace Controller
     public class FileCache
     {
         private static FileCache instance;
-
-        public static FileCache Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new FileCache();
-                return instance;
-            }
-        }
+        public static FileCache Instance => instance ??= new FileCache();
 
         private FileCache()
         {
@@ -42,7 +33,7 @@ namespace Controller
          *
          * @return void
          */
-        public void ClearCache()
+        public void ClearCache() //TODO: dit gebruiken :P
         {
             ClearCache(TimeSpan.FromHours(1));
         }

@@ -1,13 +1,6 @@
 ﻿using System.Windows;
 using Controller;
-using System.Windows.Controls;
-using Controller.DbControllers;
-using Model.Database.Contexts;
 using View.DataContexts;
-using Model.EventArgs;
-using Soundify;
-using System;
-using Model.Enums;
 using System.Linq;
 
 namespace View.Screens

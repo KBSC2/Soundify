@@ -23,4 +23,4 @@
         AccountEditAll,
         AdminDashboard,
     }
-}
+} // TODO: gebruik de rest van deze permissions

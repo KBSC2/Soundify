@@ -32,27 +32,26 @@ namespace Controller.DbControllers
          *  This is the same function as in the base class,
          *  but this function is restricted by permissions
          *
-         *  @param Item The playlist data object
+         *  @param item The playlist data object
          *
-         *  @return void
+         *  @return Playlist : the created playlist
          */
         [HasPermission(Permission = Permissions.PlaylistCreate, MaxValue = Permissions.PlaylistLimit)]
-        public override void CreateItem(Playlist item)
+        public override Playlist CreateItem(Playlist item)
         {
-            base.CreateItem(item);
+            return base.CreateItem(item);
         }
 
         /**
          * A playlist is set to de-activated upon calling this function
-         * @param playlistId the id of designated playlist
+         *
+         * @param playlist The playlist to deactivate
          *
          * @return void
          */
-        public virtual void DeactivatePlaylist(int playlistId)
+        public void DeactivatePlaylist(Playlist playlist)
         {
-            DateTime dateTime = DateTime.Now;
-            var playlist = GetItem(playlistId);
-            playlist.DeleteDateTime = dateTime.AddDays(1);
+            playlist.DeleteDateTime = DateTime.Now.AddDays(1);
             playlist.ActivePlaylist = false;
             UpdateItem(playlist);
         }
@@ -63,10 +62,10 @@ namespace Controller.DbControllers
          *
          *  @return void
          */
-        public virtual void DeletePlaylistOnDateStamp()
+        public void DeletePlaylistOnDateStamp()
         {
-            GetList().Where(p => p.ActivePlaylist == false && p.DeleteDateTime < DateTime.Now).
-                ToList().ForEach(p => DeleteItem(p.ID));
+            GetFilteredList(p => p.ActivePlaylist == false && p.DeleteDateTime < DateTime.Now)
+                .ToList().ForEach(p => DeleteItem(p.ID));
         }
 
         /**
@@ -76,9 +75,9 @@ namespace Controller.DbControllers
          *
          * @returns List<Playlist> : a list of maximum 8 playlist based on the searchTerms
          */
-        public virtual List<Playlist> SearchPlayListOnString(List<string> searchTerms, int userId)
+        public List<Playlist> SearchPlayListOnString(List<string> searchTerms, User user)
         {
-            return GetActivePlaylists()
+            return GetActivePlaylists(user)
                 .Where(playlist => searchTerms.Any(s => playlist.Name != null && playlist.Name.Contains(s)) ||
                                    searchTerms.Any(
                                        s => playlist.Description != null &&
@@ -88,12 +87,6 @@ namespace Controller.DbControllers
                 .ToList();
         }
 
-       
-        public virtual List<Playlist> GetList(int userId)
-        {
-            return base.GetFilteredList(x => x.UserID == userId);
-        }
-
         /**
          * Gets a list of active playlists
          *
@@ -101,9 +94,13 @@ namespace Controller.DbControllers
          *
          * @return A list of active playlist
          */
-        public virtual List<Playlist> GetActivePlaylists(int userId)
+        public List<Playlist> GetActivePlaylists(User user)
         {
-            return GetList(userId).Where(x => x.ActivePlaylist).ToList();
+            if (user == null)
+                return GetActivePlaylists();
+
+            return user.Playlists.Where(x => x.ActivePlaylist)
+                .GroupBy(x => x.ID).Select(g => g.First()).ToList();
         }
 
         /**
@@ -111,7 +108,7 @@ namespace Controller.DbControllers
          *
          * @return A list of active playlists
          */
-        public virtual List<Playlist> GetActivePlaylists()
+        public List<Playlist> GetActivePlaylists()
         {
             return GetList().Where(x => x.ActivePlaylist).ToList();
         }

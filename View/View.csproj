@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="PopupScreens\**" />
+    <EmbeddedResource Remove="PopupScreens\**" />
+    <None Remove="PopupScreens\**" />
+    <Page Remove="PopupScreens\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="PlaylistMenuView.xaml.cs" />
   </ItemGroup>
 
@@ -92,10 +99,6 @@
     <Page Update="Styles\NoListBoxHoverBackground.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="PopupScreens\" />
   </ItemGroup>
 
 </Project>

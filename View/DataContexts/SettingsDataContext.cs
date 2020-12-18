@@ -2,7 +2,6 @@
 using System.Runtime.CompilerServices;
 using Controller.DbControllers;
 using Model.Annotations;
-using Model.Database.Contexts;
 using Model.DbModels;
 
 namespace View.DataContexts
@@ -10,21 +9,12 @@ namespace View.DataContexts
     public class SettingsDataContext : INotifyPropertyChanged
     {
         private static SettingsDataContext instance;
-        public static SettingsDataContext Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new SettingsDataContext();
-                return instance;
-            }
-        }
-        public Role Role => RoleController.Create(DatabaseContext.Instance).GetItem(UserController.CurrentUser.RoleID);
+        public static SettingsDataContext Instance => instance ??= new SettingsDataContext();
+        public Role Role => UserController.CurrentUser.Role;
 
         public string CurrentUserName => UserController.CurrentUser.Username;
 
-        public string HasArtistRequested => UserController.Create(DatabaseContext.Instance)
-            .GetItem(UserController.CurrentUser.ID).RequestedArtist == true
+        public string HasArtistRequested => UserController.CurrentUser.RequestedArtist
             ? "Hidden"
             : "Visible";
 

@@ -37,16 +37,7 @@ namespace Controller.DbControllers
 
         public List<ShopItemPermissions> GetList()
         {
-            var permissionController = PermissionController.Create(Context);
-            var shopItemController = ShopItemController.Create(Context);
-
-            var result = Set.ToList();
-            result.ForEach(x =>
-            {
-                x.Permission = permissionController.GetItem(x.PermissionID);
-                x.ShopItem = shopItemController.GetItem(x.ShopItemID);
-            });
-            return result;
+            return Set.ToList();
         }
 
         /**
@@ -56,9 +47,20 @@ namespace Controller.DbControllers
          *
          * @return List<ShopItemPermissions> : A list of all shopItemPermissions
          */
-        public List<ShopItemPermissions> GetPermissionsFromShopItems(int[] shopItemIds)
+        public List<ShopItemPermissions> GetPermissionsFromShopItems(List<UserShopItems> shopItems)
         {
-            return GetList().Where(x => shopItemIds.Contains(x.ShopItemID)).ToList();
+            var result = new List<ShopItemPermissions>();
+
+            shopItems.ForEach(x =>
+            {
+                x.ShopItem.Permissions.ToList().ForEach(y =>
+                {
+                    if (!result.Contains(y))
+                        result.Add(y);
+                });
+            });
+
+            return result;
         }
 
         /**
@@ -74,9 +76,7 @@ namespace Controller.DbControllers
             if (user == null)
                 return null;
 
-            var shopItemIds = UserShopItemsController.Create(Context).GetItemsForUser(user.ID)
-                .Select(x => x.ShopItemID).ToArray();
-            return this.GetPermissionsFromShopItems(shopItemIds)
+            return this.GetPermissionsFromShopItems(user.UserShopItems.ToList())
                 .FirstOrDefault(x => x.PermissionID == (int)permission);
         }
 
@@ -90,15 +90,15 @@ namespace Controller.DbControllers
          */
         public int GetPermissionValueCount(User user, Permissions permission)
         {
-            var shopItemIds = UserShopItemsController.Create(Context).GetItemsForUser(user.ID)
-                .Select(x => x.ShopItemID).ToArray();
+            if (user == null)
+                return 0;
 
-            var perms = this.GetPermissionsFromShopItems(shopItemIds)
+            var perms = this.GetPermissionsFromShopItems(user.UserShopItems.ToList())
                 .Where(x => x.Permission.Name == permission.ToString()).ToList();
 
             var count = 0;
-            foreach (var t in shopItemIds)
-                count += perms.FirstOrDefault(x => x.ShopItemID == t)?.Value ?? 0;
+            foreach (var t in perms)
+                count += perms.FirstOrDefault(x => x.ShopItemID == t.ShopItemID)?.Value ?? 0;
 
             return count;
         }

@@ -17,26 +17,25 @@ namespace View.DataContexts
 
         public ShopDataContext()
         {
-            ShopItems = ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser.ID);
+            ShopItems = ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser);
             DataContext.Instance.Timer.Elapsed += OnTimedEvent;
         }
-
+        
         public void OnTimedEvent(object sender, EventArgs e)
         {
             var items = new List<ShopItem>(ShopItems);
             items.ForEach(x =>
-            {
-                x.Purchasable = UserController.CurrentUser.Coins >= x.Price;
-            });
-            ShopItems = items;
+                x.Purchasable = UserController.CurrentUser.Coins >= x.Price
+            );
 
+            ShopItems = items;
             OnPropertyChanged();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(""));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

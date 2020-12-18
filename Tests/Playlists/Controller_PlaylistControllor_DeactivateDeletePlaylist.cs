@@ -20,15 +20,15 @@ namespace Tests.Playlists
         {
             playlistController = PlaylistController.Create(new MockDatabaseContext());
             playlist = new Playlist()
-                {Name = "TestDeactivateDelete", ActivePlaylist = true, CreationDate = DateTime.Now};
-            playlistDelete = new Playlist() {Name = "TestDelete", ActivePlaylist = true, CreationDate = DateTime.Now};
+                { ID = 1, Name = "TestDeactivateDelete", ActivePlaylist = true, CreationDate = DateTime.Now};
+            playlistDelete = new Playlist() {ID = 2, Name = "TestDelete", ActivePlaylist = true, CreationDate = DateTime.Now};
         }
 
         [Test]
         public void PlaylistController_DeactivatePlaylistTest_DeactivatedPlaylist()
         {
             playlistController.CreateItem(playlist);
-            playlistController.DeactivatePlaylist(playlist.ID);
+            playlistController.DeactivatePlaylist(playlist);
             var testVariable = playlistController.GetItem(playlist.ID);
             Assert.IsFalse(testVariable.ActivePlaylist);
             playlistController.DeleteItem(playlist.ID);
@@ -38,7 +38,7 @@ namespace Tests.Playlists
         public void PlaylistController_DeletePlaylistTest_DeletedPlaylist()
         {
             playlistController.CreateItem(playlistDelete);
-            playlistController.DeactivatePlaylist(playlistDelete.ID);
+            playlistController.DeactivatePlaylist(playlistDelete);
             var testVariable = playlistController.GetItem(playlistDelete.ID);
             testVariable.DeleteDateTime = DateTime.Now.AddMilliseconds(1500);
             playlistController.UpdateItem(testVariable);

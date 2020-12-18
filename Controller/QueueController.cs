@@ -1,22 +1,12 @@
 ﻿using Model.DbModels;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Controller
 {
     public class QueueController
     {
         private static QueueController instance;
-        public static QueueController Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new QueueController();
-                return instance;
-            }
-        }
+        public static QueueController Instance => instance ??= new QueueController();
 
         public void DeleteSongFromQueue(Song song)
         {
@@ -26,11 +16,11 @@ namespace Controller
 
         public void SwapSongs(int indexOne, int indexTwo, List<Song> list)
         {
-            var listitem1 = list[indexOne];
-            var listitem2 = list[indexTwo];
+            var listItem1 = list[indexOne];
+            var listItem2 = list[indexTwo];
 
-            list[indexOne] = listitem2;
-            list[indexTwo] = listitem1;
+            list[indexOne] = listItem2;
+            list[indexTwo] = listItem1;
         }
 
     }

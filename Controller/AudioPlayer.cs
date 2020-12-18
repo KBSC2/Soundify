@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Controller.DbControllers;
-using Controller.Proxy;
+ using Controller.Proxy;
 using Model;
 using Model.Annotations;
 using Model.Database.Contexts;
@@ -28,8 +27,8 @@ namespace Controller
 
         public List<Song> Queue { get; set; } = new List<Song>();
         public List<Song> NextInQueue { get; set; } = new List<Song>();
-        public bool Looping { get; set; } = false;
-        public bool Shuffling { get; set; } = false;
+        public bool Looping { get; set; }
+        public bool Shuffling { get; set; }
 
         public static AudioPlayer Instance { get; set; }
         public static IDatabaseContext Context { get; set; }
@@ -98,7 +97,7 @@ namespace Controller
                 {
                     CurrentSongIndex = Queue.Count - 1;
                     List<Song> copyQueue = new List<Song>(Queue);
-                    copyQueue.ForEach(i => AddSongToQueue(i));
+                    copyQueue.ForEach(AddSongToQueue);
                 }
                 else
                     CurrentSongIndex = 0;
@@ -121,7 +120,7 @@ namespace Controller
                 WaveOutDevice.Stop();
             CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
             CurrentSong = song;
-            CurrentSongArtistName = ArtistController.Create(Context).GetItem(song.ArtistID).ArtistName;
+            CurrentSongArtistName = song.Artist.ArtistName;
             WaveOutDevice.Init(CurrentSongFile.AudioFile);
             NextSong?.Invoke(this, new EventArgs());
             Task.Delay(500).ContinueWith(x => WaveOutDevice.Play());
@@ -199,7 +198,7 @@ namespace Controller
 
             if (NextInQueue.Count > 0)
             {
-                NextInQueue.ForEach(i => AddSongToQueue(i));
+                NextInQueue.ForEach(AddSongToQueue);
                 CurrentSongIndex = -1;
             }
             else
@@ -246,13 +245,11 @@ namespace Controller
         private void FillQueue()
         {
             var songs = new List<Song>();
-
-            if(CurrentPlaylist != null)
-                songs = PlaylistSongController.Create(Context).GetSongsFromPlaylist(CurrentPlaylist.ID).Select(x => x.Song).ToList();
+            if (CurrentPlaylist != null)
+                songs = CurrentPlaylist.PlaylistSongs.Select(x => x.Song).ToList();
 
             if (CurrentAlbumSongs.Count > 0)
                 songs = CurrentAlbumSongs;
-
 
             if (songs.Count > 0)
             {
@@ -309,7 +306,7 @@ namespace Controller
             if (songs.Count <= 1)
                 return songs;
 
-            var shuffledList = new List<Song>(songs);
+            List<Song> shuffledList;
             var random = new Random();
 
             while (true)
@@ -323,6 +320,7 @@ namespace Controller
             return shuffledList;
         }
 
+        //TODO: documentatie
         public void PlayPause()
         {
             if(CurrentSong == null) return;
@@ -333,6 +331,7 @@ namespace Controller
                 WaveOutDevice.Pause();
         }
 
+        //TODO: documentatie
         public void ChangeVolume(int selectedItem)
         {
             MaxVolume = selectedItem switch
