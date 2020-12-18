@@ -20,7 +20,7 @@ namespace View.Screens
             var index = AudioPlayer.Instance.Queue.IndexOf(songInfo.Song);
 
             AudioPlayer.Instance.PlayQueue(index-1);
-            QueueDataContext.Instance.OnPropertyChanged();
+            QueueDataContext.Instance.OnPropertyChanged("");
         }
 
         private void Queue_MoveUp_Click(object sender, RoutedEventArgs e)
@@ -32,7 +32,7 @@ namespace View.Screens
             if (selectedSongInfo == null || listView.SelectedIndex - 1 < 0) return;
 
             QueueController.Instance.SwapSongs(listView.SelectedIndex + 1, listView.SelectedIndex, AudioPlayer.Instance.Queue);
-            QueueDataContext.Instance.OnPropertyChanged();
+            QueueDataContext.Instance.OnPropertyChanged("");
         }
 
         private void Queue_MoveDown_Click(object sender, RoutedEventArgs e)
@@ -44,7 +44,7 @@ namespace View.Screens
             if (selectedSongInfo == null || listView.SelectedIndex + 1 >= listView.Items.Count) return;
 
             QueueController.Instance.SwapSongs(listView.SelectedIndex + 1, listView.SelectedIndex + 2, AudioPlayer.Instance.Queue);
-            QueueDataContext.Instance.OnPropertyChanged();
+            QueueDataContext.Instance.OnPropertyChanged("");
         }
 
         
@@ -52,7 +52,7 @@ namespace View.Screens
         public void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
         {
             QueueController.Instance.DeleteSongFromQueue(((SongInfo)((MenuItem)sender).DataContext).Song);
-            QueueDataContext.Instance.OnPropertyChanged();
+            QueueDataContext.Instance.OnPropertyChanged("");
         }
     }
 }

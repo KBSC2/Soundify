@@ -22,14 +22,14 @@
         <ListView x:Name="SongListView"
                   Background="Transparent" BorderThickness="0" BorderBrush="{x:Null}"
                   ItemsSource="{Binding SongInfoList}" FontSize="25"
-                  DataContext="{x:Static dataContext:SongListDataContext.Instance}">
+                  DataContext="{x:Static dataContext:SongListDataContext.Instance}" >
             <ListView.View>
                 <GridView  ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
-                    <GridViewColumn Header="Title" Width="350" DisplayMemberBinding="{Binding Song.Name}" />
-                    <GridViewColumn Header="Artist" Width="240" DisplayMemberBinding="{Binding Artist.ArtistName}" />
+                    <GridViewColumn Header="Title" Width="370" DisplayMemberBinding="{Binding Song.Name}" />
+                    <GridViewColumn Header="Artist" Width="290" DisplayMemberBinding="{Binding Artist.ArtistName}" />
                     <GridViewColumn Header="Duration" Width="130" DisplayMemberBinding="{Binding Duration}" />
-                    <GridViewColumn Header="Album" Width="160" DisplayMemberBinding="{Binding Song.Album.AlbumName}" />
-                    <GridViewColumn Width="270" DisplayMemberBinding="{Binding Added}">
+                    <GridViewColumn Header="Album" Width="220" DisplayMemberBinding="{Binding Song.Album.AlbumName}" />
+                    <GridViewColumn Width="145" DisplayMemberBinding="{Binding Added}">
 	                    <GridViewColumnHeader Content="Added" Visibility="{Binding IsPlaylistScreen, Converter={StaticResource BooleanToVisibilityConverter}}"
 	                                          components:GridViewBehaviours.CollapseableColumn="True"/>
                     </GridViewColumn>
@@ -37,8 +37,14 @@
                         <GridViewColumnHeader Content="Edit" Visibility="{Binding IsSongListScreen, Converter={StaticResource BooleanToVisibilityConverter}}"
                                               components:GridViewBehaviours.CollapseableColumn="True"/>
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate >
-                                <Button x:Name ="EditSong" Content="Edit Song" Foreground="White" Background="{DynamicResource Orange}" Click="ListViewItem_ButtonClick_EditSong"/>
+                            <DataTemplate>
+                                <Button x:Name ="EditSong" Content="Edit Song" Foreground="White" Background="{DynamicResource Orange}" Click="ListViewItem_ButtonClick_EditSong">
+                                    <Button.Resources>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Setter Property="CornerRadius" Value="12"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -79,6 +85,7 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <EventSetter Event="MouseDoubleClick" Handler="SongRow_Click" />
+                    <EventSetter Event="Selected" Handler="SelectedItem_Selected"/>
                     <Setter Property="Background" Value="Transparent" />
                     <Setter Property="Foreground" Value="{Binding Playing}" />
                     <Setter Property="ContextMenu" Value="{DynamicResource ItemContextMenu}" />

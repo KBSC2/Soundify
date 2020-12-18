@@ -75,9 +75,9 @@ namespace Controller.DbControllers
          *
          * @returns List<Playlist> : a list of maximum 8 playlist based on the searchTerms
          */
-        public List<Playlist> SearchPlayListOnString(List<string> searchTerms, User user)
+        public List<Playlist> SearchPlayListOnString(List<string> searchTerms)
         {
-            return GetActivePlaylists(user)
+            return GetActivePlaylists()
                 .Where(playlist => searchTerms.Any(s => playlist.Name != null && playlist.Name.Contains(s)) ||
                                    searchTerms.Any(
                                        s => playlist.Description != null &&

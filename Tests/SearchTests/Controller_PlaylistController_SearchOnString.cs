@@ -40,7 +40,7 @@ namespace Tests.SearchTests
         [TestCase("etal", 3)]                       // playlistGenre
         public void PlaylistController_Search(string search, int expectedId)
         {
-            Assert.IsTrue(playlistController.SearchPlayListOnString(new List<string>() { search }, user)
+            Assert.IsTrue(playlistController.SearchPlayListOnString(new List<string>() { search })
                 .Any(x => x.ID == expectedId));
         }
 
@@ -48,7 +48,7 @@ namespace Tests.SearchTests
         [TestCase(new [] { "meTest", "test this", "eta" }, new [] {1, 2, 3} )]
         public void PlaylistController_Multiple(string[] searches, int[] expected)
         {
-            Assert.IsFalse(playlistController.SearchPlayListOnString(searches.ToList(), user)
+            Assert.IsFalse(playlistController.SearchPlayListOnString(searches.ToList())
                 .Any(x => !expected.Contains(x.ID)));
         }
 

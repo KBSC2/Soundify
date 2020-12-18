@@ -124,7 +124,9 @@ namespace Controller
         {
             if (CurrentSong != null)
                 WaveOutDevice.Stop();
+
             CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
+            //CurrentSongFile.AudioFile.CurrentTime = TimeSpan.FromSeconds(0);
             CurrentSong = song;
             CurrentSongArtistName = song.Artist.ArtistName;
             WaveOutDevice.Init(CurrentSongFile.AudioFile);
@@ -260,6 +262,7 @@ namespace Controller
         private void FillQueue()
         {
             var songs = new List<Song>();
+
             if (CurrentPlaylist != null)
                 songs = CurrentPlaylist.PlaylistSongs.Select(x => x.Song).ToList();
 
@@ -288,7 +291,12 @@ namespace Controller
                         tempList.ForEach(i => queueFromCurrentSongIndex.Add(i));
                     }
                     else
+                    {
+                        var tempList = new List<Song>(queueFromCurrentSongIndex);
+                        queueFromCurrentSongIndex.Clear();
+                        songs.Where(x => tempList.Contains(x)).ToList().ForEach(i => queueFromCurrentSongIndex.Add(i));
                         songs.ForEach(i => queueFromCurrentSongIndex.Add(i));
+                    }
                 }
                 else
                 {

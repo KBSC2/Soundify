@@ -235,7 +235,6 @@
             <components:MenuButton Permission="AdminDashboard" HideOnBlocked="True" ScreenName="AdminScreen" Content="Admin" Margin="0,335,0,0" Height="30" VerticalAlignment="Top" />
             <components:MenuButton ScreenName="ShopScreen" Content="Shop" Margin="0,0,0,72" Height="30" VerticalAlignment="Bottom" />
             <Image Margin="20,0,0,10" Source="/Assets/Coins.png" Height="25" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-            <!-- <Label x:Name="MoneyAdded" Content="+1" HorizontalAlignment="Center" Margin="0,0,0,52" Foreground="White" FontSize="14" Opacity="0.5" Height="29" VerticalAlignment="Bottom"/> -->
             <Label x:Name="Money" Content="{Binding CurrentUserCoins}" HorizontalAlignment="Left" Margin="60,0,0,6" Width="62" Foreground="White" FontSize="20" VerticalAlignment="Bottom" FontWeight="Bold"/>
         </Grid>
     </Grid>

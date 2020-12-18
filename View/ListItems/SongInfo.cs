@@ -14,7 +14,7 @@ namespace View
         public Artist Artist { get; set; }
         public bool ShowVisibillity { get; set; }
         public string Duration { get; set; }
-        public DateTime Added { get; set; }
+        public string Added { get; set; }
         public int Index { get; set; }
         public string Playing => AudioPlayer.Instance.CurrentSong == null ? "White" : Song.ID == AudioPlayer.Instance.CurrentSong.ID ? "#FFF78D0E" : "White";
 
@@ -25,7 +25,7 @@ namespace View
 
         public SongInfo(Song song, PlaylistSong playlistSong) : this(song)
         {
-            Added = playlistSong.Added;
+            Added = playlistSong.Added.ToString("dd-MM-yyyy");
             Index = playlistSong.Index;
         }
 
@@ -39,7 +39,7 @@ namespace View
 
         public static List<SongInfo> ConvertSongListToSongInfo(Playlist playlist)
         {
-            return playlist.PlaylistSongs.Select(song => new SongInfo(song.Song, song)).ToList();
+            return playlist.PlaylistSongs.Select(song => new SongInfo(song.Song, song)).OrderBy(s => s.Index).ToList();
         }
 
         public static List<SongInfo> ConvertSongListToSongInfo(List<Song> songs)

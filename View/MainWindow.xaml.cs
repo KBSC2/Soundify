@@ -15,7 +15,7 @@ using Model.Enums;
 using View;
 using View.Components;
 using View.DataContexts;
-
+using NAudio.Wave;
 
 namespace Soundify
 {
@@ -129,7 +129,7 @@ namespace Soundify
             if (AudioPlayer.Instance.CurrentSongFile == null)
             {
                 AudioPlayer.Instance.Next();
-                QueueDataContext.Instance.OnPropertyChanged();
+                QueueDataContext.Instance.OnPropertyChanged("");
             }
 
             AudioPlayer.Instance.PlayPause();
@@ -148,7 +148,7 @@ namespace Soundify
         {
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
             SongListDataContext.Instance.ScreenName = screenName;
-            SongListDataContext.Instance.OnPropertyChanged();
+            SongListDataContext.Instance.OnPropertyChanged("");
         }
 
         public void SetScreen(ScreenNames screenName, Playlist playlist)
@@ -172,25 +172,25 @@ namespace Soundify
         private void Prev_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Instance.Prev();
-            QueueDataContext.Instance.OnPropertyChanged();
+            QueueDataContext.Instance.OnPropertyChanged("");
         }
 
         private void Next_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Instance.NextButton();
-            QueueDataContext.Instance.OnPropertyChanged();
+            QueueDataContext.Instance.OnPropertyChanged("");
         }
 
         private void Loop_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Instance.Loop();
-            QueueDataContext.Instance.OnPropertyChanged();
+            QueueDataContext.Instance.OnPropertyChanged("");
         }
 
         private void Shuffle_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Instance.Shuffle();
-            QueueDataContext.Instance.OnPropertyChanged();
+            QueueDataContext.Instance.OnPropertyChanged("");
         }
 
         public void SetSearchTerms(object sender, KeyEventArgs e)
@@ -202,7 +202,7 @@ namespace Soundify
                 if (SongListDataContext.Instance.IsSongListScreen)
                 {
                     SongListDataContext.Instance.SongListSearchTerms = text.Split(" ").ToList();
-                    SongListDataContext.Instance.OnPropertyChanged();
+                    SongListDataContext.Instance.OnPropertyChanged("");
                 }
                 else
                 {
@@ -237,7 +237,20 @@ namespace Soundify
         {
             // Start the app minimized, then show it here to avoid a white flash on startup
             Activate();
-            WindowState = WindowState.Normal;
+            WindowState = WindowState.Maximized;
+        }
+
+        public void CheckSongFinished(object sender, EventArgs e)
+        {
+            if (AudioPlayer.Instance.CurrentSong == null)
+                return;
+
+            if (AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong >= AudioPlayer.Instance.CurrentSong.Duration)
+            {
+                AudioPlayer.Instance.Next();
+                QueueDataContext.Instance.OnPropertyChanged("");
+                SongListDataContext.Instance.OnPropertyChanged("");
+            }
         }
     }
 }

@@ -15,18 +15,18 @@ namespace View.Resources
 {
     public partial class SongContextMenuInfo : ResourceDictionary
     {
-        public void ListViewItem_RightClickAddQueue(object sender, RoutedEventArgs e)
+        private void ListViewItem_RightClickAddQueue(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Instance.AddSongToSongQueue(((SongInfo)((MenuItem)sender).DataContext).Song);
 
-            SongListDataContext.Instance.OnPropertyChanged();
+            SongListDataContext.Instance.OnPropertyChanged("");
         }
 
         private void ListViewItem_RightClickSongInfo(object sender, RoutedEventArgs e)
         {
             new SongInfoScreen(((SongInfo)((MenuItem)sender).DataContext).Song).Show();
 
-            SongListDataContext.Instance.OnPropertyChanged();
+            SongListDataContext.Instance.OnPropertyChanged("");
         }
 
         private void SongRow_Click(object sender, MouseButtonEventArgs e)
@@ -54,7 +54,7 @@ namespace View.Resources
                 }
             }
 
-            SongListDataContext.Instance.OnPropertyChanged("SongInfoList");
+            SongListDataContext.Instance.OnPropertyChanged("");
         }
 
         private void OpenAlbum_LeftClick(object sender, RoutedEventArgs e)
@@ -68,7 +68,7 @@ namespace View.Resources
         }
 
 
-        public void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
+        private void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
         {
             PlaylistSongController.Create(DatabaseContext.Instance).RemoveFromPlaylist(MainWindow.CurrentPlayList, ((SongInfo)((MenuItem)sender).DataContext).Song.ID);
 
@@ -81,15 +81,21 @@ namespace View.Resources
             var playlistSongController = PlaylistSongController.Create(DatabaseContext.Instance);
             playlistSongController.AddSongToPlaylist((Playlist)((MenuItem)sender).DataContext, ((SongInfo)((MenuItem)((MenuItem)sender).Tag).DataContext).Song.ID);
 
-            SongListDataContext.Instance.OnPropertyChanged();
+            SongListDataContext.Instance.OnPropertyChanged("");
         }
 
-        public void ListViewItem_ButtonClick_EditSong(object sender, RoutedEventArgs e)
+        private void ListViewItem_ButtonClick_EditSong(object sender, RoutedEventArgs e)
         {
             if (!(sender is Button button) || !(button.DataContext is SongInfo songInfo)) return;
             
             SongAlterationDataContext.Instance.SetSong(songInfo.Song);
             MainWindow.InstanceMainWindow.SetScreen(ScreenNames.SongAlterationScreen);
+        }
+
+        private void SelectedItem_Selected(object sender, RoutedEventArgs e )
+        {
+            var songInfo = (((ListViewItem) sender).Content as SongInfo);
+            SongListDataContext.Instance.SelectedSongInfo = songInfo;
         }
     }
 }
