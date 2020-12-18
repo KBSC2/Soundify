@@ -26,7 +26,7 @@ namespace View.Screens
                 return;
 
             ShopItemController.Create(DatabaseContext.Instance).BuyItem(UserController.CurrentUser, shopItem);
-            ShopDataContext.Instance.OnPropertyChanged();
+            ShopDataContext.Instance.OnPropertyChanged("");
             MainWindow.InstanceMainWindow.UpdateButtons();
         }
     }
