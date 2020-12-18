@@ -15,8 +15,7 @@ namespace View.Screens
 
         private void Queue_SongRow_Click(object sender, MouseButtonEventArgs e)
         {
-            var listViewItem = (ListViewItem)sender;
-            var songInfo = (SongInfo)listViewItem.Content;
+            var songInfo = (SongInfo)((ListViewItem)sender).Content;
 
             var index = AudioPlayer.Instance.Queue.IndexOf(songInfo.Song);
 
