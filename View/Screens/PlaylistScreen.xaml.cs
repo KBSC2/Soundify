@@ -48,25 +48,23 @@ namespace View.Screens
 
         private void MoveUp_Click(object sender, RoutedEventArgs e)
         {
-            var mainGrid = (Grid)((Button)sender).Tag;
-            var selectedSongInfo = (SongInfo)((ListView)mainGrid.FindName("SongList"))?.SelectedItem;
-
+            var selectedSongInfo = SongListDataContext.Instance.SelectedSongInfo;
+            
             if (selectedSongInfo == null || selectedSongInfo.Index - 1 < 0) return;
 
             playlistSongController.SwapSongs(MainWindow.CurrentPlayList, selectedSongInfo.Index, selectedSongInfo.Index - 1);
-            SongListDataContext.Instance.OnPropertyChanged("SongInfoList");
+            SongListDataContext.Instance.OnPropertyChanged("");
+            
         }
 
         private void MoveDown_Click(object sender, RoutedEventArgs e)
         {
-            var mainGrid = (Grid)((Button)sender).Tag;
-            var listView = (ListView) mainGrid.FindName("SongList");
-            var selectedSongInfo = (SongInfo)listView?.SelectedItem;
+            var selectedSongInfo = SongListDataContext.Instance.SelectedSongInfo;
 
-            if (selectedSongInfo == null || selectedSongInfo.Index + 1 >= listView.Items.Count) return;
+            if (selectedSongInfo == null || selectedSongInfo.Index + 1 >= selectedSongInfo.Song.PlaylistSongs.Count) return;
             
             playlistSongController.SwapSongs(MainWindow.CurrentPlayList, selectedSongInfo.Index, selectedSongInfo.Index + 1);
-            SongListDataContext.Instance.OnPropertyChanged("SongInfoList");
+            SongListDataContext.Instance.OnPropertyChanged("");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Model.Enums;
 
 namespace Model.DbModels
@@ -26,5 +27,7 @@ namespace Model.DbModels
         public string PathToImage { get; set; }
 
         public SongStatus Status { get; set; }
+
+        public virtual ICollection<PlaylistSong> PlaylistSongs { get; set; }
     }
 }
