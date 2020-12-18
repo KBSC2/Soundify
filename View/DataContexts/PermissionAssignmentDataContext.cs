@@ -23,8 +23,9 @@ namespace View.DataContexts
         public PermissionAssignmentDataContext()
         {
             PermissionsDict = new Dictionary<Permission, bool[]>();
-            foreach (var rolePermission in RolePermissionsController.Create(DatabaseContext.Instance).GetPermissionsFromRoles(new int[] { 1, 2, 3 })){
-
+            foreach (var rolePermission in RolePermissionsController.Create(DatabaseContext.Instance)
+                .GetPermissionsFromRoles(RoleController.Create(DatabaseContext.Instance).GetList()))
+                {
                 if (PermissionsDict.ContainsKey(rolePermission.Permission))
                 {
                     PermissionsDict[rolePermission.Permission][rolePermission.RoleID - 1] = true;
