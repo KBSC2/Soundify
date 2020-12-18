@@ -10,7 +10,6 @@ using Model.Enums;
 using Model.EventArgs;
 using Soundify;
 using View.DataContexts;
-using View.Screens;
 
 namespace View.Resources
 {
@@ -82,7 +81,7 @@ namespace View.Resources
         {
             var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
             var playlist = MainWindow.CurrentPlayList;
-            PlaylistSongController.Create(DatabaseContext.Instance).RemoveFromPlaylist(song.ID, playlist.ID);
+            PlaylistSongController.Create(DatabaseContext.Instance).RemoveFromPlaylist(playlist, song.ID);
 
             SongListDataContext.Instance.OnPropertyChanged("");
             PlaylistDataContext.Instance.OnPropertyChanged("");
@@ -94,7 +93,7 @@ namespace View.Resources
             var song = ((SongInfo)((MenuItem)((MenuItem)sender).Tag).DataContext).Song;
 
             var playlistSongController = PlaylistSongController.Create(DatabaseContext.Instance);
-            playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
+            playlistSongController.AddSongToPlaylist(playlist, song.ID);
 
             SongListDataContext.Instance.OnPropertyChanged();
         }

@@ -64,15 +64,13 @@ namespace View.Screens
             if (imageSource != null) FileTransfer.Create(DatabaseContext.Instance).UploadFile(imageSource?.LocalPath, "images/" +
                 imageSource.LocalPath.Split("\\").Last());
 
-            var artistName = ((Label)dataGrid.FindName("Artist"))?.Content.ToString();
-            var artistId = ArtistController.Create(DatabaseContext.Instance).GetArtistIdFromUserId(UserController.CurrentUser.ID);
-
-            if (artistId == null) return;
+            var artist = ArtistController.Create(DatabaseContext.Instance).GetArtistFromUser(UserController.CurrentUser);
+            if (artist == null) return;
 
             var song = new Song()
             {
                 Name = songName,
-                ArtistID = (int) artistId,
+                ArtistID = artist.ID,
                 Description = dataGrid.FindName("Description") != null
                     ? ((TextBox) dataGrid.FindName("Description"))?.Text
                     : null,
@@ -91,7 +89,7 @@ namespace View.Screens
 
             var request = new Request()
             {
-                ArtistName = artistName,
+                ArtistName = artist.ArtistName,
                 UserID = UserController.CurrentUser.ID,
                 RequestType = RequestType.Song,
                 SongID = song.ID
@@ -108,7 +106,7 @@ namespace View.Screens
             ArtistDataContext.Instance.OnPropertyChanged("");
 
             var emailController = new EmailController();
-            var email = new MailSongApprovalTemplate(new MailAddress("info.soundify@gmail.com"), artistName, songName);
+            var email = new MailSongApprovalTemplate(new MailAddress("info.soundify@gmail.com"), artist.ArtistName, songName);
             emailController.SendEmail(email, "info.soundify@gmail.com");
         }
     }

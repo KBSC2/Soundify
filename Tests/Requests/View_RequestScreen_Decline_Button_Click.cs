@@ -18,14 +18,14 @@ namespace Tests.Requests
             context = new MockDatabaseContext();
             requestController = RequestController.Create(context);
             testRequest = new Request()
-                { ID = 1, UserID = 1, ArtistName = "TestArtist", ArtistReason = "Just because I'm testing" };
+                { ID = 1, UserID = 1, User = UserController.Create(context).GetItem(1), ArtistName = "TestArtist", ArtistReason = "Just because I'm testing" };
             requestController.CreateItem(testRequest);
         }
 
         [Test]
         public void DeclineUserAsArtist()
         {
-            requestController.DeclineUser(testRequest.ID);
+            requestController.DeclineUser(testRequest);
 
             Assert.False(requestController.GetList().Contains(testRequest));
             Assert.False(UserController.Create(context).GetItem(testRequest.UserID).RequestedArtist);

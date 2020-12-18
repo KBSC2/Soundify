@@ -9,8 +9,6 @@ namespace Controller.DbControllers
 {
     public class UserShopItemsController
     {
-        private static UserShopItemsController instance;
-
         private IDatabaseContext Context { get; set; }
         private DbSet<UserShopItems> Set { get; set; }
 
@@ -25,9 +23,7 @@ namespace Controller.DbControllers
          */
         public static UserShopItemsController Create(IDatabaseContext context)
         {
-            if (instance == null)
-                instance = ProxyController.AddToProxy<UserShopItemsController>(new object[] {context}, context);
-            return instance;
+            return ProxyController.AddToProxy<UserShopItemsController>(new object[] {context}, context);
         }
 
         protected UserShopItemsController(IDatabaseContext context)
@@ -36,31 +32,36 @@ namespace Controller.DbControllers
             Set = Context.UserShopItems;
         }
 
+        /**
+         * Get all usershopitems from the tabel
+         *
+         * @return List<UserShopItems> : All the UserShopItems from the table
+         */
         public List<UserShopItems> GetList()
         {
-            var userController = UserController.Create(Context);
-            var shopItemController = ShopItemController.Create(Context);
-
-            var result = Set.ToList();
-            result.ForEach(x =>
-            {
-                x.User = userController.GetItem(x.UserID);
-                x.ShopItem = shopItemController.GetItem(x.ShopItemID);
-            });
-            return result;
+            return Set.ToList();
         }
 
-        public void CreateItem(UserShopItems item)
+        /**
+         * Insert an item into the table
+         *
+         * @param item The item to insert
+         *
+         * @return UserShopItems The created item
+         */
+        public UserShopItems CreateItem(UserShopItems item)
         {
             item.User = null;
             item.ShopItem = null;
 
             Set.Add(item);
 
-            if (!RealDatabase()) return;
+            if (RealDatabase()) {
+                Context.Entry(item).State = EntityState.Added;
+                Context.SaveChanges();
+            }
 
-            Context.Entry(item).State = EntityState.Added;
-            Context.SaveChanges();
+            return item;
         }
 
         /**
@@ -71,18 +72,6 @@ namespace Controller.DbControllers
         public bool RealDatabase()
         {
             return Context is DatabaseContext;
-        }
-
-        /**
-        * Gets all the shopItems for a user
-        *
-        * @param userId the id of the user
-        *
-        * @return List<UserShopItems> : list of items
-        */
-        public List<UserShopItems> GetItemsForUser(int userId)
-        {
-            return GetList().Where(x => x.UserID == userId).ToList();
         }
     }
 }

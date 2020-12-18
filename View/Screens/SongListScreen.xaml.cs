@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 
-
 namespace View.Screens
 {
     partial class SongListScreen : ResourceDictionary
@@ -8,7 +7,6 @@ namespace View.Screens
         public SongListScreen()
         {
             InitializeComponent();
-
         }
     }
 }

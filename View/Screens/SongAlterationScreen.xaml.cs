@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Net.Mail;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -11,9 +7,7 @@ using Controller;
 using Controller.DbControllers;
 using Microsoft.Win32;
 using Model.Database.Contexts;
-using Model.DbModels;
 using Model.Enums;
-using Model.MailTemplates;
 using Soundify;
 using View.DataContexts;
 

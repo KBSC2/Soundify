@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Controller.DbControllers;
-using Model.Database.Contexts;
 
 namespace View.DataContexts
 {
@@ -15,27 +13,18 @@ namespace View.DataContexts
         public event PropertyChangedEventHandler PropertyChanged;
 
         private static QueueDataContext instance;
-        public static QueueDataContext Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new QueueDataContext();
-                return instance;
-            }
-        }
+        public static QueueDataContext Instance => instance ??= new QueueDataContext();
 
-        public List<SongInfo> NextInQueueItems => QueueGenerator(AudioPlayer.Instance.Queue, AudioPlayer.Instance.CurrentSongIndex);
-        public string CurrentSongName => AudioPlayer.Instance.CurrentSong == null ? "" : AudioPlayer.Instance.CurrentSong.Name;
-        public string CurrentSongArtist => AudioPlayer.Instance.CurrentSong == null ? ""
-            : ArtistController.Create(DatabaseContext.Instance).GetItem(AudioPlayer.Instance.CurrentSong.ArtistID).ArtistName;
+        public List<SongInfo> NextInQueueItems => QueueGenerator(AudioPlayer.Instance.Queue, AudioPlayer.Instance.CurrentSongIndex); //TODO: Kan dit weg?
+        public string CurrentSongName => AudioPlayer.Instance.CurrentSong?.Name ?? "";
+        public string CurrentSongArtist => AudioPlayer.Instance.CurrentSong?.Artist.ArtistName ?? "";
         public string CurrentSongDuration => AudioPlayer.Instance.CurrentSong == null ? "" : TimeSpan.FromSeconds(AudioPlayer.Instance.CurrentSong.Duration).ToString("m':'ss");
 
         public List<SongInfo> QueueGenerator(List<Song> songs, int index)
         {
-            List<Song> queue = new List<Song>();
+            var queue = new List<Song>();
 
-            for(int i = index+1; i < songs.Count; i++)
+            for(var i = index+1; i < songs.Count; i++)
             {
                 queue.Add(songs[i]);
                 if (queue.Count > 12) break;
@@ -45,9 +34,9 @@ namespace View.DataContexts
         }
 
         [NotifyPropertyChangedInvocator]
-        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(""));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

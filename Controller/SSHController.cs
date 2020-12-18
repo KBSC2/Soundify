@@ -15,16 +15,7 @@ namespace Controller
         private Thread thread;
 
         private static SSHController instance;
-
-        public static SSHController Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new SSHController();
-                return instance;
-            }
-        }
+        public static SSHController Instance => instance ??= new SSHController();
 
         /**
          * Open an SSH tunnel to our Ubuntu machine
@@ -67,7 +58,7 @@ namespace Controller
          */
         public static Dictionary<string, string> GetSSHConfiguration()
         {
-            Dictionary<string, string> result = new Dictionary<string, string>();
+            var result = new Dictionary<string, string>();
 
             Configuration configuration = ConfigurationManager.OpenExeConfiguration(@"View.dll");
             foreach (var s in configuration.ConnectionStrings.ConnectionStrings["SSH"].ConnectionString.Split(";"))
@@ -97,6 +88,9 @@ namespace Controller
             thread.Start();
         }
 
+        /**
+         * Close the SSH-tunnel
+         */
         public void CloseSSHTunnel()
         {
             running = false;

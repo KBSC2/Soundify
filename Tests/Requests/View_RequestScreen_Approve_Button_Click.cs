@@ -20,17 +20,18 @@ namespace Tests.Requests
             artistController = ArtistController.Create(context);
             requestController = RequestController.Create(context);
             testRequest = new Request()
-                {ID = 1, UserID = 1, ArtistName = "TestArtist", ArtistReason = "Just because I'm testing"};
+                {ID = 1, UserID = 1, User = UserController.Create(context).GetItem(1), ArtistName = "TestArtist", ArtistReason = "Just because I'm testing"};
             requestController.CreateItem(testRequest);
         }
 
         [Test]
         public void ApproveUserAsArtist()
         {
-            requestController.ApproveUser(testRequest.ID);
+            requestController.ApproveUser(testRequest);
 
             Assert.False(requestController.GetList().Contains(testRequest));
-            Assert.True(artistController.GetArtistIdFromUserId(testRequest.UserID).HasValue);
+
+            Assert.IsNotNull(ArtistController.Create(context).GetArtistFromUser(testRequest.User));
         }
 
         [TearDown]
@@ -38,9 +39,9 @@ namespace Tests.Requests
         {
             requestController.DeleteItem(testRequest.ID);
 
-            var artistId = artistController.GetArtistIdFromUserId(testRequest.UserID);
-            if(artistId != null)
-                artistController.DeleteItem((int)artistId);
+            var artist = ArtistController.Create(context).GetArtistFromUser(testRequest.User);
+            if(artist != null)
+                ArtistController.Create(context).DeleteItem(artist.ID);
         }
     }
 }
