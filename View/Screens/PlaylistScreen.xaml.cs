@@ -27,6 +27,7 @@ namespace View.Screens
         private void Play_Playlist_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Instance.PlayPlaylist(MainWindow.CurrentPlayList);
+            SongListDataContext.Instance.OnPropertyChanged("SongInfoList");
         }
 
         private void RemovePlaylistButton_Click(object sender, RoutedEventArgs e)
@@ -53,7 +54,7 @@ namespace View.Screens
             if (selectedSongInfo == null || selectedSongInfo.Index - 1 < 0) return;
 
             playlistSongController.SwapSongs(MainWindow.CurrentPlayList, selectedSongInfo.Index, selectedSongInfo.Index - 1);
-            SongListDataContext.Instance.OnPropertyChanged();
+            SongListDataContext.Instance.OnPropertyChanged("SongInfoList");
         }
 
         private void MoveDown_Click(object sender, RoutedEventArgs e)
@@ -65,7 +66,7 @@ namespace View.Screens
             if (selectedSongInfo == null || selectedSongInfo.Index + 1 >= listView.Items.Count) return;
             
             playlistSongController.SwapSongs(MainWindow.CurrentPlayList, selectedSongInfo.Index, selectedSongInfo.Index + 1);
-            SongListDataContext.Instance.OnPropertyChanged();
+            SongListDataContext.Instance.OnPropertyChanged("SongInfoList");
         }
     }
 }
