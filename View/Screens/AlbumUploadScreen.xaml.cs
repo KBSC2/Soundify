@@ -58,7 +58,7 @@ namespace View.Screens
 
         private void Textbox_LostFocus_EditVarialble(object sender, RoutedEventArgs e)
         {
-            var song = (((TextBox) sender).DataContext as AlbumSongInfo);
+            var song = ((TextBox) sender).DataContext as AlbumSongInfo;
 
             var albumSongInfo = AlbumUploadDataContext.Instance.AlbumSongInfos.First(s => song != null && s.File.Equals(song.File));
             var i = AlbumUploadDataContext.Instance.AlbumSongInfos.IndexOf(albumSongInfo);
