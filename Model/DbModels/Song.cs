@@ -27,6 +27,5 @@ namespace Model.DbModels
         public string PathToImage { get; set; }
 
         public SongStatus Status { get; set; }
-
     }
 }
