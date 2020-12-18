@@ -23,7 +23,6 @@ namespace View.DataContexts
 
         public List<ShopItem> StillAvailable => ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser).Where(x => !x.Bought || x.Repurchasable).ToList();
     
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
