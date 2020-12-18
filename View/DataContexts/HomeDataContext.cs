@@ -16,8 +16,19 @@ namespace View.DataContexts
         private static HomeDataContext instance;
         public static HomeDataContext Instance => instance ??= new HomeDataContext();
 
-        /*public List<ShopItem> AlreadyBought => UserShopItemsController.Create(DatabaseContext.Instance).GetList()
-            .Where(x => x.User == UserController.CurrentUser).FirstOrDefault().ShopItem;*/
+        public List<ShopItem> ShopItems { get; set; }
+
+        public List<ShopItem> AlreadyBought => new List<ShopItem>(ShopItems);
+
+        public HomeDataContext()
+        {
+            ShopItems = ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser);
+        }
+
+        public void UpdateItems()
+        {
+            
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
