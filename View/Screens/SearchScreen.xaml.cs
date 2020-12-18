@@ -21,20 +21,15 @@ namespace View.Screens
 
         public void PlaylistRow_Click(object sender, MouseButtonEventArgs e)
         {
-            var listViewItem = (ListViewItem)sender;
-            var selectedPlaylist = (Playlist)listViewItem.Content;
-
             MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs
             {
                 ScreenName = ScreenNames.PlaylistScreen,
-                Playlist = selectedPlaylist
+                Playlist = (Playlist)((ListViewItem)sender).Content
             });
         }
         public void AlbumRow_Click(object sender, MouseButtonEventArgs e)
         {
-            var listViewItem = (ListViewItem)sender;
-            var selectedAlbum = (Album)listViewItem.Content;
-            AlbumSongListDataContext.Instance.Album = selectedAlbum;
+            AlbumSongListDataContext.Instance.Album = (Album)((ListViewItem)sender).Content;
 
             MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs
             {

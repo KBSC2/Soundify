@@ -36,10 +36,7 @@ namespace View.Screens
 
         private void VolumeComboBox_SelectedChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox comboBox = (ComboBox)sender;
-            int selectedItem = comboBox.SelectedIndex;
-
-            AudioPlayer.Instance.ChangeVolume(selectedItem);
+            AudioPlayer.Instance.ChangeVolume(((ComboBox)sender).SelectedIndex);
         }
         
         private void Request_Button_Click(object sender, RoutedEventArgs e)

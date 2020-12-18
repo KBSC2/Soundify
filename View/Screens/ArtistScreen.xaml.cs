@@ -104,6 +104,7 @@ namespace View.Screens
             ArtistDataContext.Instance.ArtistHasSongPending = true;
 
             ArtistDataContext.Instance.OnPropertyChanged("");
+            SongListDataContext.Instance.OnPropertyChanged("");
 
             var emailController = new EmailController();
             var email = new MailSongApprovalTemplate(new MailAddress("info.soundify@gmail.com"), artist.ArtistName, songName);
