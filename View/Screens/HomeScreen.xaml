@@ -1,9 +1,109 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:DataContexts="clr-namespace:View.DataContexts"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <DataTemplate x:Key="HomeScreen">
         <!-- Start home screen -->
-        <StackPanel>
-            <TextBlock FontSize="24"  Margin="10" Text="Welcome to Soundify!"/>
-        </StackPanel>
+        <Grid Margin="0,0,0,0" Background="{DynamicResource MainBackgroundColor}"
+              DataContext="{x:Static DataContexts:HomeDataContext.Instance}">
+            <Grid.Resources>
+                <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+            </Grid.Resources>
+            <Label Content="Welcome to Soundify!" HorizontalAlignment="Center" Margin="0,50,0,0"
+                   VerticalAlignment="Top" Height="65" Width="430" Foreground="White" FontSize="40" FontWeight="Bold" />
+            <Grid Margin="0,0,640,0">
+                <Label Content="Remaining unlocks" HorizontalAlignment="Center" Margin="0,140,0,0"
+                       VerticalAlignment="Top" Height="47" Width="auto" Foreground="White" FontSize="27"
+                       FontWeight="Bold" />
+                <ListView Margin="0,187,0,63"
+                          HorizontalAlignment="Center"
+                          Width="auto"
+                          Background="{DynamicResource MainBackgroundColor}" BorderThickness="0" BorderBrush="{x:Null}"
+                          Foreground="White"
+                          ItemsSource="{Binding StillAvailable}">
+                    <ListView.View>
+                        <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
+                            <GridViewColumn DisplayMemberBinding="{Binding Name}" />
+                        </GridView>
+                    </ListView.View>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="FontSize" Value="20"/>
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                        <GridViewRowPresenter HorizontalAlignment="Center"
+                                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                              Width="Auto" Margin="0"
+                                                              Content="{TemplateBinding  Content}" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="BorderThickness" Value="0" />
+                                    <Setter Property="Focusable" Value="False" />
+                                    <Setter Property="Foreground" Value="White" />
+                                    <Setter Property="Margin" Value="0" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="Transparent" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </Grid>
+            <Grid Margin="640,0,0,0">
+                <Label Content="Already unlocked" HorizontalAlignment="Center" Margin="0,140,0,0"
+                       VerticalAlignment="Top" Height="auto" Width="auto" Foreground="White" FontSize="27"
+                       FontWeight="Bold" />
+                <ListView Margin="0,192,0,57"
+                          HorizontalAlignment="Center"
+                          Width="auto"
+                          Background="{DynamicResource MainBackgroundColor}" BorderThickness="0" BorderBrush="{x:Null}"
+                          Foreground="White"
+                          ItemsSource="{Binding AlreadyBought}">
+                    <ListView.View>
+                        <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
+                            <GridViewColumn DisplayMemberBinding="{Binding Name}"  />
+                        </GridView>
+                    </ListView.View>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="FontSize" Value="20"/>
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                        <GridViewRowPresenter HorizontalAlignment="Center"
+                                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                              Width="Auto" Margin="0"
+                                                              Content="{TemplateBinding  Content}" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="BorderThickness" Value="0" />
+                                    <Setter Property="Focusable" Value="False" />
+                                    <Setter Property="Foreground" Value="White" />
+                                    <Setter Property="Margin" Value="0" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="Transparent" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </Grid>
+        </Grid>
     </DataTemplate>
 </ResourceDictionary>
