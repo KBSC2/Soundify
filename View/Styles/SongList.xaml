@@ -22,7 +22,7 @@
         <ListView x:Name="SongListView"
                   Background="Transparent" BorderThickness="0" BorderBrush="{x:Null}"
                   ItemsSource="{Binding SongInfoList}" FontSize="25"
-                  DataContext="{x:Static dataContext:SongListDataContext.Instance}">
+                  DataContext="{x:Static dataContext:SongListDataContext.Instance}" >
             <ListView.View>
                 <GridView  ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
                     <GridViewColumn Header="Title" Width="350" DisplayMemberBinding="{Binding Song.Name}" />
@@ -79,6 +79,7 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <EventSetter Event="MouseDoubleClick" Handler="SongRow_Click" />
+                    <EventSetter Event="Selected" Handler="SelectedItem_Selected"/>
                     <Setter Property="Background" Value="Transparent" />
                     <Setter Property="Foreground" Value="{Binding Playing}" />
                     <Setter Property="ContextMenu" Value="{DynamicResource ItemContextMenu}" />

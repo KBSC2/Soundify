@@ -16,6 +16,8 @@ namespace View.DataContexts
 
         public static SongListDataContext Instance => instance ??= new SongListDataContext();
 
+        public SongInfo SelectedSongInfo { get; set; }
+
         public ScreenNames ScreenName { get; set; }
 
         public List<string> SongListSearchTerms { get; set; } = new List<string> {""};
@@ -32,6 +34,8 @@ namespace View.DataContexts
         {
             var artistController = ArtistController.Create(DatabaseContext.Instance);
             var songController = SongController.Create(DatabaseContext.Instance);
+            if (!IsPlaylistScreen)
+                SelectedSongInfo = null;
             
             switch (instance.ScreenName)
             {

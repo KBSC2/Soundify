@@ -15,7 +15,7 @@ namespace View.Resources
 {
     public partial class SongContextMenuInfo : ResourceDictionary
     {
-        public void ListViewItem_RightClickAddQueue(object sender, RoutedEventArgs e)
+        private void ListViewItem_RightClickAddQueue(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Instance.AddSongToSongQueue(((SongInfo)((MenuItem)sender).DataContext).Song);
 
@@ -68,7 +68,7 @@ namespace View.Resources
         }
 
 
-        public void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
+        private void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
         {
             PlaylistSongController.Create(DatabaseContext.Instance).RemoveFromPlaylist(MainWindow.CurrentPlayList, ((SongInfo)((MenuItem)sender).DataContext).Song.ID);
 
@@ -84,12 +84,18 @@ namespace View.Resources
             SongListDataContext.Instance.OnPropertyChanged();
         }
 
-        public void ListViewItem_ButtonClick_EditSong(object sender, RoutedEventArgs e)
+        private void ListViewItem_ButtonClick_EditSong(object sender, RoutedEventArgs e)
         {
             if (!(sender is Button button) || !(button.DataContext is SongInfo songInfo)) return;
             
             SongAlterationDataContext.Instance.SetSong(songInfo.Song);
             MainWindow.InstanceMainWindow.SetScreen(ScreenNames.SongAlterationScreen);
+        }
+
+        private void SelectedItem_Selected(object sender, RoutedEventArgs e )
+        {
+            var songInfo = (((ListViewItem) sender).Content as SongInfo);
+            SongListDataContext.Instance.SelectedSongInfo = songInfo;
         }
     }
 }
