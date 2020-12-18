@@ -7,7 +7,7 @@ namespace Model.DbModels
     {
         public string AlbumName { get; set; }
 
-        public int ArtistID { get; set; } // rename column from Artist to ArtistId
+        public int ArtistID { get; set; }
 
         public virtual Artist Artist { get; set; }
         

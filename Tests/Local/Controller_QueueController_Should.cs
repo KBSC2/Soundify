@@ -3,9 +3,7 @@ using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Tests.Local
 {

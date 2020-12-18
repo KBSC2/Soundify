@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
@@ -23,9 +25,9 @@ namespace Tests.Playlists
         [SetUp]
         public void SetUp()
         {
-            song = new Song() { Duration = 60, ArtistID = 1, Name = "Never gonna give you up", Path = "../Dit/is/een/path" };
-            song2 = new Song() { Duration = 60, ArtistID = 2, Name = "Gangnam Style", Path = "../Dit/is/een/path", WrittenBy = "Park Jae-Sang, Yoo Gun Hyung", ProducedBy = "Park Jae-Sang, Yoo Gun Hyung", Description = "PSY - ‘I LUV IT’ M/V @ https://youtu.be/Xvjnoagk6GU PSY - ‘New Face’ M / V @https://youtu.be/OwJPPaEyqhI PSY - 8TH ALBUM '4X2=8' on iTunes @ https://smarturl.it/PSY_8thAlbum PSY - GANGNAM STYLE(강남스타일) on iTunes @ http://smarturl.it/PsyGangnam #PSY #싸이 #GANGNAMSTYLE #강남스타일"};
-            playlist = new Playlist() {Name = "TESTPLAYLIST", CreationDate = DateTime.Now};
+            song = new Song() { ID = 1, Duration = 60, ArtistID = 1, Name = "Never gonna give you up", Path = "../Dit/is/een/path" };
+            song2 = new Song() { ID = 2, Duration = 60, ArtistID = 2, Name = "Gangnam Style", Path = "../Dit/is/een/path", WrittenBy = "Park Jae-Sang, Yoo Gun Hyung", ProducedBy = "Park Jae-Sang, Yoo Gun Hyung", Description = "PSY - ‘I LUV IT’ M/V @ https://youtu.be/Xvjnoagk6GU PSY - ‘New Face’ M / V @https://youtu.be/OwJPPaEyqhI PSY - 8TH ALBUM '4X2=8' on iTunes @ https://smarturl.it/PSY_8thAlbum PSY - GANGNAM STYLE(강남스타일) on iTunes @ http://smarturl.it/PsyGangnam #PSY #싸이 #GANGNAMSTYLE #강남스타일"};
+            playlist = new Playlist() { ID = 10, Name = "TESTPLAYLIST", CreationDate = DateTime.Now, PlaylistSongs = new List<PlaylistSong>()};
             var context = new MockDatabaseContext();
             
             songController = SongController.Create(context);
@@ -40,21 +42,20 @@ namespace Tests.Playlists
         [Test]
         public void PlaylistSongController_AddToPlayList()
         {
-            playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
-
-            Assert.IsTrue(playlistSongController.RowExists(song.ID, playlist.ID));
-
-            //Teardown
-            playlistSongController.RemoveFromPlaylist(song.ID, playlist.ID);
+            playlistSongController.AddSongToPlaylist(playlist, song.ID);
+            UpdatePlaylistSongs(playlist);
+            Assert.IsTrue(playlistSongController.RowExists(playlist, song.ID));
         }
 
         [Test]
         public void PlaylistSongController_DeleteFromPlayList()
         {
-            playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
-            playlistSongController.RemoveFromPlaylist(song.ID, playlist.ID);
+            playlistSongController.AddSongToPlaylist(playlist, song.ID);
+            UpdatePlaylistSongs(playlist);
+            playlistSongController.RemoveFromPlaylist(playlist, song.ID);
+            UpdatePlaylistSongs(playlist);
 
-            Assert.IsFalse(playlistSongController.RowExists(song.ID, playlist.ID));
+            Assert.IsFalse(playlistSongController.RowExists(playlist, song.ID));
         }
 
         [Test]
@@ -68,15 +69,18 @@ namespace Tests.Playlists
         [Test]
         public void PlaylistSongController_MoveSongUpDownInPlaylist()
         {
-            playlistSongController.AddSongToPlaylist(song.ID, playlist.ID);
-            playlistSongController.AddSongToPlaylist(song2.ID, playlist.ID);
-            int indexSong1 = playlistSongController.GetPlaylistSong(playlist.ID, song.ID).Index;
-            int indexSong2 = playlistSongController.GetPlaylistSong(playlist.ID, song2.ID).Index;
+            playlistSongController.AddSongToPlaylist(playlist, song.ID);
+            playlistSongController.AddSongToPlaylist(playlist, song2.ID);
+            UpdatePlaylistSongs(playlist);
 
-            playlistSongController.SwapSongs(indexSong1, indexSong2, playlist.ID);
+            int indexSong1 = playlistSongController.GetPlaylistSong(playlist, song.ID).Index;
+            int indexSong2 = playlistSongController.GetPlaylistSong(playlist, song2.ID).Index;
 
-            Assert.AreEqual(playlistSongController.GetPlaylistSong(playlist.ID, song.ID).Index, indexSong2);
-            Assert.AreEqual(playlistSongController.GetPlaylistSong(playlist.ID, song2.ID).Index, indexSong1);
+            playlistSongController.SwapSongs(playlist, indexSong1, indexSong2);
+            UpdatePlaylistSongs(playlist);
+
+            Assert.AreEqual(playlistSongController.GetPlaylistSong(playlist, song.ID).Index, indexSong2);
+            Assert.AreEqual(playlistSongController.GetPlaylistSong(playlist, song2.ID).Index, indexSong1);
         }
 
         //Everytime you test, remove the added items out of the database.
@@ -86,6 +90,12 @@ namespace Tests.Playlists
             songController.DeleteItem(song.ID);
             songController.DeleteItem(song2.ID);
             playlistController.DeleteItem(playlist.ID);
+        }
+
+        // Use this to recreate the foriegn key on playlist.PlaylistSongs
+        private void UpdatePlaylistSongs(Playlist playlist)
+        {
+            playlist.PlaylistSongs = playlistSongController.GetList().Where(s => s.PlaylistID == playlist.ID).ToList();
         }
     }
 }

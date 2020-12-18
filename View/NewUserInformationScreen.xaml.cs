@@ -1,13 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.Enums;
-using Soundify;
 using View.DataContexts;
 
 namespace View

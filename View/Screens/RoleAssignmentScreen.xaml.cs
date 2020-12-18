@@ -1,13 +1,10 @@
 ﻿using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using View.DataContexts;
-using View.ListItems;
 
 namespace View.Screens
 {
@@ -36,9 +33,9 @@ namespace View.Screens
             if (e.Key == Key.Return)
             {
                 var textBox = (TextBox)sender;
-                var Users = UserController.Create(DatabaseContext.Instance).GetList()
-                    .Where(u => u.Username.ToLower().Contains(textBox.Text.ToLower()));
-                RoleAssignmentDataContext.Instance.Users = new List<User>(Users);
+
+                RoleAssignmentDataContext.Instance.Users = UserController.Create(DatabaseContext.Instance)
+                    .GetFilteredList(u => u.Username.ToLower().Contains(textBox.Text.ToLower()));
                 RoleAssignmentDataContext.Instance.OnPropertyChanged();
             }
         }
@@ -46,11 +43,11 @@ namespace View.Screens
         private void UserRole_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             User user = (User)((ContentPresenter)((ComboBox)sender).TemplatedParent).Content;
-            int roleID = ((ComboBox)sender).SelectedIndex + 1;
-            var role = RoleController.Create(DatabaseContext.Instance).GetItem(roleID);
-            if(user.RoleID != roleID)
+            int roleId = ((ComboBox)sender).SelectedIndex + 1;
+            var role = RoleController.Create(DatabaseContext.Instance).GetItem(roleId);
+            if(user.RoleID != roleId)
             {
-                UserController.Create(DatabaseContext.Instance).UpdateUserRole(user.ID, roleID);
+                UserController.Create(DatabaseContext.Instance).UpdateUserRole(user, roleId);
 
                 RoleAssignmentDataContext.Instance.UpdateStatus = $"{user.Username} has been made {role.Designation}";
             }

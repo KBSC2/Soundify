@@ -5,7 +5,6 @@ using Model.DbModels;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using View.ListItems;
 
 namespace View.DataContexts
 {
@@ -14,22 +13,10 @@ namespace View.DataContexts
 
         public string UpdateStatus { get; set; } = "No changes have been made";
         public List<string> Roles => RoleController.Create(DatabaseContext.Instance).GetList().Select(x => x.Designation).ToList();
-        public List<User> Users { get; set; }
+        public List<User> Users { get; set; } = UserController.Create(DatabaseContext.Instance).GetFilteredList(x => x.ID != UserController.CurrentUser.ID);
+
         private static RoleAssignmentDataContext instance;
-        public static RoleAssignmentDataContext Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new RoleAssignmentDataContext();
-                return instance;
-            }
-        }
-        public RoleAssignmentDataContext()
-        {
-            Users = UserController.Create(DatabaseContext.Instance).GetList();
-            Users.Remove(UserController.CurrentUser);
-        }
+        public static RoleAssignmentDataContext Instance => instance ??= new RoleAssignmentDataContext();
 
         public event PropertyChangedEventHandler PropertyChanged;
 

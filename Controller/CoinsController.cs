@@ -7,15 +7,7 @@ namespace Controller
     public class CoinsController
     {
         private static CoinsController instance;
-        public static CoinsController Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new CoinsController();
-                return instance;
-            }
-        }
+        public static CoinsController Instance => instance ??= new CoinsController();
 
         private int counter;
 
@@ -36,7 +28,7 @@ namespace Controller
             if (counter == 100)
             {
                 var userController = UserController.Create(new DatabaseContext());
-                UserController.CurrentUser.Coins = userController.AddCoins(userController.GetItem(UserController.CurrentUser.ID)).Coins;
+                userController.AddCoins(UserController.CurrentUser);
                 counter = 0;
             }
         }

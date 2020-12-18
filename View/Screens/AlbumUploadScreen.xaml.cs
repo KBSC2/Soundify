@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Mail;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -12,8 +11,6 @@ using Controller;
 using Controller.DbControllers;
 using Microsoft.Win32;
 using Model.Database.Contexts;
-using Model.DbModels;
-using Model.Enums;
 using Model.MailTemplates;
 using View.DataContexts;
 using View.ListItems;
@@ -70,9 +67,9 @@ namespace View.Screens
 
         private void ListViewItem_ButtonClick_DeleteSong(object sender, RoutedEventArgs e)
         {
-            var song = (AlbumSongInfo) ((sender as Button).DataContext as AlbumSongInfo);
+            var song = (sender as Button)?.DataContext as AlbumSongInfo;
             AlbumUploadDataContext.Instance.AlbumSongInfos.Remove(song);
-            AlbumUploadDataContext.Instance.AlbumFiles.Remove(song.File);
+            AlbumUploadDataContext.Instance.AlbumFiles.Remove(song?.File);
             if (AlbumUploadDataContext.Instance.AlbumSongInfos.IsNullOrEmpty())
             {
                 AlbumUploadDataContext.Instance.AlbumFiles = null;

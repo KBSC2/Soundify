@@ -3,7 +3,6 @@ using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using Model.EventArgs;
-using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +15,6 @@ using Model.Enums;
 using View;
 using View.Components;
 using View.DataContexts;
-using View.Screens;
 
 
 namespace Soundify

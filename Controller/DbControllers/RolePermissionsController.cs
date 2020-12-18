@@ -29,7 +29,17 @@ namespace Controller.DbControllers
         protected RolePermissionsController(IDatabaseContext context)
         {
             this.Context = context;
-            Set = Context.RolePermissions;
+            this.Set = Context.RolePermissions;
+        }
+
+        /**
+         * Get all RolePermissions from the table
+         *
+         * @return List<RolePermission> : All RolePermissions from the table
+         */
+        public List<RolePermissions> GetList()
+        {
+            return Set.ToList();
         }
 
         /**
@@ -39,17 +49,19 @@ namespace Controller.DbControllers
          *
          * @return List<RolePermission> : A list of all permissions
          */
-        public List<RolePermissions> GetPermissionsFromRoles(int[] roleIDs)
+        public List<RolePermissions> GetPermissionsFromRoles(List<Role> roles)
         {
-            var roleController = RoleController.Create(Context);
-            var permissionController = PermissionController.Create(Context);
+            var result = new List<RolePermissions>();
 
-            var result = Set.Where(x => roleIDs.Contains(x.RoleID)).ToList();
-            result.ForEach(x =>
+            roles.ForEach(x =>
             {
-                x.Permission = permissionController.GetItem(x.PermissionID);
-                x.Role = roleController.GetItem(x.RoleID);
+                x.Permissions.ToList().ForEach(y =>
+                {
+                    if (!result.Contains(y))
+                        result.Add(y);
+                });
             });
+
             return result;
         }
 
@@ -65,7 +77,8 @@ namespace Controller.DbControllers
         {
             if (user == null)
                 return null;
-            return this.GetPermissionsFromRoles(new[] { 1, user.RoleID })
+
+            return this.GetPermissionsFromRoles(GetUserRoles(user))
                 .FirstOrDefault(x => x.PermissionID == (int)permission);
         }
 
@@ -79,9 +92,28 @@ namespace Controller.DbControllers
          */
         public int GetPermissionValueCount(User user, Permissions permission)
         {
-            return this.GetPermissionsFromRoles(new[] {1, user.RoleID})
+            if (user == null)
+                return 0;
+
+            return this.GetPermissionsFromRoles(GetUserRoles(user))
                 .Where(x => x.PermissionID == (int) permission)
                 .Max(x => x.Value);
+        }
+
+        /**
+         * Get all the user roles, add role 1 by default
+         *
+         * @param user The user to get the roles from
+         *
+         * @return List<Role> List of the user's roles
+         */
+        private List<Role> GetUserRoles(User user)
+        {
+            List<Role> roles = new List<Role>();
+            if (user.RoleID != 1)
+                roles.Add(RoleController.Create(Context).GetItem(1));
+            roles.Add(user.Role);
+            return roles;
         }
     }
 }

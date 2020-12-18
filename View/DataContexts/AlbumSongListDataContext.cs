@@ -2,26 +2,14 @@
 using System.Runtime.CompilerServices;
 using Model.DbModels;
 using Model.Annotations;
-using Model.Database.Contexts;
 using Controller;
-using System;
-using System.Linq;
-using Controller.DbControllers;
 
 namespace View.DataContexts
 {
     public class AlbumSongListDataContext : INotifyPropertyChanged
     {
         private static AlbumSongListDataContext instance;
-        public static AlbumSongListDataContext Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new AlbumSongListDataContext();
-                return instance;
-            }
-        }
+        public static AlbumSongListDataContext Instance => instance ??= new AlbumSongListDataContext();
 
         public Album Album { get; set; }
         

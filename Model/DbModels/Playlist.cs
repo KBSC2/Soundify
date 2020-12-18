@@ -22,7 +22,6 @@ namespace Model.DbModels
         
         [Required] public DateTime DeleteDateTime { get; set; }
 
-        [ForeignKey("PlaylistID")] public virtual IList<PlaylistSong> PlaylistSongs { get; set; }
-
+        [ForeignKey("PlaylistID")] public virtual ICollection<PlaylistSong> PlaylistSongs { get; set; }
     }
 }

@@ -3,7 +3,6 @@ using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
 using NUnit.Framework;
-using static Controller.PasswordController;
 
 namespace Tests.Users
 {
