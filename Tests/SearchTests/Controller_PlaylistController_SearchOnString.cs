@@ -11,17 +11,25 @@ namespace Tests.SearchTests
     public class Controller_Playlist_SearchOnString
     {
         private PlaylistController playlistController;
+        private User user;
 
         [SetUp]
         public void SetUp()
         {
-            playlistController = PlaylistController.Create(new MockDatabaseContext());
+            var mock = new MockDatabaseContext();
+            var userController = UserController.Create(mock);
+            user = userController.GetItem(1);
+
+            playlistController = PlaylistController.Create(mock);
             playlistController.CreateItem(new Playlist()
                 { ID = 1, Name = "PlaylistNameTest", UserID = 1, ActivePlaylist = true });
             playlistController.CreateItem(new Playlist()
                 { ID = 2, Name = "PlaylistDescriptionTest", Description = "I really wanna test this", UserID = 1, ActivePlaylist = true });
             playlistController.CreateItem(new Playlist()
                 { ID = 3, Name = "PlaylistGenreTest", Genre = "Metal", UserID = 1, ActivePlaylist = true });
+
+            user.Playlists = new List<Playlist>()
+                { playlistController.GetItem(1), playlistController.GetItem(2), playlistController.GetItem(3) };
         }
 
         [TestCase("PlaylistNameTest", 1)]           // playlistName
@@ -32,7 +40,7 @@ namespace Tests.SearchTests
         [TestCase("etal", 3)]                       // playlistGenre
         public void PlaylistController_Search(string search, int expectedId)
         {
-            Assert.IsTrue(playlistController.SearchPlayListOnString(new List<string>() { search }, 1)
+            Assert.IsTrue(playlistController.SearchPlayListOnString(new List<string>() { search }, user)
                 .Any(x => x.ID == expectedId));
         }
 
@@ -40,7 +48,7 @@ namespace Tests.SearchTests
         [TestCase(new [] { "meTest", "test this", "eta" }, new [] {1, 2, 3} )]
         public void PlaylistController_Multiple(string[] searches, int[] expected)
         {
-            Assert.IsFalse(playlistController.SearchPlayListOnString(searches.ToList(), 1)
+            Assert.IsFalse(playlistController.SearchPlayListOnString(searches.ToList(), user)
                 .Any(x => !expected.Contains(x.ID)));
         }
 

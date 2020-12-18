@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Controller.Proxy;
-using Microsoft.EntityFrameworkCore;
 using Model.Database.Contexts;
 using Model.DbModels;
 using Model.Enums;
@@ -9,8 +8,6 @@ namespace Controller.DbControllers
 {
     public class RequestController : DbController<Request>
     {
-        private DbSet<RequestController> set { get; set; }
-
         /**
          * Creates a instance of this controller
          * It adds the controller to the proxy
@@ -33,7 +30,7 @@ namespace Controller.DbControllers
          *
          * @return List<Request> A list with all the requests
          */
-        public virtual List<Request> GetArtistRequests()
+        public List<Request> GetArtistRequests()
         {
             return GetFilteredList(r => r.RequestType == RequestType.Artist);
         }
@@ -43,10 +40,9 @@ namespace Controller.DbControllers
          *
          * @return List<Request> A list with all the requests
          */
-        public virtual List<Request> GetSongRequests()
+        public List<Request> GetSongRequests()
         {
-            var x = GetFilteredList(r => r.RequestType == RequestType.Song);
-            return x;
+            return GetFilteredList(r => r.RequestType == RequestType.Song);
         }
 
         /**
@@ -57,7 +53,7 @@ namespace Controller.DbControllers
          * 
          * @return RequestArtistResults : Result of the user's request to become an artist
          */
-        public virtual RequestArtistResults RequestArtist(string artistName, string artistReason)
+        public RequestArtistResults RequestArtist(string artistName, string artistReason)
         {
             if (artistName == "" && artistReason == "")
                 return RequestArtistResults.NameAndReasonNotFound;
@@ -73,13 +69,10 @@ namespace Controller.DbControllers
          *
          * @param requestID The ID of the request in question
          */
-        public void ApproveUser(int requestID)
+        public void ApproveUser(Request request)
         {
-            var request = GetItem(requestID);
-
             ArtistController.Create(Context).MakeArtist(request);
-
-            DeleteItem(requestID);
+            DeleteItem(request.ID);
         }
 
         /**
@@ -87,17 +80,12 @@ namespace Controller.DbControllers
          *
          * @param requestID The ID of the request in question
          */
-        public void DeclineUser(int requestID)
+        public void DeclineUser(Request request)
         {
-            var request = GetItem(requestID);
-            var userID = request.UserID;
+            request.User.RequestedArtist = false;
+            UserController.Create(Context).UpdateItem(request.User);
 
-            var userController = UserController.Create(Context);
-            var user = userController.GetItem(userID);
-            user.RequestedArtist = false;
-            userController.UpdateItem(user);
-
-            DeleteItem(requestID);
+            DeleteItem(request.ID);
         }
 
         /**
@@ -105,19 +93,14 @@ namespace Controller.DbControllers
         *
         * @param requestID The ID of the request in question
         */
-        public void ApproveSong(int requestID)
+        public void ApproveSong(Request request)
         {
-            var request = GetItem(requestID);
+            if (request.Song == null) return;
+            
+            request.Song.Status = SongStatus.Approved;
+            SongController.Create(DatabaseContext.Instance).UpdateItem(request.Song);
 
-            if (!request.SongID.HasValue) return;
-
-            var songController = SongController.Create(DatabaseContext.Instance);
-
-            var song = songController.GetItem(request.SongID.Value);
-            song.Status = SongStatus.Approved;
-            songController.UpdateItem(song);
-
-            DeleteItem(requestID);
+            DeleteItem(request.ID);
         }
 
         /**
@@ -125,28 +108,13 @@ namespace Controller.DbControllers
          *
          * @param requestID The ID of the request in question
          */
-        public void DeclineSong(int requestID)
+        public void DeclineSong(Request request)
         {
-            var request = GetItem(requestID);
+            if (request.Song == null) return;
 
-            if (!request.SongID.HasValue) return;
+            DeleteItem(request.ID);
 
-            var songController = SongController.Create(DatabaseContext.Instance);
-
-            DeleteItem(requestID);
-
-            songController.DeleteItem(request.SongID.Value);
-        }
-
-        /**
-         * Get the number of all the pending requests
-         *
-         * @return int The number of all the requests
-         */
-        public int GetAllRequestsCount()
-        {
-            return GetList().Count;
+            SongController.Create(DatabaseContext.Instance).DeleteItem(request.Song.ID);
         }
     }
 }
-

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Controller.DbControllers;
+﻿using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using NUnit.Framework;
@@ -10,17 +9,17 @@ namespace Tests.Users
     public class Controller_UserController_RoleDesignation
     {
         private UserController userController;
-        private ArtistController controller;
+        private ArtistController artistController;
         private User user;
 
         [SetUp]
         public void SetUp()
         {
             var mock = new MockDatabaseContext();
-            controller = ArtistController.Create(mock);
+            artistController = ArtistController.Create(mock);
             userController = UserController.Create(mock);
 
-            user = new User() { ID = 10, Email = "test@gmail.com", Username = "test" };
+            user = new User() { ID = 10, Email = "test@gmail.com", Username = "test", RoleID = 1};
             userController.CreateAccount(user, "Sterk_W@chtw00rd2", "Sterk_W@chtw00rd2");
         }
 
@@ -31,39 +30,31 @@ namespace Tests.Users
         }
 
         [Test]
-        public void UserController_MakeArtiest_UserRoleIDShouldBeArtist()
+        public void UserController_MakeArtist_UserRoleIDShouldBeArtist()
         {
-            controller.MakeArtist(new Request {UserID = user.ID, ArtistName = "test artiest"});
+            artistController.MakeArtist(new Request { UserID = user.ID, User = user, ArtistName = "test artiest" });
             Assert.AreEqual(user.RoleID, 2);
-        }
-
-        [Test]
-        public void UserController_RevokeArtiest_UserRoleIDShouldBeUser()
-        {
-            controller.RevokeArtist(user);
-            Assert.AreEqual(user.RoleID, 1);
         }
 
         [Test]
         public void UserController_ChangeUserRole()
         {
             //Get user
-            var result = userController.GetItem(user.ID);
-            Assert.AreEqual(result.RoleID, 1);
+            Assert.AreEqual(user.RoleID, 1);
 
             //Update user to artist
-            userController.UpdateUserRole(user.ID, 2);
-            Assert.AreEqual(result.RoleID, 2);
+            userController.UpdateUserRole(user, 2);
+            Assert.AreEqual(user.RoleID, 2);
 
             //Update user to admin
-            userController.UpdateUserRole(user.ID, 3);
-            Assert.AreEqual(result.RoleID, 3);
+            userController.UpdateUserRole(user, 3);
+            Assert.AreEqual(user.RoleID, 3);
         }
 
         [TearDown]
         public void TearDown()
         {
-            controller.DeleteItem(user.ID);
+            artistController.DeleteItem(user.ID);
         }
     }
 }

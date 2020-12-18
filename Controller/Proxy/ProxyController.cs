@@ -31,6 +31,5 @@ namespace Controller.Proxy
         {
             return generator.CreateClassProxy<T>(new TracingInterceptorAspect(context));
         }
-
     }
 }

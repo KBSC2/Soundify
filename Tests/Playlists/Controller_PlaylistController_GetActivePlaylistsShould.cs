@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.DbModels;
 using NUnit.Framework;
-using Assert = NUnit.Framework.Assert;
 
 namespace Tests.Playlists
 {
@@ -25,23 +23,21 @@ namespace Tests.Playlists
             user = UserController.Create(mock).GetItem(1);
             user.Playlists = new List<Playlist>();
             testPlaylist1 = new Playlist()
-                { ID = 1, Name = "TestPlaylist1", ActivePlaylist = true, CreationDate = DateTime.Now, UserID = 1, User = user};
+                { ID = 1, Name = "TestPlaylist1", ActivePlaylist = true,  CreationDate = DateTime.Now, UserID = 1, User = user };
             testPlaylist2 = new Playlist()
-                { ID = 2, Name = "TestPlaylist2", ActivePlaylist = false, CreationDate = DateTime.Now, UserID = 1, User = user};
+                { ID = 2, Name = "TestPlaylist2", ActivePlaylist = false, CreationDate = DateTime.Now, UserID = 1, User = user };
         }
 
         [Test]
         public void PlaylistController_GetActivePlaylists()
         {
-            playlistController.CreateItem(testPlaylist1);
-            playlistController.CreateItem(testPlaylist2);
-            user.Playlists.Add(testPlaylist1);
-            user.Playlists.Add(testPlaylist2);
+            user.Playlists.Add(playlistController.CreateItem(testPlaylist1));
+            user.Playlists.Add(playlistController.CreateItem(testPlaylist2));
 
             testPlaylist2.ActivePlaylist = false;
             playlistController.UpdateItem(testPlaylist2);
 
-            var result = playlistController.GetActivePlaylists(1);
+            var result = playlistController.GetActivePlaylists(user);
             Assert.True(result.Contains(testPlaylist1));
             Assert.False(result.Contains(testPlaylist2));
         }
