@@ -33,9 +33,8 @@ namespace View.Screens
             if (e.Key == Key.Return)
             {
                 var textBox = (TextBox)sender;
-
                 RoleAssignmentDataContext.Instance.Users = UserController.Create(DatabaseContext.Instance)
-                    .GetFilteredList(u => u.Username.ToLower().Contains(textBox.Text.ToLower()));
+                    .GetFilteredList(u => u.Username.ToLower().Contains(textBox.Text.ToLower()) && u.ID != UserController.CurrentUser.ID);
                 RoleAssignmentDataContext.Instance.OnPropertyChanged();
             }
         }
