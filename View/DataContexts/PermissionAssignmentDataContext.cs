@@ -18,15 +18,8 @@ namespace View.DataContexts
         public Dictionary<Permission, bool[]> PermissionsDict { get; set; }
 
         private static PermissionAssignmentDataContext instance;
-        public static PermissionAssignmentDataContext Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new PermissionAssignmentDataContext();
-                return instance;
-            }
-        }
+        public static PermissionAssignmentDataContext Instance => instance ??= new PermissionAssignmentDataContext();
+    
         public PermissionAssignmentDataContext()
         {
             PermissionsDict = new Dictionary<Permission, bool[]>();

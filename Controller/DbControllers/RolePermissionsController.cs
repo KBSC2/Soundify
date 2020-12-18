@@ -92,9 +92,9 @@ namespace Controller.DbControllers
         * 
         * @return void
         */
-        public void AddPermissionToRole(int permissionID, int roleID)
+        public void AddPermissionToRole(Permission permission, Role role)
         {
-            var rolePermission = new RolePermissions() { PermissionID = permissionID, RoleID = roleID };
+            var rolePermission = new RolePermissions() { Permission = permission, Role = role };
             Set.Add(rolePermission);
             if (!RealDatabase()) return;
             Context.Entry(rolePermission).State = EntityState.Added;
@@ -109,9 +109,9 @@ namespace Controller.DbControllers
          * 
          * @return void
          */
-        public void RemovePermissionFromRole(int permissionID, int roleID)
+        public void RemovePermissionFromRole( Permission permission, Role role)
         {
-            var rolePermission = GetPermission(roleID, permissionID);
+            var rolePermission = GetPermission(role, permission);
             Set.Remove(rolePermission);
             if (!RealDatabase()) return;
             Context.Entry(rolePermission).State = EntityState.Deleted;
@@ -126,10 +126,10 @@ namespace Controller.DbControllers
          *
          * @return RolePermissions Get a rolePermission object, for the user
          */
-        public RolePermissions GetPermission(int roleID, int permission)
+        public RolePermissions GetPermission(Role role, Permission permission)
         {
-            return this.GetPermissionsFromRoles(new[] { 1, roleID })
-                .FirstOrDefault(x => x.PermissionID == permission);
+            return this.GetPermissionsFromRoles(new[] { 1, role.ID })
+                .FirstOrDefault(x => x.Permission == permission);
         }
 
         /**

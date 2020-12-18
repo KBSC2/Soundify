@@ -17,15 +17,8 @@ namespace View.Screens
     public partial class PermissionAssignmentScreen : ResourceDictionary
     {
         private static PermissionAssignmentScreen instance;
-        public static PermissionAssignmentScreen Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new PermissionAssignmentScreen();
-                return instance;
-            }
-        }
+        public static PermissionAssignmentScreen Instance => instance ??= new PermissionAssignmentScreen();
+
         public PermissionAssignmentScreen()
         {
             InitializeComponent();
@@ -35,7 +28,8 @@ namespace View.Screens
         {
             var roleID = int.Parse((string)((CheckBox)sender).Tag);
             var permission = ((KeyValuePair<Permission, bool[]>)((CheckBox)sender).DataContext).Key;
-            RolePermissionsController.Create(DatabaseContext.Instance).AddPermissionToRole(permission.ID, roleID);
+            var role = RoleController.Create(DatabaseContext.Instance).GetItem(roleID);
+            RolePermissionsController.Create(DatabaseContext.Instance).AddPermissionToRole(permission, role);
             MessageBox.Show("The permission was added successfully to the selected role");
         }
 
@@ -43,7 +37,8 @@ namespace View.Screens
         {
             var roleID = int.Parse((string)((CheckBox)sender).Tag);
             var permission = ((KeyValuePair<Permission, bool[]>)((CheckBox)sender).DataContext).Key;
-            RolePermissionsController.Create(DatabaseContext.Instance).RemovePermissionFromRole(permission.ID, roleID);
+            var role = RoleController.Create(DatabaseContext.Instance).GetItem(roleID);
+            RolePermissionsController.Create(DatabaseContext.Instance).RemovePermissionFromRole(permission, role);
             MessageBox.Show("The permission was removed successfully from the selected role");
         }
     }
