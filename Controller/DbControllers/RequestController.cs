@@ -35,7 +35,6 @@ namespace Controller.DbControllers
             return GetFilteredList(r => r.RequestType == RequestType.Artist);
         }
 
-
         /**
          * Gets a lists of all the requests to upload a song
          *
@@ -88,7 +87,6 @@ namespace Controller.DbControllers
 
             DeleteItem(request.ID);
         }
-
 
         /**
         * Approves a request from a user to upload a song

@@ -9,7 +9,7 @@ using View.DataContexts;
 namespace View.Screens
 {
     /// <summary>
-    /// Interaction logic for TempAdminScreen.xaml
+    /// Interaction logic for ShopScreen.xaml
     /// </summary>
     public partial class ShopScreen : ResourceDictionary
     {

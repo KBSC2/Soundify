@@ -59,7 +59,7 @@ namespace Soundify
             AudioPlayer.Create(DatabaseContext.Instance);
 
             instanceMainWindow = this;
-
+            Loaded += MainWindow_Loaded;
             if (!Directory.Exists(Path.GetTempPath() + "Soundify"))
                 Directory.CreateDirectory(Path.GetTempPath() + "Soundify");
 
@@ -232,6 +232,13 @@ namespace Soundify
                 AudioPlayer.Instance.WaveOutDevice.Volume = (float)(AudioPlayer.Instance.MaxVolume / 2);
             else
                 AudioPlayer.Instance.WaveOutDevice.Volume = 0.0f;
-        }       
+        }   
+            
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Start the app minimized, then show it here to avoid a white flash on startup
+            Activate();
+            WindowState = WindowState.Normal;
+        }
     }
 }

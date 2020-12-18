@@ -13,10 +13,14 @@ namespace View.Screens
         {
             InitializeComponent();
         }
-
         private void Review_Button_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.InstanceMainWindow.SetScreen(ScreenNames.RequestScreen);
+        }
+
+        private void Permission_Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.InstanceMainWindow.SetScreen(ScreenNames.PermissionAssignmentScreen);
         }
 
         private void OpenRoleAssignmentScreen_Click(object sender, RoutedEventArgs e)

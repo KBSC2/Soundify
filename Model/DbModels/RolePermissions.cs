@@ -2,7 +2,7 @@
 
 namespace Model.DbModels
 {
-    public class RolePermissions
+    public class RolePermissions 
     {
         public int RoleID { get; set; }
         public virtual Role Role { get; set; }

@@ -1,0 +1,47 @@
+﻿<ResourceDictionary 
+                    
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:View.Screens"
+                    xmlns:Components="clr-namespace:View.Components"
+                    xmlns:DataContexts="clr-namespace:View.DataContexts" 
+                    x:Class="View.Screens.PermissionAssignmentScreen">
+    <DataTemplate x:Key="PermissionAssignmentScreen">
+        <!-- Start PermissionAssignment screen -->
+        <Grid Margin="0,0,0,0" Background="#FF303651" DataContext="{x:Static DataContexts:PermissionAssignmentDataContext.Instance}">
+            <ListView ItemsSource="{Binding PermissionsDict}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Permissions" Width="200" DisplayMemberBinding="{Binding Key.Name}">
+                        </GridViewColumn>
+                        <GridViewColumn Header="User" Width="200">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding Value[0]}" Checked="CheckBox_Checked" Unchecked="CheckBox_UnChecked" Tag="1">
+                                    </CheckBox>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Artist" Width="200">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding Value[1]}" Checked="CheckBox_Checked" Unchecked="CheckBox_UnChecked" Tag="2">
+                                    </CheckBox>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Admin" Width="200">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked ="{Binding Value[2]}" Checked="CheckBox_Checked" Unchecked="CheckBox_UnChecked" Tag="3">
+                                    </CheckBox>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>
+    
