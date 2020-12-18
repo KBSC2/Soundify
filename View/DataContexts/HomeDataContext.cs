@@ -18,17 +18,11 @@ namespace View.DataContexts
 
         public List<ShopItem> ShopItems { get; set; }
 
-        public List<ShopItem> AlreadyBought => new List<ShopItem>(ShopItems);
+        public List<ShopItem> AlreadyBought =>
+            ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser).Where(x => x.Bought && !x.Repurchasable).ToList();
 
-        public HomeDataContext()
-        {
-            ShopItems = ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser);
-        }
-
-        public void UpdateItems()
-        {
-            
-        }
+        public List<ShopItem> StillAvailable => ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser).Where(x => !x.Bought || x.Repurchasable).ToList();
+    
 
         public event PropertyChangedEventHandler PropertyChanged;
 
