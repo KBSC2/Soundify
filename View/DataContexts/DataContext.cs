@@ -56,19 +56,11 @@ namespace View.DataContexts
             Timer.Elapsed += OnTimedEvent;
             Timer.Start();
 
-            timerSlider = new Timer { Interval = 10 };
-            timerSlider.Elapsed += OnTimedEventSlider;
-            timerSlider.Start();
         }
 
         public void OnTimedEvent(object sender, EventArgs e)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(""));
-        }
-
-        public void OnTimedEventSlider(object sender, EventArgs e)
-        {
-            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentTime"));
         }
     }
 }
