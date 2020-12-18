@@ -76,24 +76,16 @@ namespace Controller
          */
         public virtual void UpdateItem(T item)
         {
-            var dbItem = GetItem(item.ID);
-            dbItem = item;
+            if (IsDetached(item))
+            {
+                Set.Attach(item);
+            }
+
 
             // If the database is a mock one, do not use the context (not required)
             if (!RealDatabase()) return;
-
-            // Prevent error from occuring when another instance of the same item is already being tracked
-            var local = Context.Set<T>()
-                .Local
-                .FirstOrDefault(entry => entry.ID.Equals(dbItem.ID));
             
-            if (local != null)
-            {
-                // detach
-                Context.Entry(local).State = EntityState.Detached;
-            }
-
-            Context.Entry(dbItem).State = EntityState.Modified;
+            Context.Entry(item).State = EntityState.Modified;
             Context.SaveChanges();
         }
 
@@ -151,5 +143,20 @@ namespace Controller
         {
             return Context is DatabaseContext;
         }
+
+        /**
+         * Determines if the entity witch is given is already being tracked
+         *
+         * @return if the item is attached
+         */
+        private bool IsDetached(T entity)
+        {
+            var localEntity = Set.Local?.FirstOrDefault(x => Equals(x.ID, entity.ID));
+            if (localEntity != null) // entity stored in local
+                return false;
+
+            return Context.Entry(entity).State == EntityState.Detached;
+        }
+
     }
 }
