@@ -46,7 +46,6 @@ namespace View.DataContexts
         public bool IsLooping => AudioPlayer.Instance.Looping;
         public bool IsShuffling => AudioPlayer.Instance.Shuffling;
 
-        private Timer timerSlider;
         public Timer Timer { get; set; }
 
         private DataContext()
