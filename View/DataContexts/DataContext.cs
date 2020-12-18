@@ -54,7 +54,6 @@ namespace View.DataContexts
             Timer.Elapsed += CoinsController.Instance.EarnCoins;
             Timer.Elapsed += OnTimedEvent;
             Timer.Start();
-
         }
 
         public void OnTimedEvent(object sender, EventArgs e)

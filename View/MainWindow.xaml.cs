@@ -129,7 +129,7 @@ namespace Soundify
             if (AudioPlayer.Instance.CurrentSongFile == null)
             {
                 AudioPlayer.Instance.Next();
-                QueueDataContext.Instance.OnPropertyChanged();
+                QueueDataContext.Instance.OnPropertyChanged("");
             }
 
             AudioPlayer.Instance.PlayPause();
@@ -172,25 +172,25 @@ namespace Soundify
         private void Prev_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Instance.Prev();
-            QueueDataContext.Instance.OnPropertyChanged();
+            QueueDataContext.Instance.OnPropertyChanged("");
         }
 
         private void Next_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Instance.NextButton();
-            QueueDataContext.Instance.OnPropertyChanged();
+            QueueDataContext.Instance.OnPropertyChanged("");
         }
 
         private void Loop_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Instance.Loop();
-            QueueDataContext.Instance.OnPropertyChanged();
+            QueueDataContext.Instance.OnPropertyChanged("");
         }
 
         private void Shuffle_Button_Click(object sender, RoutedEventArgs e)
         {
             AudioPlayer.Instance.Shuffle();
-            QueueDataContext.Instance.OnPropertyChanged();
+            QueueDataContext.Instance.OnPropertyChanged("");
         }
 
         public void SetSearchTerms(object sender, KeyEventArgs e)
@@ -238,7 +238,7 @@ namespace Soundify
         {
             // Start the app minimized, then show it here to avoid a white flash on startup
             Activate();
-            WindowState = WindowState.Normal;
+            WindowState = WindowState.Maximized;
         }
     }
 }

@@ -4,7 +4,7 @@
                     x:Class="View.Screens.RoleAssignmentScreen">
     <DataTemplate x:Key="RoleAssignmentScreen">
         <!-- Start RoleAssignmentScreen screen -->
-        <Grid Background="#FF303651" DataContext="{x:Static dataContexts:RoleAssignmentDataContext.Instance}">
+        <Grid Background="{DynamicResource MainBackgroundColor}" DataContext="{x:Static dataContexts:RoleAssignmentDataContext.Instance}">
             <Grid.Resources>
                 <ResourceDictionary Source="../Styles/Watermark.xaml"/>
             </Grid.Resources>

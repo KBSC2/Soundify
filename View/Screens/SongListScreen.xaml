@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <DataTemplate x:Key="SongListScreen">
         <!-- Start songlist screen -->
-        <Grid>
+        <Grid Margin="0,0,0,60">
             <ContentPresenter ContentTemplate="{DynamicResource SongList}" />
         </Grid>
     </DataTemplate>

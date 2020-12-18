@@ -13,8 +13,8 @@
         AllowsTransparency="True"
         Background="Transparent"
         Icon="Assets\soundifysmall.ico">
-    <Border BorderBrush="{DynamicResource BackgroundColor}" BorderThickness="20" CornerRadius="20">
-        <Grid Background="{DynamicResource BackgroundColor}" MouseDown="Window_MouseDown">
+    <Border BorderBrush="{DynamicResource MainBackgroundColor}" BorderThickness="20" CornerRadius="20">
+        <Grid Background="{DynamicResource MainBackgroundColor}" MouseDown="Window_MouseDown">
 
             <Label Content="Soundify" HorizontalAlignment="Center" Margin="0,123,0,0" VerticalAlignment="Top" Foreground="White" FontSize="50"/>
             <Label Content="Fill in your new information" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" Foreground="White" FontSize="40" FontWeight="Bold" />
