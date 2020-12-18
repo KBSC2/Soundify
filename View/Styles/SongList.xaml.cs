@@ -97,6 +97,5 @@ namespace View.Resources
             var songInfo = (((ListViewItem) sender).Content as SongInfo);
             SongListDataContext.Instance.SelectedSongInfo = songInfo;
         }
-
     }
 }
