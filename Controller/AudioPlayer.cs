@@ -260,6 +260,7 @@ namespace Controller
         private void FillQueue()
         {
             var songs = new List<Song>();
+
             if (CurrentPlaylist != null)
                 songs = CurrentPlaylist.PlaylistSongs.Select(x => x.Song).ToList();
 
@@ -288,7 +289,12 @@ namespace Controller
                         tempList.ForEach(i => queueFromCurrentSongIndex.Add(i));
                     }
                     else
+                    {
+                        var tempList = new List<Song>(queueFromCurrentSongIndex);
+                        queueFromCurrentSongIndex.Clear();
+                        songs.Where(x => tempList.Contains(x)).ToList().ForEach(i => queueFromCurrentSongIndex.Add(i));
                         songs.ForEach(i => queueFromCurrentSongIndex.Add(i));
+                    }
                 }
                 else
                 {
