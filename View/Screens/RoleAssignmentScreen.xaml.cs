@@ -36,10 +36,8 @@ namespace View.Screens
             if (e.Key == Key.Return)
             {
                 var textBox = (TextBox)sender;
-                var Users = UserController.Create(DatabaseContext.Instance).GetList()
-                    .Where(u => u.Username.ToLower().Contains(textBox.Text.ToLower()));
-                RoleAssignmentDataContext.Instance.Users = new List<User>(Users);
-                RoleAssignmentDataContext.Instance.Users.Remove(UserController.CurrentUser);
+                RoleAssignmentDataContext.Instance.Users = UserController.Create(DatabaseContext.Instance)
+                    .GetFilteredList(u => u.Username.ToLower().Contains(textBox.Text.ToLower()) && u.ID != UserController.CurrentUser.ID);
                 RoleAssignmentDataContext.Instance.OnPropertyChanged();
             }
         }
