@@ -49,6 +49,7 @@ namespace View
                 {
                     UserController.CurrentUser = controller.GetUserFromEmailOrUsername(emailOrUsername);
                     var main = MainWindow.InstanceMainWindow;
+                    main.WindowState = WindowState.Minimized;
                     main.Show();
                     main.Focus();
                     this.Hide();
