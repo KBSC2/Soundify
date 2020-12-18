@@ -37,17 +37,6 @@ namespace Controller.DbControllers
 
         public List<ShopItemPermissions> GetList()
         {
-            /*var permissionController = PermissionController.Create(Context);
-            var shopItemController = ShopItemController.Create(Context);
-
-            var result = Set.ToList();
-            result.ForEach(x =>
-            {
-                x.Permission = permissionController.GetItem(x.PermissionID);
-                x.ShopItem = shopItemController.GetItem(x.ShopItemID);
-            });
-            return result;*/
-
             return Set.ToList();
         }
 
@@ -72,8 +61,6 @@ namespace Controller.DbControllers
             });
 
             return result;
-
-            /*return GetList().Where(x => shopItemIds.Contains(x.ShopItemID)).ToList();*/
         }
 
         /**
@@ -89,8 +76,6 @@ namespace Controller.DbControllers
             if (user == null)
                 return null;
 
-            /*var shopItemIds = UserShopItemsController.Create(Context).GetItemsForUser(user.ID)
-                .Select(x => x.ShopItemID).ToArray();*/
             return this.GetPermissionsFromShopItems(user.UserShopItems.ToList())
                 .FirstOrDefault(x => x.PermissionID == (int)permission);
         }
