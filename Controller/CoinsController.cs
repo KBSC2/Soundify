@@ -8,6 +8,7 @@ namespace Controller
     {
         private static CoinsController instance;
         public static CoinsController Instance => instance ??= new CoinsController();
+        public event EventHandler UserCoinsEarned;
 
         private int counter;
 
@@ -30,6 +31,7 @@ namespace Controller
                 var userController = UserController.Create(new DatabaseContext());
                 userController.AddCoins(UserController.CurrentUser);
                 counter = 0;
+                UserCoinsEarned?.Invoke(this, new EventArgs());
             }
         }
     }
