@@ -124,7 +124,9 @@ namespace Controller
         {
             if (CurrentSong != null)
                 WaveOutDevice.Stop();
+
             CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
+            //CurrentSongFile.AudioFile.CurrentTime = TimeSpan.FromSeconds(0);
             CurrentSong = song;
             CurrentSongArtistName = song.Artist.ArtistName;
             WaveOutDevice.Init(CurrentSongFile.AudioFile);

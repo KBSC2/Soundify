@@ -23,7 +23,7 @@ namespace View.DataContexts
 
         public void OnNextSong(object sender, EventArgs e)
         {
-            SongListDataContext.Instance.OnPropertyChanged();
+            SongListDataContext.Instance.OnPropertyChanged("");
         }
 
         [NotifyPropertyChangedInvocator]

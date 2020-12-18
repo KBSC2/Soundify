@@ -18,8 +18,8 @@
                 <Label Content="Now playing" HorizontalAlignment="Left" Margin="5,50,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
                 <Image Source="/Assets/sound.png" HorizontalAlignment="Left" Margin="200,67,0,0" VerticalAlignment="Top" Height="25" />
                 <Label Content="In queue" HorizontalAlignment="Left" Margin="5,120,0,0" VerticalAlignment="Top" FontSize="30" Foreground="White" FontWeight="Bold"/>
-                <Label Content="{Binding CurrentSongName}" HorizontalAlignment="Left" Margin="270,60,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" />
-                <Label Content="{Binding CurrentSongArtist}" HorizontalAlignment="Left" Margin="570,60,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" />
+                <TextBlock Text="{Binding CurrentSongName}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="275,65,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" MaxWidth="300"  />
+                <TextBlock Text="{Binding CurrentSongArtist}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" Margin="575,65,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" MaxWidth="200" />
                 <Label Content="{Binding CurrentSongDuration}" HorizontalAlignment="Left" Margin="770,60,0,0" VerticalAlignment="Top" FontSize="25" Foreground="White" />
             </Grid>
             <ListView HorizontalAlignment="Left" VerticalAlignment="Top" Margin="270,130,0,0" x:Name="Queue" DataContext="{Binding}" Background="{DynamicResource MainBackgroundColor}" BorderThickness="0" BorderBrush="{x:Null}" Foreground="White" ItemsSource="{Binding NextInQueueItems}" FontSize="25">
