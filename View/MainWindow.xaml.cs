@@ -15,7 +15,7 @@ using Model.Enums;
 using View;
 using View.Components;
 using View.DataContexts;
-
+using NAudio.Wave;
 
 namespace Soundify
 {
@@ -57,6 +57,7 @@ namespace Soundify
         public MainWindow()
         {
             AudioPlayer.Create(DatabaseContext.Instance);
+            AudioPlayer.Instance.WaveOutDevice.PlaybackStopped += OnSongFinished;
 
             instanceMainWindow = this;
             Loaded += MainWindow_Loaded;
@@ -238,6 +239,15 @@ namespace Soundify
             // Start the app minimized, then show it here to avoid a white flash on startup
             Activate();
             WindowState = WindowState.Normal;
+        }
+
+        private void OnSongFinished(object sender, StoppedEventArgs e)
+        {
+            if (AudioPlayer.Instance.CurrentSong == null)
+                return;
+
+            AudioPlayer.Instance.Next();
+            QueueDataContext.Instance.OnPropertyChanged("");
         }
     }
 }
