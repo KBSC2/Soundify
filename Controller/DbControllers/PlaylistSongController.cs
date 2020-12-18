@@ -126,7 +126,6 @@ namespace Controller.DbControllers
                 context.Entry(playlistSong).State = EntityState.Deleted;
                 context.SaveChanges();
             }
-
             ReorderSongIndexes(playlist);
         }
 
@@ -185,7 +184,7 @@ namespace Controller.DbControllers
             context.Entry(playlistSong).State = EntityState.Modified;
             context.SaveChanges();
         } 
-        
+
         /**
          * Determine if the database is a real database, or a mock database
          *
