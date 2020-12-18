@@ -45,10 +45,11 @@ namespace View.Screens
         {
             User user = (User)((ContentPresenter)((ComboBox)sender).TemplatedParent).Content;
             int roleID = ((ComboBox)sender).SelectedIndex + 1;
+            var artistController = ArtistController.Create(DatabaseContext.Instance);
             if(user.RoleID != roleID)
             {
                 if (user.RoleID == 1) artistController.CreateItem(new Artist {ArtistName = user.Username, UserID = user.ID});
-                if (roleId == 1) artistController.RevokeArtist(artistController.GetArtistFromUser(user));
+                if (roleID == 1) artistController.RevokeArtist(artistController.GetArtistFromUser(user));
                 
                 UserController.Create(DatabaseContext.Instance).UpdateUserRole(user, roleID);
 
