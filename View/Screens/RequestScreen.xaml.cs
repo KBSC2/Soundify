@@ -25,7 +25,7 @@ namespace View.Screens
 
             requestController.ApproveUser(requestController.GetItem(requestId));
 
-            RequestDatacontext.Instance.OnPropertyChanged();
+            RequestDatacontext.Instance.OnPropertyChanged("");
         }
 
         private void Artist_Decline_Button_Click(object sender, RoutedEventArgs e)
@@ -34,7 +34,7 @@ namespace View.Screens
             
             requestController.DeclineUser(requestController.GetItem(requestId));
 
-            RequestDatacontext.Instance.OnPropertyChanged();
+            RequestDatacontext.Instance.OnPropertyChanged("");
         }
 
 
@@ -44,7 +44,7 @@ namespace View.Screens
 
             requestController.ApproveSong(requestController.GetItem(requestId));
 
-            RequestDatacontext.Instance.OnPropertyChanged();
+            RequestDatacontext.Instance.OnPropertyChanged("");
         }
 
         private void Song_Decline_Button_Click(object sender, RoutedEventArgs e)
@@ -53,7 +53,7 @@ namespace View.Screens
 
             requestController.DeclineSong(requestController.GetItem(requestId));
 
-            RequestDatacontext.Instance.OnPropertyChanged();
+            RequestDatacontext.Instance.OnPropertyChanged("");
         }
     }
 }
