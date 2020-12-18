@@ -37,7 +37,6 @@ namespace View.DataContexts
             if (!IsPlaylistScreen)
                 SelectedSongInfo = null;
             
-
             switch (instance.ScreenName)
             {
                 case ScreenNames.PlaylistScreen:
