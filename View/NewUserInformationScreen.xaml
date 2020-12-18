@@ -11,7 +11,7 @@
         ResizeMode="NoResize"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="Transparent"
+        Background="{DynamicResource MainBackgroundColor}"
         Icon="Assets\soundifysmall.ico">
     <Border BorderBrush="{DynamicResource MainBackgroundColor}" BorderThickness="20" CornerRadius="20">
         <Grid Background="{DynamicResource MainBackgroundColor}" MouseDown="Window_MouseDown">

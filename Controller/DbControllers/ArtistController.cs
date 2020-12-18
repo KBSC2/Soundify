@@ -53,7 +53,6 @@ namespace Controller.DbControllers
          */
         // Can't this be a little bit more generic. Like update role or something??
         public Artist MakeArtist(Request request)
-
         {
             var user = userController.GetItem(request.UserID);
             userController.UpdateUserRole(user, 2);

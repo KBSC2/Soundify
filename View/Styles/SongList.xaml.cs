@@ -15,29 +15,23 @@ namespace View.Resources
 {
     public partial class SongContextMenuInfo : ResourceDictionary
     {
-        public void ListViewItem_RightClickAddQueue(object sender, RoutedEventArgs e)
+        private void ListViewItem_RightClickAddQueue(object sender, RoutedEventArgs e)
         {
-            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
-
-            AudioPlayer.Instance.AddSongToSongQueue(song);
+            AudioPlayer.Instance.AddSongToSongQueue(((SongInfo)((MenuItem)sender).DataContext).Song);
 
             SongListDataContext.Instance.OnPropertyChanged();
         }
 
         private void ListViewItem_RightClickSongInfo(object sender, RoutedEventArgs e)
         {
-            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
-
-            SongInfoScreen songInfoScreen = new SongInfoScreen(song);
-            songInfoScreen.Show();
+            new SongInfoScreen(((SongInfo)((MenuItem)sender).DataContext).Song).Show();
 
             SongListDataContext.Instance.OnPropertyChanged();
         }
 
         private void SongRow_Click(object sender, MouseButtonEventArgs e)
         {
-            var listViewItem = (ListViewItem)sender;
-            if (listViewItem.Content is SongInfo songInfo)
+            if (((ListViewItem)sender).Content is SongInfo songInfo)
             {
                 switch (SongListDataContext.Instance.ScreenName)
                 {
@@ -65,22 +59,18 @@ namespace View.Resources
 
         private void OpenAlbum_LeftClick(object sender, RoutedEventArgs e)
         {
-            var songInfo = ((SongInfo) ((MenuItem)sender).DataContext);
-            
-                AlbumSongListDataContext.Instance.Album = songInfo.Song.Album;
+            AlbumSongListDataContext.Instance.Album = ((SongInfo)((MenuItem)sender).DataContext).Song.Album;
 
-                MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs
-                {
-                    ScreenName = ScreenNames.AlbumSongListScreen,
-                });
+            MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs
+            {
+                ScreenName = ScreenNames.AlbumSongListScreen,
+            });
         }
 
 
-        public void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
+        private void ListViewItem_RightClick_DeleteSong(object sender, RoutedEventArgs e)
         {
-            var song = ((SongInfo)((MenuItem)sender).DataContext).Song;
-            var playlist = MainWindow.CurrentPlayList;
-            PlaylistSongController.Create(DatabaseContext.Instance).RemoveFromPlaylist(playlist, song.ID);
+            PlaylistSongController.Create(DatabaseContext.Instance).RemoveFromPlaylist(MainWindow.CurrentPlayList, ((SongInfo)((MenuItem)sender).DataContext).Song.ID);
 
             SongListDataContext.Instance.OnPropertyChanged("");
             PlaylistDataContext.Instance.OnPropertyChanged("");
@@ -88,21 +78,24 @@ namespace View.Resources
 
         private void MenuItem_LeftClick(object sender, MouseButtonEventArgs e)
         {
-            var playlist = ((Playlist)((MenuItem)sender).DataContext);
-            var song = ((SongInfo)((MenuItem)((MenuItem)sender).Tag).DataContext).Song;
-
             var playlistSongController = PlaylistSongController.Create(DatabaseContext.Instance);
-            playlistSongController.AddSongToPlaylist(playlist, song.ID);
+            playlistSongController.AddSongToPlaylist((Playlist)((MenuItem)sender).DataContext, ((SongInfo)((MenuItem)((MenuItem)sender).Tag).DataContext).Song.ID);
 
             SongListDataContext.Instance.OnPropertyChanged();
         }
 
-        public void ListViewItem_ButtonClick_EditSong(object sender, RoutedEventArgs e)
+        private void ListViewItem_ButtonClick_EditSong(object sender, RoutedEventArgs e)
         {
             if (!(sender is Button button) || !(button.DataContext is SongInfo songInfo)) return;
             
             SongAlterationDataContext.Instance.SetSong(songInfo.Song);
             MainWindow.InstanceMainWindow.SetScreen(ScreenNames.SongAlterationScreen);
+        }
+
+        private void SelectedItem_Selected(object sender, RoutedEventArgs e )
+        {
+            var songInfo = (((ListViewItem) sender).Content as SongInfo);
+            SongListDataContext.Instance.SelectedSongInfo = songInfo;
         }
     }
 }

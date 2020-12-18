@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Soundify;
@@ -20,15 +21,15 @@ namespace View.Screens
 
         private void ShopItemBuy_Click(object sender, RoutedEventArgs e)
         {
-            int id = (int)((Button)sender).Tag;
-            var shopItem = ShopDataContext.Instance.ShopItems.FirstOrDefault(x => x.ID == id);
+            var shopItem = ShopDataContext.Instance.ShopItems.FirstOrDefault(x => x.ID == (int)((Button)sender).Tag);
 
             if (shopItem == null || (shopItem.Bought && !shopItem.Repurchasable))
                 return;
 
             ShopItemController.Create(DatabaseContext.Instance).BuyItem(UserController.CurrentUser, shopItem);
-            ShopDataContext.Instance.OnPropertyChanged();
+            ShopDataContext.Instance.OnPropertyChanged("");
             MainWindow.InstanceMainWindow.UpdateButtons();
+            ShopDataContext.Instance.Update(this, null);
         }
     }
 }
