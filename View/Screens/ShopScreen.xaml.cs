@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Controller;
 using Controller.DbControllers;
 using Model.Database.Contexts;
 using Soundify;
@@ -28,6 +29,7 @@ namespace View.Screens
             ShopItemController.Create(DatabaseContext.Instance).BuyItem(UserController.CurrentUser, shopItem);
             ShopDataContext.Instance.OnPropertyChanged("");
             MainWindow.InstanceMainWindow.UpdateButtons();
+            ShopDataContext.Instance.Update(this, null);
         }
     }
 }
