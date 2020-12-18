@@ -57,7 +57,6 @@ namespace Soundify
         public MainWindow()
         {
             AudioPlayer.Create(DatabaseContext.Instance);
-            AudioPlayer.Instance.WaveOutDevice.PlaybackStopped += OnSongFinished;
 
             instanceMainWindow = this;
             Loaded += MainWindow_Loaded;
@@ -149,7 +148,7 @@ namespace Soundify
         {
             MainContent.ContentTemplate = FindResource(screenName.ToString()) as DataTemplate;
             SongListDataContext.Instance.ScreenName = screenName;
-            SongListDataContext.Instance.OnPropertyChanged();
+            SongListDataContext.Instance.OnPropertyChanged("");
         }
 
         public void SetScreen(ScreenNames screenName, Playlist playlist)
@@ -203,7 +202,7 @@ namespace Soundify
                 if (SongListDataContext.Instance.IsSongListScreen)
                 {
                     SongListDataContext.Instance.SongListSearchTerms = text.Split(" ").ToList();
-                    SongListDataContext.Instance.OnPropertyChanged();
+                    SongListDataContext.Instance.OnPropertyChanged("");
                 }
                 else
                 {
@@ -241,13 +240,17 @@ namespace Soundify
             WindowState = WindowState.Maximized;
         }
 
-        private void OnSongFinished(object sender, StoppedEventArgs e)
+        public void CheckSongFinished(object sender, EventArgs e)
         {
             if (AudioPlayer.Instance.CurrentSong == null)
                 return;
 
-            AudioPlayer.Instance.Next();
-            QueueDataContext.Instance.OnPropertyChanged("");
+            if (AudioPlayer.Instance.CurrentSongFile.CurrentTimeSong >= AudioPlayer.Instance.CurrentSong.Duration)
+            {
+                AudioPlayer.Instance.Next();
+                QueueDataContext.Instance.OnPropertyChanged("");
+                SongListDataContext.Instance.OnPropertyChanged("");
+            }
         }
     }
 }
