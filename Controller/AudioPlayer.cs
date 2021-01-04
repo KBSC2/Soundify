@@ -127,7 +127,7 @@ namespace Controller
                 WaveOutDevice.Stop();
 
             CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
-            //CurrentSongFile.AudioFile.CurrentTime = TimeSpan.FromSeconds(0);
+            CurrentSongFile.AudioFile.CurrentTime = TimeSpan.FromSeconds(0);
             CurrentSong = song;
             CurrentSongArtistName = song.Artist.ArtistName;
             WaveOutDevice.Init(CurrentSongFile.AudioFile);
@@ -375,13 +375,20 @@ namespace Controller
          */
         public void ChangeVolume(int selectedItem)
         {
-            MaxVolume = selectedItem switch
+            switch (selectedItem)
             {
-                0 => 0.1,
-                1 => 0.2,
-                2 => 0.4,
-                _ => 0.0
-            };
+                case 0:
+                    MaxVolume = 0.1;
+                    break;
+                case 1:
+                    MaxVolume = 0.2;
+                    break;
+                case 2:
+                    MaxVolume = 0.4;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
