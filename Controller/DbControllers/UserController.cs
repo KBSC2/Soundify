@@ -79,6 +79,7 @@ namespace Controller.DbControllers
         public RegistrationResults CreateAccount(User user, string password, string passwordRepeat)
         {
             user.Username = user.Username.ToLower();
+            user.Email = user.Email.ToLower();
 
             if (user.Username == "")
                 return RegistrationResults.NoName;
