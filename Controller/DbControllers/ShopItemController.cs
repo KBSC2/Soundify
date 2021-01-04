@@ -29,7 +29,7 @@ namespace Controller.DbControllers
             var items = GetList();
             items.ForEach(x =>
             {
-                x.Bought = user.UserShopItems.Select(y => y.ShopItem).ToArray().Contains(x);
+                x.Bought = user.UserShopItems?.Select(y => y.ShopItem).ToArray().Contains(x) ?? false;
                 x.Purchasable = user.Coins >= x.Price;
                 x.ImagePath ??= "../Assets/NoImage.png";
             });

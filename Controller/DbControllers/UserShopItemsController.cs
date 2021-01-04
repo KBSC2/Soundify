@@ -56,7 +56,8 @@ namespace Controller.DbControllers
 
             Set.Add(item);
 
-            if (RealDatabase()) {
+            if (RealDatabase())
+            {
                 Context.Entry(item).State = EntityState.Added;
                 Context.SaveChanges();
             }
