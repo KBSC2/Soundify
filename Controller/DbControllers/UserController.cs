@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Controller.Proxy;
 using Model.Database.Contexts;
@@ -36,7 +37,9 @@ namespace Controller.DbControllers
          */
         public User GetUserFromEmailOrUsername(string emailOrUsername)
         {
-            return this.GetList().FirstOrDefault(x => x.Email == emailOrUsername || x.Username == emailOrUsername);
+            return this.GetList().FirstOrDefault(x =>
+                string.Equals(x.Email, emailOrUsername, StringComparison.CurrentCultureIgnoreCase) ||
+                string.Equals(x.Username, emailOrUsername, StringComparison.CurrentCultureIgnoreCase));
         }
 
         /**
