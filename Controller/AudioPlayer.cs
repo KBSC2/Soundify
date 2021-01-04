@@ -67,10 +67,12 @@ namespace Controller
          */
         public void Next()
         {
-            FillQueue();
+            //FillQueue();
             if (CurrentSongIndex >= 0 && CurrentSong != null)
                 if (NextInQueue.Contains(Queue[CurrentSongIndex]))
                     NextInQueue.Remove(Queue[CurrentSongIndex]);
+                else if (Looping)
+                    AddSongToQueue(CurrentSong);
             
             if (Queue.Count == 0) return;
             CurrentSongIndex++;
@@ -110,7 +112,6 @@ namespace Controller
             }
 
             PlaySong(Queue[CurrentSongIndex]);
-            FillQueue();
         }
 
         /**
@@ -227,6 +228,7 @@ namespace Controller
             else
                 CurrentSongIndex = startIndex;
 
+            FillQueue();
             Next();
         }
 
