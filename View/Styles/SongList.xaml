@@ -22,7 +22,8 @@
         <ListView x:Name="SongListView"
                   Background="Transparent" BorderThickness="0" BorderBrush="{x:Null}"
                   ItemsSource="{Binding SongInfoList}" FontSize="25"
-                  DataContext="{x:Static dataContext:SongListDataContext.Instance}" >
+                  DataContext="{x:Static dataContext:SongListDataContext.Instance}" 
+                  ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
                     <GridViewColumn Header="Title" Width="370" DisplayMemberBinding="{Binding Song.Name}" />

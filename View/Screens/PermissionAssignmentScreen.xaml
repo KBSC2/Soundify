@@ -8,12 +8,25 @@
                     x:Class="View.Screens.PermissionAssignmentScreen">
     <DataTemplate x:Key="PermissionAssignmentScreen">
         <!-- Start PermissionAssignment screen -->
-        <Grid Margin="0,0,0,0" Background="#FF303651" DataContext="{x:Static DataContexts:PermissionAssignmentDataContext.Instance}">
-            <ListView ItemsSource="{Binding PermissionsDict}">
+        <Grid DataContext="{x:Static DataContexts:PermissionAssignmentDataContext.Instance}">
+            <Grid.Resources>
+                <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                                <Label Content="{TemplateBinding Content}" Padding="5" Width="{TemplateBinding Width}" BorderBrush="{DynamicResource InputBackground}" BorderThickness="0,0,0,4" Foreground="White" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Grid.Resources>
+            <ListView ItemsSource="{Binding PermissionsDict}" Background="{DynamicResource MainBackgroundColor}" Foreground="White" BorderThickness="0" BorderBrush="{x:Null}" FontSize="25">
                 <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Permissions" Width="200" DisplayMemberBinding="{Binding Key.Name}">
-                        </GridViewColumn>
+                    <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
+                        <GridViewColumn Header="Permissions" Width="300" DisplayMemberBinding="{Binding Key.Name}" />
                         <GridViewColumn Header="User" Width="200">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>

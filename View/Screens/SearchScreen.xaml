@@ -28,7 +28,7 @@
                     <Label Content="Songs" Foreground="White" FontSize="30" FontWeight="ExtraBold" />
                     <ContentPresenter Height="500" ContentTemplate="{DynamicResource SongList}" />
                     <Label Content="Albums" Foreground="White" FontSize="30" FontWeight="ExtraBold" Margin="0,10,0,0" />
-                    <ListView Height="500" Name="SearchAlbums" Background="{DynamicResource MainBackgroundColor}" BorderThickness="0" BorderBrush="{x:Null}"
+                    <ListView ScrollViewer.VerticalScrollBarVisibility="Hidden" Height="500" Name="SearchAlbums" Background="{DynamicResource MainBackgroundColor}" BorderThickness="0" BorderBrush="{x:Null}"
                               Foreground="White" ItemsSource="{Binding SearchAlbums}" FontSize="25">
                         <ListView.View>
                             <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
@@ -57,7 +57,7 @@
                         </ListView.ItemContainerStyle>
                     </ListView>
                     <Label Content="Playlists" Foreground="White" FontSize="30" FontWeight="ExtraBold" Margin="0,10,0,0" />
-                    <ListView Height="500" Name="SearchPlaylists" Background="{DynamicResource MainBackgroundColor}" BorderThickness="0" BorderBrush="{x:Null}"
+                    <ListView ScrollViewer.VerticalScrollBarVisibility="Hidden" Height="500" Name="SearchPlaylists" Background="{DynamicResource MainBackgroundColor}" BorderThickness="0" BorderBrush="{x:Null}"
                               Foreground="White" ItemsSource="{Binding SearchPlaylists}" FontSize="25">
                         <ListView.View>
                             <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">

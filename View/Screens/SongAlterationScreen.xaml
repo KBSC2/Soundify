@@ -19,25 +19,43 @@
             <Label Content="Produced by" HorizontalAlignment="Left" Margin="59,164,0,0" VerticalAlignment="Top" FontSize="18" Foreground="White" FontWeight="Bold"/>
             <Label Content="Duration" HorizontalAlignment="Left" Margin="59,205,0,0" VerticalAlignment="Top" FontSize="18" Foreground="White" FontWeight="Bold" />
 
-            <TextBox x:Name="Title" Text="{Binding Song.Name}" HorizontalAlignment="Left" Margin="185,37,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="219" FontSize="18" Foreground="White" Background="White" BorderBrush="{x:Null}" />
+            <TextBox x:Name="Title" Text="{Binding Song.Name}" HorizontalAlignment="Left" Margin="185,43,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="219" FontSize="18" Foreground="Black" Background="White" BorderBrush="Black" />
             <Label x:Name="Artist" Content="{Binding ArtistName}" HorizontalAlignment="Left" Margin="185,80,0,0" VerticalAlignment="Top" Width="219" FontSize="18" Foreground="White" />
-            <TextBox x:Name="Writer" Text="{Binding Song.WrittenBy}" HorizontalAlignment="Left" Margin="185,121,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="219" FontSize="18" Foreground="White" Background="White" BorderBrush="{x:Null}" />
-            <TextBox x:Name="Producer" Text="{Binding Song.ProducedBy}" HorizontalAlignment="Left" Margin="185,164,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="219" FontSize="18" Foreground="White" Background="White" BorderBrush="{x:Null}" />
+            <TextBox x:Name="Writer" Text="{Binding Song.WrittenBy}" HorizontalAlignment="Left" Margin="185,125,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="219" FontSize="18" Foreground="Black" Background="White" BorderBrush="Black" />
+            <TextBox x:Name="Producer" Text="{Binding Song.ProducedBy}" HorizontalAlignment="Left" Margin="185,169,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="219" FontSize="18" Foreground="Black" Background="White" BorderBrush="Black" />
             <Label x:Name="Duration" Content="{Binding Duration, Mode=OneWay, Converter={StaticResource DurationConverter}}" HorizontalAlignment="Left" Margin="185,205,0,0" VerticalAlignment="Top" Width="219" FontSize="18" Foreground="White"/>
 
             <Label Content="Description" HorizontalAlignment="Left" Margin="59,267,0,0" VerticalAlignment="Top" Width="113" FontSize="18" Foreground="White" FontWeight="Bold" RenderTransformOrigin="0.5,0.5"/>
-            <TextBox x:Name="Description" Text="{Binding Song.Description}" Margin="59,306,576,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="18" Foreground="White" BorderBrush="Black" Background="{x:Null}" Height="196"/>
-            <Button Click="UploadSongImageButton_Click" HorizontalAlignment="Right" Margin="0,22,344,0" VerticalAlignment="Top" Height="31" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
+            <TextBox x:Name="Description" Text="{Binding Song.Description}" Margin="59,306,576,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="18" Foreground="White" BorderBrush="Black" Background="White" Height="150"/>
+            <Button Click="UploadSongImageButton_Click" HorizontalAlignment="Right" Margin="0,45,300,0" VerticalAlignment="Top" Height="31" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/assets/whiteUpload.png" Width="25" Height="25" RenderTransformOrigin="1.12,0.508"/>
                     <TextBlock Text="Song image" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="18" FontWeight="Bold"/>
                 </StackPanel>
             </Button>
-            <Image x:Name="Image" Source="{Binding ImageSource}" HorizontalAlignment="Right" Height="420" Margin="0,80,54,0" VerticalAlignment="Top" Width="420"/>
+            <Image x:Name="Image" Source="{Binding ImageSource}" HorizontalAlignment="Right" Height="374" Margin="0,80,54,0" VerticalAlignment="Top" Width="420"/>
 
-            <Button Content="Save song" HorizontalAlignment="Right" Margin="0,538,305,0" VerticalAlignment="Top" Height="34" Width="156" Background="{DynamicResource SGreen}" BorderBrush="{x:Null}" Foreground="White" FontSize="18" Click="Safe_Button_Click" Tag="{Binding ElementName=Title}" CommandParameter="{Binding ElementName=DataGrid}"/>
-            <Button Content="Cancel" HorizontalAlignment="Center" Margin="0,538,0,0" VerticalAlignment="Top" Height="34" Width="156" Background="{DynamicResource Orange}" BorderBrush="{x:Null}" Foreground="White" FontSize="18" Click="Cancel_Button_Click"/>
-            <Button Content="Delete" HorizontalAlignment="Left" Margin="305,538,0,0" VerticalAlignment="Top" Height="34" Width="156" Background="{DynamicResource Red}" BorderBrush="{x:Null}" Foreground="White" FontSize="18" Click="Delete_Button_Click"/>
+            <Button Content="Save song" HorizontalAlignment="Right" Margin="0,500,305,0" VerticalAlignment="Top" Height="34" Width="156" Background="{DynamicResource SGreen}" BorderBrush="{x:Null}" Foreground="White" FontSize="18" Click="Safe_Button_Click" Tag="{Binding ElementName=Title}" CommandParameter="{Binding ElementName=DataGrid}" FontWeight="Bold">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Content="Cancel" HorizontalAlignment="Center" Margin="0,500,0,0" VerticalAlignment="Top" Height="34" Width="156" Background="{DynamicResource Orange}" BorderBrush="{x:Null}" Foreground="White" FontSize="18" Click="Cancel_Button_Click" FontWeight="Bold">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Content="Delete" HorizontalAlignment="Left" Margin="305,500,0,0" VerticalAlignment="Top" Height="34" Width="156" Background="{DynamicResource Red}" BorderBrush="{x:Null}" Foreground="White" FontSize="18" Click="Delete_Button_Click" FontWeight="Bold">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="12"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

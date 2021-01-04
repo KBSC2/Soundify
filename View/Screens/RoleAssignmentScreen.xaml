@@ -8,7 +8,7 @@
             <Grid.Resources>
                 <ResourceDictionary Source="../Styles/Watermark.xaml"/>
             </Grid.Resources>
-            <Grid Margin="0, 5, 0, 5">
+            <Grid Margin="0,5,0,5">
                 <Grid.Resources>
                     <components:RoleIDConverter x:Key="converter"/>
                 </Grid.Resources>
@@ -16,8 +16,14 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Style="{StaticResource WatermarkTextbox }" x:Name="SearchUser" Grid.Column="0" Margin="0, 12, 0, 0" HorizontalAlignment="Center" Tag="Search user" TextWrapping="Wrap" VerticalAlignment="Top" Width="192" Height="25" KeyDown="GetUsers" BorderBrush="{x:Null}" Background="White"/>
-                <ListView ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="0, 50, 0, 0" Padding="5" FontSize="20" ItemsSource="{Binding Users}" BorderThickness="0" HorizontalAlignment="Center" Background="Transparent">
+                <TextBox Style="{StaticResource SearchTextbox }" VerticalAlignment="Top" x:Name="SearchUser" Grid.Column="0" Margin="0,12,0,0" Foreground="{DynamicResource MainBackgroundColor}" HorizontalAlignment="Center" Tag="Search user" TextWrapping="Wrap" Width="250" Height="30" KeyDown="GetUsers" FontSize="15" FontWeight="Bold">
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="12"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+                <ListView ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="0,50,0,0" Padding="5" FontSize="20" ItemsSource="{Binding Users}" BorderThickness="0" HorizontalAlignment="Center" Background="Transparent">
                     <ListView.View>
                         <GridView>
                             <GridView.ColumnHeaderContainerStyle>
@@ -49,12 +55,10 @@
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding }" />
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="Transparent" />
-                                    <Setter Property="Foreground" Value="Black" />
+                                    <Setter Property="Background" Value="#FF8390E4" />
                                 </Trigger>
                                 <Trigger Property="IsSelected" Value="True">
                                     <Setter Property="Background" Value="#FF8390E4" />
-                                    <Setter Property="Foreground" Value="Black" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
