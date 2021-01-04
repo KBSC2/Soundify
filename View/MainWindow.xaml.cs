@@ -58,6 +58,7 @@ namespace Soundify
         {
             AudioPlayer.Create(DatabaseContext.Instance);
 
+            var x = PasswordController.EncryptPassword("admin");
             instanceMainWindow = this;
             Loaded += MainWindow_Loaded;
             if (!Directory.Exists(Path.GetTempPath() + "Soundify"))
@@ -65,8 +66,8 @@ namespace Soundify
 
             foreach (PathDirectories path in Enum.GetValues(typeof(PathDirectories)))
             {
-                if (!Directory.Exists(Path.GetTempPath() + "Soundify/" + path.ToString().ToLower()))
-                    Directory.CreateDirectory(Path.GetTempPath() + "Soundify/" + path.ToString().ToLower());
+                if (!Directory.Exists(Path.GetTempPath() + "Soundify/" + path.ToString().Replace("_", "/").ToLower()))
+                    Directory.CreateDirectory(Path.GetTempPath() + "Soundify/" + path.ToString().Replace("_", "/").ToLower());
             }
 
             SSHController.Instance.OpenSSHTunnel();

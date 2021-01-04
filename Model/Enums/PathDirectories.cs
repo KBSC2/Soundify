@@ -4,6 +4,7 @@
     {
         Songs,
         Images,
-        Settings
+        Settings,
+        Images_Shop
     }
 }
