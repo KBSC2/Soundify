@@ -275,7 +275,7 @@ namespace Controller
             {
                 var queueFromCurrentSongIndex = new List<Song>(songs);
 
-                if (Queue.Count > 0)
+                if (Queue.Count > NextInQueue.Count)
                     queueFromCurrentSongIndex = Queue.GetRange(CurrentSongIndex + 1, Queue.Count - (CurrentSongIndex + 1));
                 
                 NextInQueue.ForEach(x => queueFromCurrentSongIndex.Remove(x));
@@ -313,7 +313,13 @@ namespace Controller
                 }
 
                 if(Queue.Count > 0)
-                    Queue.RemoveRange(CurrentSongIndex + 1 + NextInQueue.Count, Queue.Count - (CurrentSongIndex + 1 + NextInQueue.Count));
+                {
+                    if(NextInQueue.Count > 0 && NextInQueue[0] == CurrentSong)
+                        Queue.RemoveRange(CurrentSongIndex + NextInQueue.Count, Queue.Count - (CurrentSongIndex + NextInQueue.Count));
+                    else
+                        Queue.RemoveRange(CurrentSongIndex + 1 + NextInQueue.Count, Queue.Count - (CurrentSongIndex + 1 + NextInQueue.Count));
+                }
+                    
                 
                 Queue.AddRange(queueFromCurrentSongIndex);
             }
