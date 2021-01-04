@@ -16,32 +16,24 @@ namespace View.DataContexts
         private static HomeDataContext instance;
         public static HomeDataContext Instance => instance ??= new HomeDataContext();
 
-        public List<ShopItem> ShopItems { get; set; }
 
-        public List<ShopItem> AlreadyBought
-        {
-            get
-            {
-                if (UserController.CurrentUser == null) return null;
-                return ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser)
-                    .Where(x => x.Bought && !x.Repurchasable).ToList();
-            }
-        }
+        public List<ShopItem> AlreadyBought => UserController.CurrentUser == null
+            ? null
+            : ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser)
+                .Where(x => x.Bought && !x.Repurchasable).ToList();
 
-        public List<ShopItem> StillAvailable
-        {
-            get
-            {
-                if (UserController.CurrentUser == null) return null;
-                return ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser)
-                    .Where(x => !x.Bought || x.Repurchasable).ToList();
-            }
-        }
+
+        public List<ShopItem> StillAvailable => UserController.CurrentUser == null
+            ? null
+            : ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser)
+                .Where(x => !x.Bought || x.Repurchasable).ToList();
+
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

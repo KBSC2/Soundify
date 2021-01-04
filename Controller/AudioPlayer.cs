@@ -265,7 +265,7 @@ namespace Controller
             var songs = new List<Song>();
 
             if (CurrentPlaylist != null)
-                songs = CurrentPlaylist.PlaylistSongs.Select(x => x.Song).ToList();
+                songs = CurrentPlaylist.PlaylistSongs?.Select(x => x.Song).ToList() ?? new List<Song>();
 
             if (CurrentAlbumSongs.Count > 0)
                 songs = CurrentAlbumSongs;

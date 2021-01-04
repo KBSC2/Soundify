@@ -76,7 +76,7 @@ namespace Controller.DbControllers
             if (user == null)
                 return null;
 
-            return this.GetPermissionsFromShopItems(user.UserShopItems.ToList())
+            return this.GetPermissionsFromShopItems(user.UserShopItems?.ToList())
                 .FirstOrDefault(x => x.PermissionID == (int)permission);
         }
 
@@ -93,7 +93,7 @@ namespace Controller.DbControllers
             if (user == null)
                 return 0;
 
-            var perms = this.GetPermissionsFromShopItems(user.UserShopItems.ToList())
+            var perms = this.GetPermissionsFromShopItems(user.UserShopItems?.ToList())
                 .Where(x => x.Permission.Name == permission.ToString()).ToList();
 
             var count = 0;

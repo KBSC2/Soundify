@@ -29,7 +29,7 @@ namespace View.DataContexts
             var items = new List<ShopItem>(ShopItems);
             items.ForEach(x =>
             {
-                x.Bought = UserController.CurrentUser.UserShopItems.Select(y => y.ShopItem).ToArray().Contains(x);
+                x.Bought = UserController.CurrentUser.UserShopItems?.Select(y => y.ShopItem).ToArray().Contains(x) ?? false;
                 x.Purchasable = UserController.CurrentUser.Coins >= x.Price;
                 x.ImagePath = FileCache.Instance.GetFile(x.ImagePath);
             });

@@ -99,8 +99,8 @@ namespace Controller.DbControllers
             if (user == null)
                 return GetActivePlaylists();
 
-            return user.Playlists.Where(x => x.ActivePlaylist)
-                .GroupBy(x => x.ID).Select(g => g.First()).ToList();
+            return user.Playlists?.Where(x => x.ActivePlaylist)
+                .GroupBy(x => x.ID).Select(g => g.First()).ToList() ?? new List<Playlist>();
         }
 
         /**

@@ -7,6 +7,7 @@ using Controller.DbControllers;
 using Model.Database.Contexts;
 using Model.Enums;
 using Soundify;
+using View.DataContexts;
 
 namespace View
 {
@@ -66,6 +67,7 @@ namespace View
                     this.UsernameLogin.Text = "";
                     this.PasswordLogin.Password = "";
                     DataContexts.DataContext.Instance.Timer.Start();
+                    HomeDataContext.Instance.OnPropertyChanged("");
                     break;
                 }
                 case LoginResults.EmailNotFound:

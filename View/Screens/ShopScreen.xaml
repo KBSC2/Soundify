@@ -9,7 +9,8 @@
             <Label Content="Soundify Shop" Margin="0,0,0,0" HorizontalAlignment="Center" FontSize="30" Foreground="White" FontWeight="Bold"/>
             <ListBox ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemsSource="{Binding ShopItems}" 
                      Background="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Auto" FlowDirection="LeftToRight" 
-                     Margin="0,40,0,0" BorderBrush="{x:Null}" BorderThickness="0" ItemContainerStyle="{DynamicResource NoListBoxHoverBackground}">
+                     Margin="0,40,0,0" BorderBrush="{x:Null}" BorderThickness="0" ItemContainerStyle="{DynamicResource NoListBoxHoverBackground}"
+                     >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Border Background="#F0A243" Height="180" Width="200" Margin="20,20,20,30" CornerRadius="20" BorderThickness="1" BorderBrush="#F0A243">
@@ -49,7 +50,7 @@
                 </ListBox.ItemTemplate>
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Vertical" HorizontalAlignment="Stretch" MinHeight="200"/>
+                        <UniformGrid Rows="2" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Top" />
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
