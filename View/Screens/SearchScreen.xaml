@@ -10,16 +10,30 @@
         <Grid DataContext="{x:Static DataContexts:SearchDataContext.Instance}" ShowGridLines="False">
             <Grid.Resources>
                 <CollectionViewSource x:Key="AllPlaylists" Source="{Binding AllPlaylists}" />
+                <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                                <Label Content="{TemplateBinding Content}" Padding="5" Width="{TemplateBinding Width}" BorderBrush="{DynamicResource InputBackground}" BorderThickness="0,0,0,4" Foreground="White" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
             </Grid.Resources>
             <ScrollViewer>
                 <StackPanel>
+                    <Label Content="Songs" Foreground="White" FontSize="30" FontWeight="ExtraBold" />
                     <ContentPresenter Height="500" ContentTemplate="{DynamicResource SongList}" />
-                    <ListView Height="500" Name="SearchAlbums" Background="#FF303651" BorderBrush="{x:Null}"
-                              Foreground="White" ItemsSource="{Binding SearchAlbums}">
+                    <Label Content="Albums" Foreground="White" FontSize="30" FontWeight="ExtraBold" Margin="0,10,0,0" />
+                    <ListView Height="500" Name="SearchAlbums" Background="{DynamicResource MainBackgroundColor}" BorderThickness="0" BorderBrush="{x:Null}"
+                              Foreground="White" ItemsSource="{Binding SearchAlbums}" FontSize="25">
                         <ListView.View>
-                            <GridView>
+                            <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
                                 <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding AlbumName}" />
-                                <GridViewColumn Header="Artist name" Width="150"
+                                <GridViewColumn Header="Artist" Width="150"
                                                 DisplayMemberBinding="{Binding Artist.ArtistName}" />
                                 <GridViewColumn Header="Genre" Width="150" DisplayMemberBinding="{Binding Genre}" />
                             </GridView>
@@ -27,7 +41,7 @@
                         <ListView.ItemContainerStyle>
                             <Style TargetType="{x:Type ListViewItem}">
                                 <EventSetter Event="MouseDoubleClick" Handler="AlbumRow_Click" />
-                                <Setter Property="Background" Value="#FF445399" />
+                                <Setter Property="Background" Value="Transparent" />
                                 <Setter Property="Foreground" Value="White" />
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
@@ -42,12 +56,13 @@
                             </Style>
                         </ListView.ItemContainerStyle>
                     </ListView>
-                    <ListView Height="500" Name="SearchPlaylists" Background="#FF303651" BorderBrush="{x:Null}"
-                              Foreground="White" ItemsSource="{Binding SearchPlaylists}">
+                    <Label Content="Playlists" Foreground="White" FontSize="30" FontWeight="ExtraBold" Margin="0,10,0,0" />
+                    <ListView Height="500" Name="SearchPlaylists" Background="{DynamicResource MainBackgroundColor}" BorderThickness="0" BorderBrush="{x:Null}"
+                              Foreground="White" ItemsSource="{Binding SearchPlaylists}" FontSize="25">
                         <ListView.View>
-                            <GridView>
+                            <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
                                 <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}" />
-                                <GridViewColumn Header="Creation Date" Width="150"
+                                <GridViewColumn Header="Creation Date" Width="300"
                                                 DisplayMemberBinding="{Binding CreationDate}" />
                                 <GridViewColumn Header="Genre" Width="150" DisplayMemberBinding="{Binding Genre}" />
                             </GridView>
@@ -55,7 +70,7 @@
                         <ListView.ItemContainerStyle>
                             <Style TargetType="{x:Type ListViewItem}">
                                 <EventSetter Event="MouseDoubleClick" Handler="PlaylistRow_Click" />
-                                <Setter Property="Background" Value="#FF445399" />
+                                <Setter Property="Background" Value="Transparent" />
                                 <Setter Property="Foreground" Value="White" />
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">

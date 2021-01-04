@@ -24,7 +24,7 @@
                   ItemsSource="{Binding SongInfoList}" FontSize="25"
                   DataContext="{x:Static dataContext:SongListDataContext.Instance}" >
             <ListView.View>
-                <GridView  ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
+                <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
                     <GridViewColumn Header="Title" Width="370" DisplayMemberBinding="{Binding Song.Name}" />
                     <GridViewColumn Header="Artist" Width="290" DisplayMemberBinding="{Binding Artist.ArtistName}" />
                     <GridViewColumn Header="Duration" Width="130" DisplayMemberBinding="{Binding Duration}" />
