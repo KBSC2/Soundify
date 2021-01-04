@@ -41,8 +41,14 @@ namespace Controller.DbControllers
          */
         public void UploadSong(Song song, string localPath)
         {
-            song.Path = FileTransfer.Create(Context).UploadFile(localPath, "songs/" + Path.GetFileName(localPath));
             CreateItem(song);
+            song.Path = FileTransfer.Create(Context).UploadFile(localPath,
+                "songs/" +
+                $"song_{string.Format("{0:}", song.ID.ToString().PadLeft(4, '0'))}" +
+                "." +
+                Path.GetFileName(localPath).Split("\\").Last().Split(".").Last()
+            );
+            UpdateItem(song);
         }
         
         /**

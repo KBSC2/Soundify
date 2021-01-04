@@ -77,7 +77,6 @@ namespace View.Screens
                 Duration = TimeSpan.Parse(((Label) dataGrid.FindName("Duration"))?.Content.ToString() ?? string.Empty)
                     .TotalSeconds,
                 Path = ArtistDataContext.Instance.SelectedSong.Name,
-                PathToImage = imageSource != null ? "images/" + imageSource.LocalPath.Split("\\").Last() : null,
                 ProducedBy = dataGrid.FindName("Producer") != null
                     ? ((TextBox) dataGrid.FindName("Producer"))?.Text
                     : null,
@@ -85,7 +84,14 @@ namespace View.Screens
                 Status = SongStatus.AwaitingApproval
             };
 
-            SongController.Create(DatabaseContext.Instance).UploadSong(song, ArtistDataContext.Instance.SelectedSong.Name);
+            var sController = SongController.Create(DatabaseContext.Instance);
+
+            sController.UploadSong(song, ArtistDataContext.Instance.SelectedSong.Name);
+
+            song.PathToImage = FileTransfer.Create(DatabaseContext.Instance).UploadFile(imageSource?.LocalPath, "images/song_" +
+                string.Format("{0:}", song.ID.ToString().PadLeft(4, '0')) + "." + imageSource.LocalPath.Split("\\").Last().Split(".").Last());
+            sController.UpdateItem(song);
+
 
             var request = new Request()
             {

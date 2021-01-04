@@ -37,9 +37,13 @@ namespace View.Screens
 
         private void UploadAlbumSongsButton_Click(object sender, RoutedEventArgs e)
         {
-            var fileDialog = new OpenFileDialog() { DefaultExt = ".mp3", Filter = "MP3 Files (.mp3)|*.mp3" };
-            fileDialog.Multiselect = true;
-            fileDialog.Title = "Select the songs for the album";
+            var fileDialog = new OpenFileDialog
+            {
+                DefaultExt = ".mp3",
+                Filter = "MP3 Files (.mp3)|*.mp3",
+                Multiselect = true,
+                Title = "Select the songs for the album"
+            };
             if (fileDialog.ShowDialog() != true) return;
 
             var albumFiles = new List<TagLib.File>();
@@ -105,10 +109,10 @@ namespace View.Screens
 
             var image = AlbumUploadDataContext.Instance.AlbumImage.UriSource;
 
-            FileTransfer.Create(DatabaseContext.Instance).UploadFile(image?.LocalPath, "images/" +
-                image?.LocalPath.Split("\\").Last());
-
             AlbumController.Create(DatabaseContext.Instance).UploadAlbum(AlbumUploadDataContext.Instance.AlbumSongInfos, image, titleTextBox.Text, description, genre);
+
+
+
             AlbumUploadDataContext.Instance.AlbumFiles = null;
             AlbumUploadDataContext.Instance.AlbumSongInfos = null;
             AlbumUploadDataContext.Instance.AreSongsSelected = false;
