@@ -6,10 +6,21 @@
                     x:Class="View.Screens.AlbumUploadScreen">
     <DataTemplate x:Key="AlbumUploadScreen">
         <!-- Start adminupload screen -->
-        <Grid x:Name="MainGrid" Background="#FF303651"
-              DataContext="{x:Static dataContexts:AlbumUploadDataContext.Instance}">
+        <Grid x:Name="MainGrid" DataContext="{x:Static dataContexts:AlbumUploadDataContext.Instance}">
             <Grid.Resources>
                 <components:ID3DurationPropertyConverter x:Key="DurationConverter" />
+                <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                                <Label Content="{TemplateBinding Content}" Padding="5" Width="{TemplateBinding Width}" BorderBrush="{DynamicResource InputBackground}" BorderThickness="0,0,0,4" Foreground="White" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
             </Grid.Resources>
             <Grid Margin="0,0,0,164">
                 <Grid.ColumnDefinitions>
@@ -112,32 +123,32 @@
             </Grid>
             <Grid Margin="0,270,0,0">
                 <ListView x:Name="AlbumSongListView"
-                          Background="#FF303651" BorderThickness="0" BorderBrush="{x:Null}"
-                          ItemsSource="{Binding AlbumSongInfos}" FontSize="16">
+                          Background="{DynamicResource MainBackgroundColor}" BorderThickness="0" BorderBrush="{x:Null}"
+                          ItemsSource="{Binding AlbumSongInfos}" FontSize="25">
                     <ListView.View>
-                        <GridView>
-                            <GridViewColumn  Header="Title" Width="200">
+                        <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
+                            <GridViewColumn Header="Title" Width="350">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox x:Name="TextBox" Width="200" Text="{Binding Title }" LostFocus="Textbox_LostFocus_EditVarialble" />
+                                        <TextBox x:Name="TextBox" Width="350" Text="{Binding Title }" LostFocus="Textbox_LostFocus_EditVarialble" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="Produced by" Width="200">
+                            <GridViewColumn Header="Produced by" Width="250">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox x:Name="TextBox" Width="200" Text="{Binding ProducedBy }" LostFocus ="Textbox_LostFocus_EditVarialble" />
+                                        <TextBox x:Name="TextBox" Width="250" Text="{Binding ProducedBy }" LostFocus ="Textbox_LostFocus_EditVarialble" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="Written By" Width="200">
+                            <GridViewColumn Header="Written By" Width="250">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox x:Name="TextBox" Width="200" Text="{Binding WrittenBy }" LostFocus="Textbox_LostFocus_EditVarialble"/>
+                                        <TextBox x:Name="TextBox" Width="250" Text="{Binding WrittenBy }" LostFocus="Textbox_LostFocus_EditVarialble"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="Duration" Width="75" DisplayMemberBinding="{Binding Duration, Converter={ StaticResource DurationConverter}}"/>
+                            <GridViewColumn Header="Duration" Width="130" DisplayMemberBinding="{Binding Duration, Converter={ StaticResource DurationConverter}}"/>
                             <GridViewColumn Width="150" Header="Delete song">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate >
@@ -149,7 +160,7 @@
                     </ListView.View>
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
-                            <Setter Property="Background" Value="#FF445399"/>
+                            <Setter Property="Background" Value="Transparent" />
                             <Setter Property="Foreground" Value="White"/>
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                             <Style.Triggers>
