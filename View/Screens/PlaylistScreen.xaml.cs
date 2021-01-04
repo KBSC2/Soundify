@@ -32,14 +32,16 @@ namespace View.Screens
 
         private void RemovePlaylistButton_Click(object sender, RoutedEventArgs e)
         {
-            var playlist = playlistController.GetItem((int)((Button)sender).Tag);
+            var playlist = playlistController.GetItem((int) ((Button) sender).Tag);
 
-            var removeConfirm = MessageBox.Show($"Are you sure you want to delete {playlist.Name}?", $"Remove {playlist.Name}", MessageBoxButton.YesNo);
+            var removeConfirm = MessageBox.Show($"Are you sure you want to delete {playlist.Name}?",
+                $"Remove {playlist.Name}", MessageBoxButton.YesNo);
             switch (removeConfirm)
             {
                 case MessageBoxResult.Yes:
                     playlistController.DeactivatePlaylist(playlist);
-                    MainWindow.MenuItemRoutedEvent?.Invoke(this, new MenuItemRoutedEventArgs() { ScreenName = ScreenNames.PlaylistMenuScreen } );
+                    MainWindow.MenuItemRoutedEvent?.Invoke(this,
+                        new MenuItemRoutedEventArgs() {ScreenName = ScreenNames.PlaylistMenuScreen});
                     break;
                 case MessageBoxResult.No:
                     break;
@@ -49,10 +51,11 @@ namespace View.Screens
         private void MoveUp_Click(object sender, RoutedEventArgs e)
         {
             var selectedSongInfo = SongListDataContext.Instance.SelectedSongInfo;
-            
+
             if (selectedSongInfo == null || selectedSongInfo.Index - 1 < 0) return;
 
-            playlistSongController.SwapSongs(MainWindow.CurrentPlayList, selectedSongInfo.Index, selectedSongInfo.Index - 1);
+            playlistSongController.SwapSongs(MainWindow.CurrentPlayList, selectedSongInfo.Index,
+                selectedSongInfo.Index - 1);
             SongListDataContext.Instance.OnPropertyChanged("");
         }
 
@@ -60,9 +63,11 @@ namespace View.Screens
         {
             var selectedSongInfo = SongListDataContext.Instance.SelectedSongInfo;
 
-            if (selectedSongInfo == null || selectedSongInfo.Index + 1 >= MainWindow.CurrentPlayList.PlaylistSongs.Count) return;
-            
-            playlistSongController.SwapSongs(MainWindow.CurrentPlayList, selectedSongInfo.Index, selectedSongInfo.Index + 1);
+            if (selectedSongInfo == null ||
+                selectedSongInfo.Index + 1 >= (MainWindow.CurrentPlayList.PlaylistSongs?.Count ?? 0)) return;
+
+            playlistSongController.SwapSongs(MainWindow.CurrentPlayList, selectedSongInfo.Index,
+                selectedSongInfo.Index + 1);
             SongListDataContext.Instance.OnPropertyChanged("");
         }
     }

@@ -10,9 +10,9 @@ namespace Model.Database.Contexts
 
         public static DatabaseContext Instance
         {
-            get 
+            get
             {
-                if(instance == null)
+                if (instance == null)
                     instance = new DatabaseContext();
                 return instance;
             }
@@ -21,7 +21,7 @@ namespace Model.Database.Contexts
         public override DbSet<Song> Songs { get; set; }
         public override DbSet<Playlist> Playlists { get; set; }
         public override DbSet<PlaylistSong> PlaylistSongs { get; set; }
-        public override DbSet<User> Users { get; set;  }
+        public override DbSet<User> Users { get; set; }
         public override DbSet<Role> Roles { get; set; }
         public override DbSet<Artist> Artists { get; set; }
         public override DbSet<Permission> Permissions { get; set; }
@@ -49,7 +49,7 @@ namespace Model.Database.Contexts
         {
             modelBuilder.Entity<PlaylistSong>().HasKey(ps => new {ps.PlaylistID, ps.SongID});
 
-            modelBuilder.Entity<RolePermissions>().HasKey(rp => new { rp.RoleID, rp.PermissionID});
+            modelBuilder.Entity<RolePermissions>().HasKey(rp => new {rp.RoleID, rp.PermissionID});
 
             modelBuilder.Entity<Playlist>()
                 .Property(p => p.ActivePlaylist)

@@ -67,11 +67,12 @@ namespace Controller.DbControllers
             {
                 PlaylistID = playlist.ID, 
                 SongID = songId, 
-                Index = playlist.PlaylistSongs.Count, 
+                Index = playlist.PlaylistSongs?.Count ?? 0, 
                 Added = DateTime.Now
             };
 
             set.Add(playlistSong);
+
 
             if (RealDatabase())
             {
@@ -139,7 +140,7 @@ namespace Controller.DbControllers
          */
         public bool RowExists(Playlist playlist, int songId)
         {
-            return playlist.PlaylistSongs.Any(s => s.SongID == songId);
+            return playlist.PlaylistSongs?.Any(s => s.SongID == songId) ?? false;
         }
 
         /**
@@ -152,7 +153,7 @@ namespace Controller.DbControllers
          */
         public PlaylistSong GetPlaylistSong(Playlist playlist, int songId)
         {
-            return playlist.PlaylistSongs.First(x => x.SongID == songId);
+            return playlist.PlaylistSongs?.First(x => x.SongID == songId);
         }
 
         /**
@@ -165,7 +166,7 @@ namespace Controller.DbControllers
          */
         public PlaylistSong GetPlaylistSongFromIndex(Playlist playlist, int index)
         {
-            return playlist.PlaylistSongs.First(x => x.Index == index);
+            return playlist.PlaylistSongs?.First(x => x.Index == index);
         }
 
         /**

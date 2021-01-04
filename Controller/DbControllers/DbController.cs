@@ -43,8 +43,13 @@ namespace Controller
         {
             if (!RowExists(id))
                 throw new ArgumentOutOfRangeException();
+            
+            var item =  Set.FirstOrDefault(x => x.ID == id);
+            if (RealDatabase())
+                Context.Entry(item).Reload();
+            
 
-            return Set.FirstOrDefault(x => x.ID == id);
+            return item;
         }
 
         /**
@@ -57,7 +62,7 @@ namespace Controller
         public virtual T CreateItem(T item)
         {
             Set.Add(item);
-
+            
             // If the database is a mock one, do not use the context (not required)
             if (RealDatabase())
             {
@@ -65,7 +70,6 @@ namespace Controller
                 Context.Entry(item).State = EntityState.Added;
                 Context.SaveChanges();
             }
-
             return item;
         }
 
