@@ -79,7 +79,9 @@ namespace View.Resources
         private void MenuItem_LeftClick(object sender, MouseButtonEventArgs e)
         {
             var playlistSongController = PlaylistSongController.Create(DatabaseContext.Instance);
-            playlistSongController.AddSongToPlaylist((Playlist)((MenuItem)sender).DataContext, ((SongInfo)((MenuItem)((MenuItem)sender).Tag).DataContext).Song.ID);
+
+            var songinfo = (((MenuItem) ((MenuItem) sender).Tag).DataContext as SongInfo);
+            playlistSongController.AddSongToPlaylist((Playlist)((MenuItem)sender).DataContext, songinfo.Song.ID);
 
             SongListDataContext.Instance.OnPropertyChanged("");
         }
