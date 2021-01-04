@@ -4,9 +4,9 @@
                     x:Class="View.Screens.ShopScreen">
     <DataTemplate x:Key="ShopScreen">
         <!-- Start shop screen -->
-        <Grid Margin="0,0,0,0" Background="#FF303651" 
+        <Grid Margin="0,0,0,0"
               DataContext="{x:Static dataContexts:ShopDataContext.Instance}">
-            <Label Content="Soundify Shop" Margin="0,0,0,0" HorizontalAlignment="Center" FontSize="30" Foreground="White" FontWeight="DemiBold"/>
+            <Label Content="Soundify Shop" Margin="0,0,0,0" HorizontalAlignment="Center" FontSize="30" Foreground="White" FontWeight="Bold"/>
             <ListBox ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemsSource="{Binding ShopItems}" 
                      Background="{x:Null}" ScrollViewer.HorizontalScrollBarVisibility="Auto" FlowDirection="LeftToRight" 
                      Margin="0,40,0,0" BorderBrush="{x:Null}" BorderThickness="0" ItemContainerStyle="{DynamicResource NoListBoxHoverBackground}"
@@ -16,7 +16,7 @@
                         <Border Background="#F0A243" Height="180" Width="200" Margin="20,20,20,30" CornerRadius="20" BorderThickness="1" BorderBrush="#F0A243">
                             <Grid>
                                 <Label Content="{Binding Name}" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontWeight="Normal" FontSize="14"/>
-                                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10, 10, 10, 10" Source="{Binding ImagePath}" />
+                                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20, 50, 20, 25" Source="{Binding ImagePath}" />
                                 <Button VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="100" Height="30" Margin="0,20,0,-15" Tag="{Binding ID}"
                                     BorderThickness="0,0,0,0" Foreground="White" Click="ShopItemBuy_Click">
                                     <Button.Style>

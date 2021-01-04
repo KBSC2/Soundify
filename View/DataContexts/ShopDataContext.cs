@@ -21,6 +21,7 @@ namespace View.DataContexts
         {
             ShopItems = ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser);
             CoinsController.Instance.UserCoinsEarned += Update;
+            Update(null,null);
         }
         
         public void Update(object sender, EventArgs e)
@@ -30,6 +31,7 @@ namespace View.DataContexts
             {
                 x.Bought = UserController.CurrentUser.UserShopItems?.Select(y => y.ShopItem).ToArray().Contains(x) ?? false;
                 x.Purchasable = UserController.CurrentUser.Coins >= x.Price;
+                x.ImagePath = FileCache.Instance.GetFile(x.ImagePath);
             });
 
             ShopItems = items;
