@@ -25,7 +25,8 @@ namespace View.DataContexts
             ArtistName = Song.Artist.ArtistName;
             Duration = TimeSpan.FromSeconds(Song.Duration);
 
-            ImageSource = new BitmapImage(new Uri(FileCache.Instance.GetFile(song.PathToImage)));
+            ImageSource = song.PathToImage != null ?
+                    new BitmapImage(new Uri(FileCache.Instance.GetFile(song.PathToImage))) : null;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
