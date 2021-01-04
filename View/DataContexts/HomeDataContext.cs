@@ -18,11 +18,26 @@ namespace View.DataContexts
 
         public List<ShopItem> ShopItems { get; set; }
 
-        public List<ShopItem> AlreadyBought =>
-            ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser).Where(x => x.Bought && !x.Repurchasable).ToList();
+        public List<ShopItem> AlreadyBought
+        {
+            get
+            {
+                if (UserController.CurrentUser == null) return null;
+                return ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser)
+                    .Where(x => x.Bought && !x.Repurchasable).ToList();
+            }
+        }
 
-        public List<ShopItem> StillAvailable => ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser).Where(x => !x.Bought || x.Repurchasable).ToList();
-    
+        public List<ShopItem> StillAvailable
+        {
+            get
+            {
+                if (UserController.CurrentUser == null) return null;
+                return ShopItemController.Create(DatabaseContext.Instance).GetList(UserController.CurrentUser)
+                    .Where(x => !x.Bought || x.Repurchasable).ToList();
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

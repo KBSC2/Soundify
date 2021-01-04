@@ -67,10 +67,11 @@ namespace Controller
          */
         public void Next()
         {
-            FillQueue();
             if (CurrentSongIndex >= 0 && CurrentSong != null)
                 if (NextInQueue.Contains(Queue[CurrentSongIndex]))
                     NextInQueue.Remove(Queue[CurrentSongIndex]);
+                else if (Looping)
+                    AddSongToQueue(CurrentSong);
             
             if (Queue.Count == 0) return;
             CurrentSongIndex++;
@@ -110,7 +111,6 @@ namespace Controller
             }
 
             PlaySong(Queue[CurrentSongIndex]);
-            FillQueue();
         }
 
         /**
@@ -126,7 +126,7 @@ namespace Controller
                 WaveOutDevice.Stop();
 
             CurrentSongFile = new SongAudioFile(FileCache.Instance.GetFile(song.Path));
-            //CurrentSongFile.AudioFile.CurrentTime = TimeSpan.FromSeconds(0);
+            CurrentSongFile.AudioFile.CurrentTime = TimeSpan.FromSeconds(0);
             CurrentSong = song;
             CurrentSongArtistName = song.Artist.ArtistName;
             WaveOutDevice.Init(CurrentSongFile.AudioFile);
@@ -227,6 +227,7 @@ namespace Controller
             else
                 CurrentSongIndex = startIndex;
 
+            FillQueue();
             Next();
         }
 
@@ -273,7 +274,7 @@ namespace Controller
             {
                 var queueFromCurrentSongIndex = new List<Song>(songs);
 
-                if (Queue.Count > 0)
+                if (Queue.Count > NextInQueue.Count)
                     queueFromCurrentSongIndex = Queue.GetRange(CurrentSongIndex + 1, Queue.Count - (CurrentSongIndex + 1));
                 
                 NextInQueue.ForEach(x => queueFromCurrentSongIndex.Remove(x));
@@ -311,7 +312,13 @@ namespace Controller
                 }
 
                 if(Queue.Count > 0)
-                    Queue.RemoveRange(CurrentSongIndex + 1 + NextInQueue.Count, Queue.Count - (CurrentSongIndex + 1 + NextInQueue.Count));
+                {
+                    if(NextInQueue.Count > 0 && NextInQueue[0] == CurrentSong)
+                        Queue.RemoveRange(CurrentSongIndex + NextInQueue.Count, Queue.Count - (CurrentSongIndex + NextInQueue.Count));
+                    else
+                        Queue.RemoveRange(CurrentSongIndex + 1 + NextInQueue.Count, Queue.Count - (CurrentSongIndex + 1 + NextInQueue.Count));
+                }
+                    
                 
                 Queue.AddRange(queueFromCurrentSongIndex);
             }
@@ -367,13 +374,20 @@ namespace Controller
          */
         public void ChangeVolume(int selectedItem)
         {
-            MaxVolume = selectedItem switch
+            switch (selectedItem)
             {
-                0 => 0.1,
-                1 => 0.2,
-                2 => 0.4,
-                _ => 0.0
-            };
+                case 0:
+                    MaxVolume = 0.1;
+                    break;
+                case 1:
+                    MaxVolume = 0.2;
+                    break;
+                case 2:
+                    MaxVolume = 0.4;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
