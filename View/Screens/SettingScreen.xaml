@@ -13,9 +13,9 @@
                     </Button.Resources>
                 </Button>
                 <Image Source="/Assets/sound.png" Height="43" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,178,260,0" />
-                <ComboBox HorizontalAlignment="Center" Margin="0,178,0,0" VerticalAlignment="Top" Width="164" Height="43" Background="White" FontSize="26.5" FontWeight="Bold" SelectionChanged="VolumeComboBox_SelectedChanged">
+                <ComboBox HorizontalAlignment="Center" Margin="0,178,0,0" VerticalAlignment="Top" Width="164" Height="43" Background="White" FontSize="26.5" FontWeight="Bold" SelectionChanged="VolumeComboBox_SelectedChanged" SelectedIndex="{Binding VolumeComboBoxSelectedIndex, Mode=OneWay}">
                     <ComboBoxItem>Quiet</ComboBoxItem >
-                    <ComboBoxItem IsSelected="True">Normal</ComboBoxItem>
+                    <ComboBoxItem>Normal</ComboBoxItem>
                     <ComboBoxItem>Loud</ComboBoxItem>
                 </ComboBox>
                 <Button Content="Logout" HorizontalAlignment="Center" Margin="0,483,0,0" VerticalAlignment="Top" Width="130" Height="40" Background="#FFF70E0E" Foreground="White" BorderThickness="0" FontSize="26.6" FontWeight="Bold" Click="Logout_Button_Click">
