@@ -45,13 +45,19 @@ namespace Controller.DbControllers
             string description, string genre)
         {
             var artist = ArtistController.Create(Context).GetArtistFromUser(UserController.CurrentUser);
-            var pathToImage = image != null ? "images/" + image.LocalPath.Split("\\").Last() : null;
 
             if (artist == null)
                 return;
 
-            CreateItem(new Album 
-                { AlbumName = title, Description = description, ArtistID = artist.ID, PathToImage = pathToImage ,Genre = genre });
+            var album = CreateItem(new Album 
+                { AlbumName = title, Description = description, ArtistID = artist.ID, PathToImage = "", Genre = genre });
+
+            var imagePath = FileTransfer.Create(DatabaseContext.Instance).UploadFile(image?.LocalPath, "images/album_" +
+                string.Format("{0:}", album.ID.ToString().PadLeft(4, '0')) + "."+ image.LocalPath.Split("\\").Last().Split(".").Last());
+
+            album.PathToImage = imagePath;
+            UpdateItem(album);
+
 
             foreach (var albumSongInfo in albumSongInfos)
             {
@@ -60,8 +66,8 @@ namespace Controller.DbControllers
                     Name = albumSongInfo.Title,
                     ArtistID = artist.ID,
                     Duration = albumSongInfo.Duration.TotalSeconds,
-                    Path = albumSongInfo.File.Name,
-                    PathToImage = pathToImage,
+                    Path = "",
+                    PathToImage = imagePath,
                     ProducedBy = albumSongInfo.ProducedBy == "" ? null : albumSongInfo.ProducedBy,
                     WrittenBy = albumSongInfo.WrittenBy == "" ? null : albumSongInfo.WrittenBy,
                     Status = SongStatus.AwaitingApproval
@@ -79,8 +85,8 @@ namespace Controller.DbControllers
                 RequestController.Create(DatabaseContext.Instance).CreateItem(request);
             }
 
-            if (!RealDatabase()) return;
-            Context.SaveChanges();
+            if (!RealDatabase())
+                Context.SaveChanges();
         }
 
         /**
