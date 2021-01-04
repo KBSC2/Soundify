@@ -67,7 +67,6 @@ namespace Controller
          */
         public void Next()
         {
-            //FillQueue();
             if (CurrentSongIndex >= 0 && CurrentSong != null)
                 if (NextInQueue.Contains(Queue[CurrentSongIndex]))
                     NextInQueue.Remove(Queue[CurrentSongIndex]);
