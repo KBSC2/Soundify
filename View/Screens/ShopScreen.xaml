@@ -16,7 +16,7 @@
                         <Border Background="#F0A243" Height="180" Width="200" Margin="20,20,20,30" CornerRadius="20" BorderThickness="1" BorderBrush="#F0A243">
                             <Grid>
                                 <Label Content="{Binding Name}" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontWeight="Normal" FontSize="14"/>
-                                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20, 50, 20, 25" Source="{Binding ImagePath}" />
+                                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20, 50, 20, 25" Source="{Binding LocalImagePath}" />
                                 <Button VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="100" Height="30" Margin="0,20,0,-15" Tag="{Binding ID}"
                                     BorderThickness="0,0,0,0" Foreground="White" Click="ShopItemBuy_Click">
                                     <Button.Style>
