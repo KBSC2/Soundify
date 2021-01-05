@@ -13,6 +13,8 @@ namespace Model.DbModels
 
         public string ImagePath { get; set; }
 
+        [NotMapped] public string LocalImagePath { get; set; }
+
         [NotMapped] public bool Bought { get; set; }
 
         [NotMapped] public bool Purchasable { get; set; }
