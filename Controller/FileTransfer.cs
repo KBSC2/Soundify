@@ -24,7 +24,7 @@ namespace Controller
          */
         public virtual void DownloadFile(string inputPath)
         {
-            if (inputPath == "") return;
+            if (inputPath == null || inputPath.Equals("")) return;
 
             var conf = SSHController.GetSSHConfiguration();
 
